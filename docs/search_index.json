@@ -1,0 +1,6 @@
+[
+["index.html", "Analysis Report Preface", " Analysis Report Niklas Johannes 2020-09-11 Preface On this site, I document all steps, from data processing to final analyses, for the project [project title.] "],
+["setting-up.html", "1 Setting-up", " 1 Setting-up This is where all libraries and functions will go. "],
+["data-processing.html", "2 Data processing", " 2 Data processing This is where data processing and cleaning will go. "],
+["descriptives-and-visualizations.html", "3 Descriptives and visualizations", " 3 Descriptives and visualizations This is where descriptive info and visualizations will go. "]
+]
