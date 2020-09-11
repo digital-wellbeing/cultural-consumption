@@ -1,4 +1,20 @@
 # Setting-up
 
-This is where all libraries and functions will go.
+In this section, I load all libraries and define all custom functions that we need for data processing and analysis.
+Note I use the `pacman` package for loading libraries.
+```{r load-libraries}
+# pacman makes it easier to load and install packages
+if (!requireNamespace("pacman"))
+  install.packages("pacman")
 
+library(pacman)
+
+# load packages
+p_load(
+  tidyverse,
+  here
+)
+
+# set seed
+set.seed(42)
+```

@@ -1,3 +1,1063 @@
 # Data processing
 
-This is where data processing and cleaning will go.
+In this section I'll process the raw data so that I can use them for analysis in the next section.
+Currently, I'm allowed to share the raw data, which is why they're not on the Github repo yet.
+
+## Read waves 2-6
+
+We'll start with loading the data for waves 2 to 6.
+We start here instead of wave 1 because participant identification isn't super straightforward.
+A participant doesn't get a single unique identifier that's stable across all waves.
+Instead, participants start with an ID in wave 1 (called `transaction_idOld` in the wave 2 to 6 data) and get a new unique ID for wave 2 and so on.
+
+I believe originally the researchers wanted to go with a single ID, but changed their mind.
+Look at the data table below (\@ref(tab:example-ids)), where I made up two participants to recreate the data structure.
+We see that the first participant has an transaction ID (`transaction_idOld`) for the first wave.
+The same participant then has that same old transaction ID for wave two, plus a new transaction ID for wave 2 (`transaction_id`).
+
+Here's where it gets a bit complicated: That transaction ID for wave 2 is repeated on wave 3, but with a different name (`transaction_idW2`).
+Next to that new variable, is the unique ID for that wave (`transaction_idW3`).
+After that, each new wave has the ID of the previous wave plus a new ID for the current wave.
+```{r example-ids, echo=FALSE}
+example_ids <- 
+  read_csv(here("data", "example_id.csv"))
+
+knitr::kable(
+  example_ids,
+  caption = "Example of how ID variables look"
+)
+```
+
+Unfortunately, the `id` column from the example isn't included in the raw data, so we'll have to recreate participant IDs that are constant across waves.
+I solved this problem with a loop, which is definitely not the most elegant way to go about this, but I think it gets the job done.
+First, lets load the data.
+```{r load-waves-2-to-6}
+waves_2_to_6 <- 
+  read_csv(
+    here("data", "waves_2_to_6.csv"),
+    guess_max = 2e4
+  )
+```
+
+Next, the logic behind assigning the constant IDs.
+We'll start at the ID of wave 2, find the ID of wave 3 that's on the same line as the ID of wave 2 and store the ID for wave 3.
+We repeat this procedure for all waves and in the end assign an ID to those rows that have the IDs we extracted on any of the ID variables.
+
+The steps, concretely:
+
+1. We store all IDs (so that's the IDs of wave 2) in a vector (excluding `NA`s).
+2. Initiate an ID counter (i.e., the participant number we assign later).
+3. We iterate over each wave 2 ID.
+4. If participants did participate in a wave, we find the wave 3 ID that is on the same row as the wave 2 that we're currently looking for.
+5. We now look for the wave 3 ID and store the wave 4 ID that's on the same line.
+6. We repeat that until we're at the last ID and have all IDs for that participant stored in a vector.
+7. Then a row gets assigned the participant ID (to the existing, but empty `id` variable) if any of the wave ID variables have a match in the extracted IDs.
+
+On my machine, the below code takes about 30 seconds.
+```{r assign-pp-id}
+# the unique wave 2 IDs
+ids <- waves_2_to_6 %>% 
+  pull(transaction_id) %>% 
+  na.omit
+
+# the participant number we assign later
+id_counter <- 1
+
+# assign the correct variable type to the empty ID variable that's already in the data where we'll assign participant numbers at the end of the loop
+waves_2_to_6$id <- NA_real_
+
+for (an_id in ids) {
+  
+  # transaction ids that belong to that one participant
+  id_to_match <- c()
+  
+  # add the initial id
+  id_to_match <- c(id_to_match, an_id)
+  
+  # assign that id as temporary ID for which we should match (id_to_match only has one entry so far)
+  temp_id <- id_to_match
+  
+  # at this point, participants might have not participated in the next wave, so they might have an empty cell in
+  # transaction_id2. so we'll embed everything that follows in their separate if statement
+  if (!is_empty(temp_id)) {
+    
+    # find the transcation_id3 that's on the same line as transaction_id2 and store it
+    temp_id <- 
+      waves_2_to_6 %>% 
+      filter(transaction_idW2 == an_id) %>% 
+      pull(transaction_idW3)
+    
+    id_to_match <- na.omit(c(id_to_match, temp_id)) # so that NA doesn't become one of the IDs
+  }
+  
+  if (!is_empty(temp_id)){
+    # then the same for transaction_id4, but this time we compare to the temporary id we extracted above
+    # also, we only select those rows where the next ID isn't NA (because there're two matches for the temp_id)
+    temp_id <- 
+      waves_2_to_6 %>% 
+      filter((transaction_idW3 == temp_id) & !is.na(transaction_idW4)) %>% 
+      pull(transaction_idW4)
+    
+    id_to_match <- c(id_to_match, temp_id)
+  }
+  
+  if (!is_empty(temp_id)){
+    # then the same as above for transaction_id5
+    temp_id <- 
+      waves_2_to_6 %>% 
+      filter((transaction_idW4 == temp_id) & !is.na(transaction_idW5)) %>% 
+      pull(transaction_idW5)
+    
+    id_to_match <- c(id_to_match, temp_id)
+  }
+  
+  if (!is_empty(temp_id)){
+    # and last for transaction_id6
+    temp_id <- 
+      waves_2_to_6 %>% 
+      filter((transaction_idW5 == temp_id) & !is.na(transaction_idW6)) %>% 
+      pull(transaction_idW6)
+    
+    id_to_match <- c(id_to_match, temp_id)
+  }
+  
+  # then we assign a participant number, such that a participant gets the number for each row where any of their transaction_ids are part of the temporary ids
+  waves_2_to_6 <- 
+    waves_2_to_6 %>% 
+    mutate(
+      id = case_when(
+        transaction_id %in% id_to_match ~ id_counter,
+        transaction_idW2 %in% id_to_match ~ id_counter,
+        transaction_idW3 %in% id_to_match ~ id_counter,
+        transaction_idW4 %in% id_to_match ~ id_counter,
+        transaction_idW5 %in% id_to_match ~ id_counter,
+        transaction_idW6 %in% id_to_match ~ id_counter,
+        TRUE ~ id
+      )
+    )
+
+  # increase the participant number
+  id_counter <- id_counter + 1
+}
+```
+
+Before we we assign correct variable types, name factor levels etc. we'll load wave 1.
+This way, we can merge the two files first before doing all of the data cleaning, variable selection, and variable renaming.
+
+## Read wave 1
+
+Let's load the file for wave 1.
+`transcaction_id` is the unique identifier for each participant.
+However, that variables is called `transaction_idOld` in waves 2 to 6, which is why we name it the same here (see above).
+Also, `dWeekMerged` is the wave identifier that's used in waves 2 to 6, so we'll include that manually here.
+```{r load-wave-1}
+wave1 <- 
+  read_csv(
+    here("data", "wave1.csv"),
+    guess_max = 2e4
+  ) %>% 
+  rename(transaction_idOld = transaction_id) %>% 
+  mutate(dWeekMerged = 1)
+```
+
+There are many variables we don't care about, but before we make the variable selection, I'll first merge the two files.
+Here's another complication: If we look at the surveys and how variables are named there, it looks like there are different labels for the same variables in wave 1 and waves 2 to 6.
+For example, in wave 1, variables providing the estimated time with a medium had the appendix `ai` and those asking about self-estimated increases or decreases in frequency had the appendix `aii`.
+For waves 2 to 6, the surveys say that this is reversed, such that estimated time with a medium has the appendix `aii` and self-estimated increase or decrease has the appendix `ai`.
+
+The same goes for variable names: For example, the audiobooks section in wave 1 begins with `C7c`, but with `C6c` in waves 2 to 6.
+In the actual data, however, variable names are constant (see the codebook).
+For example, audiobooks are `C7c` in both data sets despite what the survey files say.
+The variable labels are the same across all waves (I manually checked), which makes merging easier.
+
+My merging strategy is as follows:
+
+1. I assign the `id` we created above to the `wave1` data file by merging by `transaction_idOld` which is available in both data sets.
+However, that means that those who didn't participate in wave 2 won't have an `id`.
+So we manually fill those empty cells up - although we'll probably exclude those who only participant in wave 1 later anyways.
+2. I then add the rows of `waves_2_to_6` to `waves1`. I use the `bind_rows` command, which maintains all variables for which there's no match and sets them to `NA` - exactly what we want, because full demographics are only in wave 1 and newer questions only in later waves.
+
+Note that from now on I leave the raw wave data untouched and make all changes in a working file.
+```{r merge-waves}
+# add the id variable to wave1 by merging by transaction_idOld that's in both data sets
+working_file <- 
+  left_join(
+    wave1,
+    waves_2_to_6 %>% select(transaction_idOld, id),
+    by = "transaction_idOld"
+  )
+
+# assign an id to those in wave 1 who have an NA in the id column because they didn't participate in later waves
+# we can do this easily with coalesce, for which we create a vector that continues from the current max ID until
+# each participant with missing ID has one
+working_file <- 
+  working_file %>% 
+  mutate(
+    id = coalesce(
+      id,
+      max(working_file$id, na.rm = T)+1:nrow(working_file)
+    )
+  )
+
+# then add the rows of waves 2 to 6 to wave 1
+working_file <- 
+  bind_rows(
+    working_file,
+    waves_2_to_6
+  )
+```
+
+## Data cleaning
+
+Now that each participant has a constant identifier and all waves are merged, we can select those variables we actually need.
+For our purposes, we'll retain:
+
+* demographic information
+* variables indicating what media people used in the past week
+* time estimates of those uses
+* self-estimated importance of the medium
+* self-estimated frequency
+* the estimated effects on well-being in wave 6
+
+Note that there are quite a lot of filtering variables.
+We can't collapse these to one variable because these questions were multiple choice.
+```{r select-and-rename}
+working_file <-
+  working_file %>% 
+  select(
+    # meta information
+    id,
+    wave = dWeekMerged,
+    
+    # demographics
+    occupation_main_earner = PS1a,
+    main_earner = PS1b,
+    income_main_earner = PS1c,
+    income_own = A7,
+    ethnicity = PS2,
+    internet_use = A2,
+    gender = A4,
+    age = A5,
+    employment = A6x1,
+    living_on_my_own = A6x2r1,
+    living_with_children = A6x2r2,
+    living_with_partner = A6x2r3,
+    living_with_partner_children = A6x2r4,
+    living_with_family = A6x2r5,
+    living_with_parents = A6x2r6,
+    living_with_friends = A6x2r7,,
+    region = A8,
+    covid_work_home_often = A6x4r1,
+    covid_work_home_always = A6x4r2,
+    covid_work_outside = A6x4r3,
+    covid_work_stopped = A6x4r4,
+    covid_home_schooling = A6x4r5,
+    covid_self_isolating = A6x4r6,
+    covid_none = A6x4r99,
+    
+    # filter questions: downloaded
+    downloaded_music = B1r1,
+    downloaded_music_videos = B1r2,
+    downloaded_video_games = B1r3,
+    downloaded_software = B1r4,
+    downloaded_films = B1r5,
+    downloaded_tv = B1r6,
+    downloaded_sports = B1r7,
+    downloaded_video_clips = B1r8,
+    downloaded_ebooks = B1r9,
+    downloaded_magazines = B1r10,
+    downloaded_audiobooks = B1r11,
+    downloaded_images = B1r12,
+    downloaded_none = B1r13,
+    
+    # filter questions: streamed
+    streamed_music = B2r1,
+    streamed_music_videos = B2r2,
+    streamed_video_games = B2r3,
+    streamed_software = B2r4,
+    streamed_films = B2r5,
+    streamed_tv = B2r6,
+    streamed_sports = B2r7,
+    streamed_video_clips = B2r8,
+    streamed_ebooks = B2r9,
+    streamed_magazines = B2r10,
+    streamed_audiobooks = B2r11,
+    streamed_images = B2r12,
+    streamed_none = B2r13,
+    
+    # filter questions: shared
+    shared_music = B3r1,
+    shared_music_videos = B3r2,
+    shared_video_games = B3r3,
+    shared_software = B3r4,
+    shared_films = B3r5,
+    shared_tv = B3r6,
+    shared_sports = B3r7,
+    shared_video_clips = B3r8,
+    shared_ebooks = B3r9,
+    shared_magazines = B3r10,
+    shared_audiobooks = B3r11,
+    shared_images = B3r12,
+    shared_none = B3r13,
+    
+    # filter questions: bought
+    bought_music = B4r1,
+    bought_video_games = B4r2,
+    bought_software = B4r3,
+    bought_films = B4r4,
+    bought_tv = B4r5,
+    bought_books = B4r6,
+    bought_magazines = B4r7,
+    bought_audiobooks = B4r8,
+    bought_none = B4r9,
+    
+    # music
+    music_identity_ = C1x1r1:C1x1r7,
+    music_hours = C1x1aiHoursc1,
+    music_minutes = C1x1aiMinutesc2,
+    music_estimate = C1x1aii,
+    
+    # films
+    films_identity_ = C2x1r1:C2x1r7,
+    films_hours = C2x1aiHoursc1,
+    films_minutes = C2x1aiMinutesc2,
+    films_estimate = C2x1aii,
+    
+    # tv
+    tv_identity_ = C3x1r1:C3x1r7,
+    tv_hours = C3x1aiHoursc1,
+    tv_minutes = C3x1aiMinutesc2,
+    tv_estimate = C3x1aii,
+    
+    # video games
+    games_identity_ = C5x1r1:C5x1r7,
+    games_hours = C5x1aiHoursc1,
+    games_minutes = C5x1aiMinutesc2,
+    games_estimate = C5x1aii,
+    
+    # e-publishing
+    e_publishing_identity_ = C7x1r1:C7x1r7,
+    
+    # (e-)books
+    books_hours = C7ax1aiHoursc1,
+    books_minutes = C7ax1aiMinutesc2,
+    books_estimate = C7ax1aii,
+    
+    # magazines
+    magazines_hours = C7bx1aiHoursc1,
+    magazines_minutes = C7bx1aiMinutesc2,
+    magazines_estimate = C7bx1aii,
+    
+    # audiobooks
+    audiobooks_hours = C7cx1aiHoursc1,
+    audiobooks_minutes = C7cx1aiMinutesc2,
+    audiobooks_estimate = C7cx1aii,
+    
+    # well-being
+    life_satisfaction_ = QD2r1:QD2r2,
+    well_being_ = QD2r3:QD2r4
+  )
+```
+
+Alright, now to the tedious part: transforming all variables to the correct type and assigning informative factor level labels.
+Note that `id` now is numeric which can be misleading, which is why I add `pp_` (for participant) before the ID number.
+```{r assign-types-and-labels}
+working_file <- 
+  working_file %>% 
+  
+  # turn non-numeric variables into factors
+  mutate(
+    across(
+      c(
+        id,
+        occupation_main_earner:gender,
+        employment:covid_none
+      ),
+      as.factor
+    )
+  ) %>% 
+  
+  # purely cosmetic: arrange by id
+  arrange(id) %>% 
+  
+  # give proper labels to demographics
+  mutate(
+    occupation_main_earner = fct_recode(
+      occupation_main_earner,
+      "Higher managerial/professional/administrative" = "1",
+      "Intermediate managerial/professional/administrative" = "2",
+      "Supervisory or clerical/junior managerial/ professional/ administrative" = "3",
+      "Skilled manual worker" = "4",
+      "Semi-skilled or unskilled work" = "5",
+      "In full time education" = "6",
+      "Unemployed" = "7",
+      "Prefer not to say" = "8"
+    ),
+    across(
+      c(income_main_earner, income_own),
+      ~ fct_recode(
+        .x,
+        "Less than £10,000" = "1",
+        "£10,000 - £19,999" = "2",
+        "£20,000 - £29,999" = "3",
+        "£30,000 - £39,999" = "4",
+        "£40,000 - £49,999" = "5",
+        "£50,000 - £59,999" = "6",
+        "£60,000 - £69,999" = "7",
+        "£70,000 - £79,999" = "8",
+        "£80,000 - £89,999" = "9",
+        "£90,000 - £99,999" = "10",
+        "£100,000 - £109,999" = "11",
+        "£110,000 - £119,999" = "12",
+        "£120,000 - £129,999" = "13",
+        "£130,000 - £139,999" = "14",
+        "£140,000 - £149,999" = "15",
+        "£150,000 - £159,999" = "16",
+        "£160,000 - £169,999" = "17",
+        "£170,000 - £179,999" = "18",
+        "£180,000 - £189,999" = "19",
+        "£190,000 - £199,999" = "20",
+        "£200,000 - £209,999" = "21",
+        "£210,000 - £219,999" = "22",
+        "£220,000 - £229,999" = "23",
+        "£230,000 - £239,999" = "24",
+        "£240,000 - £249,999" = "25",
+        "£250,000 or more" = "26"
+      )
+    ),
+    
+    ethnicity = fct_recode(
+      ethnicity,
+      "White British" = "1",
+      "White European" = "2",
+      "White - Other" = "3",
+      "Indian" = "4",
+      "Pakistani" = "5",
+      "Bangladeshi" = "6",
+      "Chinese" = "7",
+      "Japanese" = "8",
+      "Any other Asian/Asian British Origin" = "9",
+      "African" = "10",
+      "Caribbean" = "11",
+      "Any other Black/African/Caribbean British origin" = "12",
+      "Arab" = "13",
+      "Any other ethnic origin" = "14",
+      "White and Black Caribbean" = "15",
+      "White and Black African" = "16",
+      "White and Asian" = "17",
+      "Any other Mixed/Multiple ethnic origins" = "18",
+      "Prefer not to say" = "19"
+    ),
+    
+    internet_use = fct_recode(
+      internet_use,
+      "Several times a day" = "1",
+      "Once a day" = "2",
+      "5-6 days a week" = "3",
+      "2-4 days a week" = "4",
+      "Once a week" = "5",
+      "2-3 times a month" = "6",
+      "Once a month" = "7",
+      "Less often" = "8",
+      "Don't know/Not sure" = "9"
+    ),
+    
+    gender = fct_recode(
+      gender,
+      "Male" = "1",
+      "Female" = "2",
+      "Other" = "3"
+    ),
+    
+    employment = fct_recode(
+      employment,
+      "Employed full time" = "1",
+      "Employed part time" = "2",
+      "Employed but furloughed due to the coronavirus pandemic" = "3",
+      "Unemployed and looking for work" = "4",
+      "Unemployed and not looking for work" = "5",
+      "Self employed" = "6",
+      "Retired" = "7",
+      "Student" = "8",
+      "Rather not say" = "9"
+    ),
+    
+    region = fct_recode(
+      region,
+      "North East" = "1",
+      "North West" = "2",
+      "Yorkshire and The Humber" = "3",
+      "East Midlands" = "4",
+      "West Midlands" = "5",
+      "East" = "6",
+      "London" = "7",
+      "South East" = "8",
+      "South West" = "9",
+      "Wales" = "10",
+      "Scotland" = "11",
+      "Northern Ireland" = "12",
+      "Not in the UK" = "13"
+    ),
+    
+    # assign yes/no to binary variables
+    across(
+      c(
+        starts_with("living"),
+        starts_with("covid"),
+      ),
+      ~ fct_recode(
+        .x,
+        "Yes" = "1",
+        "No" = "0"
+      )
+    ),
+    
+    main_earner = fct_recode(
+      main_earner,
+      "Yes" = "1",
+      "No" = "2"
+    ),
+    
+    # add "pp_" prefix to id variable
+    id = as.factor(
+      paste0("pp_", id)
+    )
+  )
+```
+
+For the first wave, participants only responded to questions about how much they used a medium if they indicated that they had used it in the three months before wave 1.
+Those variables (e.g. `bought_books`) are only present in wave 1, but `NA` in the other waves.
+Therefore, we create new variables that show whether a person was asked to indicate their use of a medium, so if they answered yes to any of the filter variables at the beginning of the wave 1 survey.
+At this point, those filter variables are still numeric, so we'll add them up.
+If they're above 0, participants were asked about that medium.
+If they're 0, participants hadn't used any of the media in the three months before wave 1 and weren't asked questions about them.
+Note that I keep those filter variables as numeric for processing later.
+After we're done with the filter variables, we can also delete the individual ones.
+
+Note that I check at the beginning of the code chunk whether any of those filter variables have missing values, but it seems the survey had forced responses here, so we don't have missings.
+```{r check-missings-filter}
+# check whether any of the filter variables (at wave 1, when they were asked) have missing values
+working_file %>% 
+  filter(wave == 1) %>% 
+  summarise(
+    across(
+      c(
+       starts_with("downloaded"),
+       starts_with("streamed"),
+       starts_with("shared"),
+       starts_with("bought")
+      ),
+      ~unique(is.na(.x))
+    )
+  ) %>% 
+  t() %>% 
+  knitr::kable()
+```
+
+While we're at it: All constant wave 1 variables now have `NA` in the subsequent wave.
+I'll set those `NA`s to the wave 1 value because those are stable demographics that apply to each wave.
+Note that three demographic questions were asked at each wave, employment status, living siutation, and the consequences of COVID-19.
+```{r create-use-filter}
+# get filter variables (only present at wave 1)
+filters <- 
+  working_file %>% 
+  filter(wave == 1) %>%
+  
+  # the filter per category
+  mutate(
+    filter_music = rowSums(
+      select(
+        .,
+        starts_with("downloaded_music"),
+        starts_with("streamed_music"),
+        starts_with("shared_music"),
+        bought_music
+      )
+    ),
+    
+    filter_films = rowSums(
+      select(
+        .,
+        downloaded_films,
+        streamed_films,
+        shared_films,
+        bought_films
+      )
+    ),
+    
+    filter_tv = rowSums(
+      select(
+        .,
+        downloaded_tv,
+        streamed_tv,
+        shared_tv,
+        bought_tv
+      )
+    ),
+    
+    filter_video_games = rowSums(
+      select(
+        .,
+        downloaded_video_games,
+        streamed_video_games,
+        shared_video_games,
+        bought_video_games
+      )
+    ),
+    
+    filter_ebooks = rowSums(
+      select(
+        .,
+        downloaded_ebooks,
+        streamed_ebooks,
+        shared_ebooks,
+        bought_books
+      )
+    ),
+    
+    filter_magazines = rowSums(
+      select(
+        .,
+        downloaded_magazines,
+        streamed_magazines,
+        shared_magazines,
+        bought_magazines
+      )
+    ),
+    
+    filter_audiobooks = rowSums(
+      select(
+        .,
+        downloaded_audiobooks,
+        streamed_audiobooks,
+        shared_audiobooks,
+        bought_audiobooks
+      )
+    )
+  ) %>% 
+  
+  # recode depending on whether the sum is zero or not
+  mutate(
+    across(
+      starts_with("filter"),
+      ~ if_else(.x > 0, 1, 0)
+    )
+  ) %>% 
+  
+  # select variables that are constant across all waves
+  select(
+    id,
+    occupation_main_earner:internet_use,
+    contains("identity"),
+    starts_with("filter")
+  )
+
+# add those filters and constant variables so that they become a constant for each pp, deleting old filter variables
+working_file <- 
+  left_join(
+    working_file %>% 
+      select(
+        -(occupation_main_earner:internet_use),
+        -contains("identity")
+      ),
+    filters,
+    by = "id"
+  ) %>% 
+  select(
+    -starts_with("downloaded"),
+    -starts_with("streamed"),
+    -starts_with("shared"),
+    -starts_with("bought"),
+  ) %>% 
+  
+  # some reordering for purely cosmetic purposes
+  select(
+    id:age,
+    region,
+    ethnicity,
+    employment,
+    main_earner,
+    occupation_main_earner,
+    starts_with("income"),
+    starts_with("living"),
+    starts_with("covid"),
+    internet_use,
+    starts_with("filter"),
+    everything()
+  )
+
+# remove the temp filters file
+rm(filters)
+```
+
+## Response rates and missing values
+
+In this section, I check response rates, response patterns, and missing values.
+The data set is quite complicated because of the many filter variables.
+The survey had forced responses, so there aren't any missings if someone finished the survey.
+However, because of the many filters, there'll still be a large amount of missing values that we need to inspect or recode.
+
+I think the following information is most relevant to understand response and missingness patterns:
+
+1. How many participants have completed each wave.
+2. How many responses we have per medium per wave.
+
+### Participants per wave
+
+First, let's see how many people completed each wave, what percentage of people have completed that exact number of wave, how many participants that have exactly this number of waves, and what percentage of participants have completed *at least* this wave.
+```{r check-wave-completes}
+completion_table <- 
+  working_file %>% 
+  count(id) %>% 
+  count(n) %>% 
+  rename(
+    "Waves" = n,
+    "Participants (only that number of waves)" = nn
+  ) %>% 
+  mutate(
+    "Frequency" = round(`Participants (only that number of waves)` / sum(`Participants (only that number of waves)`), digits = 3) * 100,
+    "Participants per wave" = rev(cumsum(rev(`Participants (only that number of waves)`))),
+    "Frequency per wave" = round(`Participants per wave` / sum(`Participants (only that number of waves)`), digits = 3) * 100
+  ) %>% 
+  as_tibble()
+
+knitr::kable(completion_table)
+```
+
+### Responses per wave and medium
+
+Okay, next we inspect how many responses we have per medium per wave.
+The data set gets complicated here.
+This is where the filtering requires quite some wrangling: Someone who hasn't listened to music in the three months before wave 1 will have missing values on all items about music - but only at wave 1.
+
+However, at each subsequent wave, participants were asked one of the `estimate` questions.
+If they said that they had used a medium less, about the same, or more compared to the previous week, they were then also prompted to provide their use estimates.
+
+For example, someone might've had a 0 on the filter questions for audio books because they hadn't listened to audio books the three months before wave 1.
+For wave 1, then, they didn't provide the minutes and hours they spent on audio books.
+In wave 2, they were then asked how their audio book use had changed since the last survey.
+If they answered anything but the sixth answer option (i.e., they still hadn't listened to audio books), they were asked to report how many minutes and hours they had used audio books.
+
+Here's why that can be problematic: The participants below hadn't listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn't changed (i.e., selected `3` on the `audiobooks_estimate` question).
+But the participant was still asked about their minutes and hours - which is why they filled in bogus numbers.
+Minutes and hours were force response as far as I can tell.
+I wouldn't take those estimates seriously, because the participant was forced to respond to minutes and hours.
+We see that in the following waves, they selected the option that they hadn't listened to audiobooks.
+```{r example-filter-change}
+working_file %>% 
+  filter(id == "pp_7") %>%
+  filter(filter_audiobooks == 0) %>%
+  select(
+    id,
+    wave,
+    filter_audiobooks,
+    audiobooks_estimate,
+    audiobooks_minutes,
+    audiobooks_hours
+  ) %>% 
+  knitr::kable()
+```
+
+Before we turn to those cases where we can tell a participant didn't want to provide a use estimate, we need to decide what to do with the filter questions in the first wave.
+For our research question, we're interested in *how variations in amount of use relate to well-being*, not what that relation is *among users*.
+Therefore, if someone says that they didn't use a medium in the three months before the first wave, they are saying that they *spent zero amount of time engaging with that medium*.
+The filter questions didn't ask whether a user has a device they can use to engage with those content categories or whether they had any of the media.
+So the filter question didn't ask whether participants were *able* to engage with a category.
+It asked *whether people used a medium*.
+Therefore, it fits our research question to treat those values as zero.
+
+Below, I'll set all time variables at the first wave to zero that were skipped in the survey because participants said they didn't use the medium in the filter questions.
+There's probably a sleek way to write a function that pulls variable names and matches those with the conditional commands in the code, but that's above my skill level.
+```{r set-nonuse-to-zero}
+working_file <- 
+  working_file %>% 
+  mutate(
+    
+    # music
+    across(
+      c(music_hours, music_minutes),
+      ~ if_else((wave == 1 & filter_music == 0), 0, .x)
+    ),
+    
+    # films
+    across(
+      c(films_hours, films_minutes),
+      ~ if_else((wave == 1 & filter_films == 0), 0, .x)
+    ),
+    
+    # tv
+    across(
+      c(tv_hours, tv_minutes),
+      ~ if_else((wave == 1 & filter_tv == 0), 0, .x)
+    ),
+    
+    # video games
+    across(
+      c(games_hours, games_minutes),
+      ~ if_else((wave == 1 & filter_video_games == 0), 0, .x)
+    ),
+    
+    # ebooks
+    across(
+      c(books_hours, books_minutes),
+      ~ if_else((wave == 1 & filter_ebooks == 0), 0, .x)
+    ),
+    
+    # magazines
+    across(
+      c(magazines_hours, magazines_minutes),
+      ~ if_else((wave == 1 & filter_magazines == 0), 0, .x)
+    ),
+    
+    # music
+    across(
+      c(audiobooks_hours, audiobooks_minutes),
+      ~ if_else((wave == 1 & filter_audiobooks == 0), 0, .x)
+    )
+  )
+```
+
+
+Now, when participants said they didn't use a medium for any wave, in the next wave they're still presented the `estimate` question.
+When they answered anything but that they didn't use the medium, they were asked to provide minutes and hours estimates.
+In those hours and minutes survey questions, they were shown what they said in the previous wave.
+Crucially, they saw their estimate from the previous wave *after they had given their estimate*.
+
+So when I used 0 minutes in the previous week but forget what I said in the previous wave, it's not unrealistic that I select "a lot less" on the `estimate` question.
+In my mind, estimating use in relation to previous time points and giving an absolute estimate of minutes and hours are two separate psychological retrieval processes.
+Therefore, I don't have a problem with someone who used 0 minutes of audio books in a wave saying that they used audio books a lot less in the next wave and report to have used them for half an hour.
+It doesn't make sense from an objective stand point because 30 minutes is more than 0 minutes, but the estimate question is about participants' perceived frequency in relation to the past.
+For that reason, I won't directly change the 30 minutes to 0, but leave them as is.
+
+In other words, I won't set values to `NA` by comparing the absolute minutes and hours estimate to the relative frequency estimate.
+I'll only make changes in clear cases like the one presented above, where someone clearly didn't use a medium.
+I'll do exclusions in the next section when I look at data quality.
+
+For now, let's deal with those few cases that are as clear-cut as the one presented above.
+First some house keeping.
+If participants indicated on one of the `estimate` questions that they didn't use that medium in the previous week (only applicable in waves 2 to 6), they'll receive an `NA` on their time estimates.
+So we'll first set time estimates to 0 if participants say that they didn't use a medium.
+```{r didnt-use-medium}
+working_file <- 
+  working_file %>% 
+  mutate(
+    
+    # music
+    across(
+      c(music_hours, music_minutes),
+      ~ if_else((wave != 1 & music_estimate == 6), 0, .x)
+    ),
+    
+    # films
+    across(
+      c(films_hours, films_minutes),
+      ~ if_else((wave != 1 & films_estimate == 6), 0, .x)
+    ),
+    
+    # tv
+    across(
+      c(tv_hours, tv_minutes),
+      ~ if_else((wave != 1 & tv_estimate == 6), 0, .x)
+    ),
+    
+    # video games
+    across(
+      c(games_hours, games_minutes),
+      ~ if_else((wave != 1 & games_estimate == 6), 0, .x)
+    ),
+    
+    # ebooks
+    across(
+      c(books_hours, books_minutes),
+      ~ if_else((wave != 1 & books_estimate == 6), 0, .x)
+    ),
+    
+    # magazines
+    across(
+      c(magazines_hours, magazines_minutes),
+      ~ if_else((wave != 1 & magazines_estimate == 6), 0, .x)
+    ),
+    
+    # music
+    across(
+      c(audiobooks_hours, audiobooks_minutes),
+      ~ if_else((wave != 1 & audiobooks_estimate == 6), 0, .x)
+    )
+  )
+```
+
+Alright, now let's check, per medium, who only has 6s and 3s on the `estimate` questions (aka didn't use and no change to previous week).
+Those minutes and hours we'll set to 0 as well.
+This applies only to those who didn't use a medium in the first wave.
+If you used a medium in the first wave and said that your time remained the same, you shouldn't get a zero.
+
+Setting instances of time with a medium within a participant but across waves to 0 requires some serious data wrangling (or my coding game isn't strong enough...).
+To be able to assess who *only gave 3 or 6* as an estimate for a medium for waves 2 through 6, we first transform the data to long format.
+In Table X I display how the data look like after transformation.
+```{r media-to-long}
+media_long <- 
+
+  # first turn long by filter variables
+  pivot_longer(
+    working_file %>% 
+      select(
+        id,
+        wave,
+        contains("estimate"),
+        contains("minutes"),
+        contains("hours")
+      ),
+    c(-id, -wave),
+    names_to = c("medium", "time"),
+    values_to = "value",
+    names_sep = "_"
+  ) %>%
+  
+  # now the medium and time are mixed up in the same column, so we spread them 
+  pivot_wider(
+    .,
+    id:medium,
+    names_from = "time",
+    values_from = "value"
+  )
+
+knitr::kable(
+  head(media_long, n= 20)
+)
+```
+
+Next, I need to select only those media which participants didn't say they used at the first wave.
+Below, I select those, add a marker for that id by medium combination, and then add that marker to the long data frame.
+```{r mark-media}
+# select id by medium combinations that didn't give an estimate in the fist wave (aka the only NA entries)
+markers <- 
+  media_long %>% 
+  filter(is.na(estimate)) %>% 
+  select(id, medium) %>% 
+  mutate(selected = TRUE)
+
+# add those markers to the long data frame
+media_long <- 
+  left_join(
+    media_long,
+    markers,
+    by = c("id", "medium")
+  )
+```
+
+Now we know on which rows to operate.
+We then check whether a medium that wasn't used in the first wave only got a 3 or a 6 on the `estimate` in waves 2 to 6 and flag the person by medium combination that indeed doesn't have a change.
+Afterwards, we transform those `no_change` indicators to the wide format.
+Below shows how these data look like: If it's `NA` the person provided an estimate at the first wave.
+If it's `FALSE` the person didn't provide an estimate at wave 1 (so it was 0 minutes and hours), but their estimate increased or decreased over the next waves.
+If it's `TRUE` the person didn't provide an estimate at wave 1 and they kept not using or their use didn't change.
+```{r count-no-changes}
+no_changes <- 
+  media_long %>% 
+  filter(selected == TRUE) %>% # everyone who had an NA for an estimate in the first wave
+  filter(wave > 1) %>% # we don't count the first wave
+  group_by(id, medium) %>% 
+  mutate(no_change = if_else(estimate %in% c(3,6), 0, 1)) %>% # if it's 3 or 6, we assign zero 
+  summarise( # so that the sum is zero
+    no_change = sum(no_change)
+  ) %>%
+  mutate(no_change = if_else(no_change == 0, TRUE, FALSE)) %>% # then anything that isn't zero has at least one 1,2, or 4 in their estimate 
+  ungroup() %>% 
+  
+  # then turn to wide format
+  pivot_wider(
+    .,
+    names_from = "medium",
+    values_from = "no_change"
+  ) %>% 
+  rename_with(
+    .,
+    .cols = -id,
+    ~ paste0(., "_no_change")
+  )
+
+knitr::kable(head(no_changes, n = 10))
+```
+
+Now we can add those markers to the `working_file`.
+```{r add-markers}
+working_file <- 
+  left_join(
+    working_file,
+    no_changes,
+    by = c("id")
+  )
+```
+
+Last, we transform the minutes and hours for each medium in each wave to 0, depending on whether that medium has one of the above markers telling us that the person didn't use the medium at wave 1 and use didn't change in subsequent waves (i.e., "not changed" or "haven't used" on `estimate` for all subsequent waves).
+```{r zero-estimates}
+working_file <- 
+  working_file %>% 
+  mutate(
+    
+    # music
+    across(
+      c(music_hours, music_minutes),
+      ~ if_else((wave != 1 & music_no_change == TRUE), 0, .x, missing = .x) # need to set missing explicitly because the no_change variables contain NA if someone didn't have a missing in the first wave
+    ),
+    
+    # films
+    across(
+      c(films_hours, films_minutes),
+      ~ if_else((wave != 1 & films_no_change == TRUE), 0, .x, missing = .x)
+    ),
+    
+    # tv
+    across(
+      c(tv_hours, tv_minutes),
+      ~ if_else((wave != 1 & tv_no_change == TRUE), 0, .x, missing = .x)
+    ),
+    
+    # video games
+    across(
+      c(games_hours, games_minutes),
+      ~ if_else((wave != 1 & games_no_change == TRUE), 0, .x, missing = .x)
+    ),
+    
+    # ebooks
+    across(
+      c(books_hours, books_minutes),
+      ~ if_else((wave != 1 & books_no_change == TRUE), 0, .x, missing = .x)
+    ),
+    
+    # magazines
+    across(
+      c(magazines_hours, magazines_minutes),
+      ~ if_else((wave != 1 & magazines_no_change == TRUE), 0, .x, missing = .x)
+    ),
+    
+    # music
+    across(
+      c(audiobooks_hours, audiobooks_minutes),
+      ~ if_else((wave != 1 & audiobooks_no_change == TRUE), 0, .x, missing = .x)
+    )
+  ) %>% 
+  
+  # no need anymore for the variables we added
+  select(
+    -ends_with("no_change")
+  )
+```
+
+Let's do a sanity check: all `minutes` and `hours` items should now have entries because they were forced response (or because we set them to zero).
+That's indeed the case, so all looking good.
+```{r check-missings-time}
+working_file %>% 
+  summarise(
+    across(
+      c(contains("minutes"), 
+        contains("hours")),
+      ~ sum(is.na(.x))
+      )
+    ) %>%
+  gather()
+```
+
+After all this wrangling we're finally able to look at how many responses we have per medium per wave.
+Actually, the answer is straightforward now: everyone who finished a wave either provided minutes and hours estimates for all media, or they didn't which means we set them to 0.
+In other words, *the complete responses per wave are also the complete responses per medium.*

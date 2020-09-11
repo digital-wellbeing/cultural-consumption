@@ -53,6 +53,70 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -72,7 +136,15 @@
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="setting-up.html"><a href="setting-up.html"><i class="fa fa-check"></i><b>1</b> Setting-up</a></li>
-<li class="chapter" data-level="2" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>2</b> Data processing</a></li>
+<li class="chapter" data-level="2" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>2</b> Data processing</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-processing.html"><a href="data-processing.html#read-waves-2-6"><i class="fa fa-check"></i><b>2.1</b> Read waves 2-6</a></li>
+<li class="chapter" data-level="2.2" data-path="data-processing.html"><a href="data-processing.html#read-wave-1"><i class="fa fa-check"></i><b>2.2</b> Read wave 1</a></li>
+<li class="chapter" data-level="2.3" data-path="data-processing.html"><a href="data-processing.html#data-cleaning"><i class="fa fa-check"></i><b>2.3</b> Data cleaning</a></li>
+<li class="chapter" data-level="2.4" data-path="data-processing.html"><a href="data-processing.html#response-rates-and-missing-values"><i class="fa fa-check"></i><b>2.4</b> Response rates and missing values</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="data-processing.html"><a href="data-processing.html#participants-per-wave"><i class="fa fa-check"></i><b>2.4.1</b> Participants per wave</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-processing.html"><a href="data-processing.html#responses-per-wave-and-medium"><i class="fa fa-check"></i><b>2.4.2</b> Responses per wave and medium</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html"><i class="fa fa-check"></i><b>3</b> Descriptives and visualizations</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -96,8 +168,1897 @@
             <section class="normal" id="section-">
 <div id="data-processing" class="section level1">
 <h1><span class="header-section-number">2</span> Data processing</h1>
-<p>This is where data processing and cleaning will go.</p>
+<p>In this section I’ll process the raw data so that I can use them for analysis in the next section.
+Currently, I’m allowed to share the raw data, which is why they’re not on the Github repo yet.</p>
+<div id="read-waves-2-6" class="section level2">
+<h2><span class="header-section-number">2.1</span> Read waves 2-6</h2>
+<p>We’ll start with loading the data for waves 2 to 6.
+We start here instead of wave 1 because participant identification isn’t super straightforward.
+A participant doesn’t get a single unique identifier that’s stable across all waves.
+Instead, participants start with an ID in wave 1 (called <code>transaction_idOld</code> in the wave 2 to 6 data) and get a new unique ID for wave 2 and so on.</p>
+<p>I believe originally the researchers wanted to go with a single ID, but changed their mind.
+Look at the data table below (<a href="data-processing.html#tab:example-ids">2.1</a>), where I made up two participants to recreate the data structure.
+We see that the first participant has an transaction ID (<code>transaction_idOld</code>) for the first wave.
+The same participant then has that same old transaction ID for wave two, plus a new transaction ID for wave 2 (<code>transaction_id</code>).</p>
+<p>Here’s where it gets a bit complicated: That transaction ID for wave 2 is repeated on wave 3, but with a different name (<code>transaction_idW2</code>).
+Next to that new variable, is the unique ID for that wave (<code>transaction_idW3</code>).
+After that, each new wave has the ID of the previous wave plus a new ID for the current wave.</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   id = col_double(),
+##   transaction_old = col_double(),
+##   transaction_id = col_double(),
+##   transaction_idW2 = col_double(),
+##   transaction_idW3 = col_double(),
+##   transaction_idW4 = col_double(),
+##   transaction_idW5 = col_double(),
+##   transaction_idW6 = col_double(),
+##   v1 = col_double(),
+##   v2 = col_double(),
+##   week = col_double()
+## )</code></pre>
+<table style="width:100%;">
+<caption><span id="tab:example-ids">Table 2.1: </span>Example of how ID variables look</caption>
+<colgroup>
+<col width="2%" />
+<col width="12%" />
+<col width="11%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">transaction_old</th>
+<th align="right">transaction_id</th>
+<th align="right">transaction_idW2</th>
+<th align="right">transaction_idW3</th>
+<th align="right">transaction_idW4</th>
+<th align="right">transaction_idW5</th>
+<th align="right">transaction_idW6</th>
+<th align="right">v1</th>
+<th align="right">v2</th>
+<th align="right">week</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">978344791</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">978344791</td>
+<td align="right">987910814</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="right">2342</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">987910814</td>
+<td align="right">994717737</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">41</td>
+<td align="right">533</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">994717737</td>
+<td align="right">998317051</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">213</td>
+<td align="right">534</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">998317051</td>
+<td align="right">1005222579</td>
+<td align="right">NA</td>
+<td align="right">4</td>
+<td align="right">4125</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1005222579</td>
+<td align="right">1018946937</td>
+<td align="right">523</td>
+<td align="right">3123</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">978344792</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">978344792</td>
+<td align="right">987910815</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="right">2342</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">987910815</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">41</td>
+<td align="right">533</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">213</td>
+<td align="right">534</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">4</td>
+<td align="right">4125</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">523</td>
+<td align="right">3123</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p>Unfortunately, the <code>id</code> column from the example isn’t included in the raw data, so we’ll have to recreate participant IDs that are constant across waves.
+I solved this problem with a loop, which is definitely not the most elegant way to go about this, but I think it gets the job done.
+First, lets load the data.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-processing.html#cb3-1"></a>waves_<span class="dv">2</span>_to_<span class="dv">6</span> &lt;-<span class="st"> </span></span>
+<span id="cb3-2"><a href="data-processing.html#cb3-2"></a><span class="st">  </span><span class="kw">read_csv</span>(</span>
+<span id="cb3-3"><a href="data-processing.html#cb3-3"></a>    <span class="kw">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;waves_2_to_6.csv&quot;</span>),</span>
+<span id="cb3-4"><a href="data-processing.html#cb3-4"></a>    <span class="dt">guess_max =</span> <span class="fl">2e4</span></span>
+<span id="cb3-5"><a href="data-processing.html#cb3-5"></a>  )</span></code></pre></div>
+<pre><code>## Warning: Duplicated column names deduplicated: &#39;transaction_id&#39; =&gt; &#39;transaction_id_1&#39; [522]</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   uuid = col_character(),
+##   date = col_character(),
+##   markers = col_character(),
+##   PS1a = col_logical(),
+##   PS1b = col_logical(),
+##   PS1c = col_logical(),
+##   noanswerPS1c_r96 = col_logical(),
+##   A2 = col_logical(),
+##   B1r1 = col_logical(),
+##   B1r2 = col_logical(),
+##   B1r3 = col_logical(),
+##   B1r4 = col_logical(),
+##   B1r5 = col_logical(),
+##   B1r6 = col_logical(),
+##   B1r7 = col_logical(),
+##   B1r8 = col_logical(),
+##   B1r9 = col_logical(),
+##   B1r10 = col_logical(),
+##   B1r11 = col_logical(),
+##   B1r12 = col_logical()
+##   # ... with 162 more columns
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p>Next, the logic behind assigning the constant IDs.
+We’ll start at the ID of wave 2, find the ID of wave 3 that’s on the same line as the ID of wave 2 and store the ID for wave 3.
+We repeat this procedure for all waves and in the end assign an ID to those rows that have the IDs we extracted on any of the ID variables.</p>
+<p>The steps, concretely:</p>
+<ol style="list-style-type: decimal">
+<li>We store all IDs (so that’s the IDs of wave 2) in a vector (excluding <code>NA</code>s).</li>
+<li>Initiate an ID counter (i.e., the participant number we assign later).</li>
+<li>We iterate over each wave 2 ID.</li>
+<li>If participants did participate in a wave, we find the wave 3 ID that is on the same row as the wave 2 that we’re currently looking for.</li>
+<li>We now look for the wave 3 ID and store the wave 4 ID that’s on the same line.</li>
+<li>We repeat that until we’re at the last ID and have all IDs for that participant stored in a vector.</li>
+<li>Then a row gets assigned the participant ID (to the existing, but empty <code>id</code> variable) if any of the wave ID variables have a match in the extracted IDs.</li>
+</ol>
+<p>On my machine, the below code takes about 30 seconds.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-processing.html#cb7-1"></a><span class="co"># the unique wave 2 IDs</span></span>
+<span id="cb7-2"><a href="data-processing.html#cb7-2"></a>ids &lt;-<span class="st"> </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-3"><a href="data-processing.html#cb7-3"></a><span class="st">  </span><span class="kw">pull</span>(transaction_id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-4"><a href="data-processing.html#cb7-4"></a><span class="st">  </span>na.omit</span>
+<span id="cb7-5"><a href="data-processing.html#cb7-5"></a></span>
+<span id="cb7-6"><a href="data-processing.html#cb7-6"></a><span class="co"># the participant number we assign later</span></span>
+<span id="cb7-7"><a href="data-processing.html#cb7-7"></a>id_counter &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb7-8"><a href="data-processing.html#cb7-8"></a></span>
+<span id="cb7-9"><a href="data-processing.html#cb7-9"></a><span class="co"># assign the correct variable type to the empty ID variable that&#39;s already in the data where we&#39;ll assign participant numbers at the end of the loop</span></span>
+<span id="cb7-10"><a href="data-processing.html#cb7-10"></a>waves_<span class="dv">2</span>_to_<span class="dv">6</span><span class="op">$</span>id &lt;-<span class="st"> </span><span class="ot">NA_real_</span></span>
+<span id="cb7-11"><a href="data-processing.html#cb7-11"></a></span>
+<span id="cb7-12"><a href="data-processing.html#cb7-12"></a><span class="cf">for</span> (an_id <span class="cf">in</span> ids) {</span>
+<span id="cb7-13"><a href="data-processing.html#cb7-13"></a>  </span>
+<span id="cb7-14"><a href="data-processing.html#cb7-14"></a>  <span class="co"># transaction ids that belong to that one participant</span></span>
+<span id="cb7-15"><a href="data-processing.html#cb7-15"></a>  id_to_match &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb7-16"><a href="data-processing.html#cb7-16"></a>  </span>
+<span id="cb7-17"><a href="data-processing.html#cb7-17"></a>  <span class="co"># add the initial id</span></span>
+<span id="cb7-18"><a href="data-processing.html#cb7-18"></a>  id_to_match &lt;-<span class="st"> </span><span class="kw">c</span>(id_to_match, an_id)</span>
+<span id="cb7-19"><a href="data-processing.html#cb7-19"></a>  </span>
+<span id="cb7-20"><a href="data-processing.html#cb7-20"></a>  <span class="co"># assign that id as temporary ID for which we should match (id_to_match only has one entry so far)</span></span>
+<span id="cb7-21"><a href="data-processing.html#cb7-21"></a>  temp_id &lt;-<span class="st"> </span>id_to_match</span>
+<span id="cb7-22"><a href="data-processing.html#cb7-22"></a>  </span>
+<span id="cb7-23"><a href="data-processing.html#cb7-23"></a>  <span class="co"># at this point, participants might have not participated in the next wave, so they might have an empty cell in</span></span>
+<span id="cb7-24"><a href="data-processing.html#cb7-24"></a>  <span class="co"># transaction_id2. so we&#39;ll embed everything that follows in their separate if statement</span></span>
+<span id="cb7-25"><a href="data-processing.html#cb7-25"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_empty</span>(temp_id)) {</span>
+<span id="cb7-26"><a href="data-processing.html#cb7-26"></a>    </span>
+<span id="cb7-27"><a href="data-processing.html#cb7-27"></a>    <span class="co"># find the transcation_id3 that&#39;s on the same line as transaction_id2 and store it</span></span>
+<span id="cb7-28"><a href="data-processing.html#cb7-28"></a>    temp_id &lt;-<span class="st"> </span></span>
+<span id="cb7-29"><a href="data-processing.html#cb7-29"></a><span class="st">      </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-30"><a href="data-processing.html#cb7-30"></a><span class="st">      </span><span class="kw">filter</span>(transaction_idW2 <span class="op">==</span><span class="st"> </span>an_id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-31"><a href="data-processing.html#cb7-31"></a><span class="st">      </span><span class="kw">pull</span>(transaction_idW3)</span>
+<span id="cb7-32"><a href="data-processing.html#cb7-32"></a>    </span>
+<span id="cb7-33"><a href="data-processing.html#cb7-33"></a>    id_to_match &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">c</span>(id_to_match, temp_id)) <span class="co"># so that NA doesn&#39;t become one of the IDs</span></span>
+<span id="cb7-34"><a href="data-processing.html#cb7-34"></a>  }</span>
+<span id="cb7-35"><a href="data-processing.html#cb7-35"></a>  </span>
+<span id="cb7-36"><a href="data-processing.html#cb7-36"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_empty</span>(temp_id)){</span>
+<span id="cb7-37"><a href="data-processing.html#cb7-37"></a>    <span class="co"># then the same for transaction_id4, but this time we compare to the temporary id we extracted above</span></span>
+<span id="cb7-38"><a href="data-processing.html#cb7-38"></a>    <span class="co"># also, we only select those rows where the next ID isn&#39;t NA (because there&#39;re two matches for the temp_id)</span></span>
+<span id="cb7-39"><a href="data-processing.html#cb7-39"></a>    temp_id &lt;-<span class="st"> </span></span>
+<span id="cb7-40"><a href="data-processing.html#cb7-40"></a><span class="st">      </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-41"><a href="data-processing.html#cb7-41"></a><span class="st">      </span><span class="kw">filter</span>((transaction_idW3 <span class="op">==</span><span class="st"> </span>temp_id) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(transaction_idW4)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-42"><a href="data-processing.html#cb7-42"></a><span class="st">      </span><span class="kw">pull</span>(transaction_idW4)</span>
+<span id="cb7-43"><a href="data-processing.html#cb7-43"></a>    </span>
+<span id="cb7-44"><a href="data-processing.html#cb7-44"></a>    id_to_match &lt;-<span class="st"> </span><span class="kw">c</span>(id_to_match, temp_id)</span>
+<span id="cb7-45"><a href="data-processing.html#cb7-45"></a>  }</span>
+<span id="cb7-46"><a href="data-processing.html#cb7-46"></a>  </span>
+<span id="cb7-47"><a href="data-processing.html#cb7-47"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_empty</span>(temp_id)){</span>
+<span id="cb7-48"><a href="data-processing.html#cb7-48"></a>    <span class="co"># then the same as above for transaction_id5</span></span>
+<span id="cb7-49"><a href="data-processing.html#cb7-49"></a>    temp_id &lt;-<span class="st"> </span></span>
+<span id="cb7-50"><a href="data-processing.html#cb7-50"></a><span class="st">      </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-51"><a href="data-processing.html#cb7-51"></a><span class="st">      </span><span class="kw">filter</span>((transaction_idW4 <span class="op">==</span><span class="st"> </span>temp_id) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(transaction_idW5)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-52"><a href="data-processing.html#cb7-52"></a><span class="st">      </span><span class="kw">pull</span>(transaction_idW5)</span>
+<span id="cb7-53"><a href="data-processing.html#cb7-53"></a>    </span>
+<span id="cb7-54"><a href="data-processing.html#cb7-54"></a>    id_to_match &lt;-<span class="st"> </span><span class="kw">c</span>(id_to_match, temp_id)</span>
+<span id="cb7-55"><a href="data-processing.html#cb7-55"></a>  }</span>
+<span id="cb7-56"><a href="data-processing.html#cb7-56"></a>  </span>
+<span id="cb7-57"><a href="data-processing.html#cb7-57"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is_empty</span>(temp_id)){</span>
+<span id="cb7-58"><a href="data-processing.html#cb7-58"></a>    <span class="co"># and last for transaction_id6</span></span>
+<span id="cb7-59"><a href="data-processing.html#cb7-59"></a>    temp_id &lt;-<span class="st"> </span></span>
+<span id="cb7-60"><a href="data-processing.html#cb7-60"></a><span class="st">      </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-61"><a href="data-processing.html#cb7-61"></a><span class="st">      </span><span class="kw">filter</span>((transaction_idW5 <span class="op">==</span><span class="st"> </span>temp_id) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(transaction_idW6)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-62"><a href="data-processing.html#cb7-62"></a><span class="st">      </span><span class="kw">pull</span>(transaction_idW6)</span>
+<span id="cb7-63"><a href="data-processing.html#cb7-63"></a>    </span>
+<span id="cb7-64"><a href="data-processing.html#cb7-64"></a>    id_to_match &lt;-<span class="st"> </span><span class="kw">c</span>(id_to_match, temp_id)</span>
+<span id="cb7-65"><a href="data-processing.html#cb7-65"></a>  }</span>
+<span id="cb7-66"><a href="data-processing.html#cb7-66"></a>  </span>
+<span id="cb7-67"><a href="data-processing.html#cb7-67"></a>  <span class="co"># then we assign a participant number, such that a participant gets the number for each row where any of their transaction_ids are part of the temporary ids</span></span>
+<span id="cb7-68"><a href="data-processing.html#cb7-68"></a>  waves_<span class="dv">2</span>_to_<span class="dv">6</span> &lt;-<span class="st"> </span></span>
+<span id="cb7-69"><a href="data-processing.html#cb7-69"></a><span class="st">    </span>waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-70"><a href="data-processing.html#cb7-70"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb7-71"><a href="data-processing.html#cb7-71"></a>      <span class="dt">id =</span> <span class="kw">case_when</span>(</span>
+<span id="cb7-72"><a href="data-processing.html#cb7-72"></a>        transaction_id <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-73"><a href="data-processing.html#cb7-73"></a>        transaction_idW2 <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-74"><a href="data-processing.html#cb7-74"></a>        transaction_idW3 <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-75"><a href="data-processing.html#cb7-75"></a>        transaction_idW4 <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-76"><a href="data-processing.html#cb7-76"></a>        transaction_idW5 <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-77"><a href="data-processing.html#cb7-77"></a>        transaction_idW6 <span class="op">%in%</span><span class="st"> </span>id_to_match <span class="op">~</span><span class="st"> </span>id_counter,</span>
+<span id="cb7-78"><a href="data-processing.html#cb7-78"></a>        <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>id</span>
+<span id="cb7-79"><a href="data-processing.html#cb7-79"></a>      )</span>
+<span id="cb7-80"><a href="data-processing.html#cb7-80"></a>    )</span>
+<span id="cb7-81"><a href="data-processing.html#cb7-81"></a></span>
+<span id="cb7-82"><a href="data-processing.html#cb7-82"></a>  <span class="co"># increase the participant number</span></span>
+<span id="cb7-83"><a href="data-processing.html#cb7-83"></a>  id_counter &lt;-<span class="st"> </span>id_counter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb7-84"><a href="data-processing.html#cb7-84"></a>}</span></code></pre></div>
+<p>Before we we assign correct variable types, name factor levels etc. we’ll load wave 1.
+This way, we can merge the two files first before doing all of the data cleaning, variable selection, and variable renaming.</p>
+</div>
+<div id="read-wave-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> Read wave 1</h2>
+<p>Let’s load the file for wave 1.
+<code>transcaction_id</code> is the unique identifier for each participant.
+However, that variables is called <code>transaction_idOld</code> in waves 2 to 6, which is why we name it the same here (see above).
+Also, <code>dWeekMerged</code> is the wave identifier that’s used in waves 2 to 6, so we’ll include that manually here.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-processing.html#cb8-1"></a>wave1 &lt;-<span class="st"> </span></span>
+<span id="cb8-2"><a href="data-processing.html#cb8-2"></a><span class="st">  </span><span class="kw">read_csv</span>(</span>
+<span id="cb8-3"><a href="data-processing.html#cb8-3"></a>    <span class="kw">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;wave1.csv&quot;</span>),</span>
+<span id="cb8-4"><a href="data-processing.html#cb8-4"></a>    <span class="dt">guess_max =</span> <span class="fl">2e4</span></span>
+<span id="cb8-5"><a href="data-processing.html#cb8-5"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-6"><a href="data-processing.html#cb8-6"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">transaction_idOld =</span> transaction_id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-7"><a href="data-processing.html#cb8-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dWeekMerged =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   uuid = col_character(),
+##   C1x7ar98oe = col_character(),
+##   C1x9ar98oe = col_character(),
+##   C2x7ar10oe = col_character(),
+##   C2x9ar12oe = col_character(),
+##   C3x7ar10oe = col_character(),
+##   C5x7ar12oe = col_character(),
+##   C7ax7ar10oe = col_character(),
+##   C7bx7ar9oe = col_character(),
+##   C7cx7ar11oe = col_character(),
+##   C3x9ar12oe = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p>There are many variables we don’t care about, but before we make the variable selection, I’ll first merge the two files.
+Here’s another complication: If we look at the surveys and how variables are named there, it looks like there are different labels for the same variables in wave 1 and waves 2 to 6.
+For example, in wave 1, variables providing the estimated time with a medium had the appendix <code>ai</code> and those asking about self-estimated increases or decreases in frequency had the appendix <code>aii</code>.
+For waves 2 to 6, the surveys say that this is reversed, such that estimated time with a medium has the appendix <code>aii</code> and self-estimated increase or decrease has the appendix <code>ai</code>.</p>
+<p>The same goes for variable names: For example, the audiobooks section in wave 1 begins with <code>C7c</code>, but with <code>C6c</code> in waves 2 to 6.
+In the actual data, however, variable names are constant (see the codebook).
+For example, audiobooks are <code>C7c</code> in both data sets despite what the survey files say.
+The variable labels are the same across all waves (I manually checked), which makes merging easier.</p>
+<p>My merging strategy is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>I assign the <code>id</code> we created above to the <code>wave1</code> data file by merging by <code>transaction_idOld</code> which is available in both data sets.
+However, that means that those who didn’t participate in wave 2 won’t have an <code>id</code>.
+So we manually fill those empty cells up - although we’ll probably exclude those who only participant in wave 1 later anyways.</li>
+<li>I then add the rows of <code>waves_2_to_6</code> to <code>waves1</code>. I use the <code>bind_rows</code> command, which maintains all variables for which there’s no match and sets them to <code>NA</code> - exactly what we want, because full demographics are only in wave 1 and newer questions only in later waves.</li>
+</ol>
+<p>Note that from now on I leave the raw wave data untouched and make all changes in a working file.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-processing.html#cb11-1"></a><span class="co"># add the id variable to wave1 by merging by transaction_idOld that&#39;s in both data sets</span></span>
+<span id="cb11-2"><a href="data-processing.html#cb11-2"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb11-3"><a href="data-processing.html#cb11-3"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb11-4"><a href="data-processing.html#cb11-4"></a>    wave1,</span>
+<span id="cb11-5"><a href="data-processing.html#cb11-5"></a>    waves_<span class="dv">2</span>_to_<span class="dv">6</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(transaction_idOld, id),</span>
+<span id="cb11-6"><a href="data-processing.html#cb11-6"></a>    <span class="dt">by =</span> <span class="st">&quot;transaction_idOld&quot;</span></span>
+<span id="cb11-7"><a href="data-processing.html#cb11-7"></a>  )</span>
+<span id="cb11-8"><a href="data-processing.html#cb11-8"></a></span>
+<span id="cb11-9"><a href="data-processing.html#cb11-9"></a><span class="co"># assign an id to those in wave 1 who have an NA in the id column because they didn&#39;t participate in later waves</span></span>
+<span id="cb11-10"><a href="data-processing.html#cb11-10"></a><span class="co"># we can do this easily with coalesce, for which we create a vector that continues from the current max ID until</span></span>
+<span id="cb11-11"><a href="data-processing.html#cb11-11"></a><span class="co"># each participant with missing ID has one</span></span>
+<span id="cb11-12"><a href="data-processing.html#cb11-12"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb11-13"><a href="data-processing.html#cb11-13"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-14"><a href="data-processing.html#cb11-14"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb11-15"><a href="data-processing.html#cb11-15"></a>    <span class="dt">id =</span> <span class="kw">coalesce</span>(</span>
+<span id="cb11-16"><a href="data-processing.html#cb11-16"></a>      id,</span>
+<span id="cb11-17"><a href="data-processing.html#cb11-17"></a>      <span class="kw">max</span>(working_file<span class="op">$</span>id, <span class="dt">na.rm =</span> T)<span class="op">+</span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(working_file)</span>
+<span id="cb11-18"><a href="data-processing.html#cb11-18"></a>    )</span>
+<span id="cb11-19"><a href="data-processing.html#cb11-19"></a>  )</span>
+<span id="cb11-20"><a href="data-processing.html#cb11-20"></a></span>
+<span id="cb11-21"><a href="data-processing.html#cb11-21"></a><span class="co"># then add the rows of waves 2 to 6 to wave 1</span></span>
+<span id="cb11-22"><a href="data-processing.html#cb11-22"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb11-23"><a href="data-processing.html#cb11-23"></a><span class="st">  </span><span class="kw">bind_rows</span>(</span>
+<span id="cb11-24"><a href="data-processing.html#cb11-24"></a>    working_file,</span>
+<span id="cb11-25"><a href="data-processing.html#cb11-25"></a>    waves_<span class="dv">2</span>_to_<span class="dv">6</span></span>
+<span id="cb11-26"><a href="data-processing.html#cb11-26"></a>  )</span></code></pre></div>
+</div>
+<div id="data-cleaning" class="section level2">
+<h2><span class="header-section-number">2.3</span> Data cleaning</h2>
+<p>Now that each participant has a constant identifier and all waves are merged, we can select those variables we actually need.
+For our purposes, we’ll retain:</p>
+<ul>
+<li>demographic information</li>
+<li>variables indicating what media people used in the past week</li>
+<li>time estimates of those uses</li>
+<li>self-estimated importance of the medium</li>
+<li>self-estimated frequency</li>
+<li>the estimated effects on well-being in wave 6</li>
+</ul>
+<p>Note that there are quite a lot of filtering variables.
+We can’t collapse these to one variable because these questions were multiple choice.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-processing.html#cb12-1"></a>working_file &lt;-</span>
+<span id="cb12-2"><a href="data-processing.html#cb12-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-3"><a href="data-processing.html#cb12-3"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb12-4"><a href="data-processing.html#cb12-4"></a>    <span class="co"># meta information</span></span>
+<span id="cb12-5"><a href="data-processing.html#cb12-5"></a>    id,</span>
+<span id="cb12-6"><a href="data-processing.html#cb12-6"></a>    <span class="dt">wave =</span> dWeekMerged,</span>
+<span id="cb12-7"><a href="data-processing.html#cb12-7"></a>    </span>
+<span id="cb12-8"><a href="data-processing.html#cb12-8"></a>    <span class="co"># demographics</span></span>
+<span id="cb12-9"><a href="data-processing.html#cb12-9"></a>    <span class="dt">occupation_main_earner =</span> PS1a,</span>
+<span id="cb12-10"><a href="data-processing.html#cb12-10"></a>    <span class="dt">main_earner =</span> PS1b,</span>
+<span id="cb12-11"><a href="data-processing.html#cb12-11"></a>    <span class="dt">income_main_earner =</span> PS1c,</span>
+<span id="cb12-12"><a href="data-processing.html#cb12-12"></a>    <span class="dt">income_own =</span> A7,</span>
+<span id="cb12-13"><a href="data-processing.html#cb12-13"></a>    <span class="dt">ethnicity =</span> PS2,</span>
+<span id="cb12-14"><a href="data-processing.html#cb12-14"></a>    <span class="dt">internet_use =</span> A2,</span>
+<span id="cb12-15"><a href="data-processing.html#cb12-15"></a>    <span class="dt">gender =</span> A4,</span>
+<span id="cb12-16"><a href="data-processing.html#cb12-16"></a>    <span class="dt">age =</span> A5,</span>
+<span id="cb12-17"><a href="data-processing.html#cb12-17"></a>    <span class="dt">employment =</span> A6x1,</span>
+<span id="cb12-18"><a href="data-processing.html#cb12-18"></a>    <span class="dt">living_on_my_own =</span> A6x2r1,</span>
+<span id="cb12-19"><a href="data-processing.html#cb12-19"></a>    <span class="dt">living_with_children =</span> A6x2r2,</span>
+<span id="cb12-20"><a href="data-processing.html#cb12-20"></a>    <span class="dt">living_with_partner =</span> A6x2r3,</span>
+<span id="cb12-21"><a href="data-processing.html#cb12-21"></a>    <span class="dt">living_with_partner_children =</span> A6x2r4,</span>
+<span id="cb12-22"><a href="data-processing.html#cb12-22"></a>    <span class="dt">living_with_family =</span> A6x2r5,</span>
+<span id="cb12-23"><a href="data-processing.html#cb12-23"></a>    <span class="dt">living_with_parents =</span> A6x2r6,</span>
+<span id="cb12-24"><a href="data-processing.html#cb12-24"></a>    <span class="dt">living_with_friends =</span> A6x2r7,,</span>
+<span id="cb12-25"><a href="data-processing.html#cb12-25"></a>    <span class="dt">region =</span> A8,</span>
+<span id="cb12-26"><a href="data-processing.html#cb12-26"></a>    <span class="dt">covid_work_home_often =</span> A6x4r1,</span>
+<span id="cb12-27"><a href="data-processing.html#cb12-27"></a>    <span class="dt">covid_work_home_always =</span> A6x4r2,</span>
+<span id="cb12-28"><a href="data-processing.html#cb12-28"></a>    <span class="dt">covid_work_outside =</span> A6x4r3,</span>
+<span id="cb12-29"><a href="data-processing.html#cb12-29"></a>    <span class="dt">covid_work_stopped =</span> A6x4r4,</span>
+<span id="cb12-30"><a href="data-processing.html#cb12-30"></a>    <span class="dt">covid_home_schooling =</span> A6x4r5,</span>
+<span id="cb12-31"><a href="data-processing.html#cb12-31"></a>    <span class="dt">covid_self_isolating =</span> A6x4r6,</span>
+<span id="cb12-32"><a href="data-processing.html#cb12-32"></a>    <span class="dt">covid_none =</span> A6x4r99,</span>
+<span id="cb12-33"><a href="data-processing.html#cb12-33"></a>    </span>
+<span id="cb12-34"><a href="data-processing.html#cb12-34"></a>    <span class="co"># filter questions: downloaded</span></span>
+<span id="cb12-35"><a href="data-processing.html#cb12-35"></a>    <span class="dt">downloaded_music =</span> B1r1,</span>
+<span id="cb12-36"><a href="data-processing.html#cb12-36"></a>    <span class="dt">downloaded_music_videos =</span> B1r2,</span>
+<span id="cb12-37"><a href="data-processing.html#cb12-37"></a>    <span class="dt">downloaded_video_games =</span> B1r3,</span>
+<span id="cb12-38"><a href="data-processing.html#cb12-38"></a>    <span class="dt">downloaded_software =</span> B1r4,</span>
+<span id="cb12-39"><a href="data-processing.html#cb12-39"></a>    <span class="dt">downloaded_films =</span> B1r5,</span>
+<span id="cb12-40"><a href="data-processing.html#cb12-40"></a>    <span class="dt">downloaded_tv =</span> B1r6,</span>
+<span id="cb12-41"><a href="data-processing.html#cb12-41"></a>    <span class="dt">downloaded_sports =</span> B1r7,</span>
+<span id="cb12-42"><a href="data-processing.html#cb12-42"></a>    <span class="dt">downloaded_video_clips =</span> B1r8,</span>
+<span id="cb12-43"><a href="data-processing.html#cb12-43"></a>    <span class="dt">downloaded_ebooks =</span> B1r9,</span>
+<span id="cb12-44"><a href="data-processing.html#cb12-44"></a>    <span class="dt">downloaded_magazines =</span> B1r10,</span>
+<span id="cb12-45"><a href="data-processing.html#cb12-45"></a>    <span class="dt">downloaded_audiobooks =</span> B1r11,</span>
+<span id="cb12-46"><a href="data-processing.html#cb12-46"></a>    <span class="dt">downloaded_images =</span> B1r12,</span>
+<span id="cb12-47"><a href="data-processing.html#cb12-47"></a>    <span class="dt">downloaded_none =</span> B1r13,</span>
+<span id="cb12-48"><a href="data-processing.html#cb12-48"></a>    </span>
+<span id="cb12-49"><a href="data-processing.html#cb12-49"></a>    <span class="co"># filter questions: streamed</span></span>
+<span id="cb12-50"><a href="data-processing.html#cb12-50"></a>    <span class="dt">streamed_music =</span> B2r1,</span>
+<span id="cb12-51"><a href="data-processing.html#cb12-51"></a>    <span class="dt">streamed_music_videos =</span> B2r2,</span>
+<span id="cb12-52"><a href="data-processing.html#cb12-52"></a>    <span class="dt">streamed_video_games =</span> B2r3,</span>
+<span id="cb12-53"><a href="data-processing.html#cb12-53"></a>    <span class="dt">streamed_software =</span> B2r4,</span>
+<span id="cb12-54"><a href="data-processing.html#cb12-54"></a>    <span class="dt">streamed_films =</span> B2r5,</span>
+<span id="cb12-55"><a href="data-processing.html#cb12-55"></a>    <span class="dt">streamed_tv =</span> B2r6,</span>
+<span id="cb12-56"><a href="data-processing.html#cb12-56"></a>    <span class="dt">streamed_sports =</span> B2r7,</span>
+<span id="cb12-57"><a href="data-processing.html#cb12-57"></a>    <span class="dt">streamed_video_clips =</span> B2r8,</span>
+<span id="cb12-58"><a href="data-processing.html#cb12-58"></a>    <span class="dt">streamed_ebooks =</span> B2r9,</span>
+<span id="cb12-59"><a href="data-processing.html#cb12-59"></a>    <span class="dt">streamed_magazines =</span> B2r10,</span>
+<span id="cb12-60"><a href="data-processing.html#cb12-60"></a>    <span class="dt">streamed_audiobooks =</span> B2r11,</span>
+<span id="cb12-61"><a href="data-processing.html#cb12-61"></a>    <span class="dt">streamed_images =</span> B2r12,</span>
+<span id="cb12-62"><a href="data-processing.html#cb12-62"></a>    <span class="dt">streamed_none =</span> B2r13,</span>
+<span id="cb12-63"><a href="data-processing.html#cb12-63"></a>    </span>
+<span id="cb12-64"><a href="data-processing.html#cb12-64"></a>    <span class="co"># filter questions: shared</span></span>
+<span id="cb12-65"><a href="data-processing.html#cb12-65"></a>    <span class="dt">shared_music =</span> B3r1,</span>
+<span id="cb12-66"><a href="data-processing.html#cb12-66"></a>    <span class="dt">shared_music_videos =</span> B3r2,</span>
+<span id="cb12-67"><a href="data-processing.html#cb12-67"></a>    <span class="dt">shared_video_games =</span> B3r3,</span>
+<span id="cb12-68"><a href="data-processing.html#cb12-68"></a>    <span class="dt">shared_software =</span> B3r4,</span>
+<span id="cb12-69"><a href="data-processing.html#cb12-69"></a>    <span class="dt">shared_films =</span> B3r5,</span>
+<span id="cb12-70"><a href="data-processing.html#cb12-70"></a>    <span class="dt">shared_tv =</span> B3r6,</span>
+<span id="cb12-71"><a href="data-processing.html#cb12-71"></a>    <span class="dt">shared_sports =</span> B3r7,</span>
+<span id="cb12-72"><a href="data-processing.html#cb12-72"></a>    <span class="dt">shared_video_clips =</span> B3r8,</span>
+<span id="cb12-73"><a href="data-processing.html#cb12-73"></a>    <span class="dt">shared_ebooks =</span> B3r9,</span>
+<span id="cb12-74"><a href="data-processing.html#cb12-74"></a>    <span class="dt">shared_magazines =</span> B3r10,</span>
+<span id="cb12-75"><a href="data-processing.html#cb12-75"></a>    <span class="dt">shared_audiobooks =</span> B3r11,</span>
+<span id="cb12-76"><a href="data-processing.html#cb12-76"></a>    <span class="dt">shared_images =</span> B3r12,</span>
+<span id="cb12-77"><a href="data-processing.html#cb12-77"></a>    <span class="dt">shared_none =</span> B3r13,</span>
+<span id="cb12-78"><a href="data-processing.html#cb12-78"></a>    </span>
+<span id="cb12-79"><a href="data-processing.html#cb12-79"></a>    <span class="co"># filter questions: bought</span></span>
+<span id="cb12-80"><a href="data-processing.html#cb12-80"></a>    <span class="dt">bought_music =</span> B4r1,</span>
+<span id="cb12-81"><a href="data-processing.html#cb12-81"></a>    <span class="dt">bought_video_games =</span> B4r2,</span>
+<span id="cb12-82"><a href="data-processing.html#cb12-82"></a>    <span class="dt">bought_software =</span> B4r3,</span>
+<span id="cb12-83"><a href="data-processing.html#cb12-83"></a>    <span class="dt">bought_films =</span> B4r4,</span>
+<span id="cb12-84"><a href="data-processing.html#cb12-84"></a>    <span class="dt">bought_tv =</span> B4r5,</span>
+<span id="cb12-85"><a href="data-processing.html#cb12-85"></a>    <span class="dt">bought_books =</span> B4r6,</span>
+<span id="cb12-86"><a href="data-processing.html#cb12-86"></a>    <span class="dt">bought_magazines =</span> B4r7,</span>
+<span id="cb12-87"><a href="data-processing.html#cb12-87"></a>    <span class="dt">bought_audiobooks =</span> B4r8,</span>
+<span id="cb12-88"><a href="data-processing.html#cb12-88"></a>    <span class="dt">bought_none =</span> B4r9,</span>
+<span id="cb12-89"><a href="data-processing.html#cb12-89"></a>    </span>
+<span id="cb12-90"><a href="data-processing.html#cb12-90"></a>    <span class="co"># music</span></span>
+<span id="cb12-91"><a href="data-processing.html#cb12-91"></a>    <span class="dt">music_identity_ =</span> C1x1r1<span class="op">:</span>C1x1r7,</span>
+<span id="cb12-92"><a href="data-processing.html#cb12-92"></a>    <span class="dt">music_hours =</span> C1x1aiHoursc1,</span>
+<span id="cb12-93"><a href="data-processing.html#cb12-93"></a>    <span class="dt">music_minutes =</span> C1x1aiMinutesc2,</span>
+<span id="cb12-94"><a href="data-processing.html#cb12-94"></a>    <span class="dt">music_estimate =</span> C1x1aii,</span>
+<span id="cb12-95"><a href="data-processing.html#cb12-95"></a>    </span>
+<span id="cb12-96"><a href="data-processing.html#cb12-96"></a>    <span class="co"># films</span></span>
+<span id="cb12-97"><a href="data-processing.html#cb12-97"></a>    <span class="dt">films_identity_ =</span> C2x1r1<span class="op">:</span>C2x1r7,</span>
+<span id="cb12-98"><a href="data-processing.html#cb12-98"></a>    <span class="dt">films_hours =</span> C2x1aiHoursc1,</span>
+<span id="cb12-99"><a href="data-processing.html#cb12-99"></a>    <span class="dt">films_minutes =</span> C2x1aiMinutesc2,</span>
+<span id="cb12-100"><a href="data-processing.html#cb12-100"></a>    <span class="dt">films_estimate =</span> C2x1aii,</span>
+<span id="cb12-101"><a href="data-processing.html#cb12-101"></a>    </span>
+<span id="cb12-102"><a href="data-processing.html#cb12-102"></a>    <span class="co"># tv</span></span>
+<span id="cb12-103"><a href="data-processing.html#cb12-103"></a>    <span class="dt">tv_identity_ =</span> C3x1r1<span class="op">:</span>C3x1r7,</span>
+<span id="cb12-104"><a href="data-processing.html#cb12-104"></a>    <span class="dt">tv_hours =</span> C3x1aiHoursc1,</span>
+<span id="cb12-105"><a href="data-processing.html#cb12-105"></a>    <span class="dt">tv_minutes =</span> C3x1aiMinutesc2,</span>
+<span id="cb12-106"><a href="data-processing.html#cb12-106"></a>    <span class="dt">tv_estimate =</span> C3x1aii,</span>
+<span id="cb12-107"><a href="data-processing.html#cb12-107"></a>    </span>
+<span id="cb12-108"><a href="data-processing.html#cb12-108"></a>    <span class="co"># video games</span></span>
+<span id="cb12-109"><a href="data-processing.html#cb12-109"></a>    <span class="dt">games_identity_ =</span> C5x1r1<span class="op">:</span>C5x1r7,</span>
+<span id="cb12-110"><a href="data-processing.html#cb12-110"></a>    <span class="dt">games_hours =</span> C5x1aiHoursc1,</span>
+<span id="cb12-111"><a href="data-processing.html#cb12-111"></a>    <span class="dt">games_minutes =</span> C5x1aiMinutesc2,</span>
+<span id="cb12-112"><a href="data-processing.html#cb12-112"></a>    <span class="dt">games_estimate =</span> C5x1aii,</span>
+<span id="cb12-113"><a href="data-processing.html#cb12-113"></a>    </span>
+<span id="cb12-114"><a href="data-processing.html#cb12-114"></a>    <span class="co"># e-publishing</span></span>
+<span id="cb12-115"><a href="data-processing.html#cb12-115"></a>    <span class="dt">e_publishing_identity_ =</span> C7x1r1<span class="op">:</span>C7x1r7,</span>
+<span id="cb12-116"><a href="data-processing.html#cb12-116"></a>    </span>
+<span id="cb12-117"><a href="data-processing.html#cb12-117"></a>    <span class="co"># (e-)books</span></span>
+<span id="cb12-118"><a href="data-processing.html#cb12-118"></a>    <span class="dt">books_hours =</span> C7ax1aiHoursc1,</span>
+<span id="cb12-119"><a href="data-processing.html#cb12-119"></a>    <span class="dt">books_minutes =</span> C7ax1aiMinutesc2,</span>
+<span id="cb12-120"><a href="data-processing.html#cb12-120"></a>    <span class="dt">books_estimate =</span> C7ax1aii,</span>
+<span id="cb12-121"><a href="data-processing.html#cb12-121"></a>    </span>
+<span id="cb12-122"><a href="data-processing.html#cb12-122"></a>    <span class="co"># magazines</span></span>
+<span id="cb12-123"><a href="data-processing.html#cb12-123"></a>    <span class="dt">magazines_hours =</span> C7bx1aiHoursc1,</span>
+<span id="cb12-124"><a href="data-processing.html#cb12-124"></a>    <span class="dt">magazines_minutes =</span> C7bx1aiMinutesc2,</span>
+<span id="cb12-125"><a href="data-processing.html#cb12-125"></a>    <span class="dt">magazines_estimate =</span> C7bx1aii,</span>
+<span id="cb12-126"><a href="data-processing.html#cb12-126"></a>    </span>
+<span id="cb12-127"><a href="data-processing.html#cb12-127"></a>    <span class="co"># audiobooks</span></span>
+<span id="cb12-128"><a href="data-processing.html#cb12-128"></a>    <span class="dt">audiobooks_hours =</span> C7cx1aiHoursc1,</span>
+<span id="cb12-129"><a href="data-processing.html#cb12-129"></a>    <span class="dt">audiobooks_minutes =</span> C7cx1aiMinutesc2,</span>
+<span id="cb12-130"><a href="data-processing.html#cb12-130"></a>    <span class="dt">audiobooks_estimate =</span> C7cx1aii,</span>
+<span id="cb12-131"><a href="data-processing.html#cb12-131"></a>    </span>
+<span id="cb12-132"><a href="data-processing.html#cb12-132"></a>    <span class="co"># well-being</span></span>
+<span id="cb12-133"><a href="data-processing.html#cb12-133"></a>    <span class="dt">life_satisfaction_ =</span> QD2r1<span class="op">:</span>QD2r2,</span>
+<span id="cb12-134"><a href="data-processing.html#cb12-134"></a>    <span class="dt">well_being_ =</span> QD2r3<span class="op">:</span>QD2r4</span>
+<span id="cb12-135"><a href="data-processing.html#cb12-135"></a>  )</span></code></pre></div>
+<p>Alright, now to the tedious part: transforming all variables to the correct type and assigning informative factor level labels.
+Note that <code>id</code> now is numeric which can be misleading, which is why I add <code>pp_</code> (for participant) before the ID number.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-processing.html#cb13-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb13-2"><a href="data-processing.html#cb13-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-3"><a href="data-processing.html#cb13-3"></a><span class="st">  </span></span>
+<span id="cb13-4"><a href="data-processing.html#cb13-4"></a><span class="st">  </span><span class="co"># turn non-numeric variables into factors</span></span>
+<span id="cb13-5"><a href="data-processing.html#cb13-5"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb13-6"><a href="data-processing.html#cb13-6"></a>    <span class="kw">across</span>(</span>
+<span id="cb13-7"><a href="data-processing.html#cb13-7"></a>      <span class="kw">c</span>(</span>
+<span id="cb13-8"><a href="data-processing.html#cb13-8"></a>        id,</span>
+<span id="cb13-9"><a href="data-processing.html#cb13-9"></a>        occupation_main_earner<span class="op">:</span>gender,</span>
+<span id="cb13-10"><a href="data-processing.html#cb13-10"></a>        employment<span class="op">:</span>covid_none</span>
+<span id="cb13-11"><a href="data-processing.html#cb13-11"></a>      ),</span>
+<span id="cb13-12"><a href="data-processing.html#cb13-12"></a>      as.factor</span>
+<span id="cb13-13"><a href="data-processing.html#cb13-13"></a>    )</span>
+<span id="cb13-14"><a href="data-processing.html#cb13-14"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-15"><a href="data-processing.html#cb13-15"></a><span class="st">  </span></span>
+<span id="cb13-16"><a href="data-processing.html#cb13-16"></a><span class="st">  </span><span class="co"># purely cosmetic: arrange by id</span></span>
+<span id="cb13-17"><a href="data-processing.html#cb13-17"></a><span class="st">  </span><span class="kw">arrange</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-18"><a href="data-processing.html#cb13-18"></a><span class="st">  </span></span>
+<span id="cb13-19"><a href="data-processing.html#cb13-19"></a><span class="st">  </span><span class="co"># give proper labels to demographics</span></span>
+<span id="cb13-20"><a href="data-processing.html#cb13-20"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb13-21"><a href="data-processing.html#cb13-21"></a>    <span class="dt">occupation_main_earner =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-22"><a href="data-processing.html#cb13-22"></a>      occupation_main_earner,</span>
+<span id="cb13-23"><a href="data-processing.html#cb13-23"></a>      <span class="st">&quot;Higher managerial/professional/administrative&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-24"><a href="data-processing.html#cb13-24"></a>      <span class="st">&quot;Intermediate managerial/professional/administrative&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-25"><a href="data-processing.html#cb13-25"></a>      <span class="st">&quot;Supervisory or clerical/junior managerial/ professional/ administrative&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-26"><a href="data-processing.html#cb13-26"></a>      <span class="st">&quot;Skilled manual worker&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-27"><a href="data-processing.html#cb13-27"></a>      <span class="st">&quot;Semi-skilled or unskilled work&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-28"><a href="data-processing.html#cb13-28"></a>      <span class="st">&quot;In full time education&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-29"><a href="data-processing.html#cb13-29"></a>      <span class="st">&quot;Unemployed&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-30"><a href="data-processing.html#cb13-30"></a>      <span class="st">&quot;Prefer not to say&quot;</span> =<span class="st"> &quot;8&quot;</span></span>
+<span id="cb13-31"><a href="data-processing.html#cb13-31"></a>    ),</span>
+<span id="cb13-32"><a href="data-processing.html#cb13-32"></a>    <span class="kw">across</span>(</span>
+<span id="cb13-33"><a href="data-processing.html#cb13-33"></a>      <span class="kw">c</span>(income_main_earner, income_own),</span>
+<span id="cb13-34"><a href="data-processing.html#cb13-34"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">fct_recode</span>(</span>
+<span id="cb13-35"><a href="data-processing.html#cb13-35"></a>        .x,</span>
+<span id="cb13-36"><a href="data-processing.html#cb13-36"></a>        <span class="st">&quot;Less than £10,000&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-37"><a href="data-processing.html#cb13-37"></a>        <span class="st">&quot;£10,000 - £19,999&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-38"><a href="data-processing.html#cb13-38"></a>        <span class="st">&quot;£20,000 - £29,999&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-39"><a href="data-processing.html#cb13-39"></a>        <span class="st">&quot;£30,000 - £39,999&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-40"><a href="data-processing.html#cb13-40"></a>        <span class="st">&quot;£40,000 - £49,999&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-41"><a href="data-processing.html#cb13-41"></a>        <span class="st">&quot;£50,000 - £59,999&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-42"><a href="data-processing.html#cb13-42"></a>        <span class="st">&quot;£60,000 - £69,999&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-43"><a href="data-processing.html#cb13-43"></a>        <span class="st">&quot;£70,000 - £79,999&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
+<span id="cb13-44"><a href="data-processing.html#cb13-44"></a>        <span class="st">&quot;£80,000 - £89,999&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
+<span id="cb13-45"><a href="data-processing.html#cb13-45"></a>        <span class="st">&quot;£90,000 - £99,999&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
+<span id="cb13-46"><a href="data-processing.html#cb13-46"></a>        <span class="st">&quot;£100,000 - £109,999&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
+<span id="cb13-47"><a href="data-processing.html#cb13-47"></a>        <span class="st">&quot;£110,000 - £119,999&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
+<span id="cb13-48"><a href="data-processing.html#cb13-48"></a>        <span class="st">&quot;£120,000 - £129,999&quot;</span> =<span class="st"> &quot;13&quot;</span>,</span>
+<span id="cb13-49"><a href="data-processing.html#cb13-49"></a>        <span class="st">&quot;£130,000 - £139,999&quot;</span> =<span class="st"> &quot;14&quot;</span>,</span>
+<span id="cb13-50"><a href="data-processing.html#cb13-50"></a>        <span class="st">&quot;£140,000 - £149,999&quot;</span> =<span class="st"> &quot;15&quot;</span>,</span>
+<span id="cb13-51"><a href="data-processing.html#cb13-51"></a>        <span class="st">&quot;£150,000 - £159,999&quot;</span> =<span class="st"> &quot;16&quot;</span>,</span>
+<span id="cb13-52"><a href="data-processing.html#cb13-52"></a>        <span class="st">&quot;£160,000 - £169,999&quot;</span> =<span class="st"> &quot;17&quot;</span>,</span>
+<span id="cb13-53"><a href="data-processing.html#cb13-53"></a>        <span class="st">&quot;£170,000 - £179,999&quot;</span> =<span class="st"> &quot;18&quot;</span>,</span>
+<span id="cb13-54"><a href="data-processing.html#cb13-54"></a>        <span class="st">&quot;£180,000 - £189,999&quot;</span> =<span class="st"> &quot;19&quot;</span>,</span>
+<span id="cb13-55"><a href="data-processing.html#cb13-55"></a>        <span class="st">&quot;£190,000 - £199,999&quot;</span> =<span class="st"> &quot;20&quot;</span>,</span>
+<span id="cb13-56"><a href="data-processing.html#cb13-56"></a>        <span class="st">&quot;£200,000 - £209,999&quot;</span> =<span class="st"> &quot;21&quot;</span>,</span>
+<span id="cb13-57"><a href="data-processing.html#cb13-57"></a>        <span class="st">&quot;£210,000 - £219,999&quot;</span> =<span class="st"> &quot;22&quot;</span>,</span>
+<span id="cb13-58"><a href="data-processing.html#cb13-58"></a>        <span class="st">&quot;£220,000 - £229,999&quot;</span> =<span class="st"> &quot;23&quot;</span>,</span>
+<span id="cb13-59"><a href="data-processing.html#cb13-59"></a>        <span class="st">&quot;£230,000 - £239,999&quot;</span> =<span class="st"> &quot;24&quot;</span>,</span>
+<span id="cb13-60"><a href="data-processing.html#cb13-60"></a>        <span class="st">&quot;£240,000 - £249,999&quot;</span> =<span class="st"> &quot;25&quot;</span>,</span>
+<span id="cb13-61"><a href="data-processing.html#cb13-61"></a>        <span class="st">&quot;£250,000 or more&quot;</span> =<span class="st"> &quot;26&quot;</span></span>
+<span id="cb13-62"><a href="data-processing.html#cb13-62"></a>      )</span>
+<span id="cb13-63"><a href="data-processing.html#cb13-63"></a>    ),</span>
+<span id="cb13-64"><a href="data-processing.html#cb13-64"></a>    </span>
+<span id="cb13-65"><a href="data-processing.html#cb13-65"></a>    <span class="dt">ethnicity =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-66"><a href="data-processing.html#cb13-66"></a>      ethnicity,</span>
+<span id="cb13-67"><a href="data-processing.html#cb13-67"></a>      <span class="st">&quot;White British&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-68"><a href="data-processing.html#cb13-68"></a>      <span class="st">&quot;White European&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-69"><a href="data-processing.html#cb13-69"></a>      <span class="st">&quot;White - Other&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-70"><a href="data-processing.html#cb13-70"></a>      <span class="st">&quot;Indian&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-71"><a href="data-processing.html#cb13-71"></a>      <span class="st">&quot;Pakistani&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-72"><a href="data-processing.html#cb13-72"></a>      <span class="st">&quot;Bangladeshi&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-73"><a href="data-processing.html#cb13-73"></a>      <span class="st">&quot;Chinese&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-74"><a href="data-processing.html#cb13-74"></a>      <span class="st">&quot;Japanese&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
+<span id="cb13-75"><a href="data-processing.html#cb13-75"></a>      <span class="st">&quot;Any other Asian/Asian British Origin&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
+<span id="cb13-76"><a href="data-processing.html#cb13-76"></a>      <span class="st">&quot;African&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
+<span id="cb13-77"><a href="data-processing.html#cb13-77"></a>      <span class="st">&quot;Caribbean&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
+<span id="cb13-78"><a href="data-processing.html#cb13-78"></a>      <span class="st">&quot;Any other Black/African/Caribbean British origin&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
+<span id="cb13-79"><a href="data-processing.html#cb13-79"></a>      <span class="st">&quot;Arab&quot;</span> =<span class="st"> &quot;13&quot;</span>,</span>
+<span id="cb13-80"><a href="data-processing.html#cb13-80"></a>      <span class="st">&quot;Any other ethnic origin&quot;</span> =<span class="st"> &quot;14&quot;</span>,</span>
+<span id="cb13-81"><a href="data-processing.html#cb13-81"></a>      <span class="st">&quot;White and Black Caribbean&quot;</span> =<span class="st"> &quot;15&quot;</span>,</span>
+<span id="cb13-82"><a href="data-processing.html#cb13-82"></a>      <span class="st">&quot;White and Black African&quot;</span> =<span class="st"> &quot;16&quot;</span>,</span>
+<span id="cb13-83"><a href="data-processing.html#cb13-83"></a>      <span class="st">&quot;White and Asian&quot;</span> =<span class="st"> &quot;17&quot;</span>,</span>
+<span id="cb13-84"><a href="data-processing.html#cb13-84"></a>      <span class="st">&quot;Any other Mixed/Multiple ethnic origins&quot;</span> =<span class="st"> &quot;18&quot;</span>,</span>
+<span id="cb13-85"><a href="data-processing.html#cb13-85"></a>      <span class="st">&quot;Prefer not to say&quot;</span> =<span class="st"> &quot;19&quot;</span></span>
+<span id="cb13-86"><a href="data-processing.html#cb13-86"></a>    ),</span>
+<span id="cb13-87"><a href="data-processing.html#cb13-87"></a>    </span>
+<span id="cb13-88"><a href="data-processing.html#cb13-88"></a>    <span class="dt">internet_use =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-89"><a href="data-processing.html#cb13-89"></a>      internet_use,</span>
+<span id="cb13-90"><a href="data-processing.html#cb13-90"></a>      <span class="st">&quot;Several times a day&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-91"><a href="data-processing.html#cb13-91"></a>      <span class="st">&quot;Once a day&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-92"><a href="data-processing.html#cb13-92"></a>      <span class="st">&quot;5-6 days a week&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-93"><a href="data-processing.html#cb13-93"></a>      <span class="st">&quot;2-4 days a week&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-94"><a href="data-processing.html#cb13-94"></a>      <span class="st">&quot;Once a week&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-95"><a href="data-processing.html#cb13-95"></a>      <span class="st">&quot;2-3 times a month&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-96"><a href="data-processing.html#cb13-96"></a>      <span class="st">&quot;Once a month&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-97"><a href="data-processing.html#cb13-97"></a>      <span class="st">&quot;Less often&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
+<span id="cb13-98"><a href="data-processing.html#cb13-98"></a>      <span class="st">&quot;Don&#39;t know/Not sure&quot;</span> =<span class="st"> &quot;9&quot;</span></span>
+<span id="cb13-99"><a href="data-processing.html#cb13-99"></a>    ),</span>
+<span id="cb13-100"><a href="data-processing.html#cb13-100"></a>    </span>
+<span id="cb13-101"><a href="data-processing.html#cb13-101"></a>    <span class="dt">gender =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-102"><a href="data-processing.html#cb13-102"></a>      gender,</span>
+<span id="cb13-103"><a href="data-processing.html#cb13-103"></a>      <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-104"><a href="data-processing.html#cb13-104"></a>      <span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-105"><a href="data-processing.html#cb13-105"></a>      <span class="st">&quot;Other&quot;</span> =<span class="st"> &quot;3&quot;</span></span>
+<span id="cb13-106"><a href="data-processing.html#cb13-106"></a>    ),</span>
+<span id="cb13-107"><a href="data-processing.html#cb13-107"></a>    </span>
+<span id="cb13-108"><a href="data-processing.html#cb13-108"></a>    <span class="dt">employment =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-109"><a href="data-processing.html#cb13-109"></a>      employment,</span>
+<span id="cb13-110"><a href="data-processing.html#cb13-110"></a>      <span class="st">&quot;Employed full time&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-111"><a href="data-processing.html#cb13-111"></a>      <span class="st">&quot;Employed part time&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-112"><a href="data-processing.html#cb13-112"></a>      <span class="st">&quot;Employed but furloughed due to the coronavirus pandemic&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-113"><a href="data-processing.html#cb13-113"></a>      <span class="st">&quot;Unemployed and looking for work&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-114"><a href="data-processing.html#cb13-114"></a>      <span class="st">&quot;Unemployed and not looking for work&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-115"><a href="data-processing.html#cb13-115"></a>      <span class="st">&quot;Self employed&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-116"><a href="data-processing.html#cb13-116"></a>      <span class="st">&quot;Retired&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-117"><a href="data-processing.html#cb13-117"></a>      <span class="st">&quot;Student&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
+<span id="cb13-118"><a href="data-processing.html#cb13-118"></a>      <span class="st">&quot;Rather not say&quot;</span> =<span class="st"> &quot;9&quot;</span></span>
+<span id="cb13-119"><a href="data-processing.html#cb13-119"></a>    ),</span>
+<span id="cb13-120"><a href="data-processing.html#cb13-120"></a>    </span>
+<span id="cb13-121"><a href="data-processing.html#cb13-121"></a>    <span class="dt">region =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-122"><a href="data-processing.html#cb13-122"></a>      region,</span>
+<span id="cb13-123"><a href="data-processing.html#cb13-123"></a>      <span class="st">&quot;North East&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-124"><a href="data-processing.html#cb13-124"></a>      <span class="st">&quot;North West&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb13-125"><a href="data-processing.html#cb13-125"></a>      <span class="st">&quot;Yorkshire and The Humber&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
+<span id="cb13-126"><a href="data-processing.html#cb13-126"></a>      <span class="st">&quot;East Midlands&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
+<span id="cb13-127"><a href="data-processing.html#cb13-127"></a>      <span class="st">&quot;West Midlands&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
+<span id="cb13-128"><a href="data-processing.html#cb13-128"></a>      <span class="st">&quot;East&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
+<span id="cb13-129"><a href="data-processing.html#cb13-129"></a>      <span class="st">&quot;London&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
+<span id="cb13-130"><a href="data-processing.html#cb13-130"></a>      <span class="st">&quot;South East&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
+<span id="cb13-131"><a href="data-processing.html#cb13-131"></a>      <span class="st">&quot;South West&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
+<span id="cb13-132"><a href="data-processing.html#cb13-132"></a>      <span class="st">&quot;Wales&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
+<span id="cb13-133"><a href="data-processing.html#cb13-133"></a>      <span class="st">&quot;Scotland&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
+<span id="cb13-134"><a href="data-processing.html#cb13-134"></a>      <span class="st">&quot;Northern Ireland&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
+<span id="cb13-135"><a href="data-processing.html#cb13-135"></a>      <span class="st">&quot;Not in the UK&quot;</span> =<span class="st"> &quot;13&quot;</span></span>
+<span id="cb13-136"><a href="data-processing.html#cb13-136"></a>    ),</span>
+<span id="cb13-137"><a href="data-processing.html#cb13-137"></a>    </span>
+<span id="cb13-138"><a href="data-processing.html#cb13-138"></a>    <span class="co"># assign yes/no to binary variables</span></span>
+<span id="cb13-139"><a href="data-processing.html#cb13-139"></a>    <span class="kw">across</span>(</span>
+<span id="cb13-140"><a href="data-processing.html#cb13-140"></a>      <span class="kw">c</span>(</span>
+<span id="cb13-141"><a href="data-processing.html#cb13-141"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;living&quot;</span>),</span>
+<span id="cb13-142"><a href="data-processing.html#cb13-142"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;covid&quot;</span>),</span>
+<span id="cb13-143"><a href="data-processing.html#cb13-143"></a>      ),</span>
+<span id="cb13-144"><a href="data-processing.html#cb13-144"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">fct_recode</span>(</span>
+<span id="cb13-145"><a href="data-processing.html#cb13-145"></a>        .x,</span>
+<span id="cb13-146"><a href="data-processing.html#cb13-146"></a>        <span class="st">&quot;Yes&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-147"><a href="data-processing.html#cb13-147"></a>        <span class="st">&quot;No&quot;</span> =<span class="st"> &quot;0&quot;</span></span>
+<span id="cb13-148"><a href="data-processing.html#cb13-148"></a>      )</span>
+<span id="cb13-149"><a href="data-processing.html#cb13-149"></a>    ),</span>
+<span id="cb13-150"><a href="data-processing.html#cb13-150"></a>    </span>
+<span id="cb13-151"><a href="data-processing.html#cb13-151"></a>    <span class="dt">main_earner =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb13-152"><a href="data-processing.html#cb13-152"></a>      main_earner,</span>
+<span id="cb13-153"><a href="data-processing.html#cb13-153"></a>      <span class="st">&quot;Yes&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb13-154"><a href="data-processing.html#cb13-154"></a>      <span class="st">&quot;No&quot;</span> =<span class="st"> &quot;2&quot;</span></span>
+<span id="cb13-155"><a href="data-processing.html#cb13-155"></a>    ),</span>
+<span id="cb13-156"><a href="data-processing.html#cb13-156"></a>    </span>
+<span id="cb13-157"><a href="data-processing.html#cb13-157"></a>    <span class="co"># add &quot;pp_&quot; prefix to id variable</span></span>
+<span id="cb13-158"><a href="data-processing.html#cb13-158"></a>    <span class="dt">id =</span> <span class="kw">as.factor</span>(</span>
+<span id="cb13-159"><a href="data-processing.html#cb13-159"></a>      <span class="kw">paste0</span>(<span class="st">&quot;pp_&quot;</span>, id)</span>
+<span id="cb13-160"><a href="data-processing.html#cb13-160"></a>    )</span>
+<span id="cb13-161"><a href="data-processing.html#cb13-161"></a>  )</span></code></pre></div>
+<pre><code>## Warning: Problem with `mutate()` input `occupation_main_earner`.
+## i Unknown levels in `f`: 8
+## i Input `occupation_main_earner` is `fct_recode(...)`.</code></pre>
+<pre><code>## Warning: Unknown levels in `f`: 8</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `..2`.
+## i Unknown levels in `f`: 18, 20, 22
+## i Input `..2` is `across(...)`.</code></pre>
+<pre><code>## Warning: Unknown levels in `f`: 18, 20, 22</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `..2`.
+## i Unknown levels in `f`: 17, 19, 23, 24
+## i Input `..2` is `across(...)`.</code></pre>
+<pre><code>## Warning: Unknown levels in `f`: 17, 19, 23, 24</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `internet_use`.
+## i Unknown levels in `f`: 7
+## i Input `internet_use` is `fct_recode(...)`.</code></pre>
+<pre><code>## Warning: Unknown levels in `f`: 7</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `region`.
+## i Unknown levels in `f`: 13
+## i Input `region` is `fct_recode(...)`.</code></pre>
+<pre><code>## Warning: Unknown levels in `f`: 13</code></pre>
+<p>For the first wave, participants only responded to questions about how much they used a medium if they indicated that they had used it in the three months before wave 1.
+Those variables (e.g. <code>bought_books</code>) are only present in wave 1, but <code>NA</code> in the other waves.
+Therefore, we create new variables that show whether a person was asked to indicate their use of a medium, so if they answered yes to any of the filter variables at the beginning of the wave 1 survey.
+At this point, those filter variables are still numeric, so we’ll add them up.
+If they’re above 0, participants were asked about that medium.
+If they’re 0, participants hadn’t used any of the media in the three months before wave 1 and weren’t asked questions about them.
+Note that I keep those filter variables as numeric for processing later.
+After we’re done with the filter variables, we can also delete the individual ones.</p>
+<p>Note that I check at the beginning of the code chunk whether any of those filter variables have missing values, but it seems the survey had forced responses here, so we don’t have missings.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-processing.html#cb24-1"></a><span class="co"># check whether any of the filter variables (at wave 1, when they were asked) have missing values</span></span>
+<span id="cb24-2"><a href="data-processing.html#cb24-2"></a>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-3"><a href="data-processing.html#cb24-3"></a><span class="st">  </span><span class="kw">filter</span>(wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-4"><a href="data-processing.html#cb24-4"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb24-5"><a href="data-processing.html#cb24-5"></a>    <span class="kw">across</span>(</span>
+<span id="cb24-6"><a href="data-processing.html#cb24-6"></a>      <span class="kw">c</span>(</span>
+<span id="cb24-7"><a href="data-processing.html#cb24-7"></a>       <span class="kw">starts_with</span>(<span class="st">&quot;downloaded&quot;</span>),</span>
+<span id="cb24-8"><a href="data-processing.html#cb24-8"></a>       <span class="kw">starts_with</span>(<span class="st">&quot;streamed&quot;</span>),</span>
+<span id="cb24-9"><a href="data-processing.html#cb24-9"></a>       <span class="kw">starts_with</span>(<span class="st">&quot;shared&quot;</span>),</span>
+<span id="cb24-10"><a href="data-processing.html#cb24-10"></a>       <span class="kw">starts_with</span>(<span class="st">&quot;bought&quot;</span>)</span>
+<span id="cb24-11"><a href="data-processing.html#cb24-11"></a>      ),</span>
+<span id="cb24-12"><a href="data-processing.html#cb24-12"></a>      <span class="op">~</span><span class="kw">unique</span>(<span class="kw">is.na</span>(.x))</span>
+<span id="cb24-13"><a href="data-processing.html#cb24-13"></a>    )</span>
+<span id="cb24-14"><a href="data-processing.html#cb24-14"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-15"><a href="data-processing.html#cb24-15"></a><span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-16"><a href="data-processing.html#cb24-16"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<pre><code>## Warning in kable_pipe(x = structure(c(&quot;downloaded_music&quot;, &quot;downloaded_music_videos&quot;, : The table should have a header (column names)</code></pre>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">downloaded_music</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_music_videos</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_video_games</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_software</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_films</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_tv</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_sports</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_video_clips</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_ebooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_magazines</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_audiobooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">downloaded_images</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">downloaded_none</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_music</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_music_videos</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_video_games</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_software</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_films</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_tv</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_sports</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_video_clips</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_ebooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_magazines</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_audiobooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">streamed_images</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">streamed_none</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_music</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_music_videos</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_video_games</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_software</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_films</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_tv</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_sports</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_video_clips</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_ebooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_magazines</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_audiobooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">shared_images</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">shared_none</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">bought_music</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bought_video_games</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">bought_software</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bought_films</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">bought_tv</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bought_books</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">bought_magazines</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bought_audiobooks</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">bought_none</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+<p>While we’re at it: All constant wave 1 variables now have <code>NA</code> in the subsequent wave.
+I’ll set those <code>NA</code>s to the wave 1 value because those are stable demographics that apply to each wave.
+Note that three demographic questions were asked at each wave, employment status, living siutation, and the consequences of COVID-19.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-processing.html#cb26-1"></a><span class="co"># get filter variables (only present at wave 1)</span></span>
+<span id="cb26-2"><a href="data-processing.html#cb26-2"></a>filters &lt;-<span class="st"> </span></span>
+<span id="cb26-3"><a href="data-processing.html#cb26-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-4"><a href="data-processing.html#cb26-4"></a><span class="st">  </span><span class="kw">filter</span>(wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb26-5"><a href="data-processing.html#cb26-5"></a><span class="st">  </span></span>
+<span id="cb26-6"><a href="data-processing.html#cb26-6"></a><span class="st">  </span><span class="co"># the filter per category</span></span>
+<span id="cb26-7"><a href="data-processing.html#cb26-7"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb26-8"><a href="data-processing.html#cb26-8"></a>    <span class="dt">filter_music =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-9"><a href="data-processing.html#cb26-9"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-10"><a href="data-processing.html#cb26-10"></a>        .,</span>
+<span id="cb26-11"><a href="data-processing.html#cb26-11"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;downloaded_music&quot;</span>),</span>
+<span id="cb26-12"><a href="data-processing.html#cb26-12"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;streamed_music&quot;</span>),</span>
+<span id="cb26-13"><a href="data-processing.html#cb26-13"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;shared_music&quot;</span>),</span>
+<span id="cb26-14"><a href="data-processing.html#cb26-14"></a>        bought_music</span>
+<span id="cb26-15"><a href="data-processing.html#cb26-15"></a>      )</span>
+<span id="cb26-16"><a href="data-processing.html#cb26-16"></a>    ),</span>
+<span id="cb26-17"><a href="data-processing.html#cb26-17"></a>    </span>
+<span id="cb26-18"><a href="data-processing.html#cb26-18"></a>    <span class="dt">filter_films =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-19"><a href="data-processing.html#cb26-19"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-20"><a href="data-processing.html#cb26-20"></a>        .,</span>
+<span id="cb26-21"><a href="data-processing.html#cb26-21"></a>        downloaded_films,</span>
+<span id="cb26-22"><a href="data-processing.html#cb26-22"></a>        streamed_films,</span>
+<span id="cb26-23"><a href="data-processing.html#cb26-23"></a>        shared_films,</span>
+<span id="cb26-24"><a href="data-processing.html#cb26-24"></a>        bought_films</span>
+<span id="cb26-25"><a href="data-processing.html#cb26-25"></a>      )</span>
+<span id="cb26-26"><a href="data-processing.html#cb26-26"></a>    ),</span>
+<span id="cb26-27"><a href="data-processing.html#cb26-27"></a>    </span>
+<span id="cb26-28"><a href="data-processing.html#cb26-28"></a>    <span class="dt">filter_tv =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-29"><a href="data-processing.html#cb26-29"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-30"><a href="data-processing.html#cb26-30"></a>        .,</span>
+<span id="cb26-31"><a href="data-processing.html#cb26-31"></a>        downloaded_tv,</span>
+<span id="cb26-32"><a href="data-processing.html#cb26-32"></a>        streamed_tv,</span>
+<span id="cb26-33"><a href="data-processing.html#cb26-33"></a>        shared_tv,</span>
+<span id="cb26-34"><a href="data-processing.html#cb26-34"></a>        bought_tv</span>
+<span id="cb26-35"><a href="data-processing.html#cb26-35"></a>      )</span>
+<span id="cb26-36"><a href="data-processing.html#cb26-36"></a>    ),</span>
+<span id="cb26-37"><a href="data-processing.html#cb26-37"></a>    </span>
+<span id="cb26-38"><a href="data-processing.html#cb26-38"></a>    <span class="dt">filter_video_games =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-39"><a href="data-processing.html#cb26-39"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-40"><a href="data-processing.html#cb26-40"></a>        .,</span>
+<span id="cb26-41"><a href="data-processing.html#cb26-41"></a>        downloaded_video_games,</span>
+<span id="cb26-42"><a href="data-processing.html#cb26-42"></a>        streamed_video_games,</span>
+<span id="cb26-43"><a href="data-processing.html#cb26-43"></a>        shared_video_games,</span>
+<span id="cb26-44"><a href="data-processing.html#cb26-44"></a>        bought_video_games</span>
+<span id="cb26-45"><a href="data-processing.html#cb26-45"></a>      )</span>
+<span id="cb26-46"><a href="data-processing.html#cb26-46"></a>    ),</span>
+<span id="cb26-47"><a href="data-processing.html#cb26-47"></a>    </span>
+<span id="cb26-48"><a href="data-processing.html#cb26-48"></a>    <span class="dt">filter_ebooks =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-49"><a href="data-processing.html#cb26-49"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-50"><a href="data-processing.html#cb26-50"></a>        .,</span>
+<span id="cb26-51"><a href="data-processing.html#cb26-51"></a>        downloaded_ebooks,</span>
+<span id="cb26-52"><a href="data-processing.html#cb26-52"></a>        streamed_ebooks,</span>
+<span id="cb26-53"><a href="data-processing.html#cb26-53"></a>        shared_ebooks,</span>
+<span id="cb26-54"><a href="data-processing.html#cb26-54"></a>        bought_books</span>
+<span id="cb26-55"><a href="data-processing.html#cb26-55"></a>      )</span>
+<span id="cb26-56"><a href="data-processing.html#cb26-56"></a>    ),</span>
+<span id="cb26-57"><a href="data-processing.html#cb26-57"></a>    </span>
+<span id="cb26-58"><a href="data-processing.html#cb26-58"></a>    <span class="dt">filter_magazines =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-59"><a href="data-processing.html#cb26-59"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-60"><a href="data-processing.html#cb26-60"></a>        .,</span>
+<span id="cb26-61"><a href="data-processing.html#cb26-61"></a>        downloaded_magazines,</span>
+<span id="cb26-62"><a href="data-processing.html#cb26-62"></a>        streamed_magazines,</span>
+<span id="cb26-63"><a href="data-processing.html#cb26-63"></a>        shared_magazines,</span>
+<span id="cb26-64"><a href="data-processing.html#cb26-64"></a>        bought_magazines</span>
+<span id="cb26-65"><a href="data-processing.html#cb26-65"></a>      )</span>
+<span id="cb26-66"><a href="data-processing.html#cb26-66"></a>    ),</span>
+<span id="cb26-67"><a href="data-processing.html#cb26-67"></a>    </span>
+<span id="cb26-68"><a href="data-processing.html#cb26-68"></a>    <span class="dt">filter_audiobooks =</span> <span class="kw">rowSums</span>(</span>
+<span id="cb26-69"><a href="data-processing.html#cb26-69"></a>      <span class="kw">select</span>(</span>
+<span id="cb26-70"><a href="data-processing.html#cb26-70"></a>        .,</span>
+<span id="cb26-71"><a href="data-processing.html#cb26-71"></a>        downloaded_audiobooks,</span>
+<span id="cb26-72"><a href="data-processing.html#cb26-72"></a>        streamed_audiobooks,</span>
+<span id="cb26-73"><a href="data-processing.html#cb26-73"></a>        shared_audiobooks,</span>
+<span id="cb26-74"><a href="data-processing.html#cb26-74"></a>        bought_audiobooks</span>
+<span id="cb26-75"><a href="data-processing.html#cb26-75"></a>      )</span>
+<span id="cb26-76"><a href="data-processing.html#cb26-76"></a>    )</span>
+<span id="cb26-77"><a href="data-processing.html#cb26-77"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-78"><a href="data-processing.html#cb26-78"></a><span class="st">  </span></span>
+<span id="cb26-79"><a href="data-processing.html#cb26-79"></a><span class="st">  </span><span class="co"># recode depending on whether the sum is zero or not</span></span>
+<span id="cb26-80"><a href="data-processing.html#cb26-80"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb26-81"><a href="data-processing.html#cb26-81"></a>    <span class="kw">across</span>(</span>
+<span id="cb26-82"><a href="data-processing.html#cb26-82"></a>      <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>),</span>
+<span id="cb26-83"><a href="data-processing.html#cb26-83"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>(.x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb26-84"><a href="data-processing.html#cb26-84"></a>    )</span>
+<span id="cb26-85"><a href="data-processing.html#cb26-85"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-86"><a href="data-processing.html#cb26-86"></a><span class="st">  </span></span>
+<span id="cb26-87"><a href="data-processing.html#cb26-87"></a><span class="st">  </span><span class="co"># select variables that are constant across all waves</span></span>
+<span id="cb26-88"><a href="data-processing.html#cb26-88"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb26-89"><a href="data-processing.html#cb26-89"></a>    id,</span>
+<span id="cb26-90"><a href="data-processing.html#cb26-90"></a>    occupation_main_earner<span class="op">:</span>internet_use,</span>
+<span id="cb26-91"><a href="data-processing.html#cb26-91"></a>    <span class="kw">contains</span>(<span class="st">&quot;identity&quot;</span>),</span>
+<span id="cb26-92"><a href="data-processing.html#cb26-92"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>)</span>
+<span id="cb26-93"><a href="data-processing.html#cb26-93"></a>  )</span>
+<span id="cb26-94"><a href="data-processing.html#cb26-94"></a></span>
+<span id="cb26-95"><a href="data-processing.html#cb26-95"></a><span class="co"># add those filters and constant variables so that they become a constant for each pp, deleting old filter variables</span></span>
+<span id="cb26-96"><a href="data-processing.html#cb26-96"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb26-97"><a href="data-processing.html#cb26-97"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb26-98"><a href="data-processing.html#cb26-98"></a>    working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-99"><a href="data-processing.html#cb26-99"></a><span class="st">      </span><span class="kw">select</span>(</span>
+<span id="cb26-100"><a href="data-processing.html#cb26-100"></a>        <span class="op">-</span>(occupation_main_earner<span class="op">:</span>internet_use),</span>
+<span id="cb26-101"><a href="data-processing.html#cb26-101"></a>        <span class="op">-</span><span class="kw">contains</span>(<span class="st">&quot;identity&quot;</span>)</span>
+<span id="cb26-102"><a href="data-processing.html#cb26-102"></a>      ),</span>
+<span id="cb26-103"><a href="data-processing.html#cb26-103"></a>    filters,</span>
+<span id="cb26-104"><a href="data-processing.html#cb26-104"></a>    <span class="dt">by =</span> <span class="st">&quot;id&quot;</span></span>
+<span id="cb26-105"><a href="data-processing.html#cb26-105"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-106"><a href="data-processing.html#cb26-106"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb26-107"><a href="data-processing.html#cb26-107"></a>    <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;downloaded&quot;</span>),</span>
+<span id="cb26-108"><a href="data-processing.html#cb26-108"></a>    <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;streamed&quot;</span>),</span>
+<span id="cb26-109"><a href="data-processing.html#cb26-109"></a>    <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;shared&quot;</span>),</span>
+<span id="cb26-110"><a href="data-processing.html#cb26-110"></a>    <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;bought&quot;</span>),</span>
+<span id="cb26-111"><a href="data-processing.html#cb26-111"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-112"><a href="data-processing.html#cb26-112"></a><span class="st">  </span></span>
+<span id="cb26-113"><a href="data-processing.html#cb26-113"></a><span class="st">  </span><span class="co"># some reordering for purely cosmetic purposes</span></span>
+<span id="cb26-114"><a href="data-processing.html#cb26-114"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb26-115"><a href="data-processing.html#cb26-115"></a>    id<span class="op">:</span>age,</span>
+<span id="cb26-116"><a href="data-processing.html#cb26-116"></a>    region,</span>
+<span id="cb26-117"><a href="data-processing.html#cb26-117"></a>    ethnicity,</span>
+<span id="cb26-118"><a href="data-processing.html#cb26-118"></a>    employment,</span>
+<span id="cb26-119"><a href="data-processing.html#cb26-119"></a>    main_earner,</span>
+<span id="cb26-120"><a href="data-processing.html#cb26-120"></a>    occupation_main_earner,</span>
+<span id="cb26-121"><a href="data-processing.html#cb26-121"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;income&quot;</span>),</span>
+<span id="cb26-122"><a href="data-processing.html#cb26-122"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;living&quot;</span>),</span>
+<span id="cb26-123"><a href="data-processing.html#cb26-123"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;covid&quot;</span>),</span>
+<span id="cb26-124"><a href="data-processing.html#cb26-124"></a>    internet_use,</span>
+<span id="cb26-125"><a href="data-processing.html#cb26-125"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>),</span>
+<span id="cb26-126"><a href="data-processing.html#cb26-126"></a>    <span class="kw">everything</span>()</span>
+<span id="cb26-127"><a href="data-processing.html#cb26-127"></a>  )</span>
+<span id="cb26-128"><a href="data-processing.html#cb26-128"></a></span>
+<span id="cb26-129"><a href="data-processing.html#cb26-129"></a><span class="co"># remove the temp filters file</span></span>
+<span id="cb26-130"><a href="data-processing.html#cb26-130"></a><span class="kw">rm</span>(filters)</span></code></pre></div>
+</div>
+<div id="response-rates-and-missing-values" class="section level2">
+<h2><span class="header-section-number">2.4</span> Response rates and missing values</h2>
+<p>In this section, I check response rates, response patterns, and missing values.
+The data set is quite complicated because of the many filter variables.
+The survey had forced responses, so there aren’t any missings if someone finished the survey.
+However, because of the many filters, there’ll still be a large amount of missing values that we need to inspect or recode.</p>
+<p>I think the following information is most relevant to understand response and missingness patterns:</p>
+<ol style="list-style-type: decimal">
+<li>How many participants have completed each wave.</li>
+<li>How many responses we have per medium per wave.</li>
+</ol>
+<div id="participants-per-wave" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Participants per wave</h3>
+<p>First, let’s see how many people completed each wave, what percentage of people have completed that exact number of wave, how many participants that have exactly this number of waves, and what percentage of participants have completed <em>at least</em> this wave.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-processing.html#cb27-1"></a>completion_table &lt;-<span class="st"> </span></span>
+<span id="cb27-2"><a href="data-processing.html#cb27-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-3"><a href="data-processing.html#cb27-3"></a><span class="st">  </span><span class="kw">count</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-4"><a href="data-processing.html#cb27-4"></a><span class="st">  </span><span class="kw">count</span>(n) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-5"><a href="data-processing.html#cb27-5"></a><span class="st">  </span><span class="kw">rename</span>(</span>
+<span id="cb27-6"><a href="data-processing.html#cb27-6"></a>    <span class="st">&quot;Waves&quot;</span> =<span class="st"> </span>n,</span>
+<span id="cb27-7"><a href="data-processing.html#cb27-7"></a>    <span class="st">&quot;Participants (only that number of waves)&quot;</span> =<span class="st"> </span>nn</span>
+<span id="cb27-8"><a href="data-processing.html#cb27-8"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-9"><a href="data-processing.html#cb27-9"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb27-10"><a href="data-processing.html#cb27-10"></a>    <span class="st">&quot;Frequency&quot;</span> =<span class="st"> </span><span class="kw">round</span>(<span class="st">`</span><span class="dt">Participants (only that number of waves)</span><span class="st">`</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="st">`</span><span class="dt">Participants (only that number of waves)</span><span class="st">`</span>), <span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</span>
+<span id="cb27-11"><a href="data-processing.html#cb27-11"></a>    <span class="st">&quot;Participants per wave&quot;</span> =<span class="st"> </span><span class="kw">rev</span>(<span class="kw">cumsum</span>(<span class="kw">rev</span>(<span class="st">`</span><span class="dt">Participants (only that number of waves)</span><span class="st">`</span>))),</span>
+<span id="cb27-12"><a href="data-processing.html#cb27-12"></a>    <span class="st">&quot;Frequency per wave&quot;</span> =<span class="st"> </span><span class="kw">round</span>(<span class="st">`</span><span class="dt">Participants per wave</span><span class="st">`</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="st">`</span><span class="dt">Participants (only that number of waves)</span><span class="st">`</span>), <span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb27-13"><a href="data-processing.html#cb27-13"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-14"><a href="data-processing.html#cb27-14"></a><span class="st">  </span><span class="kw">as_tibble</span>()</span></code></pre></div>
+<pre><code>## Storing counts in `nn`, as `n` already present in input
+## i Use `name = &quot;new_name&quot;` to pick a new name.</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-processing.html#cb29-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(completion_table)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="41%" />
+<col width="10%" />
+<col width="22%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Waves</th>
+<th align="right">Participants (only that number of waves)</th>
+<th align="right">Frequency</th>
+<th align="right">Participants per wave</th>
+<th align="right">Frequency per wave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1071</td>
+<td align="right">27.7</td>
+<td align="right">3863</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">423</td>
+<td align="right">11.0</td>
+<td align="right">2792</td>
+<td align="right">72.3</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">237</td>
+<td align="right">6.1</td>
+<td align="right">2369</td>
+<td align="right">61.3</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">185</td>
+<td align="right">4.8</td>
+<td align="right">2132</td>
+<td align="right">55.2</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">873</td>
+<td align="right">22.6</td>
+<td align="right">1947</td>
+<td align="right">50.4</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">1074</td>
+<td align="right">27.8</td>
+<td align="right">1074</td>
+<td align="right">27.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="responses-per-wave-and-medium" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Responses per wave and medium</h3>
+<p>Okay, next we inspect how many responses we have per medium per wave.
+The data set gets complicated here.
+This is where the filtering requires quite some wrangling: Someone who hasn’t listened to music in the three months before wave 1 will have missing values on all items about music - but only at wave 1.</p>
+<p>However, at each subsequent wave, participants were asked one of the <code>estimate</code> questions.
+If they said that they had used a medium less, about the same, or more compared to the previous week, they were then also prompted to provide their use estimates.</p>
+<p>For example, someone might’ve had a 0 on the filter questions for audio books because they hadn’t listened to audio books the three months before wave 1.
+For wave 1, then, they didn’t provide the minutes and hours they spent on audio books.
+In wave 2, they were then asked how their audio book use had changed since the last survey.
+If they answered anything but the sixth answer option (i.e., they still hadn’t listened to audio books), they were asked to report how many minutes and hours they had used audio books.</p>
+<p>Here’s why that can be problematic: The participants below hadn’t listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn’t changed (i.e., selected <code>3</code> on the <code>audiobooks_estimate</code> question).
+But the participant was still asked about their minutes and hours - which is why they filled in bogus numbers.
+Minutes and hours were force response as far as I can tell.
+I wouldn’t take those estimates seriously, because the participant was forced to respond to minutes and hours.
+We see that in the following waves, they selected the option that they hadn’t listened to audiobooks.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-processing.html#cb30-1"></a>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-2"><a href="data-processing.html#cb30-2"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> &quot;pp_7&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb30-3"><a href="data-processing.html#cb30-3"></a><span class="st">  </span><span class="kw">filter</span>(filter_audiobooks <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
+<span id="cb30-4"><a href="data-processing.html#cb30-4"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb30-5"><a href="data-processing.html#cb30-5"></a>    id,</span>
+<span id="cb30-6"><a href="data-processing.html#cb30-6"></a>    wave,</span>
+<span id="cb30-7"><a href="data-processing.html#cb30-7"></a>    filter_audiobooks,</span>
+<span id="cb30-8"><a href="data-processing.html#cb30-8"></a>    audiobooks_estimate,</span>
+<span id="cb30-9"><a href="data-processing.html#cb30-9"></a>    audiobooks_minutes,</span>
+<span id="cb30-10"><a href="data-processing.html#cb30-10"></a>    audiobooks_hours</span>
+<span id="cb30-11"><a href="data-processing.html#cb30-11"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-12"><a href="data-processing.html#cb30-12"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="21%" />
+<col width="23%" />
+<col width="22%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="right">wave</th>
+<th align="right">filter_audiobooks</th>
+<th align="right">audiobooks_estimate</th>
+<th align="right">audiobooks_minutes</th>
+<th align="right">audiobooks_hours</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">pp_7</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_7</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_7</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_7</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_7</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Before we turn to those cases where we can tell a participant didn’t want to provide a use estimate, we need to decide what to do with the filter questions in the first wave.
+For our research question, we’re interested in <em>how variations in amount of use relate to well-being</em>, not what that relation is <em>among users</em>.
+Therefore, if someone says that they didn’t use a medium in the three months before the first wave, they are saying that they <em>spent zero amount of time engaging with that medium</em>.
+The filter questions didn’t ask whether a user has a device they can use to engage with those content categories or whether they had any of the media.
+So the filter question didn’t ask whether participants were <em>able</em> to engage with a category.
+It asked <em>whether people used a medium</em>.
+Therefore, it fits our research question to treat those values as zero.</p>
+<p>Below, I’ll set all time variables at the first wave to zero that were skipped in the survey because participants said they didn’t use the medium in the filter questions.
+There’s probably a sleek way to write a function that pulls variable names and matches those with the conditional commands in the code, but that’s above my skill level.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-processing.html#cb31-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb31-2"><a href="data-processing.html#cb31-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-3"><a href="data-processing.html#cb31-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb31-4"><a href="data-processing.html#cb31-4"></a>    </span>
+<span id="cb31-5"><a href="data-processing.html#cb31-5"></a>    <span class="co"># music</span></span>
+<span id="cb31-6"><a href="data-processing.html#cb31-6"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-7"><a href="data-processing.html#cb31-7"></a>      <span class="kw">c</span>(music_hours, music_minutes),</span>
+<span id="cb31-8"><a href="data-processing.html#cb31-8"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_music <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-9"><a href="data-processing.html#cb31-9"></a>    ),</span>
+<span id="cb31-10"><a href="data-processing.html#cb31-10"></a>    </span>
+<span id="cb31-11"><a href="data-processing.html#cb31-11"></a>    <span class="co"># films</span></span>
+<span id="cb31-12"><a href="data-processing.html#cb31-12"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-13"><a href="data-processing.html#cb31-13"></a>      <span class="kw">c</span>(films_hours, films_minutes),</span>
+<span id="cb31-14"><a href="data-processing.html#cb31-14"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_films <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-15"><a href="data-processing.html#cb31-15"></a>    ),</span>
+<span id="cb31-16"><a href="data-processing.html#cb31-16"></a>    </span>
+<span id="cb31-17"><a href="data-processing.html#cb31-17"></a>    <span class="co"># tv</span></span>
+<span id="cb31-18"><a href="data-processing.html#cb31-18"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-19"><a href="data-processing.html#cb31-19"></a>      <span class="kw">c</span>(tv_hours, tv_minutes),</span>
+<span id="cb31-20"><a href="data-processing.html#cb31-20"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_tv <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-21"><a href="data-processing.html#cb31-21"></a>    ),</span>
+<span id="cb31-22"><a href="data-processing.html#cb31-22"></a>    </span>
+<span id="cb31-23"><a href="data-processing.html#cb31-23"></a>    <span class="co"># video games</span></span>
+<span id="cb31-24"><a href="data-processing.html#cb31-24"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-25"><a href="data-processing.html#cb31-25"></a>      <span class="kw">c</span>(games_hours, games_minutes),</span>
+<span id="cb31-26"><a href="data-processing.html#cb31-26"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_video_games <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-27"><a href="data-processing.html#cb31-27"></a>    ),</span>
+<span id="cb31-28"><a href="data-processing.html#cb31-28"></a>    </span>
+<span id="cb31-29"><a href="data-processing.html#cb31-29"></a>    <span class="co"># ebooks</span></span>
+<span id="cb31-30"><a href="data-processing.html#cb31-30"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-31"><a href="data-processing.html#cb31-31"></a>      <span class="kw">c</span>(books_hours, books_minutes),</span>
+<span id="cb31-32"><a href="data-processing.html#cb31-32"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_ebooks <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-33"><a href="data-processing.html#cb31-33"></a>    ),</span>
+<span id="cb31-34"><a href="data-processing.html#cb31-34"></a>    </span>
+<span id="cb31-35"><a href="data-processing.html#cb31-35"></a>    <span class="co"># magazines</span></span>
+<span id="cb31-36"><a href="data-processing.html#cb31-36"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-37"><a href="data-processing.html#cb31-37"></a>      <span class="kw">c</span>(magazines_hours, magazines_minutes),</span>
+<span id="cb31-38"><a href="data-processing.html#cb31-38"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_magazines <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-39"><a href="data-processing.html#cb31-39"></a>    ),</span>
+<span id="cb31-40"><a href="data-processing.html#cb31-40"></a>    </span>
+<span id="cb31-41"><a href="data-processing.html#cb31-41"></a>    <span class="co"># music</span></span>
+<span id="cb31-42"><a href="data-processing.html#cb31-42"></a>    <span class="kw">across</span>(</span>
+<span id="cb31-43"><a href="data-processing.html#cb31-43"></a>      <span class="kw">c</span>(audiobooks_hours, audiobooks_minutes),</span>
+<span id="cb31-44"><a href="data-processing.html#cb31-44"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>filter_audiobooks <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb31-45"><a href="data-processing.html#cb31-45"></a>    )</span>
+<span id="cb31-46"><a href="data-processing.html#cb31-46"></a>  )</span></code></pre></div>
+<p>Now, when participants said they didn’t use a medium for any wave, in the next wave they’re still presented the <code>estimate</code> question.
+When they answered anything but that they didn’t use the medium, they were asked to provide minutes and hours estimates.
+In those hours and minutes survey questions, they were shown what they said in the previous wave.
+Crucially, they saw their estimate from the previous wave <em>after they had given their estimate</em>.</p>
+<p>So when I used 0 minutes in the previous week but forget what I said in the previous wave, it’s not unrealistic that I select “a lot less” on the <code>estimate</code> question.
+In my mind, estimating use in relation to previous time points and giving an absolute estimate of minutes and hours are two separate psychological retrieval processes.
+Therefore, I don’t have a problem with someone who used 0 minutes of audio books in a wave saying that they used audio books a lot less in the next wave and report to have used them for half an hour.
+It doesn’t make sense from an objective stand point because 30 minutes is more than 0 minutes, but the estimate question is about participants’ perceived frequency in relation to the past.
+For that reason, I won’t directly change the 30 minutes to 0, but leave them as is.</p>
+<p>In other words, I won’t set values to <code>NA</code> by comparing the absolute minutes and hours estimate to the relative frequency estimate.
+I’ll only make changes in clear cases like the one presented above, where someone clearly didn’t use a medium.
+I’ll do exclusions in the next section when I look at data quality.</p>
+<p>For now, let’s deal with those few cases that are as clear-cut as the one presented above.
+First some house keeping.
+If participants indicated on one of the <code>estimate</code> questions that they didn’t use that medium in the previous week (only applicable in waves 2 to 6), they’ll receive an <code>NA</code> on their time estimates.
+So we’ll first set time estimates to 0 if participants say that they didn’t use a medium.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-processing.html#cb32-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb32-2"><a href="data-processing.html#cb32-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb32-3"><a href="data-processing.html#cb32-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb32-4"><a href="data-processing.html#cb32-4"></a>    </span>
+<span id="cb32-5"><a href="data-processing.html#cb32-5"></a>    <span class="co"># music</span></span>
+<span id="cb32-6"><a href="data-processing.html#cb32-6"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-7"><a href="data-processing.html#cb32-7"></a>      <span class="kw">c</span>(music_hours, music_minutes),</span>
+<span id="cb32-8"><a href="data-processing.html#cb32-8"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>music_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-9"><a href="data-processing.html#cb32-9"></a>    ),</span>
+<span id="cb32-10"><a href="data-processing.html#cb32-10"></a>    </span>
+<span id="cb32-11"><a href="data-processing.html#cb32-11"></a>    <span class="co"># films</span></span>
+<span id="cb32-12"><a href="data-processing.html#cb32-12"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-13"><a href="data-processing.html#cb32-13"></a>      <span class="kw">c</span>(films_hours, films_minutes),</span>
+<span id="cb32-14"><a href="data-processing.html#cb32-14"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>films_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-15"><a href="data-processing.html#cb32-15"></a>    ),</span>
+<span id="cb32-16"><a href="data-processing.html#cb32-16"></a>    </span>
+<span id="cb32-17"><a href="data-processing.html#cb32-17"></a>    <span class="co"># tv</span></span>
+<span id="cb32-18"><a href="data-processing.html#cb32-18"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-19"><a href="data-processing.html#cb32-19"></a>      <span class="kw">c</span>(tv_hours, tv_minutes),</span>
+<span id="cb32-20"><a href="data-processing.html#cb32-20"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>tv_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-21"><a href="data-processing.html#cb32-21"></a>    ),</span>
+<span id="cb32-22"><a href="data-processing.html#cb32-22"></a>    </span>
+<span id="cb32-23"><a href="data-processing.html#cb32-23"></a>    <span class="co"># video games</span></span>
+<span id="cb32-24"><a href="data-processing.html#cb32-24"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-25"><a href="data-processing.html#cb32-25"></a>      <span class="kw">c</span>(games_hours, games_minutes),</span>
+<span id="cb32-26"><a href="data-processing.html#cb32-26"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>games_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-27"><a href="data-processing.html#cb32-27"></a>    ),</span>
+<span id="cb32-28"><a href="data-processing.html#cb32-28"></a>    </span>
+<span id="cb32-29"><a href="data-processing.html#cb32-29"></a>    <span class="co"># ebooks</span></span>
+<span id="cb32-30"><a href="data-processing.html#cb32-30"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-31"><a href="data-processing.html#cb32-31"></a>      <span class="kw">c</span>(books_hours, books_minutes),</span>
+<span id="cb32-32"><a href="data-processing.html#cb32-32"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>books_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-33"><a href="data-processing.html#cb32-33"></a>    ),</span>
+<span id="cb32-34"><a href="data-processing.html#cb32-34"></a>    </span>
+<span id="cb32-35"><a href="data-processing.html#cb32-35"></a>    <span class="co"># magazines</span></span>
+<span id="cb32-36"><a href="data-processing.html#cb32-36"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-37"><a href="data-processing.html#cb32-37"></a>      <span class="kw">c</span>(magazines_hours, magazines_minutes),</span>
+<span id="cb32-38"><a href="data-processing.html#cb32-38"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>magazines_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-39"><a href="data-processing.html#cb32-39"></a>    ),</span>
+<span id="cb32-40"><a href="data-processing.html#cb32-40"></a>    </span>
+<span id="cb32-41"><a href="data-processing.html#cb32-41"></a>    <span class="co"># music</span></span>
+<span id="cb32-42"><a href="data-processing.html#cb32-42"></a>    <span class="kw">across</span>(</span>
+<span id="cb32-43"><a href="data-processing.html#cb32-43"></a>      <span class="kw">c</span>(audiobooks_hours, audiobooks_minutes),</span>
+<span id="cb32-44"><a href="data-processing.html#cb32-44"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>audiobooks_estimate <span class="op">==</span><span class="st"> </span><span class="dv">6</span>), <span class="dv">0</span>, .x)</span>
+<span id="cb32-45"><a href="data-processing.html#cb32-45"></a>    )</span>
+<span id="cb32-46"><a href="data-processing.html#cb32-46"></a>  )</span></code></pre></div>
+<p>Alright, now let’s check, per medium, who only has 6s and 3s on the <code>estimate</code> questions (aka didn’t use and no change to previous week).
+Those minutes and hours we’ll set to 0 as well.
+This applies only to those who didn’t use a medium in the first wave.
+If you used a medium in the first wave and said that your time remained the same, you shouldn’t get a zero.</p>
+<p>Setting instances of time with a medium within a participant but across waves to 0 requires some serious data wrangling (or my coding game isn’t strong enough…).
+To be able to assess who <em>only gave 3 or 6</em> as an estimate for a medium for waves 2 through 6, we first transform the data to long format.
+In Table X I display how the data look like after transformation.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-processing.html#cb33-1"></a>media_long &lt;-<span class="st"> </span></span>
+<span id="cb33-2"><a href="data-processing.html#cb33-2"></a></span>
+<span id="cb33-3"><a href="data-processing.html#cb33-3"></a><span class="st">  </span><span class="co"># first turn long by filter variables</span></span>
+<span id="cb33-4"><a href="data-processing.html#cb33-4"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
+<span id="cb33-5"><a href="data-processing.html#cb33-5"></a>    working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-6"><a href="data-processing.html#cb33-6"></a><span class="st">      </span><span class="kw">select</span>(</span>
+<span id="cb33-7"><a href="data-processing.html#cb33-7"></a>        id,</span>
+<span id="cb33-8"><a href="data-processing.html#cb33-8"></a>        wave,</span>
+<span id="cb33-9"><a href="data-processing.html#cb33-9"></a>        <span class="kw">contains</span>(<span class="st">&quot;estimate&quot;</span>),</span>
+<span id="cb33-10"><a href="data-processing.html#cb33-10"></a>        <span class="kw">contains</span>(<span class="st">&quot;minutes&quot;</span>),</span>
+<span id="cb33-11"><a href="data-processing.html#cb33-11"></a>        <span class="kw">contains</span>(<span class="st">&quot;hours&quot;</span>)</span>
+<span id="cb33-12"><a href="data-processing.html#cb33-12"></a>      ),</span>
+<span id="cb33-13"><a href="data-processing.html#cb33-13"></a>    <span class="kw">c</span>(<span class="op">-</span>id, <span class="op">-</span>wave),</span>
+<span id="cb33-14"><a href="data-processing.html#cb33-14"></a>    <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;medium&quot;</span>, <span class="st">&quot;time&quot;</span>),</span>
+<span id="cb33-15"><a href="data-processing.html#cb33-15"></a>    <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>,</span>
+<span id="cb33-16"><a href="data-processing.html#cb33-16"></a>    <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb33-17"><a href="data-processing.html#cb33-17"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb33-18"><a href="data-processing.html#cb33-18"></a><span class="st">  </span></span>
+<span id="cb33-19"><a href="data-processing.html#cb33-19"></a><span class="st">  </span><span class="co"># now the medium and time are mixed up in the same column, so we spread them </span></span>
+<span id="cb33-20"><a href="data-processing.html#cb33-20"></a><span class="st">  </span><span class="kw">pivot_wider</span>(</span>
+<span id="cb33-21"><a href="data-processing.html#cb33-21"></a>    .,</span>
+<span id="cb33-22"><a href="data-processing.html#cb33-22"></a>    id<span class="op">:</span>medium,</span>
+<span id="cb33-23"><a href="data-processing.html#cb33-23"></a>    <span class="dt">names_from =</span> <span class="st">&quot;time&quot;</span>,</span>
+<span id="cb33-24"><a href="data-processing.html#cb33-24"></a>    <span class="dt">values_from =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb33-25"><a href="data-processing.html#cb33-25"></a>  )</span>
+<span id="cb33-26"><a href="data-processing.html#cb33-26"></a></span>
+<span id="cb33-27"><a href="data-processing.html#cb33-27"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb33-28"><a href="data-processing.html#cb33-28"></a>  <span class="kw">head</span>(media_long, <span class="dt">n=</span> <span class="dv">20</span>)</span>
+<span id="cb33-29"><a href="data-processing.html#cb33-29"></a>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="right">wave</th>
+<th align="left">medium</th>
+<th align="right">estimate</th>
+<th align="right">minutes</th>
+<th align="right">hours</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">music</td>
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">films</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">tv</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">games</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">books</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">magazines</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">1</td>
+<td align="left">audiobooks</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">music</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">films</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">tv</td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">games</td>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">books</td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">magazines</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1</td>
+<td align="right">2</td>
+<td align="left">audiobooks</td>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">music</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">films</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">tv</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">games</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">books</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">pp_2</td>
+<td align="right">1</td>
+<td align="left">magazines</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Next, I need to select only those media which participants didn’t say they used at the first wave.
+Below, I select those, add a marker for that id by medium combination, and then add that marker to the long data frame.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-processing.html#cb34-1"></a><span class="co"># select id by medium combinations that didn&#39;t give an estimate in the fist wave (aka the only NA entries)</span></span>
+<span id="cb34-2"><a href="data-processing.html#cb34-2"></a>markers &lt;-<span class="st"> </span></span>
+<span id="cb34-3"><a href="data-processing.html#cb34-3"></a><span class="st">  </span>media_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-4"><a href="data-processing.html#cb34-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(estimate)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-5"><a href="data-processing.html#cb34-5"></a><span class="st">  </span><span class="kw">select</span>(id, medium) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-6"><a href="data-processing.html#cb34-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">selected =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb34-7"><a href="data-processing.html#cb34-7"></a></span>
+<span id="cb34-8"><a href="data-processing.html#cb34-8"></a><span class="co"># add those markers to the long data frame</span></span>
+<span id="cb34-9"><a href="data-processing.html#cb34-9"></a>media_long &lt;-<span class="st"> </span></span>
+<span id="cb34-10"><a href="data-processing.html#cb34-10"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb34-11"><a href="data-processing.html#cb34-11"></a>    media_long,</span>
+<span id="cb34-12"><a href="data-processing.html#cb34-12"></a>    markers,</span>
+<span id="cb34-13"><a href="data-processing.html#cb34-13"></a>    <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;medium&quot;</span>)</span>
+<span id="cb34-14"><a href="data-processing.html#cb34-14"></a>  )</span></code></pre></div>
+<p>Now we know on which rows to operate.
+We then check whether a medium that wasn’t used in the first wave only got a 3 or a 6 on the <code>estimate</code> in waves 2 to 6 and flag the person by medium combination that indeed doesn’t have a change.
+Afterwards, we transform those <code>no_change</code> indicators to the wide format.
+Below shows how these data look like: If it’s <code>NA</code> the person provided an estimate at the first wave.
+If it’s <code>FALSE</code> the person didn’t provide an estimate at wave 1 (so it was 0 minutes and hours), but their estimate increased or decreased over the next waves.
+If it’s <code>TRUE</code> the person didn’t provide an estimate at wave 1 and they kept not using or their use didn’t change.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-processing.html#cb35-1"></a>no_changes &lt;-<span class="st"> </span></span>
+<span id="cb35-2"><a href="data-processing.html#cb35-2"></a><span class="st">  </span>media_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-3"><a href="data-processing.html#cb35-3"></a><span class="st">  </span><span class="kw">filter</span>(selected <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># everyone who had an NA for an estimate in the first wave</span></span>
+<span id="cb35-4"><a href="data-processing.html#cb35-4"></a><span class="st">  </span><span class="kw">filter</span>(wave <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># we don&#39;t count the first wave</span></span>
+<span id="cb35-5"><a href="data-processing.html#cb35-5"></a><span class="st">  </span><span class="kw">group_by</span>(id, medium) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-6"><a href="data-processing.html#cb35-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">no_change =</span> <span class="kw">if_else</span>(estimate <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>), <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># if it&#39;s 3 or 6, we assign zero </span></span>
+<span id="cb35-7"><a href="data-processing.html#cb35-7"></a><span class="st">  </span><span class="kw">summarise</span>( <span class="co"># so that the sum is zero</span></span>
+<span id="cb35-8"><a href="data-processing.html#cb35-8"></a>    <span class="dt">no_change =</span> <span class="kw">sum</span>(no_change)</span>
+<span id="cb35-9"><a href="data-processing.html#cb35-9"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb35-10"><a href="data-processing.html#cb35-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">no_change =</span> <span class="kw">if_else</span>(no_change <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># then anything that isn&#39;t zero has at least one 1,2, or 4 in their estimate </span></span>
+<span id="cb35-11"><a href="data-processing.html#cb35-11"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-12"><a href="data-processing.html#cb35-12"></a><span class="st">  </span></span>
+<span id="cb35-13"><a href="data-processing.html#cb35-13"></a><span class="st">  </span><span class="co"># then turn to wide format</span></span>
+<span id="cb35-14"><a href="data-processing.html#cb35-14"></a><span class="st">  </span><span class="kw">pivot_wider</span>(</span>
+<span id="cb35-15"><a href="data-processing.html#cb35-15"></a>    .,</span>
+<span id="cb35-16"><a href="data-processing.html#cb35-16"></a>    <span class="dt">names_from =</span> <span class="st">&quot;medium&quot;</span>,</span>
+<span id="cb35-17"><a href="data-processing.html#cb35-17"></a>    <span class="dt">values_from =</span> <span class="st">&quot;no_change&quot;</span></span>
+<span id="cb35-18"><a href="data-processing.html#cb35-18"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-19"><a href="data-processing.html#cb35-19"></a><span class="st">  </span><span class="kw">rename_with</span>(</span>
+<span id="cb35-20"><a href="data-processing.html#cb35-20"></a>    .,</span>
+<span id="cb35-21"><a href="data-processing.html#cb35-21"></a>    <span class="dt">.cols =</span> <span class="op">-</span>id,</span>
+<span id="cb35-22"><a href="data-processing.html#cb35-22"></a>    <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_no_change&quot;</span>)</span>
+<span id="cb35-23"><a href="data-processing.html#cb35-23"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;id&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-processing.html#cb37-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(no_changes, <span class="dt">n =</span> <span class="dv">10</span>))</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="6%" />
+<col width="16%" />
+<col width="12%" />
+<col width="10%" />
+<col width="12%" />
+<col width="15%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">audiobooks_no_change</th>
+<th align="left">games_no_change</th>
+<th align="left">tv_no_change</th>
+<th align="left">books_no_change</th>
+<th align="left">magazines_no_change</th>
+<th align="left">music_no_change</th>
+<th align="left">films_no_change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">pp_1</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_10</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_100</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1000</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1001</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1002</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1003</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1004</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">pp_1005</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">pp_1006</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">TRUE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Now we can add those markers to the <code>working_file</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-processing.html#cb38-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb38-2"><a href="data-processing.html#cb38-2"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb38-3"><a href="data-processing.html#cb38-3"></a>    working_file,</span>
+<span id="cb38-4"><a href="data-processing.html#cb38-4"></a>    no_changes,</span>
+<span id="cb38-5"><a href="data-processing.html#cb38-5"></a>    <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;id&quot;</span>)</span>
+<span id="cb38-6"><a href="data-processing.html#cb38-6"></a>  )</span></code></pre></div>
+<p>Last, we transform the minutes and hours for each medium in each wave to 0, depending on whether that medium has one of the above markers telling us that the person didn’t use the medium at wave 1 and use didn’t change in subsequent waves (i.e., “not changed” or “haven’t used” on <code>estimate</code> for all subsequent waves).</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-processing.html#cb39-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb39-2"><a href="data-processing.html#cb39-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb39-3"><a href="data-processing.html#cb39-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb39-4"><a href="data-processing.html#cb39-4"></a>    </span>
+<span id="cb39-5"><a href="data-processing.html#cb39-5"></a>    <span class="co"># music</span></span>
+<span id="cb39-6"><a href="data-processing.html#cb39-6"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-7"><a href="data-processing.html#cb39-7"></a>      <span class="kw">c</span>(music_hours, music_minutes),</span>
+<span id="cb39-8"><a href="data-processing.html#cb39-8"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>music_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x) <span class="co"># need to set missing explicitly because the no_change variables contain NA if someone didn&#39;t have a missing in the first wave</span></span>
+<span id="cb39-9"><a href="data-processing.html#cb39-9"></a>    ),</span>
+<span id="cb39-10"><a href="data-processing.html#cb39-10"></a>    </span>
+<span id="cb39-11"><a href="data-processing.html#cb39-11"></a>    <span class="co"># films</span></span>
+<span id="cb39-12"><a href="data-processing.html#cb39-12"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-13"><a href="data-processing.html#cb39-13"></a>      <span class="kw">c</span>(films_hours, films_minutes),</span>
+<span id="cb39-14"><a href="data-processing.html#cb39-14"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>films_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-15"><a href="data-processing.html#cb39-15"></a>    ),</span>
+<span id="cb39-16"><a href="data-processing.html#cb39-16"></a>    </span>
+<span id="cb39-17"><a href="data-processing.html#cb39-17"></a>    <span class="co"># tv</span></span>
+<span id="cb39-18"><a href="data-processing.html#cb39-18"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-19"><a href="data-processing.html#cb39-19"></a>      <span class="kw">c</span>(tv_hours, tv_minutes),</span>
+<span id="cb39-20"><a href="data-processing.html#cb39-20"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>tv_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-21"><a href="data-processing.html#cb39-21"></a>    ),</span>
+<span id="cb39-22"><a href="data-processing.html#cb39-22"></a>    </span>
+<span id="cb39-23"><a href="data-processing.html#cb39-23"></a>    <span class="co"># video games</span></span>
+<span id="cb39-24"><a href="data-processing.html#cb39-24"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-25"><a href="data-processing.html#cb39-25"></a>      <span class="kw">c</span>(games_hours, games_minutes),</span>
+<span id="cb39-26"><a href="data-processing.html#cb39-26"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>games_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-27"><a href="data-processing.html#cb39-27"></a>    ),</span>
+<span id="cb39-28"><a href="data-processing.html#cb39-28"></a>    </span>
+<span id="cb39-29"><a href="data-processing.html#cb39-29"></a>    <span class="co"># ebooks</span></span>
+<span id="cb39-30"><a href="data-processing.html#cb39-30"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-31"><a href="data-processing.html#cb39-31"></a>      <span class="kw">c</span>(books_hours, books_minutes),</span>
+<span id="cb39-32"><a href="data-processing.html#cb39-32"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>books_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-33"><a href="data-processing.html#cb39-33"></a>    ),</span>
+<span id="cb39-34"><a href="data-processing.html#cb39-34"></a>    </span>
+<span id="cb39-35"><a href="data-processing.html#cb39-35"></a>    <span class="co"># magazines</span></span>
+<span id="cb39-36"><a href="data-processing.html#cb39-36"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-37"><a href="data-processing.html#cb39-37"></a>      <span class="kw">c</span>(magazines_hours, magazines_minutes),</span>
+<span id="cb39-38"><a href="data-processing.html#cb39-38"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>magazines_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-39"><a href="data-processing.html#cb39-39"></a>    ),</span>
+<span id="cb39-40"><a href="data-processing.html#cb39-40"></a>    </span>
+<span id="cb39-41"><a href="data-processing.html#cb39-41"></a>    <span class="co"># music</span></span>
+<span id="cb39-42"><a href="data-processing.html#cb39-42"></a>    <span class="kw">across</span>(</span>
+<span id="cb39-43"><a href="data-processing.html#cb39-43"></a>      <span class="kw">c</span>(audiobooks_hours, audiobooks_minutes),</span>
+<span id="cb39-44"><a href="data-processing.html#cb39-44"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>((wave <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>audiobooks_no_change <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dv">0</span>, .x, <span class="dt">missing =</span> .x)</span>
+<span id="cb39-45"><a href="data-processing.html#cb39-45"></a>    )</span>
+<span id="cb39-46"><a href="data-processing.html#cb39-46"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb39-47"><a href="data-processing.html#cb39-47"></a><span class="st">  </span></span>
+<span id="cb39-48"><a href="data-processing.html#cb39-48"></a><span class="st">  </span><span class="co"># no need anymore for the variables we added</span></span>
+<span id="cb39-49"><a href="data-processing.html#cb39-49"></a><span class="st">  </span><span class="kw">select</span>(</span>
+<span id="cb39-50"><a href="data-processing.html#cb39-50"></a>    <span class="op">-</span><span class="kw">ends_with</span>(<span class="st">&quot;no_change&quot;</span>)</span>
+<span id="cb39-51"><a href="data-processing.html#cb39-51"></a>  )</span></code></pre></div>
+<p>Let’s do a sanity check: all <code>minutes</code> and <code>hours</code> items should now have entries because they were forced response (or because we set them to zero).
+That’s indeed the case, so all looking good.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-processing.html#cb40-1"></a>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb40-2"><a href="data-processing.html#cb40-2"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb40-3"><a href="data-processing.html#cb40-3"></a>    <span class="kw">across</span>(</span>
+<span id="cb40-4"><a href="data-processing.html#cb40-4"></a>      <span class="kw">c</span>(<span class="kw">contains</span>(<span class="st">&quot;minutes&quot;</span>), </span>
+<span id="cb40-5"><a href="data-processing.html#cb40-5"></a>        <span class="kw">contains</span>(<span class="st">&quot;hours&quot;</span>)),</span>
+<span id="cb40-6"><a href="data-processing.html#cb40-6"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(.x))</span>
+<span id="cb40-7"><a href="data-processing.html#cb40-7"></a>      )</span>
+<span id="cb40-8"><a href="data-processing.html#cb40-8"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb40-9"><a href="data-processing.html#cb40-9"></a><span class="st">  </span><span class="kw">gather</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 14 x 2
+##    key                value
+##    &lt;chr&gt;              &lt;int&gt;
+##  1 music_minutes          0
+##  2 films_minutes          0
+##  3 tv_minutes             0
+##  4 games_minutes          0
+##  5 books_minutes          0
+##  6 magazines_minutes      0
+##  7 audiobooks_minutes     0
+##  8 music_hours            0
+##  9 films_hours            0
+## 10 tv_hours               0
+## 11 games_hours            0
+## 12 books_hours            0
+## 13 magazines_hours        0
+## 14 audiobooks_hours       0</code></pre>
+<p>After all this wrangling we’re finally able to look at how many responses we have per medium per wave.
+Actually, the answer is straightforward now: everyone who finished a wave either provided minutes and hours estimates for all media, or they didn’t which means we set them to 0.
+In other words, <em>the complete responses per wave are also the complete responses per medium.</em></p>
 
+</div>
+</div>
 </div>
             </section>
 
