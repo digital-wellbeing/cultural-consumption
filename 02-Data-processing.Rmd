@@ -24,8 +24,10 @@ example_ids <-
 
 knitr::kable(
   example_ids,
-  caption = "Example of how ID variables look"
-)
+  caption = "Example of how ID variables look like",
+  full_width = TRUE
+) %>% 
+  kable_styling(font_size = 8)
 ```
 
 Unfortunately, the `id` column from the example isn't included in the raw data, so we'll have to recreate participant IDs that are constant across waves.
@@ -53,8 +55,8 @@ The steps, concretely:
 6. We repeat that until we're at the last ID and have all IDs for that participant stored in a vector.
 7. Then a row gets assigned the participant ID (to the existing, but empty `id` variable) if any of the wave ID variables have a match in the extracted IDs.
 
-On my machine, the below code takes about 30 seconds.
-```{r assign-pp-id}
+On my machine, the below code takes about two minutes seconds.
+```{r assign-pp-id, cache=TRUE}
 # the unique wave 2 IDs
 ids <- waves_2_to_6 %>% 
   pull(transaction_id) %>% 
@@ -188,8 +190,7 @@ working_file <-
   )
 
 # assign an id to those in wave 1 who have an NA in the id column because they didn't participate in later waves
-# we can do this easily with coalesce, for which we create a vector that continues from the current max ID until
-# each participant with missing ID has one
+# we can do this easily with coalesce, for which we create a vector that continues from the current max ID until each participant with missing ID has one
 working_file <- 
   working_file %>% 
   mutate(
@@ -534,7 +535,7 @@ If they're 0, participants hadn't used any of the media in the three months befo
 Note that I keep those filter variables as numeric for processing later.
 After we're done with the filter variables, we can also delete the individual ones.
 
-Note that I check at the beginning of the code chunk whether any of those filter variables have missing values, but it seems the survey had forced responses here, so we don't have missings.
+Note that I first check whether any of those filter variables have missing values, but it seems the survey had forced responses here, so we don't have missings.
 ```{r check-missings-filter}
 # check whether any of the filter variables (at wave 1, when they were asked) have missing values
 working_file %>% 
@@ -547,11 +548,16 @@ working_file %>%
        starts_with("shared"),
        starts_with("bought")
       ),
-      ~unique(is.na(.x))
+      ~ unique(is.na(.x))
     )
+  ) %>%
+  pivot_longer(
+    everything(),
+    values_to = "missing"
   ) %>% 
-  t() %>% 
-  knitr::kable()
+  summarise(
+    "Number of missings: " = sum(missing)
+  )
 ```
 
 While we're at it: All constant wave 1 variables now have `NA` in the subsequent wave.
@@ -704,8 +710,8 @@ I think the following information is most relevant to understand response and mi
 
 ### Participants per wave
 
-First, let's see how many people completed each wave, what percentage of people have completed that exact number of wave, how many participants that have exactly this number of waves, and what percentage of participants have completed *at least* this wave.
-```{r check-wave-completes}
+First, let's see how many people completed each wave, what percentage of people have completed that exact number of wave, how many participants that have exactly this number of waves, and what percentage of participants have completed *at least* this wave (Table \@ref(tab:check-wave-completes)).
+```{r check-wave-completes, echo=FALSE}
 completion_table <- 
   working_file %>% 
   count(id) %>% 
@@ -721,7 +727,11 @@ completion_table <-
   ) %>% 
   as_tibble()
 
-knitr::kable(completion_table)
+knitr::kable(
+  completion_table,
+  caption = "Response rates"
+) %>% 
+  kable_styling(font_size = 15)
 ```
 
 ### Responses per wave and medium
@@ -738,12 +748,12 @@ For wave 1, then, they didn't provide the minutes and hours they spent on audio 
 In wave 2, they were then asked how their audio book use had changed since the last survey.
 If they answered anything but the sixth answer option (i.e., they still hadn't listened to audio books), they were asked to report how many minutes and hours they had used audio books.
 
-Here's why that can be problematic: The participants below hadn't listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn't changed (i.e., selected `3` on the `audiobooks_estimate` question).
+Here's why that can be problematic: The participant below (\@ref(tab:example-filter-change)) hadn't listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn't changed (i.e., selected `3` on the `audiobooks_estimate` question).
 But the participant was still asked about their minutes and hours - which is why they filled in bogus numbers.
-Minutes and hours were force response as far as I can tell.
+Minutes and hours were forced response as far as I can tell.
 I wouldn't take those estimates seriously, because the participant was forced to respond to minutes and hours.
 We see that in the following waves, they selected the option that they hadn't listened to audiobooks.
-```{r example-filter-change}
+```{r example-filter-change, echo=FALSE}
 working_file %>% 
   filter(id == "pp_7") %>%
   filter(filter_audiobooks == 0) %>%
@@ -755,18 +765,25 @@ working_file %>%
     audiobooks_minutes,
     audiobooks_hours
   ) %>% 
-  knitr::kable()
+  knitr::kable(
+    .,
+    caption = "Example of a participant with no change in use"
+  ) %>% 
+  kable_styling(font_size = 15)
 ```
 
 Before we turn to those cases where we can tell a participant didn't want to provide a use estimate, we need to decide what to do with the filter questions in the first wave.
-For our research question, we're interested in *how variations in amount of use relate to well-being*, not what that relation is *among users*.
-Therefore, if someone says that they didn't use a medium in the three months before the first wave, they are saying that they *spent zero amount of time engaging with that medium*.
+For our research question, we're interested in **how variations in amount of use relate to well-being**, not what that relation is **among users**.
+Therefore, if someone says that they didn't use a medium in the three months before the first wave, they are saying that they **spent zero time engaging with that medium**.
 The filter questions didn't ask whether a user has a device they can use to engage with those content categories or whether they had any of the media.
-So the filter question didn't ask whether participants were *able* to engage with a category.
-It asked *whether people used a medium*.
+So the filter question didn't ask whether participants were **able** to engage with a category.
+It asked **whether people used a medium**.
 Therefore, it fits our research question to treat those values as zero.
 
-Below, I'll set all time variables at the first wave to zero that were skipped in the survey because participants said they didn't use the medium in the filter questions.
+Below, I'll set all time variables at the first wave to `-99` that were skipped in the survey because participants said they didn't use the medium in the filter questions.
+I choose `-99` to be able to distingiush "natural" zeros (so zeros participants actually filled in) from our imputed zeros.
+I'll turn those `-99` to zeros later when we inspect data quality.
+
 There's probably a sleek way to write a function that pulls variable names and matches those with the conditional commands in the code, but that's above my skill level.
 ```{r set-nonuse-to-zero}
 working_file <- 
@@ -776,52 +793,69 @@ working_file <-
     # music
     across(
       c(music_hours, music_minutes),
-      ~ if_else((wave == 1 & filter_music == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_music == 0), -99, .x)
     ),
     
     # films
     across(
       c(films_hours, films_minutes),
-      ~ if_else((wave == 1 & filter_films == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_films == 0), -99, .x)
     ),
     
     # tv
     across(
       c(tv_hours, tv_minutes),
-      ~ if_else((wave == 1 & filter_tv == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_tv == 0), -99, .x)
     ),
     
     # video games
     across(
       c(games_hours, games_minutes),
-      ~ if_else((wave == 1 & filter_video_games == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_video_games == 0), -99, .x)
     ),
     
     # ebooks
     across(
       c(books_hours, books_minutes),
-      ~ if_else((wave == 1 & filter_ebooks == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_ebooks == 0), -99, .x)
     ),
     
     # magazines
     across(
       c(magazines_hours, magazines_minutes),
-      ~ if_else((wave == 1 & filter_magazines == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_magazines == 0), -99, .x)
     ),
     
-    # music
+    # audiobooks
     across(
       c(audiobooks_hours, audiobooks_minutes),
-      ~ if_else((wave == 1 & filter_audiobooks == 0), 0, .x)
+      ~ if_else((wave == 1 & filter_audiobooks == 0), -99, .x)
     )
   )
 ```
 
+Also, when we look at the codebook, we see that hours and minutes were coded such that 0 = 1, 2 = 1, etc.
+This means someone who has 24 hours actually has 23 hours.
+Someone who has 60 minutes actually has 59 minutes.
+Therefore, I subtract one from each hour and minute variable to get the real estimate.
+```{r transform-hours-minutes}
+working_file <- 
+  working_file %>% 
+  mutate(
+    across(
+      c(
+        contains("hours"),
+        contains("minutes")
+      ),
+      ~ if_else(.x != -99, .x - 1, .x) # we maintain the artificial zero
+    )
+  )
+```
 
 Now, when participants said they didn't use a medium for any wave, in the next wave they're still presented the `estimate` question.
-When they answered anything but that they didn't use the medium, they were asked to provide minutes and hours estimates.
+When they answered anything but that they didn't use the medium, they were asked to provide minutes and hours estimates (see the example participant above).
 In those hours and minutes survey questions, they were shown what they said in the previous wave.
-Crucially, they saw their estimate from the previous wave *after they had given their estimate*.
+Crucially, they saw their estimate from the previous wave **after they had given their estimate**.
 
 So when I used 0 minutes in the previous week but forget what I said in the previous wave, it's not unrealistic that I select "a lot less" on the `estimate` question.
 In my mind, estimating use in relation to previous time points and giving an absolute estimate of minutes and hours are two separate psychological retrieval processes.
@@ -836,7 +870,8 @@ I'll do exclusions in the next section when I look at data quality.
 For now, let's deal with those few cases that are as clear-cut as the one presented above.
 First some house keeping.
 If participants indicated on one of the `estimate` questions that they didn't use that medium in the previous week (only applicable in waves 2 to 6), they'll receive an `NA` on their time estimates.
-So we'll first set time estimates to 0 if participants say that they didn't use a medium.
+So we'll first set time estimates to `-999` if participants say that they didn't use a medium, following the same logic I outlined above.
+I use `-999` instead of `-99` like above to be able to distinguish between imputed zeros in the first wave and imputed zeros in later waves.
 ```{r didnt-use-medium}
 working_file <- 
   working_file %>% 
@@ -845,43 +880,43 @@ working_file <-
     # music
     across(
       c(music_hours, music_minutes),
-      ~ if_else((wave != 1 & music_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & music_estimate == 6), -999, .x)
     ),
     
     # films
     across(
       c(films_hours, films_minutes),
-      ~ if_else((wave != 1 & films_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & films_estimate == 6), -999, .x)
     ),
     
     # tv
     across(
       c(tv_hours, tv_minutes),
-      ~ if_else((wave != 1 & tv_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & tv_estimate == 6), -999, .x)
     ),
     
     # video games
     across(
       c(games_hours, games_minutes),
-      ~ if_else((wave != 1 & games_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & games_estimate == 6), -999, .x)
     ),
     
     # ebooks
     across(
       c(books_hours, books_minutes),
-      ~ if_else((wave != 1 & books_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & books_estimate == 6), -999, .x)
     ),
     
     # magazines
     across(
       c(magazines_hours, magazines_minutes),
-      ~ if_else((wave != 1 & magazines_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & magazines_estimate == 6), -999, .x)
     ),
     
-    # music
+    # audiobooks
     across(
       c(audiobooks_hours, audiobooks_minutes),
-      ~ if_else((wave != 1 & audiobooks_estimate == 6), 0, .x)
+      ~ if_else((wave != 1 & audiobooks_estimate == 6), -999, .x)
     )
   )
 ```
@@ -892,9 +927,9 @@ This applies only to those who didn't use a medium in the first wave.
 If you used a medium in the first wave and said that your time remained the same, you shouldn't get a zero.
 
 Setting instances of time with a medium within a participant but across waves to 0 requires some serious data wrangling (or my coding game isn't strong enough...).
-To be able to assess who *only gave 3 or 6* as an estimate for a medium for waves 2 through 6, we first transform the data to long format.
-In Table X I display how the data look like after transformation.
-```{r media-to-long}
+To be able to assess who **only gave 3 or 6** as an estimate for a medium for waves 2 through 6, we first transform the data to long format.
+In Table \@ref(tab:media-to-long), I display how the data look like after transformation.
+```{r media-to-long, echo=FALSE}
 media_long <- 
 
   # first turn long by filter variables
@@ -922,7 +957,8 @@ media_long <-
   )
 
 knitr::kable(
-  head(media_long, n= 20)
+  head(media_long, n= 20),
+  caption = "Data in long format"
 )
 ```
 
@@ -975,8 +1011,15 @@ no_changes <-
     .cols = -id,
     ~ paste0(., "_no_change")
   )
+```
 
-knitr::kable(head(no_changes, n = 10))
+Table \@ref(tab:table-no-changes) shows how these markers look like.
+```{r table-no-changes, echo=FALSE}
+knitr::kable(
+  head(no_changes, n = 10),
+  caption = "Markers for whether someone had no change from wave 1 through wave 2 or not, per medium"
+) %>% 
+  kable_styling(font_size =  7)
 ```
 
 Now we can add those markers to the `working_file`.
@@ -990,6 +1033,8 @@ working_file <-
 ```
 
 Last, we transform the minutes and hours for each medium in each wave to 0, depending on whether that medium has one of the above markers telling us that the person didn't use the medium at wave 1 and use didn't change in subsequent waves (i.e., "not changed" or "haven't used" on `estimate` for all subsequent waves).
+Like above, we use `-9999` as an indicator for zero, so we know that `-9999` estimates are imputed zeros based on the person not changing their use after having said they don't use a medium in the first wave.
+`-999` is just someone saying they didn't use a medium and `-99` is not having used a medium in the first wave.
 ```{r zero-estimates}
 working_file <- 
   working_file %>% 
@@ -998,43 +1043,43 @@ working_file <-
     # music
     across(
       c(music_hours, music_minutes),
-      ~ if_else((wave != 1 & music_no_change == TRUE), 0, .x, missing = .x) # need to set missing explicitly because the no_change variables contain NA if someone didn't have a missing in the first wave
+      ~ if_else((wave != 1 & music_no_change == TRUE), -9999, .x, missing = .x) # need to set missing explicitly because the no_change variables contain NA if someone didn't have a missing in the first wave
     ),
     
     # films
     across(
       c(films_hours, films_minutes),
-      ~ if_else((wave != 1 & films_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & films_no_change == TRUE & .x != - 999), -9999, .x, missing = .x) # don't override the -99
     ),
     
     # tv
     across(
       c(tv_hours, tv_minutes),
-      ~ if_else((wave != 1 & tv_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & tv_no_change == TRUE & .x != - 999), -9999, .x, missing = .x)
     ),
     
     # video games
     across(
       c(games_hours, games_minutes),
-      ~ if_else((wave != 1 & games_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & games_no_change == TRUE & .x != - 999), -9999, .x, missing = .x)
     ),
     
     # ebooks
     across(
       c(books_hours, books_minutes),
-      ~ if_else((wave != 1 & books_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & books_no_change == TRUE & .x != - 999), -9999, .x, missing = .x)
     ),
     
     # magazines
     across(
       c(magazines_hours, magazines_minutes),
-      ~ if_else((wave != 1 & magazines_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & magazines_no_change == TRUE & .x != - 999), -9999, .x, missing = .x)
     ),
     
-    # music
+    # audiobooks
     across(
       c(audiobooks_hours, audiobooks_minutes),
-      ~ if_else((wave != 1 & audiobooks_no_change == TRUE), 0, .x, missing = .x)
+      ~ if_else((wave != 1 & audiobooks_no_change == TRUE & .x != - 999), -9999, .x, missing = .x)
     )
   ) %>% 
   
@@ -1058,6 +1103,766 @@ working_file %>%
   gather()
 ```
 
+In contrast, the estimates will still contain `NA`s if people didn't use a medium in the first wave because the survey had them skip those items. 
+
 After all this wrangling we're finally able to look at how many responses we have per medium per wave.
 Actually, the answer is straightforward now: everyone who finished a wave either provided minutes and hours estimates for all media, or they didn't which means we set them to 0.
-In other words, *the complete responses per wave are also the complete responses per medium.*
+In other words, **the complete responses per wave are also the complete responses per medium**.
+
+## Data quality and exclusions
+
+In this section, we inspect implausible values, strange response patterns, and potential outliers.
+
+### Implausible values
+
+Okay, first let's check that the maximum hour reported is indeed 23 and the maximum minutes 59.
+Table \@ref(tab:max-hours-minutes) shows that that's the case.
+```{r max-hours-minutes}
+working_file %>% 
+  summarise(
+  across(
+    c(contains("hours"), contains("minutes")),
+    ~ max(.x, na.rm = T)
+  )
+  ) %>% 
+  gather() %>% 
+  knitr::kable(
+    .,
+    caption = "Maximum values of hours and minutes, per medium"
+  )
+```
+
+Alright, next we did a lot of work on `working_file`, and `media_long` isn't up to date anymore, which is why I turn the working file into the long format once more because it's easier for some plotting.
+```{r media-to-long2}
+media_long <- 
+
+  # first turn long by filter variables
+  pivot_longer(
+    working_file %>% 
+      select(
+        id,
+        wave,
+        contains("estimate"),
+        contains("minutes"),
+        contains("hours")
+      ),
+    c(-id, -wave),
+    names_to = c("medium", "time"),
+    values_to = "value",
+    names_sep = "_"
+  ) %>%
+  
+  # now the medium and time are mixed up in the same column, so we spread them 
+  pivot_wider(
+    .,
+    id:medium,
+    names_from = "time",
+    values_from = "value"
+  )
+```
+
+Now let's see what proportion of minutes and hours we imputed (aka placeholders for zeros).
+We turned values into `-99` if they were in the first wave on a medium a user hadn't used; to `-999` if a user said they hadn't used a medium in the waves after that; and `-9999` if a user hadn't used a medium in the first wave and reported no changes in all following waves.
+In Table \@ref(tab:table-imputed-zeros-minutes), we see we had to impute the most zeros for audiobooks.
+```{r table-imputed-zeros-minutes, echo=FALSE}
+media_long %>% 
+  count(medium, minutes) %>% 
+  pivot_wider(
+    names_from = minutes,
+    values_from = "n"
+  ) %>% 
+  mutate(
+    Nonzero = rowSums(select(., `1`:`56`), na.rm = TRUE)
+  ) %>% 
+  rename(
+    "Zeros for no change" = `-9999`,
+    "Zeros for no use" = `-999`,
+    "Zeros for first wave" = `-99`,
+    "Natural zeros" = `0`
+  ) %>% 
+  select(medium, contains("zero"), Nonzero) %>% 
+  mutate(
+    Total = rowSums(select(., `Zeros for no change`:Nonzero)),
+    "Proportion no change" = round(`Zeros for no change` / Total * 100, digits = 2),
+    "Proportion no use" = round(`Zeros for no use` / Total * 100, digits = 2),
+    "Proportion first wave" = round(`Zeros for first wave` / Total * 100, digits = 2),
+    "Porportion natural" = round(`Natural zeros` / Total * 100, digits = 2),
+    "Proportion Nonzero" = round(Nonzero / Total * 100, digits = 2)
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Proportion of imputed and natural zero minutes"
+  )
+```
+
+Next, we do the same thing for hours.
+In Table \@ref(tab:table-imputed-zeros-hours), we see a similar pattern.
+```{r table-imputed-zeros-hours, echo=FALSE}
+media_long %>% 
+  count(medium, hours) %>% 
+  pivot_wider(
+    names_from = hours,
+    values_from = "n"
+  ) %>% 
+  mutate(
+    Nonzero = rowSums(select(., `1`:`22`), na.rm = TRUE)
+  ) %>% 
+  rename(
+    "Zeros for no change" = `-9999`,
+    "Zeros for no use" = `-999`,
+    "Zeros for first wave" = `-99`,
+    "Natural zeros" = `0`
+  ) %>% 
+  select(medium, contains("zero"), Nonzero) %>% 
+  mutate(
+    Total = rowSums(select(., `Zeros for no change`:Nonzero)),
+    "Proportion no change" = round(`Zeros for no change` / Total * 100, digits = 2),
+    "Proportion no use" = round(`Zeros for no use` / Total * 100, digits = 2),
+    "Proportion first wave" = round(`Zeros for first wave` / Total * 100, digits = 2),
+    "Porportion natural" = round(`Natural zeros` / Total * 100, digits = 2),
+    "Proportion Nonzero" = round(Nonzero / Total * 100, digits = 2)
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Proportion of imputed and natural zero hours"
+  )
+```
+
+Ultimately, these zero imputations are just a matter of how many nonzero entries a medium had to begin with.
+In other words: The more participants used a medium, the lower the proportion of imputed zeros for any reason.
+Also, someone putting down one hour and zero minutes will have a zero up here, so these tables aren't terribly informative.
+
+How much total time is zero is much more informative.
+Right now, hours and minutes are still separate, so we'll create a `time` variable that maintains the negative placeholders we inserted above.
+```{r create-time}
+media_long <- 
+  media_long %>% 
+  mutate(
+    # if minutes isn't negative, create time variable to maintain the placeholders
+    time = round(if_else(minutes >= 0, hours + (minutes / 60), minutes), digits = 1)
+  )
+```
+
+In Table \@ref(tab:table-imputed-zeros-times), we see a clearer pattern: The media with the most use (e.g., TV, music, films) have low imputed zeros, whereas those with little use (especially audio books) have a high amount of imputed zeros.
+That's in line with the high proportion of imputed values for no use (i.e., selecting not having used in waves 2 to 6) for the little used media.
+```{r table-imputed-zeros-times, echo=FALSE}
+media_long %>% 
+  count(medium, time) %>% 
+  pivot_wider(
+    names_from = time,
+    values_from = "n"
+  ) %>%  
+  mutate(
+    Nonzero = rowSums(select(., `0.1`:`21.7`), na.rm = TRUE)
+  ) %>% 
+  rename(
+    "Zeros for no change" = `-9999`,
+    "Zeros for no use" = `-999`,
+    "Zeros for first wave" = `-99`,
+    "Natural zeros" = `0`
+  ) %>% 
+  select(medium, contains("zero"), Nonzero) %>% 
+  mutate(
+    Total = rowSums(select(., `Zeros for no change`:Nonzero)),
+    "Proportion no change" = round(`Zeros for no change` / Total * 100, digits = 2),
+    "Proportion no use" = round(`Zeros for no use` / Total * 100, digits = 2),
+    "Proportion first wave" = round(`Zeros for first wave` / Total * 100, digits = 2),
+    "Porportion natural" = round(`Natural zeros` / Total * 100, digits = 2),
+    "Proportion Nonzero" = round(Nonzero / Total * 100, digits = 2)
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Proportion of imputed and natural zero times"
+  )
+```
+
+Let's turn those negative values (i.e., the placeholders for zeros) into actual zeros and check for the overall occurrence of all zeros in relation to nonzero values.
+```{r placeholders-to-zeros}
+working_file <- 
+  working_file %>% 
+  mutate(
+    across(
+      c(contains("hours"), contains("minutes")),
+      ~ if_else(.x < 0, 0, .x) # if negative, turn into zero
+    )
+  )
+
+media_long <- 
+  media_long %>% 
+  mutate(
+    across(
+      c(contains("hours"), contains("minutes")),
+      ~ if_else(.x < 0, 0, .x) # same here
+    ),
+    
+    time = round(hours + (minutes / 60), digits = 1)
+  )
+```
+
+Then we'll show zeros vs. nonzeros in Table \@ref(tab:zero-times-table).
+The table basically summarizes all tables so far, showing the popularity of the medium and how much we had to impute.
+```{r zero-times-table, echo=FALSE}
+media_long %>% 
+  group_by(medium) %>% 
+  count(time == 0) %>% 
+  pivot_wider(
+    names_from = `time == 0`,
+    values_from = "n"
+  ) %>% 
+  rename(
+    "Above 0h" = `FALSE`,
+    "0h" = `TRUE`
+  ) %>% 
+  mutate(
+    Proportion = round(`0h` / sum(c(`Above 0h`, `0h`)) * 100, digits = 2)
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Proportion of 0 hours, per medium"
+  )
+```
+
+Alright, next we'll visually inspect the distribution of self-reported use times per medium.
+We'll be working with the `working_file` again, for which we need to calculate the time per medium.
+Like before, I'll do that manually for all seven media.
+```{r get-time-per-medium}
+working_file <- 
+  working_file %>% 
+  mutate(
+    
+    # music
+    music_time = round(music_hours + (music_minutes / 60), digits = 1),
+    
+    # films
+    films_time = round(films_hours + (films_minutes / 60), digits = 1),
+    
+    # tv
+    tv_time = round(tv_hours + (tv_minutes / 60), digits = 1),
+    
+    # video games
+    games_time = round(games_hours + (games_minutes / 60), digits = 1),
+    
+    # ebooks
+    books_time = round(books_hours + (books_minutes / 60), digits = 1),
+    
+    # magazines
+    magazines_time = round(magazines_hours + (magazines_minutes / 60), digits = 1),
+    
+    # audiobooks
+    audiobooks_time = round(audiobooks_hours + (audiobooks_minutes / 60), digits = 1)
+  )
+```
+
+In Figure \@ref(fig:plot-minutes-hours-per-medium) we see the distribution of use time per medium.
+Those figures aren't super accurate for practical reasons: For some media, there's so many zeros that there isn't enough jitter in the cloud which is why they're all so bunched up together on the left.
+
+There's many entries of more than 18h of **average daily use**, which is close to impossible if someone sleeps at least six hours.
+```{r plot-minutes-hours-per-medium, echo = FALSE, warning=FALSE, message=FALSE, fig.cap="Distribution of self-reported time per medium", fig.dim=c(8.5,9)}
+plot_grid( # from cowplot
+  dens_with_points(working_file, "music_time"), # custom function, see custom functions under setting up
+  dens_with_points(working_file, "films_time"),
+  dens_with_points(working_file, "tv_time"),
+  dens_with_points(working_file, "games_time"),
+  dens_with_points(working_file, "books_time"),
+  dens_with_points(working_file, "magazines_time"),
+  dens_with_points(working_file, "audiobooks_time"),
+  labels = c(
+    "Music time", 
+    "Films time",
+    "TV time",
+    "Games time",
+    "Books time",
+    "Magazines time",
+    "Audiobooks time"
+    ),
+  ncol = 2,
+  label_size = 8,
+  hjust = 0,
+  vjust = 0,
+  label_x = 0,
+  label_y = 0.93
+)
+```
+
+In Table \@ref(tab:implausible-use-table) we see that very few entries are above 18h, relative to all other values, which is a good sign.
+```{r implausible-use-table}
+# count proportion per medium
+media_long %>% 
+  group_by(medium) %>% 
+  count(time >= 18) %>% 
+  pivot_wider(
+    names_from = `time >= 18`,
+    values_from = "n"
+  ) %>% 
+  rename(
+    "Below 18h" = `FALSE`,
+    "Above 18h" = `TRUE`
+  ) %>% 
+  mutate(
+    Proportion = round(`Above 18h` / sum(c(`Above 18h`, `Below 18h`)) * 100, digits = 2)
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Proportion of hours above 18"
+  )
+```
+
+#### Participant-level
+
+Let's follow up on those who reported 18h or more use of a medium and check whether there are any participants whose estimates we cannot really trust.
+
+We need to distinguish between completely excluding a participant (whose answers we don't trust for all waves they provided) and wave-level exclusions (when we trust the data of the participant, except for one or two waves).
+
+As for implausible values on the participant-level, I'd say the following are indicators of poor quality:
+
+1. More than 30% of time estimates participants provided (excluding zeros imputed by us) across all waves are above 18h.
+2. More than one instance of a 23h+ estimate across all waves.
+3. More than one instance where the sum of nonzero estimates is above 48h in a wave. 
+
+Let's look at the proportion of very high reported use times.
+Self-reported use is also about how much people **feel** like they used medium, so I'll be liberal here.
+I'd say we can't trust a participant if they estimated 18+ hours in > 30% of all their time estimates, across all waves.
+Below, I'll count per participant how many times they estimated 18+ hours of consumption in relation to all time estimates they provided.
+I'll not include zero times in that account because we imputed times of zero.
+```{r implausible-pp-level-1}
+implausible_pp_level_1  <- 
+  media_long %>%
+  filter(time > 0) %>% # nonzero
+  group_by(id, medium) %>% 
+  summarise(
+    above18 = sum(time >= 18),
+    below18 = sum(time < 18),
+    waves = n()
+  ) %>% 
+  ungroup() %>% 
+  group_by(id) %>% 
+  summarise(
+    above18 = sum(above18),
+    below18 = sum(below18),
+    entries = sum(waves),
+    proportion_above18 = round(above18 / entries, digits = 2)
+  ) %>% 
+  ungroup() %>% 
+  arrange(desc(proportion_above18)) %>% 
+  filter(proportion_above18 > 0.3)
+
+# store the participants that were above that threshold
+exclusions_pp_1 <- 
+  implausible_pp_level_1 %>% 
+  pull(id) %>% 
+  as.character()
+```
+
+In Table \@ref(tab:table-implausible-pp-1) we see that there's mostly participants that fulfill these exclusions who completed only a wave or two, so there's most likely a correlation between their motivation to participate and how seriously they took the survey.
+**Note: For all tables on exclusions, I show the first 15 rows.**
+```{r table-implausible-pp-1, echo=FALSE}
+knitr::kable(
+  head(implausible_pp_level_1, n = 15),
+  caption = "Proportion of respondents who reported use of 18h in more than 30% of their estimates"
+)
+```
+
+Overall, there were `r length(exclusions_pp_1)` participants who fall into the first exclusion criterion.
+Next, participants might feel like they played the whole day, so saying 23 hours of play on average is close to impossible.
+I'd say that can happen, but if it happens twice across waves, I wouldn't trust that participant.
+```{r implausible-pp-level-2}
+implausible_pp_level_2 <- 
+  media_long %>% 
+  group_by(id) %>% 
+  summarise(
+    above23 = sum(time >= 23),
+    below23 = sum(time < 23)
+  ) %>% 
+  filter(above23 > 1)
+
+# store the IDs
+exclusions_pp_2 <- 
+  implausible_pp_level_2 %>% 
+  pull(id) %>% 
+  as.character()
+```
+
+There were `r length(exclusions_pp_2)` participants who fell into the second criterion.
+In Table \@ref(tab:table-implausible-pp-2) we see that there's mostly participants that fulfill these exclusions who completed only a wave or two, so there's most likely a correlation between their motivation to participate and how seriously they took the survey.
+```{r table-implausible-pp-2, echo=FALSE}
+knitr::kable(
+  head(implausible_pp_level_2, n = 15),
+  caption = "Proportion of respondents who reported more than one instance of 23h use across waves"
+)
+```
+
+By the same logic, some weeks might feel very intense, and participants surely didn't keep track of what they reported for use throughout all media.
+So it's possible if we add up all times, there'll be instances where the sum is above 24h, even around 48h.
+After all, participants can multitask, but if they use three media at the same time for 16 hours, that's 48h.
+I'd say that can happen theoretically, but not over multiple weeks.
+So if there's more than one wave where the total is equal to or above 48h, I don't think the participant read the question correctly.
+```{r implausible-pp-level-3}
+# get total time
+working_file <- 
+  working_file %>% 
+  mutate(
+    total_time = rowSums(select(., contains("time")))
+  )
+
+# get counts of more than 48h total time
+implausible_pp_level_3 <- 
+  working_file %>% 
+  group_by(id) %>% 
+  summarise(
+    above48_count = sum(total_time >= 48)
+  ) %>% 
+  filter(above48_count > 1)
+
+# store the IDs
+exclusions_pp_3 <- 
+  implausible_pp_level_3 %>% 
+  pull(id) %>% 
+  as.character()
+```
+
+In Table \@ref(tab:table-implausible-pp-3) we see that there's a bunch of participants who had 48h of total media use more than once (in total `r length(exclusions_pp_3)`).
+```{r table-implausible-pp-3, echo=FALSE}
+knitr::kable(
+  head(implausible_pp_level_3, n = 15),
+  caption = "Respondents who reported a total media use time of 48h or more across multiple weeks"
+)
+``` 
+
+Last, let's check how many unique participants we'd need to exclude if we applied all three of those exclusion criteria (taking into account overalp).
+```{r implausible-values-pp-overlap}
+exclusions_pp <- 
+  c(exclusions_pp_1, exclusions_pp_2, exclusions_pp_3) %>% 
+  unique()
+```
+
+#### Wave-level
+
+As for implausible values on the wave-level, I'll apply the following criteria:
+
+1. Any wave that has more than two estimates of using a medium for 16h+.
+2. Any wave where the sum of use times is above 64h.
+3. Any wave where a participant estimated use of 23h or more.
+
+Again, it's probably not uncommon to report a high number if I went on a reading-binge.
+But I'd say if you sleep eight hours, reporting the rest of the time twice for a wave is suspicious, so there's probably a typo or someone didn't take the question seriously.
+```{r implausible-wave-level-1}
+implausible_wave_level_1 <- 
+  media_long %>%
+  group_by(id, wave) %>% 
+  summarise(
+    two16s = sum(time >= 16)
+  ) %>% 
+  filter(two16s > 1)
+
+# store the rows that were above that threshold
+exclusions_wave_1 <- 
+  implausible_wave_level_1 %>% 
+  select(id, wave)
+```
+
+Overall, we have `r nrow(exclusions_wave_1)` rows of data we need to exclude from `r length(unique(exclusions_wave_1$id))` participants.
+However, of those, `r sum(unique(exclusions_wave_1$id) %in% exclusions_pp)` were already identified as suspicious in the participant-level exclusions.
+
+Next, we inspect waves where even excessive multitasking per day exceeds a reasonable threshold.
+If someone multitasked with three media every waking hour, they'd have 16h x 3 = 48h.
+Therefore, we exclude waves where the sum of use times is equal or above four times all day multitasking: 16h x 3 = 64.
+```{r implausible-wave-level-2}
+implausible_wave_level_2 <- 
+  working_file %>% 
+  mutate(
+    total_time = rowSums(select(., contains("time")))
+  ) %>% 
+  filter(total_time >= 64) %>% 
+  select(id, wave, contains("time"))
+
+# store the rows
+exclusions_wave_2 <- 
+  implausible_wave_level_2 %>% 
+  select(id, wave)
+```
+
+For this criterion, we have `r nrow(exclusions_wave_2)` rows of data we need to exclude from `r length(unique(exclusions_wave_2$id))` participants.
+However, of those, `r sum(unique(exclusions_wave_2$id) %in% exclusions_pp)` were already identified as suspicious in the participant-level exclusions.
+
+Last on the wave-level, we want to exclude any row where participants estimated 23h of daily use of any medium.
+Maybe one can multitask with three media for 16h a day, but an average use of 23h **daily** for a week is close to impossible.
+On the participant level, we already had an exclusion criterion where all of people's rows were excluded if they had more than one estimate of 23h (across all waves).
+```{r implausible-wave-level-3}
+implausible_wave_level_3 <- 
+  media_long %>%
+  group_by(id, wave) %>% 
+  summarise(
+    max_time = max(time)
+  ) %>% 
+  filter(max_time >= 23)
+
+# store the rows that were above that threshold
+exclusions_wave_3 <- 
+  implausible_wave_level_3 %>% 
+  select(id, wave)
+```
+
+For this criterion, we have `r nrow(exclusions_wave_3)` rows of data we need to exclude from `r length(unique(exclusions_wave_3$id))` participants.
+However, of those, `r sum(unique(exclusions_wave_3$id) %in% exclusions_pp)` were already identified as suspicious in the participant-level exclusions.
+
+Before I remove those cases and rows from the data, I'll go to response patterns. 
+I'll do the actual exclusions at the end of this section. 
+
+### Response patterns
+
+In surveys, people who didn't take the study seriously often provide implausible values (see section above), rush, or have response patterns.
+Out of experience, response patterns are an indicator of poor data quality.
+I'll mostly be looking at straightlining, so selecting the same answer option for each item in a scale.
+Usually, straightlining isn't uncommon for, say, well-being scales, so I don't want to be too strict here and exclude valid cases.
+
+Also, if participants repeatedly provide the same time estimate **across** different media, I'd be suspicious of their responses.
+
+1. Anyone who straightlined on more than two of the identity scales (minimum of three media).
+2. Anyone who has the same total time in each wave (minimum three media and waves).
+
+For the first criterion, we calculate the variance for each identity scale (provided participants provided a response).
+If someone straightlined at three (of at least three) scales, I wouldn't trust them to take the survey seriously.
+Note that magazines and audio books didn't have identity questions.
+```{r pattern-pp-level-1}
+exclusions_pp_4 <- 
+  working_file %>% 
+  
+  # create the variance variables per row
+  rowwise() %>% 
+  mutate(
+    
+    # music identity variance
+    music_identity_sd = sd(
+      c_across(starts_with("music_identity")),
+      na.rm = TRUE
+    ),
+    
+    # films identity variance
+    films_identity_sd = sd(
+      c_across(starts_with("films_identity")),
+      na.rm = TRUE
+    ),
+    
+    # tv identity variance
+    tv_identity_sd = sd(
+      c_across(starts_with("tv_identity")),
+      na.rm = TRUE
+    ),
+    
+    # games identity variance
+    games_identity_sd = sd(
+      c_across(starts_with("games_identity")),
+      na.rm = TRUE
+    ),
+    
+    # epublishing identity variance
+    e_publishing_identity_sd = sd(
+      c_across(starts_with("e_publishing_identity")),
+      na.rm = TRUE
+    )
+  ) %>% 
+  unnest(cols = c()) %>% 
+  
+  # we're only looking at the first wave where the identity questions were asked
+  group_by(id) %>% 
+  filter(wave == 1) %>% 
+  ungroup() %>% 
+  
+  # now we check who answered at least three identity scales by summing the filer questions
+  mutate(
+    media_number = rowSums(select(., filter_music:filter_ebooks)),
+    at_least_three = if_else(media_number >= 3, 1, 0)
+  ) %>% 
+  filter(at_least_three == 1) %>% 
+  
+  # create a variable that counts how many of the variances are zero
+  mutate(
+    multiple_straightlines = rowSums(select(., ends_with("_sd")) == 0)
+  ) %>% 
+  filter(multiple_straightlines > 2) %>% 
+  
+  # and select participants
+  pull(id) %>% 
+  as.character()
+```
+
+For this criterion, we have `r length(exclusions_pp_4)` participants.
+Of those, `r sum(exclusions_pp_4 %in% exclusions_pp)` were already identified as suspicious in the participant-level exclusions previously.
+
+On to the second criterion: Someone might be very consistent and provide the same use times at each wave (excluding nonzero estimates).
+However, if a person provides the same use estimates for each medium across all waves (minimum three waves), I'd say they're just trying to get the survey done and rely on the time that they survey prompted.
+
+So below I'll check who has the same total time (i.e., reporting the same time across all media) in all of their waves.
+To avoid excluding people for whom this occurred only once, I'll set a minimum of three media and three waves.
+```{r pattern-pp-level-2}
+# get participants who have at least three waves and media use estimates
+three_media_and_waves <- 
+  working_file %>% 
+  mutate(
+    media_number = rowSums(select(., starts_with("filter"))) # minimum three media
+  ) %>% 
+  filter(media_number >= 3) %>% 
+  count(id) %>% # count waves
+  filter(n >= 3) %>% 
+  pull(id) %>% 
+  as.character()
+
+# then filter by those participants and check how many times their total times are constant
+exclusions_pp_5 <- 
+  working_file %>% 
+  filter(id %in% three_media_and_waves) %>% 
+  select(id, wave, total_time) %>% 
+  group_by(id) %>%
+  summarise(
+    distinct_times = n_distinct(total_time)
+  ) %>%
+  filter(distinct_times == 1) %>% 
+  pull(id) %>% 
+  as.character()
+```
+
+Only `r length(exclusions_pp_5)` participants fulfilled this criterion.
+Of those, `r sum(exclusions_pp_5 %in% exclusions_pp)` were already identified as suspicious in the participant-level exclusions previously.
+
+Alright, let's add those participants with response patterns to those with implausible values.
+```{r pattern-pp-overlap}
+exclusions_pp <- 
+  c(exclusions_pp, exclusions_pp_4, exclusions_pp_5) %>% 
+  unique()
+```
+
+#### Applying exclusions
+
+As a last step, we exclude those participants whom we identified as having low data quality.
+How many people we exclude will depend on what our starting sample is.
+Currently, we still have the whole sample, but for the analysis, we'll restrict valid cases to those who responded to a certain number of waves.
+
+Below in Table \@ref(tab:show-pp-exclusions) I'll show, per wave, how many people we'd exclude for each exclusion criterion plus what proportion of the valid sample (aka how many participants have at least that many waves) we have left.
+ 
+Note that some participants fulfill multiple exclusions, so the last columns shows the cumulative exclusions and proportion of the respective sample. 
+We decided to only impute an entire wave if a person has at least fives waves.
+```{r show-pp-exclusions, echo=FALSE}
+# a data frame that simply counts the data points per participant
+waves_per_id <- 
+  working_file %>% 
+  count(id)
+
+# we take the completion table from above so we have the wave and cumulative number of participants at that wave
+# then I apply the exclusion function (see custom functions in the setting up chapter) to see, per wave, how many exclusions we'd have with each exclusion criterion
+completion_table %>% 
+  select(Waves, `Participants per wave`) %>% 
+  rename(N = `Participants per wave`) %>% 
+  rowwise() %>% 
+  mutate(
+    
+    # exclusion 1
+    "Exclusion 1" = apply_exclusion(Waves, exclusions_pp_1),
+    "Exclusion 1 %" = round(1 - (`Exclusion 1` / N), digits = 4) * 100,
+    
+    # exclusion 2
+    "Exclusion 2" = apply_exclusion(Waves, exclusions_pp_2),
+    "Exclusion 2 %" = round(1 - (`Exclusion 2` / N), digits = 4) * 100,
+    
+    # exclusion 3
+    "Exclusion 3" = apply_exclusion(Waves, exclusions_pp_3),
+    "Exclusion 3 %" = round(1 - (`Exclusion 3` / N), digits = 4) * 100,
+    
+    # exclusion 4
+    "Exclusion 4" = apply_exclusion(Waves, exclusions_pp_4),
+    "Exclusion 4 %" = round(1 - (`Exclusion 4` / N), digits = 4) * 100,
+    
+    # exclusion 5
+    "Exclusion 5" = apply_exclusion(Waves, exclusions_pp_5),
+    "Exclusion 5 %" = round(1 - (`Exclusion 5` / N), digits = 4) * 100,
+    
+    # cumulative
+    "Exclusion all" = apply_all_exclusions(Waves),
+    "Exclusion all %" = round(1 - (`Exclusion all` / N), digits = 4) * 100
+  ) %>% 
+  
+  # hm, the table is quite wide like this, so I'll turn it into the long format
+  pivot_longer(
+    N:`Exclusion all %`
+  ) %>% 
+  pivot_wider(
+    names_from = Waves,
+    values_from = value,
+    names_prefix = "Wave "
+  ) %>% 
+  rename(
+    Participants = name
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Exclusions depending on how many minimum waves participants must have"
+  )
+```
+
+Let's apply those exclusions.
+```{r apply-pp-exclusions}
+# exclusions_pp contains all participant-level exclusions
+working_file <- 
+  working_file %>% 
+  filter(!id %in% exclusions_pp)
+```
+
+Now that we've applied the participant-level exclusions, we also need to take a look at wave-level exclusions.
+It's quite possible that having excluded participants with low-quality data already excluded many of their low-quality rows as well.
+```{r combine-wave-exclusions}
+# first, I'll combine all three wave-level exclusions
+exclusions_wave <- 
+  full_join(
+    exclusions_wave_1,
+    exclusions_wave_2
+  ) %>% 
+  full_join(
+    .,
+    exclusions_wave_3
+  ) %>% 
+  ungroup() %>% 
+  distinct()
+```
+
+
+Let's take the data set after participant exclusions, exclude low-quality rows (i.e., waves) and count the number of waves again.
+Table \@ref(tab:show-wave-exclusions) shows the number of participants with at least a number of waves (after participant-level exclusions) next to the same number after excluding on the wave-level.
+The sharpest drop is in the number of people who previously had completed six waves.
+That's not surprising because each unique participant in `exclusions_wave` (`r length(unique(exclusions_wave$id))` participants) who had previously completed six waves now drops down to five waves.
+Probably there's a correlation between sticking around for this long and motivation, such that motivation drops in later waves and there's a higher chance to fulfill one of the exclusion criteria.
+**Overall, `r round((nrow(exclusions_wave) / nrow(working_file2)), digits = 2) * 100`% of rows are excluded.**
+```{r show-wave-exclusions, echo=FALSE}
+# let's get the table
+working_file %>% 
+  count(id) %>% 
+  count(n) %>% 
+  rename(
+    "Waves" = n
+  ) %>% 
+  mutate(
+    "Participants per wave" = rev(cumsum(rev(nn))) # same as above, get number with at least that many rows
+  ) %>% 
+  select(-nn) %>% 
+  left_join( # then add how many are left after doing row-wise exclusions
+    .,
+  anti_join( # don't keep any rows that are in the exclusions for wave
+    working_file2,
+    exclusions_wave
+  ) %>% 
+    count(id) %>% 
+    count(n) %>% 
+    rename( # same as above, getting participants with at least that many rows but after exclusions
+      "Waves" = n
+    ) %>% 
+  mutate(
+    "Participants per wave after exclusions" = rev(cumsum(rev(nn)))
+  ) %>% 
+    select(-nn)
+  ) %>% 
+  mutate( # get proportion in reduction
+    "Reduction proportion %" = round(1 - (`Participants per wave after exclusions` / `Participants per wave`), digits = 4) * 100
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Participants with at least a number of waves before and after wave-level exclusion"
+  )
+```

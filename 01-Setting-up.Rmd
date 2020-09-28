@@ -2,7 +2,7 @@
 
 In this section, I load all libraries and define all custom functions that we need for data processing and analysis.
 Note I use the `pacman` package for loading libraries.
-```{r load-libraries}
+```{r setting-up}
 # pacman makes it easier to load and install packages
 if (!requireNamespace("pacman"))
   install.packages("pacman")
@@ -12,9 +12,87 @@ library(pacman)
 # load packages
 p_load(
   tidyverse,
-  here
+  here,
+  ggridges,
+  cowplot,
+  kableExtra
 )
 
 # set seed
 set.seed(42)
+
+# chunk options
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE
+)
 ```
+
+```{r custom-functions}
+dens_with_points <- 
+  function(
+    data,
+    variable
+  ) {
+    p <- 
+      ggplot(data, aes_string(x = variable, y = 0)) +
+      geom_density_ridges(
+        jittered_points = TRUE, 
+        position = "raincloud", 
+        fill = "darkslateblue", 
+        point_color = "darkslateblue", 
+        color = "darkslateblue", 
+        alpha = 0.5
+      ) +
+      theme_cowplot() +
+      theme(
+        axis.line=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        legend.position="none",
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank()
+      )
+    
+    return(p)
+  }
+
+# function that applies the exclusion criterion, taking the number of waves as argument plus the list of to be excluded participants
+apply_exclusion <- 
+  function(
+    wave_number,
+    exclusion_criterion
+  ){
+    N <- 
+      working_file %>% 
+      filter(id %in% (waves_per_id %>% filter(n >= wave_number) %>% pull(id))) %>% # select only those with at least this many waves
+      group_by(id) %>%
+      slice(1) %>% 
+      filter(!id %in% exclusion_criterion) %>%
+      nrow()
+    
+    return(N)
+  }
+
+# the same function as above, but this time applying all exclusions at the same time
+apply_all_exclusions <- 
+  function(
+    wave_number
+  ){
+    N <- 
+      working_file %>% 
+      filter(id %in% (waves_per_id %>% filter(n >= wave_number) %>% pull(id))) %>% 
+      group_by(id) %>% 
+      slice(1) %>% 
+      filter(!id %in% exclusions_pp) %>% 
+      nrow()
+    
+    return(N)
+  }
+```
+

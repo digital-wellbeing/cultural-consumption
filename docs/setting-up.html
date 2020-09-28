@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes" />
 
 
-<meta name="date" content="2020-09-11" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -144,6 +146,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="data-processing.html"><a href="data-processing.html#participants-per-wave"><i class="fa fa-check"></i><b>2.4.1</b> Participants per wave</a></li>
 <li class="chapter" data-level="2.4.2" data-path="data-processing.html"><a href="data-processing.html#responses-per-wave-and-medium"><i class="fa fa-check"></i><b>2.4.2</b> Responses per wave and medium</a></li>
 </ul></li>
+<li class="chapter" data-level="2.5" data-path="data-processing.html"><a href="data-processing.html#data-quality-and-exclusions"><i class="fa fa-check"></i><b>2.5</b> Data quality and exclusions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="data-processing.html"><a href="data-processing.html#implausible-values"><i class="fa fa-check"></i><b>2.5.1</b> Implausible values</a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-processing.html"><a href="data-processing.html#response-patterns"><i class="fa fa-check"></i><b>2.5.2</b> Response patterns</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html"><i class="fa fa-check"></i><b>3</b> Descriptives and visualizations</a></li>
 <li class="divider"></li>
@@ -179,11 +185,85 @@ Note I use the <code>pacman</code> package for loading libraries.</p>
 <span id="cb1-7"><a href="setting-up.html#cb1-7"></a><span class="co"># load packages</span></span>
 <span id="cb1-8"><a href="setting-up.html#cb1-8"></a><span class="kw">p_load</span>(</span>
 <span id="cb1-9"><a href="setting-up.html#cb1-9"></a>  tidyverse,</span>
-<span id="cb1-10"><a href="setting-up.html#cb1-10"></a>  here</span>
-<span id="cb1-11"><a href="setting-up.html#cb1-11"></a>)</span>
-<span id="cb1-12"><a href="setting-up.html#cb1-12"></a></span>
-<span id="cb1-13"><a href="setting-up.html#cb1-13"></a><span class="co"># set seed</span></span>
-<span id="cb1-14"><a href="setting-up.html#cb1-14"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span></code></pre></div>
+<span id="cb1-10"><a href="setting-up.html#cb1-10"></a>  here,</span>
+<span id="cb1-11"><a href="setting-up.html#cb1-11"></a>  ggridges,</span>
+<span id="cb1-12"><a href="setting-up.html#cb1-12"></a>  cowplot,</span>
+<span id="cb1-13"><a href="setting-up.html#cb1-13"></a>  kableExtra</span>
+<span id="cb1-14"><a href="setting-up.html#cb1-14"></a>)</span>
+<span id="cb1-15"><a href="setting-up.html#cb1-15"></a></span>
+<span id="cb1-16"><a href="setting-up.html#cb1-16"></a><span class="co"># set seed</span></span>
+<span id="cb1-17"><a href="setting-up.html#cb1-17"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-18"><a href="setting-up.html#cb1-18"></a></span>
+<span id="cb1-19"><a href="setting-up.html#cb1-19"></a><span class="co"># chunk options</span></span>
+<span id="cb1-20"><a href="setting-up.html#cb1-20"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</span>
+<span id="cb1-21"><a href="setting-up.html#cb1-21"></a>  <span class="dt">message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb1-22"><a href="setting-up.html#cb1-22"></a>  <span class="dt">warning =</span> <span class="ot">FALSE</span></span>
+<span id="cb1-23"><a href="setting-up.html#cb1-23"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setting-up.html#cb2-1"></a>dens_with_points &lt;-<span class="st"> </span></span>
+<span id="cb2-2"><a href="setting-up.html#cb2-2"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-3"><a href="setting-up.html#cb2-3"></a>    data,</span>
+<span id="cb2-4"><a href="setting-up.html#cb2-4"></a>    variable</span>
+<span id="cb2-5"><a href="setting-up.html#cb2-5"></a>  ) {</span>
+<span id="cb2-6"><a href="setting-up.html#cb2-6"></a>    p &lt;-<span class="st"> </span></span>
+<span id="cb2-7"><a href="setting-up.html#cb2-7"></a><span class="st">      </span><span class="kw">ggplot</span>(data, <span class="kw">aes_string</span>(<span class="dt">x =</span> variable, <span class="dt">y =</span> <span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb2-8"><a href="setting-up.html#cb2-8"></a><span class="st">      </span><span class="kw">geom_density_ridges</span>(</span>
+<span id="cb2-9"><a href="setting-up.html#cb2-9"></a>        <span class="dt">jittered_points =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb2-10"><a href="setting-up.html#cb2-10"></a>        <span class="dt">position =</span> <span class="st">&quot;raincloud&quot;</span>, </span>
+<span id="cb2-11"><a href="setting-up.html#cb2-11"></a>        <span class="dt">fill =</span> <span class="st">&quot;darkslateblue&quot;</span>, </span>
+<span id="cb2-12"><a href="setting-up.html#cb2-12"></a>        <span class="dt">point_color =</span> <span class="st">&quot;darkslateblue&quot;</span>, </span>
+<span id="cb2-13"><a href="setting-up.html#cb2-13"></a>        <span class="dt">color =</span> <span class="st">&quot;darkslateblue&quot;</span>, </span>
+<span id="cb2-14"><a href="setting-up.html#cb2-14"></a>        <span class="dt">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb2-15"><a href="setting-up.html#cb2-15"></a>      ) <span class="op">+</span></span>
+<span id="cb2-16"><a href="setting-up.html#cb2-16"></a><span class="st">      </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
+<span id="cb2-17"><a href="setting-up.html#cb2-17"></a><span class="st">      </span><span class="kw">theme</span>(</span>
+<span id="cb2-18"><a href="setting-up.html#cb2-18"></a>        <span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-19"><a href="setting-up.html#cb2-19"></a>        <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-20"><a href="setting-up.html#cb2-20"></a>        <span class="dt">axis.ticks=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-21"><a href="setting-up.html#cb2-21"></a>        <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-22"><a href="setting-up.html#cb2-22"></a>        <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-23"><a href="setting-up.html#cb2-23"></a>        <span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb2-24"><a href="setting-up.html#cb2-24"></a>        <span class="dt">panel.background=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-25"><a href="setting-up.html#cb2-25"></a>        <span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-26"><a href="setting-up.html#cb2-26"></a>        <span class="dt">panel.grid.major=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-27"><a href="setting-up.html#cb2-27"></a>        <span class="dt">panel.grid.minor=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb2-28"><a href="setting-up.html#cb2-28"></a>        <span class="dt">plot.background=</span><span class="kw">element_blank</span>()</span>
+<span id="cb2-29"><a href="setting-up.html#cb2-29"></a>      )</span>
+<span id="cb2-30"><a href="setting-up.html#cb2-30"></a>    </span>
+<span id="cb2-31"><a href="setting-up.html#cb2-31"></a>    <span class="kw">return</span>(p)</span>
+<span id="cb2-32"><a href="setting-up.html#cb2-32"></a>  }</span>
+<span id="cb2-33"><a href="setting-up.html#cb2-33"></a></span>
+<span id="cb2-34"><a href="setting-up.html#cb2-34"></a><span class="co"># function that applies the exclusion criterion, taking the number of waves as argument plus the list of to be excluded participants</span></span>
+<span id="cb2-35"><a href="setting-up.html#cb2-35"></a>apply_exclusion &lt;-<span class="st"> </span></span>
+<span id="cb2-36"><a href="setting-up.html#cb2-36"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-37"><a href="setting-up.html#cb2-37"></a>    wave_number,</span>
+<span id="cb2-38"><a href="setting-up.html#cb2-38"></a>    exclusion_criterion</span>
+<span id="cb2-39"><a href="setting-up.html#cb2-39"></a>  ){</span>
+<span id="cb2-40"><a href="setting-up.html#cb2-40"></a>    N &lt;-<span class="st"> </span></span>
+<span id="cb2-41"><a href="setting-up.html#cb2-41"></a><span class="st">      </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-42"><a href="setting-up.html#cb2-42"></a><span class="st">      </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span>(waves_per_id <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;=</span><span class="st"> </span>wave_number) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(id))) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only those with at least this many waves</span></span>
+<span id="cb2-43"><a href="setting-up.html#cb2-43"></a><span class="st">      </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span></span>
+<span id="cb2-44"><a href="setting-up.html#cb2-44"></a><span class="st">      </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-45"><a href="setting-up.html#cb2-45"></a><span class="st">      </span><span class="kw">filter</span>(<span class="op">!</span>id <span class="op">%in%</span><span class="st"> </span>exclusion_criterion) <span class="op">%&gt;%</span></span>
+<span id="cb2-46"><a href="setting-up.html#cb2-46"></a><span class="st">      </span><span class="kw">nrow</span>()</span>
+<span id="cb2-47"><a href="setting-up.html#cb2-47"></a>    </span>
+<span id="cb2-48"><a href="setting-up.html#cb2-48"></a>    <span class="kw">return</span>(N)</span>
+<span id="cb2-49"><a href="setting-up.html#cb2-49"></a>  }</span>
+<span id="cb2-50"><a href="setting-up.html#cb2-50"></a></span>
+<span id="cb2-51"><a href="setting-up.html#cb2-51"></a><span class="co"># the same function as above, but this time applying all exclusions at the same time</span></span>
+<span id="cb2-52"><a href="setting-up.html#cb2-52"></a>apply_all_exclusions &lt;-<span class="st"> </span></span>
+<span id="cb2-53"><a href="setting-up.html#cb2-53"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-54"><a href="setting-up.html#cb2-54"></a>    wave_number</span>
+<span id="cb2-55"><a href="setting-up.html#cb2-55"></a>  ){</span>
+<span id="cb2-56"><a href="setting-up.html#cb2-56"></a>    N &lt;-<span class="st"> </span></span>
+<span id="cb2-57"><a href="setting-up.html#cb2-57"></a><span class="st">      </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-58"><a href="setting-up.html#cb2-58"></a><span class="st">      </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span>(waves_per_id <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;=</span><span class="st"> </span>wave_number) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(id))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-59"><a href="setting-up.html#cb2-59"></a><span class="st">      </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-60"><a href="setting-up.html#cb2-60"></a><span class="st">      </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-61"><a href="setting-up.html#cb2-61"></a><span class="st">      </span><span class="kw">filter</span>(<span class="op">!</span>id <span class="op">%in%</span><span class="st"> </span>exclusions_pp) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-62"><a href="setting-up.html#cb2-62"></a><span class="st">      </span><span class="kw">nrow</span>()</span>
+<span id="cb2-63"><a href="setting-up.html#cb2-63"></a>    </span>
+<span id="cb2-64"><a href="setting-up.html#cb2-64"></a>    <span class="kw">return</span>(N)</span>
+<span id="cb2-65"><a href="setting-up.html#cb2-65"></a>  }</span></code></pre></div>
 
 </div>
             </section>
