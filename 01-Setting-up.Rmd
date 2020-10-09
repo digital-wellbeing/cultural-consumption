@@ -15,11 +15,16 @@ p_load(
   here,
   ggridges,
   cowplot,
-  kableExtra
+  kableExtra,
+  directlabels,
+  GGally
 )
 
 # set seed
 set.seed(42)
+
+# set theme
+theme_set(theme_cowplot())
 
 # chunk options
 knitr::opts_chunk$set(
@@ -93,6 +98,265 @@ apply_all_exclusions <-
       nrow()
     
     return(N)
+  }
+
+# raincloud plot function from https://github.com/RainCloudPlots/RainCloudPlots/blob/master/tutorial_R/R_rainclouds.R
+# Defining the geom_flat_violin function ----
+# Note: the below code modifies the
+# existing github page by removing a parenthesis in line 50
+
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+
+geom_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                             position = "dodge", trim = TRUE, scale = "area",
+                             show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomFlatViolin,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      trim = trim,
+      scale = scale,
+      ...
+    )
+  )
+}
+
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomFlatViolin <-
+  ggproto("GeomFlatViolin", Geom,
+    setup_data = function(data, params) {
+      data$width <- data$width %||%
+        params$width %||% (resolution(data$x, FALSE) * 0.9)
+
+      # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+      data %>%
+        group_by(group) %>%
+        mutate(
+          ymin = min(y),
+          ymax = max(y),
+          xmin = x,
+          xmax = x + width / 2
+        )
+    },
+
+    draw_group = function(data, panel_scales, coord) {
+      # Find the points for the line to go all the way around
+      data <- transform(data,
+        xminv = x,
+        xmaxv = x + violinwidth * (xmax - x)
+      )
+
+      # Make sure it's sorted properly to draw the outline
+      newdata <- rbind(
+        plyr::arrange(transform(data, x = xminv), y),
+        plyr::arrange(transform(data, x = xmaxv), -y)
+      )
+
+      # Close the polygon: set first and last point the same
+      # Needed for coord_polar and such
+      newdata <- rbind(newdata, newdata[1, ])
+
+      ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+    },
+
+    draw_key = draw_key_polygon,
+
+    default_aes = aes(
+      weight = 1, colour = "grey20", fill = "white", size = 0.5,
+      alpha = NA, linetype = "solid"
+    ),
+
+    required_aes = c("x", "y")
+  )
+
+# function that returns summary stats
+describe <- function(
+  dat,
+  variable,
+  trait = FALSE
+){
+  # if variable is not repeated-measures, take only one measure per participant
+  if (trait == TRUE){
+    dat <- 
+      dat %>%
+      group_by(id) %>% 
+      slice(1) %>% 
+      ungroup()
+  }
+  
+  # then get descriptives
+  descriptives <-
+    dat %>%
+    filter(!is.na(UQ(sym(variable)))) %>% # remove missing values
+    summarise(
+      across(
+        !! variable,
+        list(
+          N = ~ n(),
+          mean = mean,
+          sd = sd,
+          median = median,
+          min = min,
+          max = max,
+          cilow = ~Rmisc::CI(.x)[[3]], # lower CI
+          cihigh = ~Rmisc::CI(.x)[[1]] # upper CI
+        )
+      )
+    )
+
+  descriptives <-
+    descriptives %>%
+
+    # only keep measure
+    rename_all(
+      ~ str_remove(
+        .,
+        paste0(variable, "_")
+      )
+    ) %>%
+    mutate(
+      variable = variable,
+      range = max - min
+    ) %>%
+    relocate(variable) %>%
+    relocate(
+      range,
+      .after = max
+    )
+  
+  return(descriptives)
+}
+
+# a single raincloud plot
+single_cloud <- 
+  function(
+    raw_data,
+    summary_data,
+    variable,
+    color,
+    title,
+    trait = FALSE
+  ){
+    
+    # take only one row per person if it's a trait variable
+    if (trait == TRUE){
+      raw_data <-
+        raw_data %>% 
+        group_by(id) %>% 
+        slice(1) %>% 
+        ungroup()
+    }
+    
+    # the plot
+    p <- 
+      ggplot(
+        raw_data %>%
+          mutate(Density = 1),
+        aes(
+          x = Density,
+          y = get(variable)
+        )
+      ) +
+      geom_flat_violin( # the "cloud"
+        position = position_nudge(x = .2, y = 0),
+        adjust = 2,
+        color = NA,
+        fill = color,
+        alpha = 0.5
+      ) +
+      geom_point( # the "rain"
+        position = position_jitter(width = .15),
+        size = 1,
+        color = color,
+        alpha = 0.5
+      ) +
+      geom_point( # the mean from the summary stats
+        data = summary_data %>%
+          filter(variable == !! variable) %>%
+          mutate(Density = 1),
+        aes(
+          x = Density + 0.175,
+          y = mean
+        ),
+        color = color,
+        size = 2.5
+      ) +
+      geom_errorbar( # error bars
+        data = summary_data %>%
+          filter(variable == !! variable) %>%
+          mutate(Density = 1),
+        aes(
+          x = Density + 0.175,
+          y = mean,
+          ymin = cilow,
+          ymax = cihigh
+        ),
+        width = 0,
+        size = 0.8,
+        color = color
+      ) +
+      ylab(title) +
+      theme(
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line = element_blank()
+      ) +
+      guides(
+        color = FALSE,
+        fill = FALSE
+      ) +
+      coord_flip()
+    
+    return(p)
+  }
+
+lm_function <- 
+  function(
+    data, 
+    mapping, 
+    ...
+    ){
+  p <- 
+    ggplot(
+      data = data, 
+      mapping = mapping
+      ) + 
+    geom_point(
+      color = "#56B4E9",
+      alpha = 0.5
+    ) + 
+    geom_smooth(
+      method=lm, 
+      fill="#0072B2", 
+      color="#0072B2", 
+      ...)
+  p
+}
+
+dens_function <-
+  function(
+    data,
+    mapping,
+    ...
+  ){
+    p <- 
+      ggplot(
+        data = data,
+        mapping = mapping
+      ) +
+      geom_density(fill = "#009E73", color = NA, alpha = 0.5)
   }
 ```
 

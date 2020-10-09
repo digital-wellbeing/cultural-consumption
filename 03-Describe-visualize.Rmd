@@ -1,3 +1,1026 @@
 # Descriptives and visualizations
 
-This is where descriptive info and visualizations will go.
+## Overview
+
+In this section, I describe and visualize the variables.
+We got variables on the person-level and on the wave level.
+
+**Person-level**
+
+* Age and gender (`age`, `gender`)
+* What region of the UK participants are from (`region`)
+* What their ethnicity is (`ethnicity`)
+* What their employment status is (`employment`)
+* Whether they are the main earner (`main_earner`), what the occupation of the main earner is (`occupation_main_earner`) plus the main earner's or their own income (`income_main_earner` and `income_own`)
+* Their living situation (variables starting with `living`)
+* How COVID-19 has affected their situation (variables starting with `covid`)
+* Whether they've used a medium in the three months before the first wave (variables starting with `filter`)
+* To what extent they identify with a medium (variables ending with `identity`)
+
+**Wave-level**
+
+* How much they used a medium per wave (variables ending with `time`)
+* How much they estimated to have used a medium per wave (variables ending with `estimate`)
+* Their well-being per wave (`well_being`)
+
+## Person-level
+
+Let's have a look at the final sample.
+Overall, our sample size is N = `r working_file %>% group_by(id) %>% slice(1) %>% ungroup() %>% nrow()`.
+Participants, on average, were *M* = `r round(working_file %>% group_by(id) %>% pull(age) %>% mean, digits = 1)` years old, *SD* = `r round(working_file %>% group_by(id) %>% pull(age) %>% sd, digits = 1)`, see Figure \@ref(fig:visualize-age).
+The gender distribution is pretty equal (`r working_file %>% group_by(id) %>% slice(1) %>% ungroup() %>% filter(gender == "Female") %>% nrow()` women (`r round(working_file %>% group_by(id) %>% slice(1) %>% filter(gender == "Female") %>% nrow() / length(unique(working_file$id)), digits = 4) * 100`%), `r working_file %>% group_by(id) %>% slice(1) %>% ungroup() %>% filter(gender == "Male") %>% nrow()` men, and `r working_file %>% group_by(id) %>% slice(1) %>% ungroup() %>% filter(gender == "Other") %>% nrow()` non-binary participants).
+```{r visualize-age, echo=FALSE, fig.cap="Distribution of age"}
+age <- 
+  describe(
+    working_file,
+    "age",
+    trait = TRUE
+  )
+
+single_cloud(
+  working_file,
+  age,
+  "age",
+  "#009E73",
+  title = NULL,
+  trait = TRUE
+)
+```
+
+Alright, next let's see from what regions participants come from, Table \@ref(tab:describe-region).
+The sample is distributed pretty much long the geographical population density.
+```{r describe-region, echo=FALSE}
+working_file %>% 
+  group_by(id) %>% 
+  slice(1) %>% 
+  ungroup() %>% 
+  count(region, sort = TRUE) %>% 
+  mutate(
+    Frequency = round(n / sum(n), 3) * 100 
+  ) %>% 
+  rename(
+    Region = region,
+    N = n
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Region that participants come from"
+  )
+```
+
+Let's do the same thing for ethnicity, see Table \@ref(tab:describe-ethnicity).
+The majority of participants are White British.
+```{r describe-ethnicity, echo=FALSE}
+working_file %>% 
+  group_by(id) %>% 
+  slice(1) %>% 
+  ungroup() %>% 
+  count(ethnicity, sort = TRUE) %>% 
+  mutate(
+    Frequency = round(n / sum(n), 4) * 100 
+  ) %>% 
+  rename(
+    Ethnicity = ethnicity,
+    N = n
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Participants' ethnicity"
+  )
+```
+
+In Table \@ref(tab:describe-employment) we see that the majority of the sample are not employed full time.
+A substantial proportion are furloughed because of COVID-19.
+```{r describe-employment, echo=FALSE}
+working_file %>% 
+  group_by(id) %>% 
+  slice(1) %>% 
+  ungroup() %>% 
+  count(employment, sort = TRUE) %>% 
+  mutate(
+    Frequency = round(n / sum(n), 4) * 100 
+  ) %>% 
+  rename(
+    Employment = employment,
+    N = n
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Participants' employment"
+  )
+```
+
+Now let's check the income brackets.
+If participants were the main earner, they provided only their income.
+If participants weren't the main earner, they provided the income of the main earner and their own.
+The answers were on an ordinal scale, so adding those two up to a total income doesn't work.
+Instead, I'll simply provide a frequency table of the income of the main earner.
+
+Table \@ref(tab:describe-main-earner-income) shows the distribution of income brackets.
+We see that the majority is somewhere around UK median income.
+```{r describe-main-earner-income, echo=FALSE}
+working_file %>% 
+  group_by(id) %>% 
+  slice(1) %>% 
+  mutate(
+    Income = coalesce(income_main_earner, income_own)
+  ) %>% 
+  ungroup() %>% 
+  count(Income) %>% 
+  mutate(
+    Frequency = round(n / sum(n), 4) * 100 
+  ) %>% 
+  rename(N = n) %>% 
+  knitr::kable(
+    .,
+    caption = "Income of the household main earner"
+  )
+```
+
+Now let's inspect participants' occupation.
+Rather, that's the occupation of the main earner.
+In Table \@ref(tab:describe-main-earner-occupation) we see that the majority have a white collar job.
+```{r describe-main-earner-occupation, echo=FALSE}
+working_file %>% 
+  group_by(id) %>% 
+  slice(1) %>% 
+  ungroup() %>% 
+  count(occupation_main_earner, sort = TRUE) %>% 
+  mutate(
+    Frequency = round(n / sum(n), 4) * 100 
+  ) %>% 
+  rename(
+    "Occupation of the main earner" = occupation_main_earner,
+    N = n
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Occupation of the household main earner"
+  )
+```
+
+
+Alright, how do participants live?
+This item was a multiple choice question, so we'll have more responses than participants.
+I'll not plot the unique combinations, but rather summarize across variables.
+Participants answered this question at each wave, so we'll plot the proportions over time.
+At this point, it's easiest to first turn the data into the long format, then count, then back to wide format.
+
+Table \@ref(fig:describe-living-situation) shows that the majority are living with a partner and/or with partner and children, but also that over time those with living with a partner become fewer.
+```{r describe-living-situation, echo=FALSE, fig.cap="Living situation over time (multiple choice possible)"}
+working_file %>% 
+  select(id, wave, starts_with("living")) %>% 
+  pivot_longer(
+    c(-id, -wave),
+    names_to = "Situation",
+    values_to = "Applies"
+  ) %>% 
+  group_by(wave) %>% 
+  count(Situation, Applies) %>% 
+  ungroup() %>% 
+  pivot_wider(
+    names_from = Applies,
+    values_from = n
+  ) %>% 
+  mutate(
+    Percent = round(Yes / (No + Yes), digits = 2) * 100,
+    wave = as.factor(wave)
+  ) %>% 
+  ggplot(
+    data = .,
+    aes(
+      x = wave,
+      y = Percent,
+      color = Situation,
+      group = Situation
+    )
+  ) +
+  geom_line() +
+  scale_color_brewer(palette="Dark2") +
+  scale_colour_discrete(guide = "none") +
+  geom_dl(aes(label = Situation), method = list(dl.trans(x = x - 1), gapply.fun(d[6,]), cex = 0.8)) 
+```
+
+Let's do the same for the impact of COVID-19.
+Note that this item was a) multiple choice again, b) not all options were shown to all participants, c) asked at each wave.
+
+I'll show the proportions as a line graph, faceting by the grouping of work and parenting situation.
+Figure \@ref(fig:describe-covid-consequences) shows that the majority of participants had to work from home full time or had to stop working altogether.
+```{r describe-covid-consequences, echo=FALSE, fig.cap="Proportion of consequences of COVID-19 by demographic group"}
+# get proportions per answer of those who are employed
+working_file %>% 
+  mutate(
+    # see the survey materials, not all questions were shown to all respondents, so we create four groups, which neglects retirees and those who prefer not to say
+    covid_filter = case_when(
+      (employment %in% levels(working_file$employment)[c(1:3,6,8)] & (living_with_children == "Yes" | living_with_parents == "Yes" | living_with_partner_children == "Yes")) ~ "Working with kids/parents at home",
+      (employment %in% levels(working_file$employment)[c(1:3,6,8)] & (living_with_children == "No" & living_with_parents == "No" & living_with_partner_children == "No")) ~ "Working without kids/parents at home",
+      (employment %in% levels(working_file$employment)[c(4,5)] & (living_with_children == "Yes" | living_with_parents == "Yes" | living_with_partner_children == "Yes")) ~ "Unemployed with kids/parents at home",
+      (employment %in% levels(working_file$employment)[c(4,5)] & (living_with_children == "No" & living_with_parents == "No" & living_with_partner_children == "No")) ~ "Unemployed without kids/parents at home",
+      TRUE ~ as.character(employment)
+    )
+  )  %>% 
+  select(id, wave, starts_with("covid")) %>% 
+  pivot_longer(
+    c(-id, -wave, -covid_filter),
+    names_to = "Situation",
+    values_to = "Applies"
+  ) %>%
+  group_by(wave, covid_filter) %>% 
+  count(Situation, Applies) %>% 
+  pivot_wider(
+    names_from = Applies,
+    values_from = n
+  ) %>% 
+  mutate(
+    Percent = round(Yes / (No + Yes), digits = 2) * 100
+  ) %>% 
+  filter(!is.na(Percent)) %>% # exclude those who weren't asked that question
+  ggplot(
+    aes(
+      x = wave,
+      y = Percent,
+      color = Situation,
+      group = Situation
+    )
+  ) +
+  geom_line() +
+  scale_color_brewer(palette="Dark2") +
+  facet_wrap(~ covid_filter)
+```
+
+Alright, next let's have a look again (now that we have the final sample) at how many people had used a medium in the three months before wave 1 (Table \@ref(tab:table-media-filters)).
+```{r table-media-filters, echo=FALSE}
+working_file %>% 
+  filter(wave == 1) %>%
+  select(id, wave, starts_with("filter")) %>% 
+  pivot_longer(
+    cols = c(-id, -wave),
+    names_to = "Medium",
+    values_to = "Used"
+  ) %>% 
+  mutate(
+    Medium = str_remove(Medium, "filter_")
+  ) %>% 
+  group_by(Medium) %>% 
+  summarise(
+    Used = sum(Used),
+    "Not Used" = n() - Used,
+    Proportion = round(Used / n(), digits = 3) * 100
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Frequency of how much a medium was used at wave 1"
+  )
+```
+
+Now let's have a look at how much people identified with each medium.
+Note that people weren't asked those identity questions if they indicated that they hadn't used a medium at wave 1.
+```{r describe-identities, echo=FALSE}
+# custom function, see setting up page
+identity_descriptives <- 
+  bind_rows(
+    describe(
+      working_file,
+      "music_identity",
+      trait = TRUE
+    ),
+    describe(
+      working_file,
+      "tv_identity",
+      trait = TRUE
+    ),
+    describe(
+      working_file,
+      "films_identity",
+      trait = TRUE
+    ),
+    describe(
+      working_file,
+      "games_identity",
+      trait = TRUE
+    ),
+    describe(
+      working_file,
+      "e_publishing_identity",
+      trait = TRUE
+    )
+  ) %>% 
+  mutate(
+    across(
+      mean:cihigh,
+      ~ round(.x, digits = 2)
+    )
+  )
+
+knitr::kable(
+  identity_descriptives,
+  caption = "Descriptive information for identity scales"
+)
+```
+
+Figure \@ref(fig:identity-distributions) shows the distributions of those identity variables.
+Apparently gamers identified more with games than for example music listeners identified with music.
+```{r identity-distributions, echo=FALSE, fig.cap="Distribution of identity variables"}
+# plot_grid is from cowplot
+plot_grid(
+  single_cloud(
+    working_file,
+    identity_descriptives,
+    "music_identity",
+    "#999999",
+    title = "Music",
+    trait = TRUE
+  ),
+  single_cloud(
+    working_file,
+    identity_descriptives,
+    "tv_identity",
+    "#E69F00",
+    title = "TV",
+    trait = TRUE
+  ),
+  single_cloud(
+    working_file,
+    identity_descriptives,
+    "films_identity",
+    "#56B4E9",
+    title = "Films",
+    trait = TRUE
+  ),
+  single_cloud(
+    working_file,
+    identity_descriptives,
+    "games_identity",
+    "#009E73",
+    title = "Games",
+    trait = TRUE
+  ),
+  single_cloud(
+    working_file,
+    identity_descriptives,
+    "e_publishing_identity",
+    "#F0E442",
+    title = "E-publishing/books",
+    trait = TRUE
+  ),
+  ncol = 2
+)
+```
+
+## Wave-level
+
+Let's inspect the descriptive information for the different media.
+Table \@ref(tab:describe-time-with-zeros) shows that people used TV, music, and films the most, but spent little time on magazines and audio books.
+```{r describe-time-with-zeros, echo=FALSE}
+times_descriptives_with_zeros <- 
+  bind_rows(
+    describe(
+      working_file,
+      "music_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "tv_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "films_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "games_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "books_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "magazines_time",
+      trait = FALSE
+    ),
+    describe(
+      working_file,
+      "audiobooks_time",
+      trait = FALSE
+    )
+  ) %>% 
+  mutate(
+    across(
+      mean:cihigh,
+      ~ round(.x, digits = 2)
+    )
+  )
+
+knitr::kable(
+  times_descriptives_with_zeros,
+  caption = "Descriptive information for use time (including zero estimates)"
+)
+```
+
+Figure \@ref(fig:time-distributions-with-zeros) shows the distributions of those time variables.
+Note that most distributions are zero-inflated with a heavy skew.
+```{r time-distributions-with-zeros, echo=FALSE, fig.cap="Distribution of time variables (with zeros)"}
+plot_grid(
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "music_time",
+    "#999999",
+    title = "Music",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "tv_time",
+    "#E69F00",
+    title = "TV",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "films_time",
+    "#56B4E9",
+    title = "Films",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "games_time",
+    "#009E73",
+    title = "Games",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "books_time",
+    "#F0E442",
+    title = "E-publishing/books",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "magazines_time",
+    "#0072B2",
+    title = "Magazines",
+    trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    times_descriptives_with_zeros,
+    "audiobooks_time",
+    "#D55E00",
+    title = "Audiobooks",
+    trait = FALSE
+  ),
+  ncol = 2
+)
+```
+
+Let's also inspect those summary statistics and distributions without zeros.
+Table \@ref(tab:describe-time-without-zeros) shows the same pattern was with zeros, but overall higher means.
+Interestingly, those who listen to audiobooks report to do so for a long time per day.
+```{r describe-time-without-zeros, echo=FALSE}
+# temp file without zeros
+temp <- 
+  working_file %>% 
+  mutate(
+    across(
+      ends_with("time"),
+      ~ na_if(.x, 0)
+    ) 
+  )
+
+times_descriptives_without_zeros <- 
+  bind_rows(
+    describe(
+      temp,
+      "music_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "tv_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "films_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "games_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "books_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "magazines_time",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "audiobooks_time",
+      trait = FALSE
+    )
+  ) %>% 
+  mutate(
+    across(
+      mean:cihigh,
+      ~ round(.x, digits = 2)
+    )
+  )
+
+knitr::kable(
+  times_descriptives_without_zeros,
+  caption = "Descriptive information for use time (excluding zero estimates)"
+)
+```
+
+Figure \@ref(fig:time-distributions-without-zeros) shows a less skewed distribution once we remove zeros.
+```{r time-distributions-without-zeros, echo=FALSE, fig.cap="Distribution of time variables (without zeros)"}
+plot_grid(
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "music_time",
+    "#999999",
+    title = "Music",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "tv_time",
+    "#E69F00",
+    title = "TV",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "films_time",
+    "#56B4E9",
+    title = "Films",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "games_time",
+    "#009E73",
+    title = "Games",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "books_time",
+    "#F0E442",
+    title = "E-publishing/books",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "magazines_time",
+    "#0072B2",
+    title = "Magazines",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    times_descriptives_without_zeros,
+    "audiobooks_time",
+    "#D55E00",
+    title = "Audiobooks",
+    trait = FALSE
+  ),
+  ncol = 2
+)
+
+# remove temp file
+rm(temp)
+```
+
+As a next step, let's see how use developed over time.
+Figure \@ref(fig:use-over-time) shows that most media stay stable, except maybe an overall spike in wave 2.
+```{r use-over-time, echo=FALSE, fig.cap="Average use over time per medium"}
+# get summary stats with CI per wave in the long format
+time_per_wave <-
+  working_file %>%
+  group_by(wave) %>% 
+  summarise(
+    across(
+      c(ends_with("time")),
+      list(
+        mean = mean,
+        cilow = ~Rmisc::CI(.x)[[3]], # lower CI
+        cihigh = ~Rmisc::CI(.x)[[1]] # upper CI
+      )
+    )
+  ) %>% 
+  pivot_longer(
+    -wave,
+    names_to = "Medium",
+    values_to = "value"
+  ) %>% 
+  extract(Medium, into = c("Medium", "metric"), "(.*)_([^_]+$)") %>% # separate by last occurrence of underscore
+  pivot_wider(
+    names_from = "metric",
+    values_from = "value"
+  ) %>% 
+  mutate(
+    Medium = str_remove(Medium, "_time"),
+    Medium = tools::toTitleCase(Medium) # capitalize first letter
+  )
+  
+
+ggplot(
+  time_per_wave,
+  aes(
+    x = as.factor(wave),
+    y = mean,
+    color = Medium,
+    group = Medium
+  )
+) +
+  geom_line(size = 1) +
+  geom_errorbar(
+    aes(
+      ymin = cilow,
+      ymax = cihigh,
+      width = 0
+    )
+  ) +
+  scale_color_brewer(palette="Dark2") +
+  xlab("Wave") +
+  ylab("Average use per day (in h)")
+```
+
+Let's also check how estimates look like over time per medium.
+We'll only use answers when there was use.
+Recall that I reverse coded the estimates question, so now 1 means not having used a medium.
+I'll remove all answers where people haven't used a medium and then recode so that 1 means having used a lot less.
+Table \@ref(tab:describe-estimates) shows that, on average across all waves, participants felt like their used remained stable.
+```{r describe-estimates, echo=FALSE}
+temp <- 
+  working_file %>% 
+  mutate(
+    across(
+      ends_with("estimate"), # turn 1 (aka not used) into NA
+      ~ na_if(.x, 1)
+    ),
+    across(
+      ends_with("estimate"), # recode so that 2 becomes 1 etc.
+      ~ .x - 1
+    )
+  )
+
+estimates <- 
+  bind_rows(
+    describe(
+      temp,
+      "music_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "tv_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "films_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "games_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "books_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "magazines_estimate",
+      trait = FALSE
+    ),
+    describe(
+      temp,
+      "audiobooks_estimate",
+      trait = FALSE
+    )
+  ) %>% 
+  mutate(
+    across(
+      mean:cihigh,
+      ~ round(.x, digits = 2)
+    )
+  )
+
+knitr::kable(
+  estimates,
+  caption = "Descriptive information for estimates"
+)
+```
+
+Figure \@ref(fig:estimate-distributions) shows the typical distribution of ordinal variables.
+Even then, the mean and median are clearly around the midpoint of the scale.
+```{r estimate-distributions, echo=FALSE, fig.cap="Distribution of estimate variables"}
+plot_grid(
+  single_cloud(
+    temp,
+    estimates,
+    "music_estimate",
+    "#999999",
+    title = "Music",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "tv_estimate",
+    "#E69F00",
+    title = "TV",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "films_estimate",
+    "#56B4E9",
+    title = "Films",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "games_estimate",
+    "#009E73",
+    title = "Games",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "books_estimate",
+    "#F0E442",
+    title = "E-publishing/books",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "magazines_estimate",
+    "#0072B2",
+    title = "Magazines",
+    trait = FALSE
+  ),
+  single_cloud(
+    temp,
+    estimates,
+    "audiobooks_estimate",
+    "#D55E00",
+    title = "Audiobooks",
+    trait = FALSE
+  ),
+  ncol = 2
+)
+```
+
+Let's inspect how those estimates behave over time.
+Figure \@ref(fig:estimates-over-time) shows that there's a clear downward trend in the estimates the longer the study lasted, with the sharpest drop at wave 2 - ironically, where the self-reported use went up.
+```{r estimates-over-time, echo=FALSE, fig.cap="Average estimates over time per medium"}
+# get summary stats with CI per wave in the long format
+estimates_per_wave <-
+  temp %>%
+  group_by(wave) %>% 
+  summarise(
+    across(
+      c(ends_with("estimate")),
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        cilow = ~Rmisc::CI(na.omit(.x))[[3]], # lower CI
+        cihigh = ~Rmisc::CI(na.omit(.x))[[1]] # upper CI
+      )
+    )
+  ) %>% 
+  pivot_longer(
+    -wave,
+    names_to = "Medium",
+    values_to = "value"
+  ) %>% 
+  extract(Medium, into = c("Medium", "metric"), "(.*)_([^_]+$)") %>% # separate by last occurrence of underscore
+  pivot_wider(
+    names_from = "metric",
+    values_from = "value"
+  ) %>% 
+  mutate(
+    Medium = str_remove(Medium, "_estimate"),
+    Medium = tools::toTitleCase(Medium) # capitalize first letter
+  )
+
+
+ggplot(
+  estimates_per_wave,
+  aes(
+    x = as.factor(wave),
+    y = mean,
+    color = Medium,
+    group = Medium
+  )
+) +
+  geom_line(size = 1) +
+  geom_errorbar(
+    aes(
+      ymin = cilow,
+      ymax = cihigh,
+      width = 0
+    )
+  ) +
+  scale_color_brewer(palette="Dark2") +
+  xlab("Wave") +
+  ylab("Average estimate per day")
+```
+
+Last, let's see the overall descriptives of the well-being variable.
+Table \@ref(tab:describe-well-being) shows that well-being was above the mid-point of the scale.
+```{r describe-well-being, echo = FALSE}
+well_being <- 
+    describe(
+      working_file,
+      "well_being",
+      trait = FALSE
+    )
+
+knitr::kable(
+  well_being,
+  caption = "Well-being descriptives"
+)
+```
+
+Let's plot the distribution of overall well-being in Figure \@ref(fig:well-being-distribution).
+```{r well-being-distribution, echo=FALSE, fig.cap="Distribution of well-being across waves and participants"}
+single_cloud(
+    working_file,
+    well_being,
+    "well_being",
+    "#009E73",
+    title = "Well-being",
+    trait = FALSE
+)
+  
+```
+
+Last, let's look at how well-being develops over time.
+Figure \@ref(fig:well-being-over-time) shows that well-being is extremely stable: note the y-axis is on decimal points (range: 0 to 10), so well-being seems static.
+```{r well-being-over-time, echo=FALSE, fig.cap="Average estimates over time per medium"}
+# get summary stats with CI per wave in the long format
+well_being_per_wave <-
+  working_file %>%
+  group_by(wave) %>% 
+  summarise(
+    across(
+      well_being,
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        cilow = ~Rmisc::CI(na.omit(.x))[[3]], # lower CI
+        cihigh = ~Rmisc::CI(na.omit(.x))[[1]] # upper CI
+      )
+    )
+  ) %>% 
+  pivot_longer(
+    -wave,
+    names_to = "Metric",
+    values_to = "Wellbeing"
+  ) %>% 
+  mutate(Metric = str_remove(Metric, "well_being_")) %>% 
+  pivot_wider(
+    names_from = "Metric",
+    values_from = "Wellbeing"
+  )
+
+
+ggplot(
+  well_being_per_wave,
+  aes(
+    x = as.factor(wave),
+    y = mean,
+    group = 1
+  )
+) +
+  geom_line(
+    size = 1,
+    color = "#009E73"
+  ) +
+  geom_errorbar(
+    aes(
+      ymin = cilow,
+      ymax = cihigh,
+      width = 0
+    ),
+    color = "#009E73"
+  ) +
+  scale_color_brewer(palette="Dark2") +
+  xlab("Wave") +
+  ylab("Average well-being")
+```
+
+## Correlation matrices
+
+Let's have a look at the row correlations between the media use variables and well-being.
+Figure \@ref(fig:correlation-matrix-use-well-being) shows that a) most media use is correlated, and b) there are negative, but very small correlations between well-being and media use.
+The significance is negligible here just because the sample is so large.
+That said, we haven't done any grouping yet, so the correlation matrix treats all observations as independent, which is clearly not the case.
+```{r correlation-matrix-use-well-being, echo=FALSE, message=F, fig.cap="Correlation matrix of hours spent with a medium and well-being",fig.dim=c(14,14)}
+ggpairs(
+  data = working_file %>%
+    select(
+      contains("time"),
+      well_being
+    ) %>%
+    # remove _time appendix to make variable names shorter
+    rename_with(
+      ~ str_remove(.x, "_time"),
+      ends_with("time"),
+    ),
+  lower = list(
+    continuous = lm_function # custom helper function
+  ),
+  diag = list(
+    continuous = dens_function # custom helper function
+  )
+) +
+  theme(
+    axis.line=element_blank(),
+    axis.text.x=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.y=element_blank(),
+    axis.title.x=element_blank(),
+    legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank()
+  )
+```
+
+Figure \@ref(fig:correlation-matrix-estimates-well-being) shows the correlations between estimates of change of use and well-being.
+The pattern is similar to that of use and well-being with even smaller effect sizes.
+```{r correlation-matrix-estimates-well-being, echo=FALSE, message=F, warning=F, fig.cap="Correlation matrix of estimated time spent with a medium and well-being", fig.dim=c(14,14)}
+ggpairs(
+  data = working_file %>%
+    select(
+      contains("estimate"),
+      well_being
+    ) %>%
+    # remove _estimate appendix to make variable names shorter
+    rename_with(
+      ~ str_remove(.x, "_estimate"),
+      ends_with("estimate"),
+    ),
+  lower = list(
+    continuous = lm_function # custom helper function
+  ),
+  diag = list(
+    continuous = dens_function # custom helper function
+  )
+) +
+  theme(
+    axis.line=element_blank(),
+    axis.text.x=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.y=element_blank(),
+    axis.title.x=element_blank(),
+    legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank()
+  )
+```

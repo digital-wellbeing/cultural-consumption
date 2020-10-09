@@ -246,7 +246,7 @@ working_file <-
     living_with_partner_children = A6x2r4,
     living_with_family = A6x2r5,
     living_with_parents = A6x2r6,
-    living_with_friends = A6x2r7,,
+    living_with_friends = A6x2r7,
     region = A8,
     covid_work_home_often = A6x4r1,
     covid_work_home_always = A6x4r2,
@@ -1731,7 +1731,7 @@ exclusions_pp <-
   unique()
 ```
 
-#### Applying exclusions
+### Applying exclusions
 
 As a last step, we exclude those participants whom we identified as having low data quality.
 How many people we exclude will depend on what our starting sample is.
@@ -1829,7 +1829,7 @@ Table \@ref(tab:show-wave-exclusions) shows the number of participants with at l
 The sharpest drop is in the number of people who previously had completed six waves.
 That's not surprising because each unique participant in `exclusions_wave` (`r length(unique(exclusions_wave$id))` participants) who had previously completed six waves now drops down to five waves.
 Probably there's a correlation between sticking around for this long and motivation, such that motivation drops in later waves and there's a higher chance to fulfill one of the exclusion criteria.
-**Overall, `r round((nrow(exclusions_wave) / nrow(working_file2)), digits = 2) * 100`% of rows are excluded.**
+**Overall, `r round((nrow(exclusions_wave) / nrow(working_file)), digits = 2) * 100`% of rows are excluded.**
 ```{r show-wave-exclusions, echo=FALSE}
 # let's get the table
 working_file %>% 
@@ -1845,7 +1845,7 @@ working_file %>%
   left_join( # then add how many are left after doing row-wise exclusions
     .,
   anti_join( # don't keep any rows that are in the exclusions for wave
-    working_file2,
+    working_file,
     exclusions_wave
   ) %>% 
     count(id) %>% 
@@ -1865,4 +1865,109 @@ working_file %>%
     .,
     caption = "Participants with at least a number of waves before and after wave-level exclusion"
   )
+```
+
+## Build scales
+
+As a last step, we're creating the mean score scales.
+
+Before we do that, we have to reverse code some items.
+Both the `estimates` and the `identity` items had strongest agreement as 1.
+I find it more intuitive when larger numbers mean more agreement.
+The same applies to the well-being item about anxiety, which I will reverse code.
+```{r reverse-code}
+working_file <- 
+  working_file %>% 
+  mutate(
+    across(
+      contains("identity"),
+      ~ 5 - .x
+    ),
+    
+    across(
+      ends_with("estimate"),
+      ~ 7 - .x
+    ),
+    
+    well_being_2 = 10 - well_being_2 # starts at 0
+  )
+```
+
+
+Let's start with the identity scales; for each medium (except magazines and audiobooks), participants indicated how much that medium was part of their identity.
+```{r build-identity-scales}
+working_file <- 
+  working_file %>% 
+  mutate(
+    
+    # music
+    music_identity = rowMeans(select(., starts_with("music_identity"))),
+    
+    # films
+    films_identity = rowMeans(select(., starts_with("films_identity"))),
+    
+    # tv
+    tv_identity = rowMeans(select(., starts_with("tv_identity"))),
+    
+    # games
+    games_identity = rowMeans(select(., starts_with("games_identity"))),
+    
+    # epublishing
+    e_publishing_identity = rowMeans(select(., starts_with("e_publishing_identity"))),
+  )
+```
+
+And the well-being scales per wave.
+```{r build-well-being-scales}
+working_file <- 
+  working_file %>% 
+  mutate(
+    well_being = rowMeans(select(., starts_with("well_being"), starts_with("life_satisfaction")))
+  )
+```
+
+Before we move on to visualizations and descriptive info, I'll do some housekeeping.
+I'll reorder some variables for cosmetic purposes, only select those we need, and clean the workspace.
+```{r housekeeping-processing}
+# select relevant variables
+working_file <- 
+  working_file %>% 
+  select(
+    id:filter_audiobooks,
+    starts_with("music"),
+    starts_with("films"),
+    starts_with("tv"),
+    starts_with("games"),
+    starts_with("e_publishing"),
+    starts_with("books"),
+    starts_with("magazines"),
+    starts_with("audiobooks"),
+    total_time,
+    starts_with("life_satisfaction"),
+    starts_with("well_being"),
+    -ends_with("hours"), # we got the total time from here on
+    -ends_with("minutes"),
+  )
+
+# clean workspace
+rm(
+  markers,
+  no_changes,
+  waves_per_id,
+  an_id,
+  id_counter,
+  id_to_match,
+  ids,
+  temp_id,
+  three_media_and_waves
+)
+```
+
+And then remove those who don't have at least five waves.
+```{r only-keep-five-waves}
+working_file <- 
+  working_file %>% 
+  group_by(id) %>% 
+  filter(n() >= 5) %>% 
+  ungroup()
 ```

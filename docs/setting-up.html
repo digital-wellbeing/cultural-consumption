@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes" />
 
 
-<meta name="date" content="2020-09-28" />
+<meta name="date" content="2020-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="data-processing.html"><a href="data-processing.html#data-quality-and-exclusions"><i class="fa fa-check"></i><b>2.5</b> Data quality and exclusions</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="data-processing.html"><a href="data-processing.html#implausible-values"><i class="fa fa-check"></i><b>2.5.1</b> Implausible values</a></li>
 <li class="chapter" data-level="2.5.2" data-path="data-processing.html"><a href="data-processing.html#response-patterns"><i class="fa fa-check"></i><b>2.5.2</b> Response patterns</a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-processing.html"><a href="data-processing.html#applying-exclusions"><i class="fa fa-check"></i><b>2.5.3</b> Applying exclusions</a></li>
 </ul></li>
+<li class="chapter" data-level="2.6" data-path="data-processing.html"><a href="data-processing.html#build-scales"><i class="fa fa-check"></i><b>2.6</b> Build scales</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html"><i class="fa fa-check"></i><b>3</b> Descriptives and visualizations</a></li>
+<li class="chapter" data-level="3" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html"><i class="fa fa-check"></i><b>3</b> Descriptives and visualizations</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#overview"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#person-level"><i class="fa fa-check"></i><b>3.2</b> Person-level</a></li>
+<li class="chapter" data-level="3.3" data-path="data-processing.html"><a href="data-processing.html#wave-level"><i class="fa fa-check"></i><b>3.3</b> Wave-level</a></li>
+<li class="chapter" data-level="3.4" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#correlation-matrices"><i class="fa fa-check"></i><b>3.4</b> Correlation matrices</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -188,17 +195,22 @@ Note I use the <code>pacman</code> package for loading libraries.</p>
 <span id="cb1-10"><a href="setting-up.html#cb1-10"></a>  here,</span>
 <span id="cb1-11"><a href="setting-up.html#cb1-11"></a>  ggridges,</span>
 <span id="cb1-12"><a href="setting-up.html#cb1-12"></a>  cowplot,</span>
-<span id="cb1-13"><a href="setting-up.html#cb1-13"></a>  kableExtra</span>
-<span id="cb1-14"><a href="setting-up.html#cb1-14"></a>)</span>
-<span id="cb1-15"><a href="setting-up.html#cb1-15"></a></span>
-<span id="cb1-16"><a href="setting-up.html#cb1-16"></a><span class="co"># set seed</span></span>
-<span id="cb1-17"><a href="setting-up.html#cb1-17"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1-18"><a href="setting-up.html#cb1-18"></a></span>
-<span id="cb1-19"><a href="setting-up.html#cb1-19"></a><span class="co"># chunk options</span></span>
-<span id="cb1-20"><a href="setting-up.html#cb1-20"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</span>
-<span id="cb1-21"><a href="setting-up.html#cb1-21"></a>  <span class="dt">message =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb1-22"><a href="setting-up.html#cb1-22"></a>  <span class="dt">warning =</span> <span class="ot">FALSE</span></span>
-<span id="cb1-23"><a href="setting-up.html#cb1-23"></a>)</span></code></pre></div>
+<span id="cb1-13"><a href="setting-up.html#cb1-13"></a>  kableExtra,</span>
+<span id="cb1-14"><a href="setting-up.html#cb1-14"></a>  directlabels,</span>
+<span id="cb1-15"><a href="setting-up.html#cb1-15"></a>  GGally</span>
+<span id="cb1-16"><a href="setting-up.html#cb1-16"></a>)</span>
+<span id="cb1-17"><a href="setting-up.html#cb1-17"></a></span>
+<span id="cb1-18"><a href="setting-up.html#cb1-18"></a><span class="co"># set seed</span></span>
+<span id="cb1-19"><a href="setting-up.html#cb1-19"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-20"><a href="setting-up.html#cb1-20"></a></span>
+<span id="cb1-21"><a href="setting-up.html#cb1-21"></a><span class="co"># set theme</span></span>
+<span id="cb1-22"><a href="setting-up.html#cb1-22"></a><span class="kw">theme_set</span>(<span class="kw">theme_cowplot</span>())</span>
+<span id="cb1-23"><a href="setting-up.html#cb1-23"></a></span>
+<span id="cb1-24"><a href="setting-up.html#cb1-24"></a><span class="co"># chunk options</span></span>
+<span id="cb1-25"><a href="setting-up.html#cb1-25"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</span>
+<span id="cb1-26"><a href="setting-up.html#cb1-26"></a>  <span class="dt">message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb1-27"><a href="setting-up.html#cb1-27"></a>  <span class="dt">warning =</span> <span class="ot">FALSE</span></span>
+<span id="cb1-28"><a href="setting-up.html#cb1-28"></a>)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setting-up.html#cb2-1"></a>dens_with_points &lt;-<span class="st"> </span></span>
 <span id="cb2-2"><a href="setting-up.html#cb2-2"></a><span class="st">  </span><span class="cf">function</span>(</span>
 <span id="cb2-3"><a href="setting-up.html#cb2-3"></a>    data,</span>
@@ -263,7 +275,266 @@ Note I use the <code>pacman</code> package for loading libraries.</p>
 <span id="cb2-62"><a href="setting-up.html#cb2-62"></a><span class="st">      </span><span class="kw">nrow</span>()</span>
 <span id="cb2-63"><a href="setting-up.html#cb2-63"></a>    </span>
 <span id="cb2-64"><a href="setting-up.html#cb2-64"></a>    <span class="kw">return</span>(N)</span>
-<span id="cb2-65"><a href="setting-up.html#cb2-65"></a>  }</span></code></pre></div>
+<span id="cb2-65"><a href="setting-up.html#cb2-65"></a>  }</span>
+<span id="cb2-66"><a href="setting-up.html#cb2-66"></a></span>
+<span id="cb2-67"><a href="setting-up.html#cb2-67"></a><span class="co"># raincloud plot function from https://github.com/RainCloudPlots/RainCloudPlots/blob/master/tutorial_R/R_rainclouds.R</span></span>
+<span id="cb2-68"><a href="setting-up.html#cb2-68"></a><span class="co"># Defining the geom_flat_violin function ----</span></span>
+<span id="cb2-69"><a href="setting-up.html#cb2-69"></a><span class="co"># Note: the below code modifies the</span></span>
+<span id="cb2-70"><a href="setting-up.html#cb2-70"></a><span class="co"># existing github page by removing a parenthesis in line 50</span></span>
+<span id="cb2-71"><a href="setting-up.html#cb2-71"></a></span>
+<span id="cb2-72"><a href="setting-up.html#cb2-72"></a><span class="st">&quot;%||%&quot;</span> &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {</span>
+<span id="cb2-73"><a href="setting-up.html#cb2-73"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(a)) a <span class="cf">else</span> b</span>
+<span id="cb2-74"><a href="setting-up.html#cb2-74"></a>}</span>
+<span id="cb2-75"><a href="setting-up.html#cb2-75"></a></span>
+<span id="cb2-76"><a href="setting-up.html#cb2-76"></a>geom_flat_violin &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">mapping =</span> <span class="ot">NULL</span>, <span class="dt">data =</span> <span class="ot">NULL</span>, <span class="dt">stat =</span> <span class="st">&quot;ydensity&quot;</span>,</span>
+<span id="cb2-77"><a href="setting-up.html#cb2-77"></a>                             <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>, <span class="dt">trim =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb2-78"><a href="setting-up.html#cb2-78"></a>                             <span class="dt">show.legend =</span> <span class="ot">NA</span>, <span class="dt">inherit.aes =</span> <span class="ot">TRUE</span>, ...) {</span>
+<span id="cb2-79"><a href="setting-up.html#cb2-79"></a>  <span class="kw">layer</span>(</span>
+<span id="cb2-80"><a href="setting-up.html#cb2-80"></a>    <span class="dt">data =</span> data,</span>
+<span id="cb2-81"><a href="setting-up.html#cb2-81"></a>    <span class="dt">mapping =</span> mapping,</span>
+<span id="cb2-82"><a href="setting-up.html#cb2-82"></a>    <span class="dt">stat =</span> stat,</span>
+<span id="cb2-83"><a href="setting-up.html#cb2-83"></a>    <span class="dt">geom =</span> GeomFlatViolin,</span>
+<span id="cb2-84"><a href="setting-up.html#cb2-84"></a>    <span class="dt">position =</span> position,</span>
+<span id="cb2-85"><a href="setting-up.html#cb2-85"></a>    <span class="dt">show.legend =</span> show.legend,</span>
+<span id="cb2-86"><a href="setting-up.html#cb2-86"></a>    <span class="dt">inherit.aes =</span> inherit.aes,</span>
+<span id="cb2-87"><a href="setting-up.html#cb2-87"></a>    <span class="dt">params =</span> <span class="kw">list</span>(</span>
+<span id="cb2-88"><a href="setting-up.html#cb2-88"></a>      <span class="dt">trim =</span> trim,</span>
+<span id="cb2-89"><a href="setting-up.html#cb2-89"></a>      <span class="dt">scale =</span> scale,</span>
+<span id="cb2-90"><a href="setting-up.html#cb2-90"></a>      ...</span>
+<span id="cb2-91"><a href="setting-up.html#cb2-91"></a>    )</span>
+<span id="cb2-92"><a href="setting-up.html#cb2-92"></a>  )</span>
+<span id="cb2-93"><a href="setting-up.html#cb2-93"></a>}</span>
+<span id="cb2-94"><a href="setting-up.html#cb2-94"></a></span>
+<span id="cb2-95"><a href="setting-up.html#cb2-95"></a><span class="co">#&#39; @rdname ggplot2-ggproto</span></span>
+<span id="cb2-96"><a href="setting-up.html#cb2-96"></a><span class="co">#&#39; @format NULL</span></span>
+<span id="cb2-97"><a href="setting-up.html#cb2-97"></a><span class="co">#&#39; @usage NULL</span></span>
+<span id="cb2-98"><a href="setting-up.html#cb2-98"></a><span class="co">#&#39; @export</span></span>
+<span id="cb2-99"><a href="setting-up.html#cb2-99"></a>GeomFlatViolin &lt;-</span>
+<span id="cb2-100"><a href="setting-up.html#cb2-100"></a><span class="st">  </span><span class="kw">ggproto</span>(<span class="st">&quot;GeomFlatViolin&quot;</span>, Geom,</span>
+<span id="cb2-101"><a href="setting-up.html#cb2-101"></a>    <span class="dt">setup_data =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb2-102"><a href="setting-up.html#cb2-102"></a>      data<span class="op">$</span>width &lt;-<span class="st"> </span>data<span class="op">$</span>width <span class="op">%||%</span></span>
+<span id="cb2-103"><a href="setting-up.html#cb2-103"></a><span class="st">        </span>params<span class="op">$</span>width <span class="op">%||%</span><span class="st"> </span>(<span class="kw">resolution</span>(data<span class="op">$</span>x, <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>)</span>
+<span id="cb2-104"><a href="setting-up.html#cb2-104"></a></span>
+<span id="cb2-105"><a href="setting-up.html#cb2-105"></a>      <span class="co"># ymin, ymax, xmin, and xmax define the bounding rectangle for each group</span></span>
+<span id="cb2-106"><a href="setting-up.html#cb2-106"></a>      data <span class="op">%&gt;%</span></span>
+<span id="cb2-107"><a href="setting-up.html#cb2-107"></a><span class="st">        </span><span class="kw">group_by</span>(group) <span class="op">%&gt;%</span></span>
+<span id="cb2-108"><a href="setting-up.html#cb2-108"></a><span class="st">        </span><span class="kw">mutate</span>(</span>
+<span id="cb2-109"><a href="setting-up.html#cb2-109"></a>          <span class="dt">ymin =</span> <span class="kw">min</span>(y),</span>
+<span id="cb2-110"><a href="setting-up.html#cb2-110"></a>          <span class="dt">ymax =</span> <span class="kw">max</span>(y),</span>
+<span id="cb2-111"><a href="setting-up.html#cb2-111"></a>          <span class="dt">xmin =</span> x,</span>
+<span id="cb2-112"><a href="setting-up.html#cb2-112"></a>          <span class="dt">xmax =</span> x <span class="op">+</span><span class="st"> </span>width <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb2-113"><a href="setting-up.html#cb2-113"></a>        )</span>
+<span id="cb2-114"><a href="setting-up.html#cb2-114"></a>    },</span>
+<span id="cb2-115"><a href="setting-up.html#cb2-115"></a></span>
+<span id="cb2-116"><a href="setting-up.html#cb2-116"></a>    <span class="dt">draw_group =</span> <span class="cf">function</span>(data, panel_scales, coord) {</span>
+<span id="cb2-117"><a href="setting-up.html#cb2-117"></a>      <span class="co"># Find the points for the line to go all the way around</span></span>
+<span id="cb2-118"><a href="setting-up.html#cb2-118"></a>      data &lt;-<span class="st"> </span><span class="kw">transform</span>(data,</span>
+<span id="cb2-119"><a href="setting-up.html#cb2-119"></a>        <span class="dt">xminv =</span> x,</span>
+<span id="cb2-120"><a href="setting-up.html#cb2-120"></a>        <span class="dt">xmaxv =</span> x <span class="op">+</span><span class="st"> </span>violinwidth <span class="op">*</span><span class="st"> </span>(xmax <span class="op">-</span><span class="st"> </span>x)</span>
+<span id="cb2-121"><a href="setting-up.html#cb2-121"></a>      )</span>
+<span id="cb2-122"><a href="setting-up.html#cb2-122"></a></span>
+<span id="cb2-123"><a href="setting-up.html#cb2-123"></a>      <span class="co"># Make sure it&#39;s sorted properly to draw the outline</span></span>
+<span id="cb2-124"><a href="setting-up.html#cb2-124"></a>      newdata &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
+<span id="cb2-125"><a href="setting-up.html#cb2-125"></a>        plyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">transform</span>(data, <span class="dt">x =</span> xminv), y),</span>
+<span id="cb2-126"><a href="setting-up.html#cb2-126"></a>        plyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">transform</span>(data, <span class="dt">x =</span> xmaxv), <span class="op">-</span>y)</span>
+<span id="cb2-127"><a href="setting-up.html#cb2-127"></a>      )</span>
+<span id="cb2-128"><a href="setting-up.html#cb2-128"></a></span>
+<span id="cb2-129"><a href="setting-up.html#cb2-129"></a>      <span class="co"># Close the polygon: set first and last point the same</span></span>
+<span id="cb2-130"><a href="setting-up.html#cb2-130"></a>      <span class="co"># Needed for coord_polar and such</span></span>
+<span id="cb2-131"><a href="setting-up.html#cb2-131"></a>      newdata &lt;-<span class="st"> </span><span class="kw">rbind</span>(newdata, newdata[<span class="dv">1</span>, ])</span>
+<span id="cb2-132"><a href="setting-up.html#cb2-132"></a></span>
+<span id="cb2-133"><a href="setting-up.html#cb2-133"></a>      ggplot2<span class="op">:::</span><span class="kw">ggname</span>(<span class="st">&quot;geom_flat_violin&quot;</span>, GeomPolygon<span class="op">$</span><span class="kw">draw_panel</span>(newdata, panel_scales, coord))</span>
+<span id="cb2-134"><a href="setting-up.html#cb2-134"></a>    },</span>
+<span id="cb2-135"><a href="setting-up.html#cb2-135"></a></span>
+<span id="cb2-136"><a href="setting-up.html#cb2-136"></a>    <span class="dt">draw_key =</span> draw_key_polygon,</span>
+<span id="cb2-137"><a href="setting-up.html#cb2-137"></a></span>
+<span id="cb2-138"><a href="setting-up.html#cb2-138"></a>    <span class="dt">default_aes =</span> <span class="kw">aes</span>(</span>
+<span id="cb2-139"><a href="setting-up.html#cb2-139"></a>      <span class="dt">weight =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&quot;grey20&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-140"><a href="setting-up.html#cb2-140"></a>      <span class="dt">alpha =</span> <span class="ot">NA</span>, <span class="dt">linetype =</span> <span class="st">&quot;solid&quot;</span></span>
+<span id="cb2-141"><a href="setting-up.html#cb2-141"></a>    ),</span>
+<span id="cb2-142"><a href="setting-up.html#cb2-142"></a></span>
+<span id="cb2-143"><a href="setting-up.html#cb2-143"></a>    <span class="dt">required_aes =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
+<span id="cb2-144"><a href="setting-up.html#cb2-144"></a>  )</span>
+<span id="cb2-145"><a href="setting-up.html#cb2-145"></a></span>
+<span id="cb2-146"><a href="setting-up.html#cb2-146"></a><span class="co"># function that returns summary stats</span></span>
+<span id="cb2-147"><a href="setting-up.html#cb2-147"></a>describe &lt;-<span class="st"> </span><span class="cf">function</span>(</span>
+<span id="cb2-148"><a href="setting-up.html#cb2-148"></a>  dat,</span>
+<span id="cb2-149"><a href="setting-up.html#cb2-149"></a>  variable,</span>
+<span id="cb2-150"><a href="setting-up.html#cb2-150"></a>  <span class="dt">trait =</span> <span class="ot">FALSE</span></span>
+<span id="cb2-151"><a href="setting-up.html#cb2-151"></a>){</span>
+<span id="cb2-152"><a href="setting-up.html#cb2-152"></a>  <span class="co"># if variable is not repeated-measures, take only one measure per participant</span></span>
+<span id="cb2-153"><a href="setting-up.html#cb2-153"></a>  <span class="cf">if</span> (trait <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>){</span>
+<span id="cb2-154"><a href="setting-up.html#cb2-154"></a>    dat &lt;-<span class="st"> </span></span>
+<span id="cb2-155"><a href="setting-up.html#cb2-155"></a><span class="st">      </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb2-156"><a href="setting-up.html#cb2-156"></a><span class="st">      </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-157"><a href="setting-up.html#cb2-157"></a><span class="st">      </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-158"><a href="setting-up.html#cb2-158"></a><span class="st">      </span><span class="kw">ungroup</span>()</span>
+<span id="cb2-159"><a href="setting-up.html#cb2-159"></a>  }</span>
+<span id="cb2-160"><a href="setting-up.html#cb2-160"></a>  </span>
+<span id="cb2-161"><a href="setting-up.html#cb2-161"></a>  <span class="co"># then get descriptives</span></span>
+<span id="cb2-162"><a href="setting-up.html#cb2-162"></a>  descriptives &lt;-</span>
+<span id="cb2-163"><a href="setting-up.html#cb2-163"></a><span class="st">    </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb2-164"><a href="setting-up.html#cb2-164"></a><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(<span class="kw">UQ</span>(<span class="kw">sym</span>(variable)))) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove missing values</span></span>
+<span id="cb2-165"><a href="setting-up.html#cb2-165"></a><span class="st">    </span><span class="kw">summarise</span>(</span>
+<span id="cb2-166"><a href="setting-up.html#cb2-166"></a>      <span class="kw">across</span>(</span>
+<span id="cb2-167"><a href="setting-up.html#cb2-167"></a>        <span class="op">!!</span><span class="st"> </span>variable,</span>
+<span id="cb2-168"><a href="setting-up.html#cb2-168"></a>        <span class="kw">list</span>(</span>
+<span id="cb2-169"><a href="setting-up.html#cb2-169"></a>          <span class="dt">N =</span> <span class="op">~</span><span class="st"> </span><span class="kw">n</span>(),</span>
+<span id="cb2-170"><a href="setting-up.html#cb2-170"></a>          <span class="dt">mean =</span> mean,</span>
+<span id="cb2-171"><a href="setting-up.html#cb2-171"></a>          <span class="dt">sd =</span> sd,</span>
+<span id="cb2-172"><a href="setting-up.html#cb2-172"></a>          <span class="dt">median =</span> median,</span>
+<span id="cb2-173"><a href="setting-up.html#cb2-173"></a>          <span class="dt">min =</span> min,</span>
+<span id="cb2-174"><a href="setting-up.html#cb2-174"></a>          <span class="dt">max =</span> max,</span>
+<span id="cb2-175"><a href="setting-up.html#cb2-175"></a>          <span class="dt">cilow =</span> <span class="op">~</span>Rmisc<span class="op">::</span><span class="kw">CI</span>(.x)[[<span class="dv">3</span>]], <span class="co"># lower CI</span></span>
+<span id="cb2-176"><a href="setting-up.html#cb2-176"></a>          <span class="dt">cihigh =</span> <span class="op">~</span>Rmisc<span class="op">::</span><span class="kw">CI</span>(.x)[[<span class="dv">1</span>]] <span class="co"># upper CI</span></span>
+<span id="cb2-177"><a href="setting-up.html#cb2-177"></a>        )</span>
+<span id="cb2-178"><a href="setting-up.html#cb2-178"></a>      )</span>
+<span id="cb2-179"><a href="setting-up.html#cb2-179"></a>    )</span>
+<span id="cb2-180"><a href="setting-up.html#cb2-180"></a></span>
+<span id="cb2-181"><a href="setting-up.html#cb2-181"></a>  descriptives &lt;-</span>
+<span id="cb2-182"><a href="setting-up.html#cb2-182"></a><span class="st">    </span>descriptives <span class="op">%&gt;%</span></span>
+<span id="cb2-183"><a href="setting-up.html#cb2-183"></a></span>
+<span id="cb2-184"><a href="setting-up.html#cb2-184"></a><span class="st">    </span><span class="co"># only keep measure</span></span>
+<span id="cb2-185"><a href="setting-up.html#cb2-185"></a><span class="st">    </span><span class="kw">rename_all</span>(</span>
+<span id="cb2-186"><a href="setting-up.html#cb2-186"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">str_remove</span>(</span>
+<span id="cb2-187"><a href="setting-up.html#cb2-187"></a>        .,</span>
+<span id="cb2-188"><a href="setting-up.html#cb2-188"></a>        <span class="kw">paste0</span>(variable, <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb2-189"><a href="setting-up.html#cb2-189"></a>      )</span>
+<span id="cb2-190"><a href="setting-up.html#cb2-190"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb2-191"><a href="setting-up.html#cb2-191"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb2-192"><a href="setting-up.html#cb2-192"></a>      <span class="dt">variable =</span> variable,</span>
+<span id="cb2-193"><a href="setting-up.html#cb2-193"></a>      <span class="dt">range =</span> max <span class="op">-</span><span class="st"> </span>min</span>
+<span id="cb2-194"><a href="setting-up.html#cb2-194"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb2-195"><a href="setting-up.html#cb2-195"></a><span class="st">    </span><span class="kw">relocate</span>(variable) <span class="op">%&gt;%</span></span>
+<span id="cb2-196"><a href="setting-up.html#cb2-196"></a><span class="st">    </span><span class="kw">relocate</span>(</span>
+<span id="cb2-197"><a href="setting-up.html#cb2-197"></a>      range,</span>
+<span id="cb2-198"><a href="setting-up.html#cb2-198"></a>      <span class="dt">.after =</span> max</span>
+<span id="cb2-199"><a href="setting-up.html#cb2-199"></a>    )</span>
+<span id="cb2-200"><a href="setting-up.html#cb2-200"></a>  </span>
+<span id="cb2-201"><a href="setting-up.html#cb2-201"></a>  <span class="kw">return</span>(descriptives)</span>
+<span id="cb2-202"><a href="setting-up.html#cb2-202"></a>}</span>
+<span id="cb2-203"><a href="setting-up.html#cb2-203"></a></span>
+<span id="cb2-204"><a href="setting-up.html#cb2-204"></a><span class="co"># a single raincloud plot</span></span>
+<span id="cb2-205"><a href="setting-up.html#cb2-205"></a>single_cloud &lt;-<span class="st"> </span></span>
+<span id="cb2-206"><a href="setting-up.html#cb2-206"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-207"><a href="setting-up.html#cb2-207"></a>    raw_data,</span>
+<span id="cb2-208"><a href="setting-up.html#cb2-208"></a>    summary_data,</span>
+<span id="cb2-209"><a href="setting-up.html#cb2-209"></a>    variable,</span>
+<span id="cb2-210"><a href="setting-up.html#cb2-210"></a>    color,</span>
+<span id="cb2-211"><a href="setting-up.html#cb2-211"></a>    title,</span>
+<span id="cb2-212"><a href="setting-up.html#cb2-212"></a>    <span class="dt">trait =</span> <span class="ot">FALSE</span></span>
+<span id="cb2-213"><a href="setting-up.html#cb2-213"></a>  ){</span>
+<span id="cb2-214"><a href="setting-up.html#cb2-214"></a>    </span>
+<span id="cb2-215"><a href="setting-up.html#cb2-215"></a>    <span class="co"># take only one row per person if it&#39;s a trait variable</span></span>
+<span id="cb2-216"><a href="setting-up.html#cb2-216"></a>    <span class="cf">if</span> (trait <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>){</span>
+<span id="cb2-217"><a href="setting-up.html#cb2-217"></a>      raw_data &lt;-</span>
+<span id="cb2-218"><a href="setting-up.html#cb2-218"></a><span class="st">        </span>raw_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-219"><a href="setting-up.html#cb2-219"></a><span class="st">        </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-220"><a href="setting-up.html#cb2-220"></a><span class="st">        </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-221"><a href="setting-up.html#cb2-221"></a><span class="st">        </span><span class="kw">ungroup</span>()</span>
+<span id="cb2-222"><a href="setting-up.html#cb2-222"></a>    }</span>
+<span id="cb2-223"><a href="setting-up.html#cb2-223"></a>    </span>
+<span id="cb2-224"><a href="setting-up.html#cb2-224"></a>    <span class="co"># the plot</span></span>
+<span id="cb2-225"><a href="setting-up.html#cb2-225"></a>    p &lt;-<span class="st"> </span></span>
+<span id="cb2-226"><a href="setting-up.html#cb2-226"></a><span class="st">      </span><span class="kw">ggplot</span>(</span>
+<span id="cb2-227"><a href="setting-up.html#cb2-227"></a>        raw_data <span class="op">%&gt;%</span></span>
+<span id="cb2-228"><a href="setting-up.html#cb2-228"></a><span class="st">          </span><span class="kw">mutate</span>(<span class="dt">Density =</span> <span class="dv">1</span>),</span>
+<span id="cb2-229"><a href="setting-up.html#cb2-229"></a>        <span class="kw">aes</span>(</span>
+<span id="cb2-230"><a href="setting-up.html#cb2-230"></a>          <span class="dt">x =</span> Density,</span>
+<span id="cb2-231"><a href="setting-up.html#cb2-231"></a>          <span class="dt">y =</span> <span class="kw">get</span>(variable)</span>
+<span id="cb2-232"><a href="setting-up.html#cb2-232"></a>        )</span>
+<span id="cb2-233"><a href="setting-up.html#cb2-233"></a>      ) <span class="op">+</span></span>
+<span id="cb2-234"><a href="setting-up.html#cb2-234"></a><span class="st">      </span><span class="kw">geom_flat_violin</span>( <span class="co"># the &quot;cloud&quot;</span></span>
+<span id="cb2-235"><a href="setting-up.html#cb2-235"></a>        <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">.2</span>, <span class="dt">y =</span> <span class="dv">0</span>),</span>
+<span id="cb2-236"><a href="setting-up.html#cb2-236"></a>        <span class="dt">adjust =</span> <span class="dv">2</span>,</span>
+<span id="cb2-237"><a href="setting-up.html#cb2-237"></a>        <span class="dt">color =</span> <span class="ot">NA</span>,</span>
+<span id="cb2-238"><a href="setting-up.html#cb2-238"></a>        <span class="dt">fill =</span> color,</span>
+<span id="cb2-239"><a href="setting-up.html#cb2-239"></a>        <span class="dt">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb2-240"><a href="setting-up.html#cb2-240"></a>      ) <span class="op">+</span></span>
+<span id="cb2-241"><a href="setting-up.html#cb2-241"></a><span class="st">      </span><span class="kw">geom_point</span>( <span class="co"># the &quot;rain&quot;</span></span>
+<span id="cb2-242"><a href="setting-up.html#cb2-242"></a>        <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">.15</span>),</span>
+<span id="cb2-243"><a href="setting-up.html#cb2-243"></a>        <span class="dt">size =</span> <span class="dv">1</span>,</span>
+<span id="cb2-244"><a href="setting-up.html#cb2-244"></a>        <span class="dt">color =</span> color,</span>
+<span id="cb2-245"><a href="setting-up.html#cb2-245"></a>        <span class="dt">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb2-246"><a href="setting-up.html#cb2-246"></a>      ) <span class="op">+</span></span>
+<span id="cb2-247"><a href="setting-up.html#cb2-247"></a><span class="st">      </span><span class="kw">geom_point</span>( <span class="co"># the mean from the summary stats</span></span>
+<span id="cb2-248"><a href="setting-up.html#cb2-248"></a>        <span class="dt">data =</span> summary_data <span class="op">%&gt;%</span></span>
+<span id="cb2-249"><a href="setting-up.html#cb2-249"></a><span class="st">          </span><span class="kw">filter</span>(variable <span class="op">==</span><span class="st"> </span><span class="op">!!</span><span class="st"> </span>variable) <span class="op">%&gt;%</span></span>
+<span id="cb2-250"><a href="setting-up.html#cb2-250"></a><span class="st">          </span><span class="kw">mutate</span>(<span class="dt">Density =</span> <span class="dv">1</span>),</span>
+<span id="cb2-251"><a href="setting-up.html#cb2-251"></a>        <span class="kw">aes</span>(</span>
+<span id="cb2-252"><a href="setting-up.html#cb2-252"></a>          <span class="dt">x =</span> Density <span class="op">+</span><span class="st"> </span><span class="fl">0.175</span>,</span>
+<span id="cb2-253"><a href="setting-up.html#cb2-253"></a>          <span class="dt">y =</span> mean</span>
+<span id="cb2-254"><a href="setting-up.html#cb2-254"></a>        ),</span>
+<span id="cb2-255"><a href="setting-up.html#cb2-255"></a>        <span class="dt">color =</span> color,</span>
+<span id="cb2-256"><a href="setting-up.html#cb2-256"></a>        <span class="dt">size =</span> <span class="fl">2.5</span></span>
+<span id="cb2-257"><a href="setting-up.html#cb2-257"></a>      ) <span class="op">+</span></span>
+<span id="cb2-258"><a href="setting-up.html#cb2-258"></a><span class="st">      </span><span class="kw">geom_errorbar</span>( <span class="co"># error bars</span></span>
+<span id="cb2-259"><a href="setting-up.html#cb2-259"></a>        <span class="dt">data =</span> summary_data <span class="op">%&gt;%</span></span>
+<span id="cb2-260"><a href="setting-up.html#cb2-260"></a><span class="st">          </span><span class="kw">filter</span>(variable <span class="op">==</span><span class="st"> </span><span class="op">!!</span><span class="st"> </span>variable) <span class="op">%&gt;%</span></span>
+<span id="cb2-261"><a href="setting-up.html#cb2-261"></a><span class="st">          </span><span class="kw">mutate</span>(<span class="dt">Density =</span> <span class="dv">1</span>),</span>
+<span id="cb2-262"><a href="setting-up.html#cb2-262"></a>        <span class="kw">aes</span>(</span>
+<span id="cb2-263"><a href="setting-up.html#cb2-263"></a>          <span class="dt">x =</span> Density <span class="op">+</span><span class="st"> </span><span class="fl">0.175</span>,</span>
+<span id="cb2-264"><a href="setting-up.html#cb2-264"></a>          <span class="dt">y =</span> mean,</span>
+<span id="cb2-265"><a href="setting-up.html#cb2-265"></a>          <span class="dt">ymin =</span> cilow,</span>
+<span id="cb2-266"><a href="setting-up.html#cb2-266"></a>          <span class="dt">ymax =</span> cihigh</span>
+<span id="cb2-267"><a href="setting-up.html#cb2-267"></a>        ),</span>
+<span id="cb2-268"><a href="setting-up.html#cb2-268"></a>        <span class="dt">width =</span> <span class="dv">0</span>,</span>
+<span id="cb2-269"><a href="setting-up.html#cb2-269"></a>        <span class="dt">size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb2-270"><a href="setting-up.html#cb2-270"></a>        <span class="dt">color =</span> color</span>
+<span id="cb2-271"><a href="setting-up.html#cb2-271"></a>      ) <span class="op">+</span></span>
+<span id="cb2-272"><a href="setting-up.html#cb2-272"></a><span class="st">      </span><span class="kw">ylab</span>(title) <span class="op">+</span></span>
+<span id="cb2-273"><a href="setting-up.html#cb2-273"></a><span class="st">      </span><span class="kw">theme</span>(</span>
+<span id="cb2-274"><a href="setting-up.html#cb2-274"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb2-275"><a href="setting-up.html#cb2-275"></a>        <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb2-276"><a href="setting-up.html#cb2-276"></a>        <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb2-277"><a href="setting-up.html#cb2-277"></a>        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb2-278"><a href="setting-up.html#cb2-278"></a>        <span class="dt">axis.line =</span> <span class="kw">element_blank</span>()</span>
+<span id="cb2-279"><a href="setting-up.html#cb2-279"></a>      ) <span class="op">+</span></span>
+<span id="cb2-280"><a href="setting-up.html#cb2-280"></a><span class="st">      </span><span class="kw">guides</span>(</span>
+<span id="cb2-281"><a href="setting-up.html#cb2-281"></a>        <span class="dt">color =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb2-282"><a href="setting-up.html#cb2-282"></a>        <span class="dt">fill =</span> <span class="ot">FALSE</span></span>
+<span id="cb2-283"><a href="setting-up.html#cb2-283"></a>      ) <span class="op">+</span></span>
+<span id="cb2-284"><a href="setting-up.html#cb2-284"></a><span class="st">      </span><span class="kw">coord_flip</span>()</span>
+<span id="cb2-285"><a href="setting-up.html#cb2-285"></a>    </span>
+<span id="cb2-286"><a href="setting-up.html#cb2-286"></a>    <span class="kw">return</span>(p)</span>
+<span id="cb2-287"><a href="setting-up.html#cb2-287"></a>  }</span>
+<span id="cb2-288"><a href="setting-up.html#cb2-288"></a></span>
+<span id="cb2-289"><a href="setting-up.html#cb2-289"></a>lm_function &lt;-<span class="st"> </span></span>
+<span id="cb2-290"><a href="setting-up.html#cb2-290"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-291"><a href="setting-up.html#cb2-291"></a>    data, </span>
+<span id="cb2-292"><a href="setting-up.html#cb2-292"></a>    mapping, </span>
+<span id="cb2-293"><a href="setting-up.html#cb2-293"></a>    ...</span>
+<span id="cb2-294"><a href="setting-up.html#cb2-294"></a>    ){</span>
+<span id="cb2-295"><a href="setting-up.html#cb2-295"></a>  p &lt;-<span class="st"> </span></span>
+<span id="cb2-296"><a href="setting-up.html#cb2-296"></a><span class="st">    </span><span class="kw">ggplot</span>(</span>
+<span id="cb2-297"><a href="setting-up.html#cb2-297"></a>      <span class="dt">data =</span> data, </span>
+<span id="cb2-298"><a href="setting-up.html#cb2-298"></a>      <span class="dt">mapping =</span> mapping</span>
+<span id="cb2-299"><a href="setting-up.html#cb2-299"></a>      ) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb2-300"><a href="setting-up.html#cb2-300"></a><span class="st">    </span><span class="kw">geom_point</span>(</span>
+<span id="cb2-301"><a href="setting-up.html#cb2-301"></a>      <span class="dt">color =</span> <span class="st">&quot;#56B4E9&quot;</span>,</span>
+<span id="cb2-302"><a href="setting-up.html#cb2-302"></a>      <span class="dt">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb2-303"><a href="setting-up.html#cb2-303"></a>    ) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb2-304"><a href="setting-up.html#cb2-304"></a><span class="st">    </span><span class="kw">geom_smooth</span>(</span>
+<span id="cb2-305"><a href="setting-up.html#cb2-305"></a>      <span class="dt">method=</span>lm, </span>
+<span id="cb2-306"><a href="setting-up.html#cb2-306"></a>      <span class="dt">fill=</span><span class="st">&quot;#0072B2&quot;</span>, </span>
+<span id="cb2-307"><a href="setting-up.html#cb2-307"></a>      <span class="dt">color=</span><span class="st">&quot;#0072B2&quot;</span>, </span>
+<span id="cb2-308"><a href="setting-up.html#cb2-308"></a>      ...)</span>
+<span id="cb2-309"><a href="setting-up.html#cb2-309"></a>  p</span>
+<span id="cb2-310"><a href="setting-up.html#cb2-310"></a>}</span>
+<span id="cb2-311"><a href="setting-up.html#cb2-311"></a></span>
+<span id="cb2-312"><a href="setting-up.html#cb2-312"></a>dens_function &lt;-</span>
+<span id="cb2-313"><a href="setting-up.html#cb2-313"></a><span class="st">  </span><span class="cf">function</span>(</span>
+<span id="cb2-314"><a href="setting-up.html#cb2-314"></a>    data,</span>
+<span id="cb2-315"><a href="setting-up.html#cb2-315"></a>    mapping,</span>
+<span id="cb2-316"><a href="setting-up.html#cb2-316"></a>    ...</span>
+<span id="cb2-317"><a href="setting-up.html#cb2-317"></a>  ){</span>
+<span id="cb2-318"><a href="setting-up.html#cb2-318"></a>    p &lt;-<span class="st"> </span></span>
+<span id="cb2-319"><a href="setting-up.html#cb2-319"></a><span class="st">      </span><span class="kw">ggplot</span>(</span>
+<span id="cb2-320"><a href="setting-up.html#cb2-320"></a>        <span class="dt">data =</span> data,</span>
+<span id="cb2-321"><a href="setting-up.html#cb2-321"></a>        <span class="dt">mapping =</span> mapping</span>
+<span id="cb2-322"><a href="setting-up.html#cb2-322"></a>      ) <span class="op">+</span></span>
+<span id="cb2-323"><a href="setting-up.html#cb2-323"></a><span class="st">      </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;#009E73&quot;</span>, <span class="dt">color =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb2-324"><a href="setting-up.html#cb2-324"></a>  }</span></code></pre></div>
 
 </div>
             </section>
