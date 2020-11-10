@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Analysis | Analysis Report</title>
+  <meta name="description" content="Analysis report detailing alls steps from data processing to final analyses." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Analysis | Analysis Report" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://github.com/digital-wellbeing/cultural-consumption" />
+  
+  <meta property="og:description" content="Analysis report detailing alls steps from data processing to final analyses." />
+  <meta name="github-repo" content="digital-wellbeing/cultural-consumption" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Analysis | Analysis Report" />
+  
+  <meta name="twitter:description" content="Analysis report detailing alls steps from data processing to final analyses." />
+  
+
+<meta name="author" content="Niklas Johannes" />
+
+
+<meta name="date" content="2020-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descriptives-and-visualizations.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Analysis Report</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="setting-up.html"><a href="setting-up.html"><i class="fa fa-check"></i><b>1</b> Setting-up</a></li>
+<li class="chapter" data-level="2" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>2</b> Data processing</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-processing.html"><a href="data-processing.html#read-waves-2-6"><i class="fa fa-check"></i><b>2.1</b> Read waves 2-6</a></li>
+<li class="chapter" data-level="2.2" data-path="data-processing.html"><a href="data-processing.html#read-wave-1"><i class="fa fa-check"></i><b>2.2</b> Read wave 1</a></li>
+<li class="chapter" data-level="2.3" data-path="data-processing.html"><a href="data-processing.html#data-cleaning"><i class="fa fa-check"></i><b>2.3</b> Data cleaning</a></li>
+<li class="chapter" data-level="2.4" data-path="data-processing.html"><a href="data-processing.html#response-rates-and-missing-values"><i class="fa fa-check"></i><b>2.4</b> Response rates and missing values</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="data-processing.html"><a href="data-processing.html#participants-per-wave"><i class="fa fa-check"></i><b>2.4.1</b> Participants per wave</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-processing.html"><a href="data-processing.html#responses-per-wave-and-medium"><i class="fa fa-check"></i><b>2.4.2</b> Responses per wave and medium</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-processing.html"><a href="data-processing.html#data-quality-and-exclusions"><i class="fa fa-check"></i><b>2.5</b> Data quality and exclusions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="data-processing.html"><a href="data-processing.html#implausible-values"><i class="fa fa-check"></i><b>2.5.1</b> Implausible values</a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-processing.html"><a href="data-processing.html#response-patterns"><i class="fa fa-check"></i><b>2.5.2</b> Response patterns</a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-processing.html"><a href="data-processing.html#applying-exclusions"><i class="fa fa-check"></i><b>2.5.3</b> Applying exclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="data-processing.html"><a href="data-processing.html#build-scales"><i class="fa fa-check"></i><b>2.6</b> Build scales</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html"><i class="fa fa-check"></i><b>3</b> Descriptives and visualizations</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#overview"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#person-level"><i class="fa fa-check"></i><b>3.2</b> Person-level</a></li>
+<li class="chapter" data-level="3.3" data-path="data-processing.html"><a href="data-processing.html#wave-level"><i class="fa fa-check"></i><b>3.3</b> Wave-level</a></li>
+<li class="chapter" data-level="3.4" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#correlation-matrices"><i class="fa fa-check"></i><b>3.4</b> Correlation matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>4</b> Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="analysis.html"><a href="analysis.html#data-preparation"><i class="fa fa-check"></i><b>4.1</b> Data preparation</a></li>
+<li class="chapter" data-level="4.2" data-path="analysis.html"><a href="analysis.html#music"><i class="fa fa-check"></i><b>4.2</b> Music</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analysis.html"><a href="analysis.html#affect"><i class="fa fa-check"></i><b>4.2.1</b> Affect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analysis.html"><a href="analysis.html#life-satisfaction"><i class="fa fa-check"></i><b>4.2.2</b> Life Satisfaction</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analysis Report</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analysis" class="section level1">
+<h1><span class="header-section-number">4</span> Analysis</h1>
+<p>Our overarching research question is how media use in different categories and well-being influence each other over time.
+There were four well-being items; two were asking about life in general, two about affective states yesterday.
+I don’t think, just based on face validity, that these four items form one concept, which is why I treated them separately in the data processing.</p>
+<p>Let’s run a confirmatory factor analysis on the first wave and inspect the fit.
+The fit is poor-ish and the model suggest that we should correlate the residuals of the life satisfaction items with each other and of the affect items with each other.</p>
+<p>That confirms my idea about treating those four items as coming from two different constructs.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysis.html#cb49-1"></a><span class="kw">load</span>(<span class="kw">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;workspace.RData&quot;</span>))</span>
+<span id="cb49-2"><a href="analysis.html#cb49-2"></a>cfa_model &lt;-<span class="st"> </span></span>
+<span id="cb49-3"><a href="analysis.html#cb49-3"></a><span class="st">  &quot;well_being_factor =~ life_satisfaction_1 + life_satisfaction_2 + well_being_1 + well_being_2&quot;</span></span>
+<span id="cb49-4"><a href="analysis.html#cb49-4"></a></span>
+<span id="cb49-5"><a href="analysis.html#cb49-5"></a><span class="co"># get fit</span></span>
+<span id="cb49-6"><a href="analysis.html#cb49-6"></a>cfa_fit &lt;-<span class="st"> </span><span class="kw">cfa</span>(</span>
+<span id="cb49-7"><a href="analysis.html#cb49-7"></a>  cfa_model,</span>
+<span id="cb49-8"><a href="analysis.html#cb49-8"></a>  <span class="dt">data =</span> working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-9"><a href="analysis.html#cb49-9"></a><span class="st">    </span><span class="kw">filter</span>(wave <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb49-10"><a href="analysis.html#cb49-10"></a>)</span>
+<span id="cb49-11"><a href="analysis.html#cb49-11"></a></span>
+<span id="cb49-12"><a href="analysis.html#cb49-12"></a><span class="co"># inspect summary</span></span>
+<span id="cb49-13"><a href="analysis.html#cb49-13"></a><span class="kw">summary</span>(</span>
+<span id="cb49-14"><a href="analysis.html#cb49-14"></a>  cfa_fit,</span>
+<span id="cb49-15"><a href="analysis.html#cb49-15"></a>  <span class="dt">fit.measures =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb49-16"><a href="analysis.html#cb49-16"></a>  <span class="dt">modindices =</span> <span class="ot">TRUE</span></span>
+<span id="cb49-17"><a href="analysis.html#cb49-17"></a>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-7 ended normally after 25 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                          8
+##                                                       
+##                                                   Used       Total
+##   Number of observations                          2103        2159
+##                                                                   
+## Model Test User Model:
+##                                                       
+##   Test statistic                               152.823
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              4689.433
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.968
+##   Tucker-Lewis Index (TLI)                       0.903
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)             -16789.925
+##   Loglikelihood unrestricted model (H1)     -16713.513
+##                                                       
+##   Akaike (AIC)                               33595.849
+##   Bayesian (BIC)                             33641.058
+##   Sample-size adjusted Bayesian (BIC)        33615.641
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.189
+##   90 Percent confidence interval - lower         0.165
+##   90 Percent confidence interval - upper         0.215
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.038
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                        Estimate  Std.Err  z-value  P(&gt;|z|)
+##   well_being_factor =~                                    
+##     life_stsfctn_1        1.000                           
+##     life_stsfctn_2        0.952    0.019   51.334    0.000
+##     well_being_1          1.012    0.018   54.730    0.000
+##     well_being_2          0.575    0.032   18.148    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .life_stsfctn_1    0.764    0.047   16.108    0.000
+##    .life_stsfctn_2    1.413    0.058   24.476    0.000
+##    .well_being_1      1.156    0.055   20.862    0.000
+##    .well_being_2      6.871    0.216   31.883    0.000
+##     well_beng_fctr    3.740    0.143   26.163    0.000
+## 
+## Modification Indices:
+## 
+##                    lhs op                 rhs      mi    epc sepc.lv sepc.all sepc.nox
+## 10 life_satisfaction_1 ~~ life_satisfaction_2 147.866  1.518   1.518    1.461    1.461
+## 11 life_satisfaction_1 ~~        well_being_1  49.432 -1.025  -1.025   -1.090   -1.090
+## 12 life_satisfaction_1 ~~        well_being_2  29.103 -0.381  -0.381   -0.166   -0.166
+## 13 life_satisfaction_2 ~~        well_being_1  29.103 -0.639  -0.639   -0.500   -0.500
+## 14 life_satisfaction_2 ~~        well_being_2  49.432 -0.554  -0.554   -0.178   -0.178
+## 15        well_being_1 ~~        well_being_2 147.867  0.928   0.928    0.329    0.329</code></pre>
+<div id="data-preparation" class="section level2">
+<h2><span class="header-section-number">4.1</span> Data preparation</h2>
+<p>We’re interested in reciprocal effects of media use and well-being.
+Usually, I’d go for Random-Intercept Cross-Lagged Panel Models (RICLPM), but we have such massive zero inflation that the distribution of media use might bias the results.</p>
+<p>I emailed one of the co-authors of the Random-Intercept Cross-Lagged Panel Models and he said that these models are only well-understood for normally distributed data.
+Absent any simulation studies that show that these models can retrieve parameters from a non-normal data generating process, I’ll look for an alternative.</p>
+<p>Instead, I’ll rely on a mixed-models framework.
+Per well-being outcome (so affect and life satisfaction) and medium, I’ll run two models:</p>
+<ol style="list-style-type: decimal">
+<li>The first model predicts well-being from lagged media use. We can treat well-being as normally distributed.</li>
+<li>The second mode predicts media use from lagged well-being. We treat media use as zero-inflated with a gamma distribution.</li>
+</ol>
+<p>These models have the advantage that we don’t need to impute missing waves.
+Instead, the model will weigh those with more data more heavily for the outcome distribution.
+Because we use lagged predictors in the model predicting use, a participant must have at least three valid waves.
+When we lag, the model will automatically exclude the first wave (because half of its information is contained in the second wave now).
+Some participants also have missing values on some waves - which is why we only kept those participants with <strong>at least three rows of data</strong>.
+So someone with all six waves but four excluded waves will not be included in the final sample.</p>
+<p>For both types of models, we’ll separate between- and within-person effects.
+We’ll not control for the lagged value of the dependent variable, see <a href="https://doi.org/10.1007/s11135-018-0802-x">here</a>.</p>
+<p>To be able to distinguish between within- and between-person effects, we’ll need to make use of centering.
+We’re dividing each predictor into a stable, level-2 (person-level) component, and a component that tells us how much each measurement deviates from that stable component (level-1 or within-person effect).
+See instructions from this excellent <a href="https://philippmasur.de/2018/05/23/how-to-center-in-multilevel-models/">blog post</a>.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="analysis.html#cb51-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb51-2"><a href="analysis.html#cb51-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-3"><a href="analysis.html#cb51-3"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-4"><a href="analysis.html#cb51-4"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb51-5"><a href="analysis.html#cb51-5"></a>    <span class="kw">across</span>(</span>
+<span id="cb51-6"><a href="analysis.html#cb51-6"></a>      <span class="kw">c</span>(</span>
+<span id="cb51-7"><a href="analysis.html#cb51-7"></a>        affect,</span>
+<span id="cb51-8"><a href="analysis.html#cb51-8"></a>        life_satisfaction,</span>
+<span id="cb51-9"><a href="analysis.html#cb51-9"></a>        <span class="kw">ends_with</span>(<span class="st">&quot;time&quot;</span>)</span>
+<span id="cb51-10"><a href="analysis.html#cb51-10"></a>      ),</span>
+<span id="cb51-11"><a href="analysis.html#cb51-11"></a>      <span class="kw">list</span>(</span>
+<span id="cb51-12"><a href="analysis.html#cb51-12"></a>        <span class="dt">between =</span> <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb51-13"><a href="analysis.html#cb51-13"></a>        <span class="dt">within =</span> <span class="op">~</span><span class="st"> </span>.x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb51-14"><a href="analysis.html#cb51-14"></a>      )</span>
+<span id="cb51-15"><a href="analysis.html#cb51-15"></a>    ) </span>
+<span id="cb51-16"><a href="analysis.html#cb51-16"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-17"><a href="analysis.html#cb51-17"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
+<p>Also, we’re interested in the threshold of going from not using a medium to using a medium.
+This is due to how the media use variable is distributed: Lots of zeros and continuous if not zero.
+Because of how we treated zeros so far, we know that zeros are qualitatively different from nonzeros.
+Zero means not having used at all (possibly a different process), nonzero means how much you used a medium <strong>if</strong> you used it.</p>
+<p>When media use is the outcome variable, we’ll model those different processes with a zero-inflation distribution.
+It’s my understanding that it’s not a good idea to select an outcome distribution based on the histogram of a variable.
+Richard McElreath calls this “histomancy”.
+After all, it’s about the distribution of the residuals after model fitting - so a weird looking distribution might still be the result of a normally distributed data generating process.
+In our case, I think the use variable doesn’t come from a normally distributed data generating process because we know that using vs. not using a medium is a different process.
+Likewise, we know that <strong>if</strong> someone used a medium, their use time cannot be zero and will be skewed toward lower values, with fewer and fewer larger values as use increases.
+That’s a typical case for a Gamma distribution.</p>
+<p>When media use is the predictor, we need to tell the model that there’s something special about zeros or not zeros.
+That’s why we’ll include a new indicator variable for whether use is zero or not.
+See this <a href="https://stats.stackexchange.com/questions/56306/time-spent-in-an-activity-as-an-independent-variable">discussion</a>.</p>
+<p>In this discussion, they talk about a case where there’s only one observation per case.
+However, I want to distinguish within- and between-person effects, like I did with the continuous part of use time.
+I’ll match that strategy with the indicator.</p>
+<p>First, per medium and wave, I’ll create an index variable that’s 1 when someone used a medium for a wave, and 0 when not.
+Second, I’ll take the average of that index variable per person.
+That gives us a between-person proportion.
+The parameter for that proportion will tell us what happens for well-being if we compare nonusers (0 proportion) to users (100 proportion), so if we go from 0 to 1.
+Third, we center each participant’s rows with that proportion, just like we did with use time.
+The parameter for this variable tells us what happens <strong>within</strong> a person when they go from not using to using, so if we go from their average to their average plus one.</p>
+<p>For example, suppose someone listened to music in three of the six waves.
+They’ll have their average time as the between-person effect and their deviation from that average time as the within-person effect.
+That’s what we did with the centering above.
+That person will therefore have a constant proportion of having listened to music (yes or no) of 50%.
+The parameter for this variable will then tell us what happens if we go one up on the proportion scale, which is bound at [0|1].
+In other words, if there’s someone else who listened to music in 67% of waves, the model will give us a parameter for a comparison of not using (0) to using (1), based on all the proportion between people.
+Strictly speaking, the model will tell us what happens if the proportion increases by one, but we can interpret this increase as going from nonuse to use because the proportion is bound at those values.</p>
+<p>As for the within-part, say the first person listened to music every other wave.
+Their within-indicator would then take the values of <code>used</code> (1 or 0) minus <code>proportion of use</code> (0.5) = <code>c(-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)</code> for the six waves.
+The parameter for that indicator would tell us what happens if a user goes up one point above their average proportion of listening to music across all waves.
+But this proportion is bound at [0|1], so effectively this tells us what happens if the user goes from not listening to music to listening to music (aka 1 up) because the raw scores are always 0 or 1.</p>
+<p>I’ll create this index variable and center it like I did above.
+Note that we already have filter variables, but those refer to whether someone used a medium in the three months before the first wave.
+That’s why I’ll use the <code>used</code> suffix here.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="analysis.html#cb52-1"></a>working_file &lt;-<span class="st"> </span></span>
+<span id="cb52-2"><a href="analysis.html#cb52-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb52-3"><a href="analysis.html#cb52-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb52-4"><a href="analysis.html#cb52-4"></a>    <span class="kw">across</span>(</span>
+<span id="cb52-5"><a href="analysis.html#cb52-5"></a>      <span class="kw">c</span>(</span>
+<span id="cb52-6"><a href="analysis.html#cb52-6"></a>        <span class="kw">ends_with</span>(<span class="st">&quot;time&quot;</span>),</span>
+<span id="cb52-7"><a href="analysis.html#cb52-7"></a>        <span class="op">-</span>total_time</span>
+<span id="cb52-8"><a href="analysis.html#cb52-8"></a>      ),</span>
+<span id="cb52-9"><a href="analysis.html#cb52-9"></a>      <span class="kw">list</span>(</span>
+<span id="cb52-10"><a href="analysis.html#cb52-10"></a>        <span class="dt">used =</span> <span class="op">~</span><span class="st"> </span><span class="kw">if_else</span>(.x <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb52-11"><a href="analysis.html#cb52-11"></a>      )</span>
+<span id="cb52-12"><a href="analysis.html#cb52-12"></a>    )</span>
+<span id="cb52-13"><a href="analysis.html#cb52-13"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb52-14"><a href="analysis.html#cb52-14"></a><span class="st">  </span></span>
+<span id="cb52-15"><a href="analysis.html#cb52-15"></a><span class="st">  </span><span class="co"># remove the _time part of the variable name</span></span>
+<span id="cb52-16"><a href="analysis.html#cb52-16"></a><span class="st">  </span><span class="kw">rename_with</span>(</span>
+<span id="cb52-17"><a href="analysis.html#cb52-17"></a>    <span class="op">~</span><span class="st"> </span><span class="kw">str_remove</span>(.x, <span class="st">&quot;time_&quot;</span>),</span>
+<span id="cb52-18"><a href="analysis.html#cb52-18"></a>    <span class="kw">ends_with</span>(<span class="st">&quot;used&quot;</span>)</span>
+<span id="cb52-19"><a href="analysis.html#cb52-19"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb52-20"><a href="analysis.html#cb52-20"></a><span class="st">  </span></span>
+<span id="cb52-21"><a href="analysis.html#cb52-21"></a><span class="st">  </span><span class="co"># center those variables</span></span>
+<span id="cb52-22"><a href="analysis.html#cb52-22"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb52-23"><a href="analysis.html#cb52-23"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb52-24"><a href="analysis.html#cb52-24"></a>    <span class="kw">across</span>(</span>
+<span id="cb52-25"><a href="analysis.html#cb52-25"></a>      <span class="kw">ends_with</span>(<span class="st">&quot;used&quot;</span>),</span>
+<span id="cb52-26"><a href="analysis.html#cb52-26"></a>      <span class="kw">list</span>(</span>
+<span id="cb52-27"><a href="analysis.html#cb52-27"></a>        <span class="dt">between =</span> <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb52-28"><a href="analysis.html#cb52-28"></a>        <span class="dt">within =</span> <span class="op">~</span><span class="st"> </span>.x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb52-29"><a href="analysis.html#cb52-29"></a>      )</span>
+<span id="cb52-30"><a href="analysis.html#cb52-30"></a>    )</span>
+<span id="cb52-31"><a href="analysis.html#cb52-31"></a>  )</span></code></pre></div>
+<p>We had <code>NA</code>s for those who had poor quality data in a row.
+However, when introducing the between variables above, we assigned a constant per participant, overwriting the <code>NA</code>.
+So I’ll reintroduce <code>NA</code> on the <code>between</code> and <code>used</code> variables.
+I’ll condition on a random variable that’s <code>NA</code> - <code>affect</code> in this case..
+Any other variable would also work because all wave-level entries will be <code>NA</code>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="analysis.html#cb53-1"></a>working_file &lt;-<span class="st">  </span></span>
+<span id="cb53-2"><a href="analysis.html#cb53-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-3"><a href="analysis.html#cb53-3"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb53-4"><a href="analysis.html#cb53-4"></a>    <span class="kw">across</span>(</span>
+<span id="cb53-5"><a href="analysis.html#cb53-5"></a>      <span class="kw">c</span>(</span>
+<span id="cb53-6"><a href="analysis.html#cb53-6"></a>        <span class="kw">contains</span>(<span class="st">&quot;used&quot;</span>),</span>
+<span id="cb53-7"><a href="analysis.html#cb53-7"></a>        <span class="kw">contains</span>(<span class="st">&quot;between&quot;</span>)</span>
+<span id="cb53-8"><a href="analysis.html#cb53-8"></a>      ),</span>
+<span id="cb53-9"><a href="analysis.html#cb53-9"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">replace</span>(.x, <span class="kw">is.na</span>(affect), <span class="ot">NA</span>)</span>
+<span id="cb53-10"><a href="analysis.html#cb53-10"></a>    )</span>
+<span id="cb53-11"><a href="analysis.html#cb53-11"></a>  )</span></code></pre></div>
+<p>Last, we need to create the lagged and led variables.
+If we add them to the model as <code>lag(variable)</code>/<code>lead(variable)</code>, it will merely shift values one up/down across all participants.
+But we need to lag/lead for each participant.
+We can do that when specifying the data, but that’s prone to error with that many models.
+So I’ll manually create lagged/led variables in our working file where we lag/lead per participant.</p>
+<p>Note that we don’t need to lag everything here: The data are “naturally” lagged.
+At each wave, participants reported their average daily use of a medium for the <strong>preceding week</strong> and their <strong>current</strong> well-being.
+So lagging the times variable would mean we’re predicting current well-being with the reports of use from last week, which themselves refer to the week before.
+Therefore, we don’t need to lag the time variables - they are lagged already.
+The same holds for variables that show whether someone used a medium or not.
+They’re also referring to the previous week, so are “naturally” lagged.</p>
+<p>As for the well-being indicators: Here we don’t want to lag the variable, but lead them.
+Affect at wave 1 should predict use and time at wave 2, so we need to “move down” use and time one row per participant.
+Obviously, lagging well-being or leading use is the same, but I find leading more intuitive here because it corresponds to the time line of the data.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="analysis.html#cb54-1"></a>working_file &lt;-<span class="st">  </span></span>
+<span id="cb54-2"><a href="analysis.html#cb54-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-3"><a href="analysis.html#cb54-3"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-4"><a href="analysis.html#cb54-4"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb54-5"><a href="analysis.html#cb54-5"></a>    <span class="kw">across</span>(</span>
+<span id="cb54-6"><a href="analysis.html#cb54-6"></a>      <span class="kw">c</span>(</span>
+<span id="cb54-7"><a href="analysis.html#cb54-7"></a>        <span class="kw">ends_with</span>(<span class="st">&quot;_time&quot;</span>)</span>
+<span id="cb54-8"><a href="analysis.html#cb54-8"></a>      ),</span>
+<span id="cb54-9"><a href="analysis.html#cb54-9"></a>      lead,</span>
+<span id="cb54-10"><a href="analysis.html#cb54-10"></a>      <span class="dt">.names =</span> <span class="st">&quot;lead_{.col}&quot;</span></span>
+<span id="cb54-11"><a href="analysis.html#cb54-11"></a>    )</span>
+<span id="cb54-12"><a href="analysis.html#cb54-12"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-13"><a href="analysis.html#cb54-13"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
+</div>
+<div id="music" class="section level2">
+<h2><span class="header-section-number">4.2</span> Music</h2>
+<div id="affect" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Affect</h3>
+<div id="music-on-affect" class="section level4">
+<h4><span class="header-section-number">4.2.1.1</span> Music on affect</h4>
+<p>Let’s begin with modeling affect and music over time.
+In addition to separating within and between effects, we also let the within effects vary.
+So the fixed effects tell us how much an average person changed on well-being a week later if they went from not using to using a medium and how much well-being changed if a person used a medium an hour more than they usually do.
+We allow both of those effects to vary across participants.</p>
+<p>Note, I only ran those once because the analysis takes time (~ half an hour on my machine) and the files get huge (this one is almost 1 GB).</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="analysis.html#cb55-1"></a>music_affect &lt;-<span class="st"> </span></span>
+<span id="cb55-2"><a href="analysis.html#cb55-2"></a><span class="st">  </span><span class="kw">brm</span>(</span>
+<span id="cb55-3"><a href="analysis.html#cb55-3"></a>    <span class="dt">data =</span> working_file,</span>
+<span id="cb55-4"><a href="analysis.html#cb55-4"></a>    <span class="dt">family =</span> gaussian,</span>
+<span id="cb55-5"><a href="analysis.html#cb55-5"></a>    affect <span class="op">~</span></span>
+<span id="cb55-6"><a href="analysis.html#cb55-6"></a><span class="st">      </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb55-7"><a href="analysis.html#cb55-7"></a><span class="st">      </span>music_used_between <span class="op">+</span></span>
+<span id="cb55-8"><a href="analysis.html#cb55-8"></a><span class="st">      </span>music_used_within <span class="op">+</span></span>
+<span id="cb55-9"><a href="analysis.html#cb55-9"></a><span class="st">      </span>music_time_between <span class="op">+</span></span>
+<span id="cb55-10"><a href="analysis.html#cb55-10"></a><span class="st">      </span>music_time_within <span class="op">+</span></span>
+<span id="cb55-11"><a href="analysis.html#cb55-11"></a><span class="st">      </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb55-12"><a href="analysis.html#cb55-12"></a><span class="st">         </span>music_time_within <span class="op">+</span></span>
+<span id="cb55-13"><a href="analysis.html#cb55-13"></a><span class="st">         </span>music_used_within</span>
+<span id="cb55-14"><a href="analysis.html#cb55-14"></a>       <span class="op">|</span><span class="st"> </span>id),</span>
+<span id="cb55-15"><a href="analysis.html#cb55-15"></a>    <span class="dt">iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb55-16"><a href="analysis.html#cb55-16"></a>    <span class="dt">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb55-17"><a href="analysis.html#cb55-17"></a>    <span class="dt">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb55-18"><a href="analysis.html#cb55-18"></a>    <span class="dt">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb55-19"><a href="analysis.html#cb55-19"></a>    <span class="dt">seed =</span> <span class="dv">42</span>,</span>
+<span id="cb55-20"><a href="analysis.html#cb55-20"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">0.95</span>),</span>
+<span id="cb55-21"><a href="analysis.html#cb55-21"></a>    <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;music_affect&quot;</span>)</span>
+<span id="cb55-22"><a href="analysis.html#cb55-22"></a>  )</span></code></pre></div>
+Let’s inspect the traceplots.
+Overall, they look fine and the chains seem to have mixed well, see (Figure <a href="#fig:inspect-music-affect"><strong>??</strong></a>).
+<div class="figure"><span id="fig:inspect-music-affect-1"></span>
+<img src="analysis_report_files/figure-html/inspect-music-affect-1.png" alt="Traceplots and posterior distributions for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.1: Traceplots and posterior distributions for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-music-affect-2"></span>
+<img src="analysis_report_files/figure-html/inspect-music-affect-2.png" alt="Traceplots and posterior distributions for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.2: Traceplots and posterior distributions for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-music-affect-3"></span>
+<img src="analysis_report_files/figure-html/inspect-music-affect-3.png" alt="Traceplots and posterior distributions for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.3: Traceplots and posterior distributions for Music-Affect model
+</p>
+</div>
+The posterior predictive distribution (Figure <a href="analysis.html#fig:ppc-music-affect">4.4</a>) shows that the model does an okay job in predicting our outcome.
+It retrieves mean well, but the outcome is not fully normally distributed, which we see in the posterior predictive distribution and hence the median is overestimated by the model.
+I’d say fitting another distribution (e.g., a skewed normal) might be overfitting - I think a normal data generating process for well-being is adequate.
+<div class="figure"><span id="fig:ppc-music-affect"></span>
+<img src="analysis_report_files/figure-html/ppc-music-affect-1.png" alt="Posterior predictive checks for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.4: Posterior predictive checks for Music-Affect model
+</p>
+</div>
+<p>Let’s also check for potentially influential values.
+Quite a lot are flagged: This might have to do with the fact that some participants only had three observations.
+If we leave one out, the posterior will be influenced heavily by the two remaining observation, see the <a href="https://discourse.mc-stan.org/t/pareto-k-diagnostics-and-kfold-model-comparison/7409">discussion here</a>.
+Unfortunately, using moment matching to get better LOO estimates doesn’t work for me, even when I save all parameters.
+Apparently, this could be a <a href="https://discourse.mc-stan.org/t/difficulty-comparing-models-with-loo/17271">bug</a>.
+And calculating ELPD directly isn’t an option because it would take days.</p>
+<p>Overall, I’m inclined to trust the model (conditional on us using a normal outcome distribution) because of the model diagnostics.
+It’s possible that some of the larger values on the time variable (which are quite rare) have a large influence on the posterior if they come from the same person.
+But we already excluded many implausible values, so this is the sample we’re working with and from which we want to generalize to the population.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="analysis.html#cb56-1"></a>music_affect_loo &lt;-<span class="st"> </span><span class="kw">loo</span>(music_affect)</span>
+<span id="cb56-2"><a href="analysis.html#cb56-2"></a>music_affect_loo</span></code></pre></div>
+<pre><code>## 
+## Computed from 12000 by 10985 log-likelihood matrix
+## 
+##          Estimate    SE
+## elpd_loo -18112.0 105.4
+## p_loo      1955.7  34.5
+## looic     36224.0 210.8
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     10617 96.6%   434       
+##  (0.5, 0.7]   (ok)         330  3.0%   93        
+##    (0.7, 1]   (bad)         36  0.3%   28        
+##    (1, Inf)   (very bad)     2  0.0%   19        
+## See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<p>Let’s inspect the summary.
+We see that:</p>
+<ul>
+<li>Music listeners were less happy than those who didn’t listen to music (<code>music_used_between</code>). The model also estimates the effect to be quite large: listeners scored 0.38 points lower on the ten-point scale. The credible interval doesn’t include zero, so conditional on the model, the data are 95% likely to have been generated by a true effect that does not include zero.</li>
+<li>However, if a person went from not listening to listening, they felt better the next week (<code>music_used_within</code>). That effect is smaller than the between effect: If someone stopped listening they felt 0.12 points worse. The credible interval doesn’t contain zero, but barely.</li>
+<li>When a person listened to one hour more music than someone else, that person also felt slightly worse (<code>music_time_between</code>). However, the effect is small and the posterior contains zero as well as positive effects, so we can’t be certain.</li>
+<li>The same goes for a one-hour increase from one’s typical music listening (<code>music_time_within</code>): the effect is positive, but super small and the posterior contains zero as well as negative values.</li>
+</ul>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="analysis.html#cb58-1"></a><span class="kw">summary</span>(music_affect)</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: affect ~ 1 + music_used_between + music_used_within + music_time_between + music_time_within + (1 + music_time_within + music_used_within | id) 
+##    Data: working_file (Number of observations: 10985) 
+## Samples: 4 chains, each with iter = 5000; warmup = 2000; thin = 1;
+##          total post-warmup samples = 12000
+## 
+## Group-Level Effects: 
+## ~id (Number of levels: 2159) 
+##                                          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)                                1.86      0.03     1.80     1.92 1.00     2558     5066
+## sd(music_time_within)                        0.06      0.03     0.01     0.11 1.00     1546     1804
+## sd(music_used_within)                        0.22      0.11     0.03     0.45 1.00     3101     3835
+## cor(Intercept,music_time_within)            -0.22      0.21    -0.68     0.15 1.00     6556     3633
+## cor(Intercept,music_used_within)             0.46      0.26    -0.07     0.92 1.00     7058     6344
+## cor(music_time_within,music_used_within)    -0.05      0.46    -0.87     0.79 1.00     4688     6431
+## 
+## Population-Level Effects: 
+##                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept              6.26      0.09     6.07     6.44 1.00     2009     3590
+## music_used_between    -0.38      0.13    -0.63    -0.12 1.00     1849     3799
+## music_used_within      0.12      0.06     0.01     0.24 1.00    24236     9993
+## music_time_between    -0.02      0.02    -0.06     0.02 1.00     1988     3865
+## music_time_within      0.01      0.01    -0.01     0.03 1.00    19482    10123
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     1.13      0.01     1.11     1.15 1.00     9868     9496
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+Let’s visualize that summary and look at the effects.
+Figure <a href="#fig:music-affect-effects"><strong>??</strong></a> shows that the <code>used</code> effects have less uncertainty associated with the extreme ends of the distribution, whereas <code>time</code> effects have a lot of uncertainty around smaller and larger values, probably because there aren’t many data points here.
+<div class="figure"><span id="fig:music-affect-effects-1"></span>
+<img src="analysis_report_files/figure-html/music-affect-effects-1.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.5: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-affect-effects-2"></span>
+<img src="analysis_report_files/figure-html/music-affect-effects-2.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.6: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-affect-effects-3"></span>
+<img src="analysis_report_files/figure-html/music-affect-effects-3.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.7: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-affect-effects-4"></span>
+<img src="analysis_report_files/figure-html/music-affect-effects-4.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.8: Conditional effects for Music-Affect model
+</p>
+</div>
+</div>
+<div id="affect-on-music" class="section level4">
+<h4><span class="header-section-number">4.2.1.2</span> Affect on music</h4>
+<p>Let’s do the other lag of the model: The effect of affect in the previous week on music listening.
+Here, we’ll use a zero-inflated gamma distribution.
+The zero-inflation is obvious: Not everyone uses each medium at each wave.
+Like I said above, that’s a clear argument that zero vs. not zero is a different data generating process than time listened.</p>
+<p>And like above, where I wanted to see how listening vs. not listening is related to affect a week later, I want to see whether changes in affect are related to changes in the probability to listen to music a week later.
+Besides predicting listening vs. not listening, we also want to see whether changes in affect are related to changes in music listening duration a week later (so the non-zero parts of media use).
+We know that the non-zero duration is continuous (i.e., hours) and cannot be zero.
+We can also see from the distribution that the variation increases with larger values, so the variation likely increases with the mean.
+That’s why I think a Gamma distribution is adequate.</p>
+<p>Below I run the model.
+Note again that music time is naturally lagged (i.e., reported for the previous week).
+So get the lagged effect of affect on music time, we use the led music time.</p>
+<p>On my machine, the model took about an two hours.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="analysis.html#cb60-1"></a>affect_music &lt;-<span class="st"> </span></span>
+<span id="cb60-2"><a href="analysis.html#cb60-2"></a><span class="st">  </span><span class="kw">brm</span>(</span>
+<span id="cb60-3"><a href="analysis.html#cb60-3"></a>    <span class="kw">bf</span>(</span>
+<span id="cb60-4"><a href="analysis.html#cb60-4"></a>      <span class="co"># predicting continuous part</span></span>
+<span id="cb60-5"><a href="analysis.html#cb60-5"></a>      lead_music_time <span class="op">~</span></span>
+<span id="cb60-6"><a href="analysis.html#cb60-6"></a><span class="st">        </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb60-7"><a href="analysis.html#cb60-7"></a><span class="st">        </span>affect_between <span class="op">+</span></span>
+<span id="cb60-8"><a href="analysis.html#cb60-8"></a><span class="st">        </span>affect_within <span class="op">+</span></span>
+<span id="cb60-9"><a href="analysis.html#cb60-9"></a><span class="st">        </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb60-10"><a href="analysis.html#cb60-10"></a><span class="st">           </span>affect_within</span>
+<span id="cb60-11"><a href="analysis.html#cb60-11"></a>         <span class="op">|</span><span class="st"> </span>id),</span>
+<span id="cb60-12"><a href="analysis.html#cb60-12"></a>      </span>
+<span id="cb60-13"><a href="analysis.html#cb60-13"></a>      <span class="co"># predicting hurdle part</span></span>
+<span id="cb60-14"><a href="analysis.html#cb60-14"></a>      hu <span class="op">~</span></span>
+<span id="cb60-15"><a href="analysis.html#cb60-15"></a><span class="st">        </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb60-16"><a href="analysis.html#cb60-16"></a><span class="st">        </span>affect_between <span class="op">+</span></span>
+<span id="cb60-17"><a href="analysis.html#cb60-17"></a><span class="st">        </span>affect_within <span class="op">+</span></span>
+<span id="cb60-18"><a href="analysis.html#cb60-18"></a><span class="st">        </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb60-19"><a href="analysis.html#cb60-19"></a><span class="st">           </span>affect_within</span>
+<span id="cb60-20"><a href="analysis.html#cb60-20"></a>         <span class="op">|</span><span class="st"> </span>id)</span>
+<span id="cb60-21"><a href="analysis.html#cb60-21"></a>    ),</span>
+<span id="cb60-22"><a href="analysis.html#cb60-22"></a>    <span class="dt">data =</span> working_file,</span>
+<span id="cb60-23"><a href="analysis.html#cb60-23"></a>    <span class="dt">family =</span> <span class="kw">hurdle_gamma</span>(),</span>
+<span id="cb60-24"><a href="analysis.html#cb60-24"></a>    ,</span>
+<span id="cb60-25"><a href="analysis.html#cb60-25"></a>    <span class="dt">iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb60-26"><a href="analysis.html#cb60-26"></a>    <span class="dt">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb60-27"><a href="analysis.html#cb60-27"></a>    <span class="dt">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb60-28"><a href="analysis.html#cb60-28"></a>    <span class="dt">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb60-29"><a href="analysis.html#cb60-29"></a>    <span class="dt">seed =</span> <span class="dv">42</span>,</span>
+<span id="cb60-30"><a href="analysis.html#cb60-30"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">0.95</span>),</span>
+<span id="cb60-31"><a href="analysis.html#cb60-31"></a>    <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;affect_music&quot;</span>)</span>
+<span id="cb60-32"><a href="analysis.html#cb60-32"></a>  )</span></code></pre></div>
+Let’s inspect the traceplots.
+Overall, they look fine and the chains seem to have mixed well, see (Figure <a href="#fig:inspect-affect-music"><strong>??</strong></a>).
+<div class="figure"><span id="fig:inspect-affect-music-1"></span>
+<img src="analysis_report_files/figure-html/inspect-affect-music-1.png" alt="Traceplots and posterior distributions for Affect-Music model" width="672" />
+<p class="caption">
+Figure 4.9: Traceplots and posterior distributions for Affect-Music model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-affect-music-2"></span>
+<img src="analysis_report_files/figure-html/inspect-affect-music-2.png" alt="Traceplots and posterior distributions for Affect-Music model" width="672" />
+<p class="caption">
+Figure 4.10: Traceplots and posterior distributions for Affect-Music model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-affect-music-3"></span>
+<img src="analysis_report_files/figure-html/inspect-affect-music-3.png" alt="Traceplots and posterior distributions for Affect-Music model" width="672" />
+<p class="caption">
+Figure 4.11: Traceplots and posterior distributions for Affect-Music model
+</p>
+</div>
+<p>The posterior predictive distribution (Figure <a href="analysis.html#fig:ppc-affect-music">4.12</a>) shows that the model does an excellent job in predicting our outcome - at least if we follow the distribution.
+Self-reported time will necessarily bundle around full and half hours (e.g., 0.5h, 1h, 1.5h etc.), which is why the distribution of the data has spikes.
+The model smooths those spikes, which is a good thing because we want to get at the data generating process.</p>
+It retrieves the mean well, but underestimates the median, quite possibly because the model expects less zeros, but more very small values - which is what we want from multilevel models: shrinkage.
+The other model fit diagnostics are okay, but not great.
+<div class="figure"><span id="fig:ppc-affect-music"></span>
+<img src="analysis_report_files/figure-html/ppc-affect-music-1.png" alt="Posterior predictive checks for Affect-Music model" width="672" />
+<p class="caption">
+Figure 4.12: Posterior predictive checks for Affect-Music model
+</p>
+</div>
+<p>Let’s also check for potentially influential values.
+A lot are flagged, like in the previous model: Again, I think that speaks for the flexibility of the model.
+There are multiple participants with only two observations.
+If we leave one out, the posterior will be influenced heavily by the one remaining observation
+Once more, I’m inclined to trust the model because the model diagnostics looked good.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="analysis.html#cb61-1"></a>affect_music_loo &lt;-<span class="st"> </span><span class="kw">loo</span>(affect_music)</span>
+<span id="cb61-2"><a href="analysis.html#cb61-2"></a>affect_music_loo</span></code></pre></div>
+<pre><code>## 
+## Computed from 12000 by 8698 log-likelihood matrix
+## 
+##          Estimate    SE
+## elpd_loo -11519.8 123.4
+## p_loo      2101.0  53.1
+## looic     23039.6 246.8
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     7702  88.5%   761       
+##  (0.5, 0.7]   (ok)        630   7.2%   100       
+##    (0.7, 1]   (bad)       264   3.0%   10        
+##    (1, Inf)   (very bad)  102   1.2%   1         
+## See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<p>Summary:</p>
+<ul>
+<li>For <code>mu</code> we’re on the log scale, so we need to exponentiate which yields <code>exp(0.97)</code> = 2.64 hours on non-zero music time - when a participant has zero affect and no deviation from that affect, so not a very meaningful number (<code>Intercept</code>)</li>
+<li>For the hurdle, so the odds of having zero rather than not zero, the model estimates considerable shrinkage: The probability of having a zero is <code>plogis(-9.46)</code> = 7.790052210^{-5}, much smaller than the proportion of zeros in the actual data. That’s okay, because most zeros come from very few participants who have all zero, so the model takes that into account (<code>hu_Intercept</code>).</li>
+<li>When we look at the effect of affect on non-zero hours, we’re still on the log scale, meaning we need to exponentiate which gives us the factor at which y increases with each increase on x: If we compare a participant with another participant with an increase of one on affect, their music time increases (so decreases) by a factor of <code>exp(-0.02)</code> = 0.98 one week later - a small effect, but the posterior doesn’t include zero (<code>affect_between</code>)</li>
+<li>The same goes for the within effect: As a person goes up one point on affect compared to their typical affect score, their music time increases (i.e., decreases) by a factor of <code>exp(-0.004)</code> = 1 - a completely negligible, small effect whose posterior includes zero (<code>affect_within</code>).</li>
+<li>As for whether affect influences whether someone went from not listening to music to listening to music: The between effect shows that people with higher affect also have higher odds of not listening to music across all waves: <code>exp(0.48)</code> = 1.6160744 for <code>hu_affect_between</code>.</li>
+<li>Interestingly, if the average users went went up one point from their typical affect, they had higher odds of not listening to music a week later, <code>exp(0.21)</code> = 1.2336781.</li>
+</ul>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="analysis.html#cb63-1"></a><span class="kw">summary</span>(affect_music)</span></code></pre></div>
+<pre><code>##  Family: hurdle_gamma 
+##   Links: mu = log; shape = identity; hu = logit 
+## Formula: lead_music_time ~ 1 + affect_between + affect_within + (1 + affect_within | id) 
+##          hu ~ 1 + affect_between + affect_within + (1 + affect_within | id)
+##    Data: working_file (Number of observations: 8698) 
+## Samples: 4 chains, each with iter = 5000; warmup = 2000; thin = 1;
+##          total post-warmup samples = 12000
+## 
+## Group-Level Effects: 
+## ~id (Number of levels: 2157) 
+##                                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)                          0.76      0.01     0.73     0.79 1.00     2207     4724
+## sd(affect_within)                      0.04      0.02     0.00     0.07 1.00      845     1934
+## sd(hu_Intercept)                       8.86      0.53     7.88     9.96 1.00     3052     5772
+## sd(hu_affect_within)                   0.31      0.23     0.01     0.86 1.00     2528     5195
+## cor(Intercept,affect_within)          -0.35      0.24    -0.88     0.05 1.00     3478     2685
+## cor(hu_Intercept,hu_affect_within)    -0.39      0.56    -0.99     0.87 1.00     5938     7531
+## 
+## Population-Level Effects: 
+##                   Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept             0.97      0.06     0.86     1.09 1.00     1812     3180
+## hu_Intercept         -9.46      0.94   -11.39    -7.70 1.00     1799     3685
+## affect_between       -0.02      0.01    -0.04    -0.00 1.00     1901     3045
+## affect_within        -0.00      0.01    -0.02     0.01 1.00    17660    10180
+## hu_affect_between     0.48      0.13     0.23     0.74 1.00     1597     3508
+## hu_affect_within      0.21      0.20    -0.08     0.68 1.00     4093     6519
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## shape     5.35      0.11     5.14     5.58 1.00     5354     8356
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+Figure <a href="#fig:music-affect-effects"><strong>??</strong></a> shows the conditional effects of affect on the amount of music listened a week later.
+We see the between effect could be meaningful over the entire range of the affect scale, but the within effect is almost flat.
+<div class="figure"><span id="fig:affect-music-effects-1"></span>
+<img src="analysis_report_files/figure-html/affect-music-effects-1.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.13: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:affect-music-effects-2"></span>
+<img src="analysis_report_files/figure-html/affect-music-effects-2.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.14: Conditional effects for Music-Affect model
+</p>
+</div>
+</div>
+</div>
+<div id="life-satisfaction" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Life Satisfaction</h3>
+<p>From now on, I’ll be less verbose in describing the models, simply because we’re running 28 in total (7 categories x two directions x 2 well-being measures).
+I’ll apply the same steps as I did above with affect and music, but won’t describe every parameter unless there’s something unusual that sticks out.
+Rather, in the end of this section, I’ll create a summary figure.</p>
+<div id="music-on-life-satisfaction" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> Music on Life Satisfaction</h4>
+<p>Let’s run the model.
+Again, that took about half an hour on my machine.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="analysis.html#cb65-1"></a>music_life &lt;-<span class="st"> </span></span>
+<span id="cb65-2"><a href="analysis.html#cb65-2"></a><span class="st">  </span><span class="kw">brm</span>(</span>
+<span id="cb65-3"><a href="analysis.html#cb65-3"></a>    <span class="dt">data =</span> working_file,</span>
+<span id="cb65-4"><a href="analysis.html#cb65-4"></a>    <span class="dt">family =</span> gaussian,</span>
+<span id="cb65-5"><a href="analysis.html#cb65-5"></a>    life_satisfaction <span class="op">~</span></span>
+<span id="cb65-6"><a href="analysis.html#cb65-6"></a><span class="st">      </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb65-7"><a href="analysis.html#cb65-7"></a><span class="st">      </span>music_used_between <span class="op">+</span></span>
+<span id="cb65-8"><a href="analysis.html#cb65-8"></a><span class="st">      </span>music_used_within <span class="op">+</span></span>
+<span id="cb65-9"><a href="analysis.html#cb65-9"></a><span class="st">      </span>music_time_between <span class="op">+</span></span>
+<span id="cb65-10"><a href="analysis.html#cb65-10"></a><span class="st">      </span>music_time_within <span class="op">+</span></span>
+<span id="cb65-11"><a href="analysis.html#cb65-11"></a><span class="st">      </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb65-12"><a href="analysis.html#cb65-12"></a><span class="st">         </span>music_time_within <span class="op">+</span></span>
+<span id="cb65-13"><a href="analysis.html#cb65-13"></a><span class="st">         </span>music_used_within</span>
+<span id="cb65-14"><a href="analysis.html#cb65-14"></a>       <span class="op">|</span><span class="st"> </span>id),</span>
+<span id="cb65-15"><a href="analysis.html#cb65-15"></a>    <span class="dt">iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb65-16"><a href="analysis.html#cb65-16"></a>    <span class="dt">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb65-17"><a href="analysis.html#cb65-17"></a>    <span class="dt">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb65-18"><a href="analysis.html#cb65-18"></a>    <span class="dt">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb65-19"><a href="analysis.html#cb65-19"></a>    <span class="dt">seed =</span> <span class="dv">42</span>,</span>
+<span id="cb65-20"><a href="analysis.html#cb65-20"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">0.95</span>),</span>
+<span id="cb65-21"><a href="analysis.html#cb65-21"></a>    <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;music_life&quot;</span>)</span>
+<span id="cb65-22"><a href="analysis.html#cb65-22"></a>  )</span></code></pre></div>
+The traceplots look good (Figure <a href="#fig:inspect-music-life"><strong>??</strong></a>).
+<div class="figure"><span id="fig:inspect-music-life-1"></span>
+<img src="analysis_report_files/figure-html/inspect-music-life-1.png" alt="Traceplots and posterior distributions for Music-Life Satisfaction model" width="672" />
+<p class="caption">
+Figure 4.15: Traceplots and posterior distributions for Music-Life Satisfaction model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-music-life-2"></span>
+<img src="analysis_report_files/figure-html/inspect-music-life-2.png" alt="Traceplots and posterior distributions for Music-Life Satisfaction model" width="672" />
+<p class="caption">
+Figure 4.16: Traceplots and posterior distributions for Music-Life Satisfaction model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-music-life-3"></span>
+<img src="analysis_report_files/figure-html/inspect-music-life-3.png" alt="Traceplots and posterior distributions for Music-Life Satisfaction model" width="672" />
+<p class="caption">
+Figure 4.17: Traceplots and posterior distributions for Music-Life Satisfaction model
+</p>
+</div>
+The posterior predictive distribution (Figure <a href="analysis.html#fig:ppc-music-life">4.18</a>) shows that the model does a good job in predicting our outcome.
+Like before, it slightly underestimates the median; everything else looks fine.
+<div class="figure"><span id="fig:ppc-music-life"></span>
+<img src="analysis_report_files/figure-html/ppc-music-life-1.png" alt="Posterior predictive checks for Music-Life Satisfaction model" width="672" />
+<p class="caption">
+Figure 4.18: Posterior predictive checks for Music-Life Satisfaction model
+</p>
+</div>
+<p>The outliers are in about the same range as previous models, and the model diagnostics look good.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="analysis.html#cb66-1"></a>music_life_loo &lt;-<span class="st"> </span><span class="kw">loo</span>(music_life)</span>
+<span id="cb66-2"><a href="analysis.html#cb66-2"></a>music_life_loo</span></code></pre></div>
+<pre><code>## 
+## Computed from 12000 by 10985 log-likelihood matrix
+## 
+##          Estimate    SE
+## elpd_loo -14530.0 147.9
+## p_loo      2289.4  54.1
+## looic     29059.9 295.8
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     10210 92.9%   623       
+##  (0.5, 0.7]   (ok)         623  5.7%   101       
+##    (0.7, 1]   (bad)        137  1.2%   14        
+##    (1, Inf)   (very bad)    15  0.1%   1         
+## See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<p>Let’s inspect the summary.
+We see that:</p>
+<ul>
+<li>Music listeners had lower satisfaction with life than non-listeners (<code>music_used_between</code>), but the effect is much smaller than for affect and the posterior contains both zero and a lot of negative values</li>
+<li>However, if a person went from not listening to listening, they reported higher life satisfaction nthe next week (<code>music_used_within</code>), but posterior contains zero.</li>
+<li>When a person listened to one hour more music than someone else, that person reported slightly higher life satisfaction (<code>music_time_between</code>), but 0 is in CI.</li>
+<li>The same goes for a one-hour increase from one’s typical music listening (<code>music_time_within</code>): the effect is positive, but super small and the posterior contains zero as well as negative values.</li>
+</ul>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="analysis.html#cb68-1"></a><span class="kw">summary</span>(music_life)</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: life_satisfaction ~ 1 + music_used_between + music_used_within + music_time_between + music_time_within + (1 + music_time_within + music_used_within | id) 
+##    Data: working_file (Number of observations: 10985) 
+## Samples: 4 chains, each with iter = 5000; warmup = 2000; thin = 1;
+##          total post-warmup samples = 12000
+## 
+## Group-Level Effects: 
+## ~id (Number of levels: 2159) 
+##                                          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)                                1.91      0.03     1.85     1.96 1.01     1211     2309
+## sd(music_time_within)                        0.11      0.01     0.08     0.14 1.00     2961     5824
+## sd(music_used_within)                        0.50      0.08     0.33     0.65 1.00      818     2361
+## cor(Intercept,music_time_within)            -0.22      0.09    -0.39    -0.06 1.00     8603     9541
+## cor(Intercept,music_used_within)             0.13      0.09    -0.05     0.31 1.00     8745     7147
+## cor(music_time_within,music_used_within)     0.18      0.31    -0.36     0.83 1.01      478      752
+## 
+## Population-Level Effects: 
+##                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept              6.43      0.09     6.24     6.61 1.01      754     1588
+## music_used_between    -0.11      0.13    -0.37     0.15 1.01      536     1281
+## music_used_within      0.04      0.05    -0.05     0.13 1.00    15623    10202
+## music_time_between     0.02      0.02    -0.02     0.07 1.01      819     1615
+## music_time_within      0.01      0.01    -0.01     0.03 1.00    11135     9998
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     0.80      0.01     0.79     0.81 1.00     8930     9477
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+Figure <a href="#fig:music-life-effects"><strong>??</strong></a> shows the conditional effects
+<div class="figure"><span id="fig:music-life-effects-1"></span>
+<img src="analysis_report_files/figure-html/music-life-effects-1.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.19: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-life-effects-2"></span>
+<img src="analysis_report_files/figure-html/music-life-effects-2.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.20: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-life-effects-3"></span>
+<img src="analysis_report_files/figure-html/music-life-effects-3.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.21: Conditional effects for Music-Affect model
+</p>
+</div>
+<div class="figure"><span id="fig:music-life-effects-4"></span>
+<img src="analysis_report_files/figure-html/music-life-effects-4.png" alt="Conditional effects for Music-Affect model" width="672" />
+<p class="caption">
+Figure 4.22: Conditional effects for Music-Affect model
+</p>
+</div>
+</div>
+<div id="life-satisfaction-on-music" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> Life satisfaction on music</h4>
+<p>Below I run the model.
+On my machine, the model took about three and a half hours.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="analysis.html#cb70-1"></a>life_music &lt;-<span class="st"> </span></span>
+<span id="cb70-2"><a href="analysis.html#cb70-2"></a><span class="st">  </span><span class="kw">brm</span>(</span>
+<span id="cb70-3"><a href="analysis.html#cb70-3"></a>    <span class="kw">bf</span>(</span>
+<span id="cb70-4"><a href="analysis.html#cb70-4"></a>      <span class="co"># predicting continuous part</span></span>
+<span id="cb70-5"><a href="analysis.html#cb70-5"></a>      lead_music_time <span class="op">~</span></span>
+<span id="cb70-6"><a href="analysis.html#cb70-6"></a><span class="st">        </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb70-7"><a href="analysis.html#cb70-7"></a><span class="st">        </span>life_satisfaction_between <span class="op">+</span></span>
+<span id="cb70-8"><a href="analysis.html#cb70-8"></a><span class="st">        </span>life_satisfaction_within <span class="op">+</span></span>
+<span id="cb70-9"><a href="analysis.html#cb70-9"></a><span class="st">        </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb70-10"><a href="analysis.html#cb70-10"></a><span class="st">           </span>life_satisfaction_within</span>
+<span id="cb70-11"><a href="analysis.html#cb70-11"></a>         <span class="op">|</span><span class="st"> </span>id),</span>
+<span id="cb70-12"><a href="analysis.html#cb70-12"></a>      </span>
+<span id="cb70-13"><a href="analysis.html#cb70-13"></a>      <span class="co"># predicting hurdle part</span></span>
+<span id="cb70-14"><a href="analysis.html#cb70-14"></a>      hu <span class="op">~</span></span>
+<span id="cb70-15"><a href="analysis.html#cb70-15"></a><span class="st">        </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb70-16"><a href="analysis.html#cb70-16"></a><span class="st">        </span>life_satisfaction_between <span class="op">+</span></span>
+<span id="cb70-17"><a href="analysis.html#cb70-17"></a><span class="st">        </span>life_satisfaction_within <span class="op">+</span></span>
+<span id="cb70-18"><a href="analysis.html#cb70-18"></a><span class="st">        </span>(<span class="dv">1</span> <span class="op">+</span></span>
+<span id="cb70-19"><a href="analysis.html#cb70-19"></a><span class="st">           </span>life_satisfaction_within</span>
+<span id="cb70-20"><a href="analysis.html#cb70-20"></a>         <span class="op">|</span><span class="st"> </span>id)</span>
+<span id="cb70-21"><a href="analysis.html#cb70-21"></a>    ),</span>
+<span id="cb70-22"><a href="analysis.html#cb70-22"></a>    <span class="dt">data =</span> working_file,</span>
+<span id="cb70-23"><a href="analysis.html#cb70-23"></a>    <span class="dt">family =</span> <span class="kw">hurdle_gamma</span>(),</span>
+<span id="cb70-24"><a href="analysis.html#cb70-24"></a>    ,</span>
+<span id="cb70-25"><a href="analysis.html#cb70-25"></a>    <span class="dt">iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb70-26"><a href="analysis.html#cb70-26"></a>    <span class="dt">warmup =</span> <span class="dv">2000</span>,</span>
+<span id="cb70-27"><a href="analysis.html#cb70-27"></a>    <span class="dt">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb70-28"><a href="analysis.html#cb70-28"></a>    <span class="dt">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb70-29"><a href="analysis.html#cb70-29"></a>    <span class="dt">seed =</span> <span class="dv">42</span>,</span>
+<span id="cb70-30"><a href="analysis.html#cb70-30"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">0.95</span>),</span>
+<span id="cb70-31"><a href="analysis.html#cb70-31"></a>    <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;life_music&quot;</span>)</span>
+<span id="cb70-32"><a href="analysis.html#cb70-32"></a>  )</span></code></pre></div>
+The chains seem to have mixed well, see (Figure <a href="#fig:inspect-life-music"><strong>??</strong></a>).
+<div class="figure"><span id="fig:inspect-life-music-1"></span>
+<img src="analysis_report_files/figure-html/inspect-life-music-1.png" alt="Traceplots and posterior distributions for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.23: Traceplots and posterior distributions for Life Satisfaction-Music model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-life-music-2"></span>
+<img src="analysis_report_files/figure-html/inspect-life-music-2.png" alt="Traceplots and posterior distributions for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.24: Traceplots and posterior distributions for Life Satisfaction-Music model
+</p>
+</div>
+<div class="figure"><span id="fig:inspect-life-music-3"></span>
+<img src="analysis_report_files/figure-html/inspect-life-music-3.png" alt="Traceplots and posterior distributions for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.25: Traceplots and posterior distributions for Life Satisfaction-Music model
+</p>
+</div>
+The posterior predictive distribution (Figure <a href="analysis.html#fig:ppc-life-music">4.26</a>) shows that the model does an excellent job in predicting our outcome.
+Once more, it shifts zero values to very small values (shrinkage), which biases the median.
+<div class="figure"><span id="fig:ppc-life-music"></span>
+<img src="analysis_report_files/figure-html/ppc-life-music-1.png" alt="Posterior predictive checks for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.26: Posterior predictive checks for Life Satisfaction-Music model
+</p>
+</div>
+<p>Once more, there are several potential outliers.
+Again, because the model diagnostics look good and leaving one out here will estimate parameters for a participant with only two observations, which can lead to influential values, I believe the model is just flexible.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="analysis.html#cb71-1"></a>life_music_loo &lt;-<span class="st"> </span><span class="kw">loo</span>(life_music)</span>
+<span id="cb71-2"><a href="analysis.html#cb71-2"></a>life_music_loo</span></code></pre></div>
+<pre><code>## 
+## Computed from 12000 by 8698 log-likelihood matrix
+## 
+##          Estimate    SE
+## elpd_loo -11513.5 123.2
+## p_loo      2082.9  52.6
+## looic     23026.9 246.5
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     7652  88.0%   701       
+##  (0.5, 0.7]   (ok)        676   7.8%   157       
+##    (0.7, 1]   (bad)       276   3.2%   10        
+##    (1, Inf)   (very bad)   94   1.1%   1         
+## See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<p>Summary:</p>
+<ul>
+<li>Those with higher life satisfaction have a (very small) tendency to listen to more music a week later than those with lower life satisfaction: <code>exp(0.02)</code> = 1.02 (<code>life_satisfaction_between</code>)</li>
+<li>As a person goes up one point on affect compared to their typical life satisfaction score, their music time increases by a factor of <code>exp(0.002)</code> = 1 - a completely negligible, small effect whose posterior includes zero (<code>life_satisfaction_within</code>).</li>
+<li>The between effect shows that people with higher life satisfaction also have lower odds of not listening to music across all waves: <code>exp(-0.31)</code> = 0.733447 for <code>hu_life_satisfaction_between</code> - but the posterior goes from negative to positive.</li>
+<li>If the average users went went up one point from their typical life satisfaction score, they had lower odds of not listening to music a week later, <code>exp(-0.15)</code> = 0.860708, but again the posterior includes a wide range of values, including zero.</li>
+</ul>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="analysis.html#cb73-1"></a><span class="kw">summary</span>(life_music)</span></code></pre></div>
+<pre><code>##  Family: hurdle_gamma 
+##   Links: mu = log; shape = identity; hu = logit 
+## Formula: lead_music_time ~ 1 + life_satisfaction_between + life_satisfaction_within + (1 + life_satisfaction_within | id) 
+##          hu ~ 1 + life_satisfaction_between + life_satisfaction_within + (1 + life_satisfaction_within | id)
+##    Data: working_file (Number of observations: 8698) 
+## Samples: 4 chains, each with iter = 5000; warmup = 2000; thin = 1;
+##          total post-warmup samples = 12000
+## 
+## Group-Level Effects: 
+## ~id (Number of levels: 2157) 
+##                                               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)                                     0.76      0.01     0.73     0.79 1.00     2364     4922
+## sd(life_satisfaction_within)                      0.04      0.02     0.00     0.08 1.00     1295     3789
+## sd(hu_Intercept)                                  9.01      0.55     8.00    10.19 1.00     3125     5342
+## sd(hu_life_satisfaction_within)                   0.50      0.24     0.06     1.02 1.00     2794     3283
+## cor(Intercept,life_satisfaction_within)          -0.03      0.34    -0.78     0.75 1.00     9234     4000
+## cor(hu_Intercept,hu_life_satisfaction_within)     0.11      0.55    -0.88     0.94 1.00     5983     6577
+## 
+## Population-Level Effects: 
+##                              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept                        0.71      0.07     0.58     0.84 1.00     1752     3009
+## hu_Intercept                    -6.36      0.90    -8.17    -4.64 1.00     1794     3694
+## life_satisfaction_between        0.02      0.01     0.00     0.04 1.00     1669     3526
+## life_satisfaction_within         0.00      0.01    -0.01     0.02 1.00    16724     9671
+## hu_life_satisfaction_between    -0.05      0.13    -0.31     0.19 1.00     1651     3214
+## hu_life_satisfaction_within     -0.15      0.25    -0.68     0.36 1.00     6065     7309
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## shape     5.33      0.11     5.12     5.55 1.00     6693     8054
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+Figure <a href="#fig:life-music-effects"><strong>??</strong></a> shows the conditional effects of life satisfaction on the amount of music listened a week later.
+<div class="figure"><span id="fig:life-music-effects-1"></span>
+<img src="analysis_report_files/figure-html/life-music-effects-1.png" alt="Conditional effects for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.27: Conditional effects for Life Satisfaction-Music model
+</p>
+</div>
+<div class="figure"><span id="fig:life-music-effects-2"></span>
+<img src="analysis_report_files/figure-html/life-music-effects-2.png" alt="Conditional effects for Life Satisfaction-Music model" width="672" />
+<p class="caption">
+Figure 4.28: Conditional effects for Life Satisfaction-Music model
+</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descriptives-and-visualizations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

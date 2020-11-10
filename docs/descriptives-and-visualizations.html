@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes" />
 
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="data-processing.html"/>
-
+<link rel="next" href="analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -159,6 +159,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="data-processing.html"><a href="data-processing.html#wave-level"><i class="fa fa-check"></i><b>3.3</b> Wave-level</a></li>
 <li class="chapter" data-level="3.4" data-path="descriptives-and-visualizations.html"><a href="descriptives-and-visualizations.html#correlation-matrices"><i class="fa fa-check"></i><b>3.4</b> Correlation matrices</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>4</b> Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="analysis.html"><a href="analysis.html#data-preparation"><i class="fa fa-check"></i><b>4.1</b> Data preparation</a></li>
+<li class="chapter" data-level="4.2" data-path="analysis.html"><a href="analysis.html#music"><i class="fa fa-check"></i><b>4.2</b> Music</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analysis.html"><a href="analysis.html#affect"><i class="fa fa-check"></i><b>4.2.1</b> Affect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analysis.html"><a href="analysis.html#life-satisfaction"><i class="fa fa-check"></i><b>4.2.2</b> Life Satisfaction</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -207,9 +214,9 @@ We got variables on the person-level and on the wave level.</p>
 <div id="person-level" class="section level2">
 <h2><span class="header-section-number">3.2</span> Person-level</h2>
 Let’s have a look at the final sample.
-Overall, our sample size is N = 1852.
-Participants, on average, were <em>M</em> = 47.1 years old, <em>SD</em> = 14.3, see Figure <a href="descriptives-and-visualizations.html#fig:visualize-age">3.1</a>.
-The gender distribution is pretty equal (949 women (51.24%), 901 men, and 2 non-binary participants).
+Overall, our sample size is N = 2159.
+Participants, on average, were <em>M</em> = 47 years old, <em>SD</em> = 14.6, see Figure <a href="descriptives-and-visualizations.html#fig:visualize-age">3.1</a>.
+The gender distribution is pretty equal (1123 women (52.01%), 1035 men, and 1 non-binary participants).
 <div class="figure"><span id="fig:visualize-age"></span>
 <img src="analysis_report_files/figure-html/visualize-age-1.png" alt="Distribution of age" width="672" />
 <p class="caption">
@@ -241,10 +248,10 @@ Frequency
 South East
 </td>
 <td style="text-align:right;">
-287
+348
 </td>
 <td style="text-align:right;">
-15.5
+16.1
 </td>
 </tr>
 <tr>
@@ -252,10 +259,10 @@ South East
 London
 </td>
 <td style="text-align:right;">
-197
+239
 </td>
 <td style="text-align:right;">
-10.6
+11.1
 </td>
 </tr>
 <tr>
@@ -263,10 +270,10 @@ London
 North West
 </td>
 <td style="text-align:right;">
-194
+232
 </td>
 <td style="text-align:right;">
-10.5
+10.7
 </td>
 </tr>
 <tr>
@@ -274,10 +281,10 @@ North West
 East
 </td>
 <td style="text-align:right;">
-183
+201
 </td>
 <td style="text-align:right;">
-9.9
+9.3
 </td>
 </tr>
 <tr>
@@ -285,10 +292,10 @@ East
 Scotland
 </td>
 <td style="text-align:right;">
-170
+186
 </td>
 <td style="text-align:right;">
-9.2
+8.6
 </td>
 </tr>
 <tr>
@@ -296,32 +303,10 @@ Scotland
 West Midlands
 </td>
 <td style="text-align:right;">
-167
+184
 </td>
 <td style="text-align:right;">
-9.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Yorkshire and The Humber
-</td>
-<td style="text-align:right;">
-146
-</td>
-<td style="text-align:right;">
-7.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-East Midlands
-</td>
-<td style="text-align:right;">
-142
-</td>
-<td style="text-align:right;">
-7.7
+8.5
 </td>
 </tr>
 <tr>
@@ -329,10 +314,32 @@ East Midlands
 South West
 </td>
 <td style="text-align:right;">
-142
+175
 </td>
 <td style="text-align:right;">
-7.7
+8.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+East Midlands
+</td>
+<td style="text-align:right;">
+172
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yorkshire and The Humber
+</td>
+<td style="text-align:right;">
+169
+</td>
+<td style="text-align:right;">
+7.8
 </td>
 </tr>
 <tr>
@@ -340,10 +347,10 @@ South West
 Wales
 </td>
 <td style="text-align:right;">
-103
+116
 </td>
 <td style="text-align:right;">
-5.6
+5.4
 </td>
 </tr>
 <tr>
@@ -351,10 +358,10 @@ Wales
 North East
 </td>
 <td style="text-align:right;">
-74
+84
 </td>
 <td style="text-align:right;">
-4.0
+3.9
 </td>
 </tr>
 <tr>
@@ -362,7 +369,7 @@ North East
 Northern Ireland
 </td>
 <td style="text-align:right;">
-47
+53
 </td>
 <td style="text-align:right;">
 2.5
@@ -395,10 +402,10 @@ Frequency
 White British
 </td>
 <td style="text-align:right;">
-1605
+1861
 </td>
 <td style="text-align:right;">
-86.66
+86.20
 </td>
 </tr>
 <tr>
@@ -406,10 +413,10 @@ White British
 White European
 </td>
 <td style="text-align:right;">
-63
+72
 </td>
 <td style="text-align:right;">
-3.40
+3.33
 </td>
 </tr>
 <tr>
@@ -417,10 +424,10 @@ White European
 White - Other
 </td>
 <td style="text-align:right;">
-51
+60
 </td>
 <td style="text-align:right;">
-2.75
+2.78
 </td>
 </tr>
 <tr>
@@ -428,10 +435,10 @@ White - Other
 Chinese
 </td>
 <td style="text-align:right;">
-31
+32
 </td>
 <td style="text-align:right;">
-1.67
+1.48
 </td>
 </tr>
 <tr>
@@ -439,7 +446,7 @@ Chinese
 Indian
 </td>
 <td style="text-align:right;">
-24
+28
 </td>
 <td style="text-align:right;">
 1.30
@@ -450,10 +457,10 @@ Indian
 Any other Asian/Asian British Origin
 </td>
 <td style="text-align:right;">
-13
+18
 </td>
 <td style="text-align:right;">
-0.70
+0.83
 </td>
 </tr>
 <tr>
@@ -461,21 +468,10 @@ Any other Asian/Asian British Origin
 Pakistani
 </td>
 <td style="text-align:right;">
-12
+17
 </td>
 <td style="text-align:right;">
-0.65
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Any other Mixed/Multiple ethnic origins
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-0.65
+0.79
 </td>
 </tr>
 <tr>
@@ -483,10 +479,21 @@ Any other Mixed/Multiple ethnic origins
 African
 </td>
 <td style="text-align:right;">
-10
+13
 </td>
 <td style="text-align:right;">
-0.54
+0.60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Any other Mixed/Multiple ethnic origins
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.60
 </td>
 </tr>
 <tr>
@@ -494,21 +501,10 @@ African
 White and Asian
 </td>
 <td style="text-align:right;">
-9
+11
 </td>
 <td style="text-align:right;">
-0.49
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Prefer not to say
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-0.27
+0.51
 </td>
 </tr>
 <tr>
@@ -516,10 +512,10 @@ Prefer not to say
 Caribbean
 </td>
 <td style="text-align:right;">
-4
+8
 </td>
 <td style="text-align:right;">
-0.22
+0.37
 </td>
 </tr>
 <tr>
@@ -527,10 +523,21 @@ Caribbean
 Bangladeshi
 </td>
 <td style="text-align:right;">
-3
+7
 </td>
 <td style="text-align:right;">
-0.16
+0.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Prefer not to say
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.28
 </td>
 </tr>
 <tr>
@@ -538,10 +545,10 @@ Bangladeshi
 Arab
 </td>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
-0.16
+0.19
 </td>
 </tr>
 <tr>
@@ -549,10 +556,10 @@ Arab
 White and Black Caribbean
 </td>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
-0.16
+0.19
 </td>
 </tr>
 <tr>
@@ -563,7 +570,29 @@ Any other ethnic origin
 2
 </td>
 <td style="text-align:right;">
-0.11
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Japanese
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Any other Black/African/Caribbean British origin
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
 </td>
 </tr>
 <tr>
@@ -571,10 +600,10 @@ Any other ethnic origin
 White and Black African
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 <td style="text-align:right;">
-0.11
+0.05
 </td>
 </tr>
 </tbody>
@@ -604,10 +633,10 @@ Frequency
 Employed full time
 </td>
 <td style="text-align:right;">
-809
+922
 </td>
 <td style="text-align:right;">
-43.68
+42.70
 </td>
 </tr>
 <tr>
@@ -615,10 +644,10 @@ Employed full time
 Retired
 </td>
 <td style="text-align:right;">
-287
+335
 </td>
 <td style="text-align:right;">
-15.50
+15.52
 </td>
 </tr>
 <tr>
@@ -626,10 +655,10 @@ Retired
 Employed part time
 </td>
 <td style="text-align:right;">
-266
+302
 </td>
 <td style="text-align:right;">
-14.36
+13.99
 </td>
 </tr>
 <tr>
@@ -637,10 +666,10 @@ Employed part time
 Unemployed and not looking for work
 </td>
 <td style="text-align:right;">
-181
+217
 </td>
 <td style="text-align:right;">
-9.77
+10.05
 </td>
 </tr>
 <tr>
@@ -648,10 +677,10 @@ Unemployed and not looking for work
 Self employed
 </td>
 <td style="text-align:right;">
-106
+130
 </td>
 <td style="text-align:right;">
-5.72
+6.02
 </td>
 </tr>
 <tr>
@@ -659,21 +688,10 @@ Self employed
 Employed but furloughed due to the coronavirus pandemic
 </td>
 <td style="text-align:right;">
-86
+109
 </td>
 <td style="text-align:right;">
-4.64
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Unemployed and looking for work
-</td>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:right;">
-3.02
+5.05
 </td>
 </tr>
 <tr>
@@ -681,10 +699,21 @@ Unemployed and looking for work
 Student
 </td>
 <td style="text-align:right;">
-55
+71
 </td>
 <td style="text-align:right;">
-2.97
+3.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Unemployed and looking for work
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+3.10
 </td>
 </tr>
 <tr>
@@ -695,7 +724,7 @@ Rather not say
 6
 </td>
 <td style="text-align:right;">
-0.32
+0.28
 </td>
 </tr>
 </tbody>
@@ -730,10 +759,10 @@ Frequency
 Less than £10,000
 </td>
 <td style="text-align:right;">
-134
+170
 </td>
 <td style="text-align:right;">
-7.24
+7.87
 </td>
 </tr>
 <tr>
@@ -741,10 +770,10 @@ Less than £10,000
 £10,000 - £19,999
 </td>
 <td style="text-align:right;">
-368
+428
 </td>
 <td style="text-align:right;">
-19.87
+19.82
 </td>
 </tr>
 <tr>
@@ -752,10 +781,10 @@ Less than £10,000
 £20,000 - £29,999
 </td>
 <td style="text-align:right;">
-437
+514
 </td>
 <td style="text-align:right;">
-23.60
+23.81
 </td>
 </tr>
 <tr>
@@ -763,10 +792,10 @@ Less than £10,000
 £30,000 - £39,999
 </td>
 <td style="text-align:right;">
-343
+393
 </td>
 <td style="text-align:right;">
-18.52
+18.20
 </td>
 </tr>
 <tr>
@@ -774,10 +803,10 @@ Less than £10,000
 £40,000 - £49,999
 </td>
 <td style="text-align:right;">
-237
+274
 </td>
 <td style="text-align:right;">
-12.80
+12.69
 </td>
 </tr>
 <tr>
@@ -785,10 +814,10 @@ Less than £10,000
 £50,000 - £59,999
 </td>
 <td style="text-align:right;">
-129
+148
 </td>
 <td style="text-align:right;">
-6.97
+6.86
 </td>
 </tr>
 <tr>
@@ -796,10 +825,10 @@ Less than £10,000
 £60,000 - £69,999
 </td>
 <td style="text-align:right;">
-70
+84
 </td>
 <td style="text-align:right;">
-3.78
+3.89
 </td>
 </tr>
 <tr>
@@ -807,10 +836,10 @@ Less than £10,000
 £70,000 - £79,999
 </td>
 <td style="text-align:right;">
-53
+56
 </td>
 <td style="text-align:right;">
-2.86
+2.59
 </td>
 </tr>
 <tr>
@@ -818,10 +847,10 @@ Less than £10,000
 £80,000 - £89,999
 </td>
 <td style="text-align:right;">
-21
+26
 </td>
 <td style="text-align:right;">
-1.13
+1.20
 </td>
 </tr>
 <tr>
@@ -832,7 +861,7 @@ Less than £10,000
 22
 </td>
 <td style="text-align:right;">
-1.19
+1.02
 </td>
 </tr>
 <tr>
@@ -840,10 +869,10 @@ Less than £10,000
 £100,000 - £109,999
 </td>
 <td style="text-align:right;">
-12
+13
 </td>
 <td style="text-align:right;">
-0.65
+0.60
 </td>
 </tr>
 <tr>
@@ -854,7 +883,7 @@ Less than £10,000
 9
 </td>
 <td style="text-align:right;">
-0.49
+0.42
 </td>
 </tr>
 <tr>
@@ -862,10 +891,10 @@ Less than £10,000
 £120,000 - £129,999
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-0.11
+0.14
 </td>
 </tr>
 <tr>
@@ -873,10 +902,10 @@ Less than £10,000
 £130,000 - £139,999
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-0.11
+0.14
 </td>
 </tr>
 <tr>
@@ -887,7 +916,7 @@ Less than £10,000
 4
 </td>
 <td style="text-align:right;">
-0.22
+0.19
 </td>
 </tr>
 <tr>
@@ -898,7 +927,7 @@ Less than £10,000
 2
 </td>
 <td style="text-align:right;">
-0.11
+0.09
 </td>
 </tr>
 <tr>
@@ -939,10 +968,10 @@ Less than £10,000
 £250,000 or more
 </td>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
-0.16
+0.19
 </td>
 </tr>
 <tr>
@@ -954,6 +983,17 @@ Less than £10,000
 </td>
 <td style="text-align:right;">
 0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+£210,000 - £219,999
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.09
 </td>
 </tr>
 </tbody>
@@ -984,10 +1024,10 @@ Frequency
 Supervisory or clerical/junior managerial/ professional/ administrative
 </td>
 <td style="text-align:right;">
-557
+636
 </td>
 <td style="text-align:right;">
-30.08
+29.46
 </td>
 </tr>
 <tr>
@@ -995,10 +1035,10 @@ Supervisory or clerical/junior managerial/ professional/ administrative
 Intermediate managerial/professional/administrative
 </td>
 <td style="text-align:right;">
-510
+584
 </td>
 <td style="text-align:right;">
-27.54
+27.05
 </td>
 </tr>
 <tr>
@@ -1006,10 +1046,10 @@ Intermediate managerial/professional/administrative
 Skilled manual worker
 </td>
 <td style="text-align:right;">
-314
+361
 </td>
 <td style="text-align:right;">
-16.95
+16.72
 </td>
 </tr>
 <tr>
@@ -1017,10 +1057,10 @@ Skilled manual worker
 Semi-skilled or unskilled work
 </td>
 <td style="text-align:right;">
-233
+277
 </td>
 <td style="text-align:right;">
-12.58
+12.83
 </td>
 </tr>
 <tr>
@@ -1028,10 +1068,10 @@ Semi-skilled or unskilled work
 Unemployed
 </td>
 <td style="text-align:right;">
-119
+152
 </td>
 <td style="text-align:right;">
-6.43
+7.04
 </td>
 </tr>
 <tr>
@@ -1039,10 +1079,10 @@ Unemployed
 Higher managerial/professional/administrative
 </td>
 <td style="text-align:right;">
-107
+133
 </td>
 <td style="text-align:right;">
-5.78
+6.16
 </td>
 </tr>
 <tr>
@@ -1050,10 +1090,10 @@ Higher managerial/professional/administrative
 In full time education
 </td>
 <td style="text-align:right;">
-12
+16
 </td>
 <td style="text-align:right;">
-0.65
+0.74
 </td>
 </tr>
 </tbody>
@@ -1107,13 +1147,13 @@ Proportion
 audiobooks
 </td>
 <td style="text-align:right;">
-237
+274
 </td>
 <td style="text-align:right;">
-1615
+1885
 </td>
 <td style="text-align:right;">
-12.8
+12.7
 </td>
 </tr>
 <tr>
@@ -1121,13 +1161,13 @@ audiobooks
 ebooks
 </td>
 <td style="text-align:right;">
-913
+1032
 </td>
 <td style="text-align:right;">
-939
+1127
 </td>
 <td style="text-align:right;">
-49.3
+47.8
 </td>
 </tr>
 <tr>
@@ -1135,13 +1175,13 @@ ebooks
 films
 </td>
 <td style="text-align:right;">
-1161
+1339
 </td>
 <td style="text-align:right;">
-691
+820
 </td>
 <td style="text-align:right;">
-62.7
+62.0
 </td>
 </tr>
 <tr>
@@ -1149,13 +1189,13 @@ films
 magazines
 </td>
 <td style="text-align:right;">
-434
+498
 </td>
 <td style="text-align:right;">
-1418
+1661
 </td>
 <td style="text-align:right;">
-23.4
+23.1
 </td>
 </tr>
 <tr>
@@ -1163,13 +1203,13 @@ magazines
 music
 </td>
 <td style="text-align:right;">
-1228
+1420
 </td>
 <td style="text-align:right;">
-624
+739
 </td>
 <td style="text-align:right;">
-66.3
+65.8
 </td>
 </tr>
 <tr>
@@ -1177,13 +1217,13 @@ music
 tv
 </td>
 <td style="text-align:right;">
-1138
+1310
 </td>
 <td style="text-align:right;">
-714
+849
 </td>
 <td style="text-align:right;">
-61.4
+60.7
 </td>
 </tr>
 <tr>
@@ -1191,13 +1231,13 @@ tv
 video_games
 </td>
 <td style="text-align:right;">
-537
+624
 </td>
 <td style="text-align:right;">
-1315
+1535
 </td>
 <td style="text-align:right;">
-29.0
+28.9
 </td>
 </tr>
 </tbody>
@@ -1248,13 +1288,13 @@ cihigh
 music_identity
 </td>
 <td style="text-align:right;">
-1228
+1420
 </td>
 <td style="text-align:right;">
 2.19
 </td>
 <td style="text-align:right;">
-0.66
+0.67
 </td>
 <td style="text-align:right;">
 2.14
@@ -1269,7 +1309,7 @@ music_identity
 3
 </td>
 <td style="text-align:right;">
-2.15
+2.16
 </td>
 <td style="text-align:right;">
 2.23
@@ -1280,10 +1320,10 @@ music_identity
 tv_identity
 </td>
 <td style="text-align:right;">
-1138
+1310
 </td>
 <td style="text-align:right;">
-2.15
+2.16
 </td>
 <td style="text-align:right;">
 0.63
@@ -1301,10 +1341,10 @@ tv_identity
 3
 </td>
 <td style="text-align:right;">
-2.11
+2.13
 </td>
 <td style="text-align:right;">
-2.18
+2.20
 </td>
 </tr>
 <tr>
@@ -1312,13 +1352,13 @@ tv_identity
 films_identity
 </td>
 <td style="text-align:right;">
-1161
+1339
 </td>
 <td style="text-align:right;">
-2.23
+2.26
 </td>
 <td style="text-align:right;">
-0.66
+0.67
 </td>
 <td style="text-align:right;">
 2.14
@@ -1333,10 +1373,10 @@ films_identity
 3
 </td>
 <td style="text-align:right;">
-2.19
+2.22
 </td>
 <td style="text-align:right;">
-2.27
+2.29
 </td>
 </tr>
 <tr>
@@ -1344,13 +1384,13 @@ films_identity
 games_identity
 </td>
 <td style="text-align:right;">
-537
+624
 </td>
 <td style="text-align:right;">
-2.47
+2.48
 </td>
 <td style="text-align:right;">
-0.83
+0.82
 </td>
 <td style="text-align:right;">
 2.43
@@ -1365,10 +1405,10 @@ games_identity
 3
 </td>
 <td style="text-align:right;">
-2.40
+2.42
 </td>
 <td style="text-align:right;">
-2.54
+2.55
 </td>
 </tr>
 <tr>
@@ -1376,13 +1416,13 @@ games_identity
 e_publishing_identity
 </td>
 <td style="text-align:right;">
-1058
+1211
 </td>
 <td style="text-align:right;">
-2.31
+2.33
 </td>
 <td style="text-align:right;">
-0.68
+0.69
 </td>
 <td style="text-align:right;">
 2.29
@@ -1397,10 +1437,10 @@ e_publishing_identity
 3
 </td>
 <td style="text-align:right;">
-2.27
+2.29
 </td>
 <td style="text-align:right;">
-2.35
+2.37
 </td>
 </tr>
 </tbody>
@@ -1462,31 +1502,31 @@ cihigh
 music_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-2.43
+2.28
 </td>
 <td style="text-align:right;">
-2.81
+2.57
 </td>
 <td style="text-align:right;">
-2.0
+2.00
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-23.8
+22.22
 </td>
 <td style="text-align:right;">
-23.8
+22.22
 </td>
 <td style="text-align:right;">
-2.38
+2.24
 </td>
 <td style="text-align:right;">
-2.49
+2.33
 </td>
 </tr>
 <tr>
@@ -1494,31 +1534,31 @@ music_time
 tv_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-3.61
+3.25
 </td>
 <td style="text-align:right;">
-3.98
+3.38
 </td>
 <td style="text-align:right;">
-2.8
+2.50
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-3.54
+3.18
 </td>
 <td style="text-align:right;">
-3.69
+3.31
 </td>
 </tr>
 <tr>
@@ -1526,31 +1566,31 @@ tv_time
 films_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-2.59
+2.33
 </td>
 <td style="text-align:right;">
-3.10
+2.62
 </td>
 <td style="text-align:right;">
-2.0
+2.00
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-24.0
+22.25
 </td>
 <td style="text-align:right;">
-24.0
+22.25
 </td>
 <td style="text-align:right;">
-2.53
+2.28
 </td>
 <td style="text-align:right;">
-2.65
+2.37
 </td>
 </tr>
 <tr>
@@ -1558,31 +1598,31 @@ films_time
 games_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-1.17
+0.98
 </td>
 <td style="text-align:right;">
-2.66
+2.24
 </td>
 <td style="text-align:right;">
-0.0
+0.00
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-1.12
+0.94
 </td>
 <td style="text-align:right;">
-1.22
+1.02
 </td>
 </tr>
 <tr>
@@ -1590,31 +1630,31 @@ games_time
 books_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-1.25
+1.09
 </td>
 <td style="text-align:right;">
-2.33
+1.96
 </td>
 <td style="text-align:right;">
-0.2
+0.17
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-22.0
+21.00
 </td>
 <td style="text-align:right;">
-22.0
+21.00
 </td>
 <td style="text-align:right;">
-1.21
+1.05
 </td>
 <td style="text-align:right;">
-1.30
+1.12
 </td>
 </tr>
 <tr>
@@ -1622,31 +1662,31 @@ books_time
 magazines_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-0.29
+0.24
 </td>
 <td style="text-align:right;">
-1.12
+0.87
 </td>
 <td style="text-align:right;">
-0.0
+0.00
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-20.0
+20.00
 </td>
 <td style="text-align:right;">
-20.0
+20.00
 </td>
 <td style="text-align:right;">
-0.27
+0.23
 </td>
 <td style="text-align:right;">
-0.31
+0.26
 </td>
 </tr>
 <tr>
@@ -1654,31 +1694,31 @@ magazines_time
 audiobooks_time
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-0.20
+0.16
 </td>
 <td style="text-align:right;">
-0.99
+0.78
 </td>
 <td style="text-align:right;">
-0.0
+0.00
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-20.0
+20.00
 </td>
 <td style="text-align:right;">
-20.0
+20.00
+</td>
+<td style="text-align:right;">
+0.15
 </td>
 <td style="text-align:right;">
 0.18
-</td>
-<td style="text-align:right;">
-0.22
 </td>
 </tr>
 </tbody>
@@ -1738,31 +1778,31 @@ cihigh
 music_time
 </td>
 <td style="text-align:right;">
-7826
+8251
 </td>
 <td style="text-align:right;">
-3.20
+3.04
 </td>
 <td style="text-align:right;">
-2.82
+2.54
 </td>
 <td style="text-align:right;">
-2.5
+2.25
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-23.8
+22.22
 </td>
 <td style="text-align:right;">
-23.7
+22.20
 </td>
 <td style="text-align:right;">
-3.13
+2.99
 </td>
 <td style="text-align:right;">
-3.26
+3.09
 </td>
 </tr>
 <tr>
@@ -1770,31 +1810,31 @@ music_time
 tv_time
 </td>
 <td style="text-align:right;">
-8112
+8537
 </td>
 <td style="text-align:right;">
-4.58
+4.18
 </td>
 <td style="text-align:right;">
-3.96
+3.29
 </td>
 <td style="text-align:right;">
-3.3
+3.00
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-23.9
+21.98
 </td>
 <td style="text-align:right;">
-4.49
+4.11
 </td>
 <td style="text-align:right;">
-4.67
+4.25
 </td>
 </tr>
 <tr>
@@ -1802,31 +1842,31 @@ tv_time
 films_time
 </td>
 <td style="text-align:right;">
-7560
+7956
 </td>
 <td style="text-align:right;">
-3.52
+3.21
 </td>
 <td style="text-align:right;">
-3.13
+2.58
 </td>
 <td style="text-align:right;">
-2.5
+2.33
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-24.0
+22.25
 </td>
 <td style="text-align:right;">
-23.9
+22.23
 </td>
 <td style="text-align:right;">
-3.45
+3.15
 </td>
 <td style="text-align:right;">
-3.59
+3.27
 </td>
 </tr>
 <tr>
@@ -1834,31 +1874,31 @@ films_time
 games_time
 </td>
 <td style="text-align:right;">
-3786
+3873
 </td>
 <td style="text-align:right;">
-3.18
+2.78
 </td>
 <td style="text-align:right;">
-3.58
+3.04
 </td>
 <td style="text-align:right;">
-2.0
+2.00
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-24.0
+22.00
 </td>
 <td style="text-align:right;">
-23.9
+21.98
 </td>
 <td style="text-align:right;">
-3.07
+2.69
 </td>
 <td style="text-align:right;">
-3.30
+2.88
 </td>
 </tr>
 <tr>
@@ -1866,31 +1906,31 @@ games_time
 books_time
 </td>
 <td style="text-align:right;">
-5328
+5561
 </td>
 <td style="text-align:right;">
-2.42
+2.14
 </td>
 <td style="text-align:right;">
-2.77
+2.31
 </td>
 <td style="text-align:right;">
-1.5
+1.50
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-22.0
+21.00
 </td>
 <td style="text-align:right;">
-21.9
+20.98
 </td>
 <td style="text-align:right;">
-2.34
+2.08
 </td>
 <td style="text-align:right;">
-2.49
+2.21
 </td>
 </tr>
 <tr>
@@ -1898,31 +1938,31 @@ books_time
 magazines_time
 </td>
 <td style="text-align:right;">
-2315
+2442
 </td>
 <td style="text-align:right;">
-1.30
+1.09
 </td>
 <td style="text-align:right;">
-2.07
+1.58
 </td>
 <td style="text-align:right;">
-1.0
+0.67
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-20.0
+20.00
 </td>
 <td style="text-align:right;">
-19.9
+19.98
 </td>
 <td style="text-align:right;">
-1.21
+1.03
 </td>
 <td style="text-align:right;">
-1.38
+1.16
 </td>
 </tr>
 <tr>
@@ -1930,31 +1970,31 @@ magazines_time
 audiobooks_time
 </td>
 <td style="text-align:right;">
-1036
+1101
 </td>
 <td style="text-align:right;">
-2.01
+1.64
 </td>
 <td style="text-align:right;">
-2.47
+1.93
 </td>
 <td style="text-align:right;">
-1.0
+1.00
 </td>
 <td style="text-align:right;">
-0.1
+0.02
 </td>
 <td style="text-align:right;">
-20.0
+20.00
 </td>
 <td style="text-align:right;">
-19.9
+19.98
 </td>
 <td style="text-align:right;">
-1.86
+1.52
 </td>
 <td style="text-align:right;">
-2.16
+1.75
 </td>
 </tr>
 </tbody>
@@ -2023,10 +2063,10 @@ cihigh
 music_estimate
 </td>
 <td style="text-align:right;">
-8802
+9338
 </td>
 <td style="text-align:right;">
-3.33
+3.34
 </td>
 <td style="text-align:right;">
 0.85
@@ -2044,10 +2084,10 @@ music_estimate
 4
 </td>
 <td style="text-align:right;">
-3.31
+3.32
 </td>
 <td style="text-align:right;">
-3.34
+3.35
 </td>
 </tr>
 <tr>
@@ -2055,7 +2095,7 @@ music_estimate
 tv_estimate
 </td>
 <td style="text-align:right;">
-9276
+9829
 </td>
 <td style="text-align:right;">
 3.22
@@ -2087,7 +2127,7 @@ tv_estimate
 films_estimate
 </td>
 <td style="text-align:right;">
-8796
+9298
 </td>
 <td style="text-align:right;">
 3.28
@@ -2108,7 +2148,7 @@ films_estimate
 4
 </td>
 <td style="text-align:right;">
-3.26
+3.27
 </td>
 <td style="text-align:right;">
 3.30
@@ -2119,7 +2159,7 @@ films_estimate
 games_estimate
 </td>
 <td style="text-align:right;">
-5337
+5578
 </td>
 <td style="text-align:right;">
 3.12
@@ -2151,7 +2191,7 @@ games_estimate
 books_estimate
 </td>
 <td style="text-align:right;">
-6480
+6834
 </td>
 <td style="text-align:right;">
 3.21
@@ -2183,13 +2223,13 @@ books_estimate
 magazines_estimate
 </td>
 <td style="text-align:right;">
-3832
+4045
 </td>
 <td style="text-align:right;">
 3.01
 </td>
 <td style="text-align:right;">
-0.66
+0.64
 </td>
 <td style="text-align:right;">
 3
@@ -2215,10 +2255,10 @@ magazines_estimate
 audiobooks_estimate
 </td>
 <td style="text-align:right;">
-2161
+2270
 </td>
 <td style="text-align:right;">
-3.09
+3.07
 </td>
 <td style="text-align:right;">
 0.69
@@ -2236,10 +2276,10 @@ audiobooks_estimate
 4
 </td>
 <td style="text-align:right;">
-3.06
+3.05
 </td>
 <td style="text-align:right;">
-3.12
+3.10
 </td>
 </tr>
 </tbody>
@@ -2260,8 +2300,8 @@ Figure <a href="descriptives-and-visualizations.html#fig:estimates-over-time">3.
 Figure 3.9: Average estimates over time per medium
 </p>
 </div>
-Last, let’s see the overall descriptives of the well-being variable.
-Table <a href="descriptives-and-visualizations.html#tab:describe-well-being">3.11</a> shows that well-being was above the mid-point of the scale.
+Last, let’s see the overall descriptives of the well-being variables.
+Table <a href="descriptives-and-visualizations.html#tab:describe-well-being">3.11</a> shows that both life satisfaction and affect were above the mid-point of the scale - even though for affect, it’s a close call.
 <table>
 <caption>
 <span id="tab:describe-well-being">Table 3.11: </span>Well-being descriptives
@@ -2303,19 +2343,19 @@ cihigh
 <tbody>
 <tr>
 <td style="text-align:left;">
-well_being
+affect
 </td>
 <td style="text-align:right;">
-10282
+10985
 </td>
 <td style="text-align:right;">
-6.179416
+5.938689
 </td>
 <td style="text-align:right;">
-1.936582
+2.181849
 </td>
 <td style="text-align:right;">
-6.25
+6
 </td>
 <td style="text-align:right;">
 0
@@ -2327,15 +2367,47 @@ well_being
 10
 </td>
 <td style="text-align:right;">
-6.141979
+5.897883
 </td>
 <td style="text-align:right;">
-6.216852
+5.979495
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+life_satisfaction
+</td>
+<td style="text-align:right;">
+2103
+</td>
+<td style="text-align:right;">
+6.410366
+</td>
+<td style="text-align:right;">
+2.032778
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+6.323436
+</td>
+<td style="text-align:right;">
+6.497296
 </td>
 </tr>
 </tbody>
 </table>
-Let’s plot the distribution of overall well-being in Figure <a href="descriptives-and-visualizations.html#fig:well-being-distribution">3.10</a>.
+Let’s plot the distribution of both affect and life satisfaction in Figure <a href="descriptives-and-visualizations.html#fig:well-being-distribution">3.10</a>.
 <div class="figure"><span id="fig:well-being-distribution"></span>
 <img src="analysis_report_files/figure-html/well-being-distribution-1.png" alt="Distribution of well-being across waves and participants" width="672" />
 <p class="caption">
@@ -2343,7 +2415,8 @@ Figure 3.10: Distribution of well-being across waves and participants
 </p>
 </div>
 Last, let’s look at how well-being develops over time.
-Figure <a href="descriptives-and-visualizations.html#fig:well-being-over-time">3.11</a> shows that well-being is extremely stable: note the y-axis is on decimal points (range: 0 to 10), so well-being seems static.
+Figure <a href="descriptives-and-visualizations.html#fig:well-being-over-time">3.11</a> shows that life satisfaction appears stable: note the y-axis is on decimal points (original range: 0 to 10).
+In contrast, affect has significantly decreased, mostly because anxiety has decreased (not shown on graph).
 <div class="figure"><span id="fig:well-being-over-time"></span>
 <img src="analysis_report_files/figure-html/well-being-over-time-1.png" alt="Average estimates over time per medium" width="672" />
 <p class="caption">
@@ -2379,8 +2452,8 @@ Figure 3.13: Correlation matrix of estimated time spent with a medium and well-b
           </div>
         </div>
       </div>
-<a href="data-processing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="data-processing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

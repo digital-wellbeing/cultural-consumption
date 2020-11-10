@@ -1,7 +1,7 @@
 # Data processing
 
 In this section I'll process the raw data so that I can use them for analysis in the next section.
-Currently, I'm allowed to share the raw data, which is why they're not on the Github repo yet.
+Currently, I'm not allowed to share the raw data, which is why they're not on the Github repo yet.
 
 ## Read waves 2-6
 
@@ -55,7 +55,7 @@ The steps, concretely:
 6. We repeat that until we're at the last ID and have all IDs for that participant stored in a vector.
 7. Then a row gets assigned the participant ID (to the existing, but empty `id` variable) if any of the wave ID variables have a match in the extracted IDs.
 
-On my machine, the below code takes about two minutes seconds.
+On my machine, the below code takes about three minutes.
 ```{r assign-pp-id, cache=TRUE}
 # the unique wave 2 IDs
 ids <- waves_2_to_6 %>% 
@@ -1331,25 +1331,25 @@ working_file <-
   mutate(
     
     # music
-    music_time = round(music_hours + (music_minutes / 60), digits = 1),
+    music_time = music_hours + (music_minutes / 60),
     
     # films
-    films_time = round(films_hours + (films_minutes / 60), digits = 1),
+    films_time = films_hours + (films_minutes / 60),
     
     # tv
-    tv_time = round(tv_hours + (tv_minutes / 60), digits = 1),
+    tv_time = tv_hours + (tv_minutes / 60),
     
     # video games
-    games_time = round(games_hours + (games_minutes / 60), digits = 1),
+    games_time = games_hours + (games_minutes / 60),
     
     # ebooks
-    books_time = round(books_hours + (books_minutes / 60), digits = 1),
+    books_time = books_hours + (books_minutes / 60),
     
     # magazines
-    magazines_time = round(magazines_hours + (magazines_minutes / 60), digits = 1),
+    magazines_time = magazines_hours + (magazines_minutes / 60),
     
     # audiobooks
-    audiobooks_time = round(audiobooks_hours + (audiobooks_minutes / 60), digits = 1)
+    audiobooks_time = audiobooks_hours + (audiobooks_minutes / 60)
   )
 ```
 
@@ -1740,7 +1740,7 @@ Currently, we still have the whole sample, but for the analysis, we'll restrict 
 Below in Table \@ref(tab:show-pp-exclusions) I'll show, per wave, how many people we'd exclude for each exclusion criterion plus what proportion of the valid sample (aka how many participants have at least that many waves) we have left.
  
 Note that some participants fulfill multiple exclusions, so the last columns shows the cumulative exclusions and proportion of the respective sample. 
-We decided to only impute an entire wave if a person has at least fives waves.
+For the analysis, mixed-effects models weigh participants with more data more heavily, which means we can use everyone with at least three waves (because we used lagged predictors).
 ```{r show-pp-exclusions, echo=FALSE}
 # a data frame that simply counts the data points per participant
 waves_per_id <- 
@@ -1823,13 +1823,23 @@ exclusions_wave <-
   distinct()
 ```
 
+I'll check how many rows that we intended to exclude on the wave-level are already not in the data set anymore because the entire participant that row belongs to was excluded during participant-level exclusions.
+```{r compare-wave-pp-exclusions}
+anti_join(
+  exclusions_wave,
+  working_file,
+  by = c("id", "wave")
+) %>% 
+  nrow()
+```
 
 Let's take the data set after participant exclusions, exclude low-quality rows (i.e., waves) and count the number of waves again.
+
 Table \@ref(tab:show-wave-exclusions) shows the number of participants with at least a number of waves (after participant-level exclusions) next to the same number after excluding on the wave-level.
 The sharpest drop is in the number of people who previously had completed six waves.
 That's not surprising because each unique participant in `exclusions_wave` (`r length(unique(exclusions_wave$id))` participants) who had previously completed six waves now drops down to five waves.
 Probably there's a correlation between sticking around for this long and motivation, such that motivation drops in later waves and there's a higher chance to fulfill one of the exclusion criteria.
-**Overall, `r round((nrow(exclusions_wave) / nrow(working_file)), digits = 2) * 100`% of rows are excluded.**
+**Overall, `r 100 - round(nrow(anti_join(working_file, exclusions_wave)) / nrow(working_file), digits =4) * 100`% of rows are excluded.**
 ```{r show-wave-exclusions, echo=FALSE}
 # let's get the table
 working_file %>% 
@@ -1865,6 +1875,48 @@ working_file %>%
     .,
     caption = "Participants with at least a number of waves before and after wave-level exclusion"
   )
+```
+
+During model fitting, we'll predict the outcome with the lagged value of the predictor.
+If we merely exclude the rows participants will have gaps in their waves.
+For example, a participant might have entries for waves 1-4, but wave 3 belongs to low-quality data rows.
+We'd then be left with rows 1,2, and 4.
+During model fitting, just lagging the value would mean the outcome at wave 4 is predicted by the predictor at wave 2 - effectively messing up our one-week lag between waves.
+
+Therefore, it makes sense to maintain those rows whose data we exclude, but set them to `NA`.
+This way, we don't have "gaps" between waves.
+In addition, if we want to impute missing values during model fitting (via the built-in `brms` imputation), we want to be able to know what value to impute, which is why we need the `NA` signal.
+
+Let's make those rows that have low quality data, then set all wave-level entries to `NA` on those rows.
+```{r apply-wave-exclusions}
+# add marker to wave-level exclusions
+exclusions_wave <- 
+  exclusions_wave %>% 
+  mutate(set_to_na = 1)
+
+# add that marker to working file
+working_file <- 
+  left_join(
+    working_file,
+    exclusions_wave,
+    by = c("id", "wave")
+  )
+
+# then set all wave-level entries to NA that have a marker
+working_file <-
+  working_file %>% 
+  mutate(
+    across(
+      c(
+        covid_work_home_often:covid_none,
+        music_hours:well_being_2,
+        music_time:total_time
+      ),
+      ~ replace(.x, set_to_na == 1, NA)
+    )
+  ) %>% 
+  # remove marker
+  select(-set_to_na)
 ```
 
 ## Build scales
@@ -1917,12 +1969,14 @@ working_file <-
   )
 ```
 
-And the well-being scales per wave.
+And the well-being scales per wave (aka row).
 ```{r build-well-being-scales}
 working_file <- 
   working_file %>% 
   mutate(
-    well_being = rowMeans(select(., starts_with("well_being"), starts_with("life_satisfaction")))
+    life_satisfaction = rowMeans(select(., starts_with("life_satisfaction"))),
+    affect = rowMeans(select(., starts_with("well_being"))),
+    well_being = rowMeans(select(., starts_with("well_being"), starts_with("life_satisfaction"))) # both affect and well-being combined
   )
 ```
 
@@ -1945,6 +1999,7 @@ working_file <-
     total_time,
     starts_with("life_satisfaction"),
     starts_with("well_being"),
+    affect,
     -ends_with("hours"), # we got the total time from here on
     -ends_with("minutes"),
   )
@@ -1963,11 +2018,27 @@ rm(
 )
 ```
 
-And then remove those who don't have at least five waves.
+And then remove those who don't have at least three waves.
+For one model part, we'll used led values, so two waves won't be enough because that means a participant is left with only one wave once we lead a predictor.
+
+Also, some participants now have missing values (because we applied the wave-level exclusions).
+Missing values will be removed during model fitting, meaning that if someone has three waves, but two of them are `NA`, they'll be left with one wave of data.
+So I'll filter the data set to only keep those with at least three waves with responses.
 ```{r only-keep-five-waves}
-working_file <- 
+# get ids of participants who have at least three valid waves
+at_least_three <- 
   working_file %>% 
   group_by(id) %>% 
-  filter(n() >= 5) %>% 
-  ungroup()
+  filter(!is.na(music_time)) %>% 
+  filter(n() >= 3) %>% 
+  ungroup() %>% 
+  pull(id)
+
+# then only keep those participants
+working_file <- 
+  working_file %>% 
+  filter(id %in% at_least_three)
+
+# remove from workspace
+rm(at_least_three)
 ```

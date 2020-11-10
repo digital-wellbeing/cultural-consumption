@@ -1,0 +1,563 @@
+# Analysis
+
+Our overarching research question is how media use in different categories and well-being influence each other over time.
+There were four well-being items; two were asking about life in general, two about affective states yesterday.
+I don't think, just based on face validity, that these four items form one concept, which is why I treated them separately in the data processing.
+
+Let's run a confirmatory factor analysis on the first wave and inspect the fit.
+The fit is poor-ish and the model suggest that we should correlate the residuals of the life satisfaction items with each other and of the affect items with each other.
+
+That confirms my idea about treating those four items as coming from two different constructs.
+```{r well-being-cfa}
+load(here("data", "workspace.RData"))
+cfa_model <- 
+  "well_being_factor =~ life_satisfaction_1 + life_satisfaction_2 + well_being_1 + well_being_2"
+
+# get fit
+cfa_fit <- cfa(
+  cfa_model,
+  data = working_file %>% 
+    filter(wave == 1)
+)
+
+# inspect summary
+summary(
+  cfa_fit,
+  fit.measures = TRUE,
+  modindices = TRUE
+)
+```
+## Data preparation
+
+We're interested in reciprocal effects of media use and well-being.
+Usually, I'd go for Random-Intercept Cross-Lagged Panel Models (RICLPM), but we have such massive zero inflation that the distribution of media use might bias the results.
+
+I emailed one of the co-authors of the Random-Intercept Cross-Lagged Panel Models and he said that these models are only well-understood for normally distributed data.
+Absent any simulation studies that show that these models can retrieve parameters from a non-normal data generating process, I'll look for an alternative.
+
+Instead, I'll rely on a mixed-models framework.
+Per well-being outcome (so affect and life satisfaction) and medium, I'll run two models:
+
+1. The first model predicts well-being from lagged media use. We can treat well-being as normally distributed.
+2. The second mode predicts media use from lagged well-being. We treat media use as zero-inflated with a gamma distribution.
+
+These models have the advantage that we don't need to impute missing waves.
+Instead, the model will weigh those with more data more heavily for the outcome distribution.
+Because we use lagged predictors in the model predicting use, a participant must have at least three valid waves.
+When we lag, the model will automatically exclude the first wave (because half of its information is contained in the second wave now).
+Some participants also have missing values on some waves - which is why we only kept those participants with **at least three rows of data**.
+So someone with all six waves but four excluded waves will not be included in the final sample.
+
+For both types of models, we'll separate between- and within-person effects.
+We'll not control for the lagged value of the dependent variable, see [here](https://doi.org/10.1007/s11135-018-0802-x).
+
+To be able to distinguish between within- and between-person effects, we'll need to make use of centering.
+We're dividing each predictor into a stable, level-2 (person-level) component, and a component that tells us how much each measurement deviates from that stable component (level-1 or within-person effect).
+See instructions from this excellent [blog post](https://philippmasur.de/2018/05/23/how-to-center-in-multilevel-models/).
+```{r within-between-centering}
+working_file <- 
+  working_file %>% 
+  group_by(id) %>% 
+  mutate(
+    across(
+      c(
+        affect,
+        life_satisfaction,
+        ends_with("time")
+      ),
+      list(
+        between = ~ mean(.x, na.rm = TRUE),
+        within = ~ .x - mean(.x, na.rm = TRUE)
+      )
+    ) 
+  ) %>% 
+  ungroup()
+```
+
+Also, we're interested in the threshold of going from not using a medium to using a medium.
+This is due to how the media use variable is distributed: Lots of zeros and continuous if not zero.
+Because of how we treated zeros so far, we know that zeros are qualitatively different from nonzeros.
+Zero means not having used at all (possibly a different process), nonzero means how much you used a medium **if** you used it.
+
+When media use is the outcome variable, we'll model those different processes with a zero-inflation distribution.
+It's my understanding that it's not a good idea to select an outcome distribution based on the histogram of a variable.
+Richard McElreath calls this "histomancy".
+After all, it's about the distribution of the residuals after model fitting - so a weird looking distribution might still be the result of a normally distributed data generating process.
+In our case, I think the use variable doesn't come from a normally distributed data generating process because we know that using vs. not using a medium is a different process.
+Likewise, we know that **if** someone used a medium, their use time cannot be zero and will be skewed toward lower values, with fewer and fewer larger values as use increases.
+That's a typical case for a Gamma distribution.
+
+When media use is the predictor, we need to tell the model that there's something special about zeros or not zeros.
+That's why we'll include a new indicator variable for whether use is zero or not.
+See this [discussion](https://stats.stackexchange.com/questions/56306/time-spent-in-an-activity-as-an-independent-variable).
+
+In this discussion, they talk about a case where there's only one observation per case.
+However, I want to distinguish within- and between-person effects, like I did with the continuous part of use time.
+I'll match that strategy with the indicator.
+
+First, per medium and wave, I'll create an index variable that's 1 when someone used a medium for a wave, and 0 when not.
+Second, I'll take the average of that index variable per person.
+That gives us a between-person proportion.
+The parameter for that proportion will tell us what happens for well-being if we compare nonusers (0 proportion) to users (100 proportion), so if we go from 0 to 1.
+Third, we center each participant's rows with that proportion, just like we did with use time.
+The parameter for this variable tells us what happens **within** a person when they go from not using to using, so if we go from their average to their average plus one.
+
+For example, suppose someone listened to music in three of the six waves.
+They'll have their average time as the between-person effect and their deviation from that average time as the within-person effect.
+That's what we did with the centering above.
+That person will therefore have a constant proportion of having listened to music (yes or no) of 50%.
+The parameter for this variable will then tell us what happens if we go one up on the proportion scale, which is bound at [0|1].
+In other words, if there's someone else who listened to music in 67% of waves, the model will give us a parameter for a comparison of not using (0) to using (1), based on all the proportion between people.
+Strictly speaking, the model will tell us what happens if the proportion increases by one, but we can interpret this increase as going from nonuse to use because the proportion is bound at those values.
+
+As for the within-part, say the first person listened to music every other wave.
+Their within-indicator would then take the values of `used` (1 or 0) minus `proportion of use` (0.5) = `c(-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)` for the six waves.
+The parameter for that indicator would tell us what happens if a user goes up one point above their average proportion of listening to music across all waves.
+But this proportion is bound at [0|1], so effectively this tells us what happens if the user goes from not listening to music to listening to music (aka 1 up) because the raw scores are always 0 or 1.
+
+I'll create this index variable and center it like I did above.
+Note that we already have filter variables, but those refer to whether someone used a medium in the three months before the first wave.
+That's why I'll use the `used` suffix here.
+```{r indicator-centering}
+working_file <- 
+  working_file %>% 
+  mutate(
+    across(
+      c(
+        ends_with("time"),
+        -total_time
+      ),
+      list(
+        used = ~ if_else(.x == 0, 0, 1)
+      )
+    )
+  ) %>% 
+  
+  # remove the _time part of the variable name
+  rename_with(
+    ~ str_remove(.x, "time_"),
+    ends_with("used")
+  ) %>% 
+  
+  # center those variables
+  group_by(id) %>% 
+  mutate(
+    across(
+      ends_with("used"),
+      list(
+        between = ~ mean(.x, na.rm = TRUE),
+        within = ~ .x - mean(.x, na.rm = TRUE)
+      )
+    )
+  )
+```
+
+We had `NA`s for those who had poor quality data in a row.
+However, when introducing the between variables above, we assigned a constant per participant, overwriting the `NA`.
+So I'll reintroduce `NA` on the `between` and `used` variables.
+I'll condition on a random variable that's `NA` - `affect` in this case..
+Any other variable would also work because all wave-level entries will be `NA`.
+```{r reinsert-nas}
+working_file <-  
+  working_file %>% 
+  mutate(
+    across(
+      c(
+        contains("used"),
+        contains("between")
+      ),
+      ~ replace(.x, is.na(affect), NA)
+    )
+  )
+```
+
+Last, we need to create the lagged and led variables.
+If we add them to the model as `lag(variable)`/`lead(variable)`, it will merely shift values one up/down across all participants.
+But we need to lag/lead for each participant.
+We can do that when specifying the data, but that's prone to error with that many models.
+So I'll manually create lagged/led variables in our working file where we lag/lead per participant.
+
+Note that we don't need to lag everything here: The data are "naturally" lagged.
+At each wave, participants reported their average daily use of a medium for the **preceding week** and their **current** well-being.
+So lagging the times variable would mean we're predicting current well-being with the reports of use from last week, which themselves refer to the week before.
+Therefore, we don't need to lag the time variables - they are lagged already.
+The same holds for variables that show whether someone used a medium or not.
+They're also referring to the previous week, so are "naturally" lagged.
+
+As for the well-being indicators: Here we don't want to lag the variable, but lead them.
+Affect at wave 1 should predict use and time at wave 2, so we need to "move down" use and time one row per participant.
+Obviously, lagging well-being or leading use is the same, but I find leading more intuitive here because it corresponds to the time line of the data.
+```{r create-led-variables}
+working_file <-  
+  working_file %>% 
+  group_by(id) %>% 
+  mutate(
+    across(
+      c(
+        ends_with("_time")
+      ),
+      lead,
+      .names = "lead_{.col}"
+    )
+  ) %>% 
+  ungroup()
+```
+
+## Music
+
+### Affect
+
+#### Music on affect
+
+Let's begin with modeling affect and music over time.
+In addition to separating within and between effects, we also let the within effects vary.
+So the fixed effects tell us how much an average person changed on well-being a week later if they went from not using to using a medium and how much well-being changed if a person used a medium an hour more than they usually do.
+We allow both of those effects to vary across participants.
+
+Note, I only ran those once because the analysis takes time (~ half an hour on my machine) and the files get huge (this one is almost 1 GB).
+```{r music-affect, eval=FALSE}
+music_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      music_used_between +
+      music_used_within +
+      music_time_between +
+      music_time_within +
+      (1 +
+         music_time_within +
+         music_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "music_affect")
+  )
+```
+
+```{r load-music-affect, echo=FALSE}
+music_affect <- read_rds(here("models", "music_affect.rds"))
+```
+
+Let's inspect the traceplots.
+Overall, they look fine and the chains seem to have mixed well, see (Figure \@ref(fig:inspect-music-affect)).
+```{r inspect-music-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Music-Affect model"}
+# plot traceplots and posterior distributions
+plot(music_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-music-affect)) shows that the model does an okay job in predicting our outcome.
+It retrieves mean well, but the outcome is not fully normally distributed, which we see in the posterior predictive distribution and hence the median is overestimated by the model.
+I'd say fitting another distribution (e.g., a skewed normal) might be overfitting - I think a normal data generating process for well-being is adequate.
+```{r ppc-music-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Music-Affect model"}
+model_diagnostics(music_affect) # custom function, see 01-Setting-up.Rmd
+```
+
+Let's also check for potentially influential values.
+Quite a lot are flagged: This might have to do with the fact that some participants only had three observations.
+If we leave one out, the posterior will be influenced heavily by the two remaining observation, see the [discussion here](https://discourse.mc-stan.org/t/pareto-k-diagnostics-and-kfold-model-comparison/7409).
+Unfortunately, using moment matching to get better LOO estimates doesn't work for me, even when I save all parameters.
+Apparently, this could be a [bug](https://discourse.mc-stan.org/t/difficulty-comparing-models-with-loo/17271).
+And calculating ELPD directly isn't an option because it would take days.
+
+Overall, I'm inclined to trust the model (conditional on us using a normal outcome distribution) because of the model diagnostics.
+It's possible that some of the larger values on the time variable (which are quite rare) have a large influence on the posterior if they come from the same person.
+But we already excluded many implausible values, so this is the sample we're working with and from which we want to generalize to the population.
+```{r outliers-music-affect, cache=TRUE}
+music_affect_loo <- loo(music_affect)
+music_affect_loo
+```
+
+Let's inspect the summary.
+We see that:
+
+* Music listeners were less happy than those who didn't listen to music (`music_used_between`). The model also estimates the effect to be quite large: listeners scored 0.38 points lower on the ten-point scale. The credible interval doesn't include zero, so conditional on the model, the data are 95% likely to have been generated by a true effect that does not include zero.
+* However, if a person went from not listening to listening, they felt better the next week (`music_used_within`). That effect is smaller than the between effect: If someone stopped listening they felt 0.12 points worse. The credible interval doesn't contain zero, but barely.
+* When a person listened to one hour more music than someone else, that person also felt slightly worse (`music_time_between`). However, the effect is small and the posterior contains zero as well as positive effects, so we can't be certain.
+* The same goes for a one-hour increase from one's typical music listening (`music_time_within`): the effect is positive, but super small and the posterior contains zero as well as negative values.
+```{r summary-music-affect}
+summary(music_affect)
+```
+
+Let's visualize that summary and look at the effects.
+Figure \@ref(fig:music-affect-effects) shows that the `used` effects have less uncertainty associated with the extreme ends of the distribution, whereas `time` effects have a lot of uncertainty around smaller and larger values, probably because there aren't many data points here.
+```{r music-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Music-Affect model"}
+conditional_effects(music_affect)
+```
+```{r, echo=FALSE}
+# remove the model from the workspace to save space
+rm(music_affect)
+```
+
+#### Affect on music
+
+Let's do the other lag of the model: The effect of affect in the previous week on music listening.
+Here, we'll use a zero-inflated gamma distribution.
+The zero-inflation is obvious: Not everyone uses each medium at each wave.
+Like I said above, that's a clear argument that zero vs. not zero is a different data generating process than time listened.
+
+And like above, where I wanted to see how listening vs. not listening is related to affect a week later, I want to see whether changes in affect are related to changes in the probability to listen to music a week later.
+Besides predicting listening vs. not listening, we also want to see whether changes in affect are related to changes in music listening duration a week later (so the non-zero parts of media use).
+We know that the non-zero duration is continuous (i.e., hours) and cannot be zero.
+We can also see from the distribution that the variation increases with larger values, so the variation likely increases with the mean.
+That's why I think a Gamma distribution is adequate.
+
+Below I run the model.
+Note again that music time is naturally lagged (i.e., reported for the previous week).
+So get the lagged effect of affect on music time, we use the led music time.
+
+On my machine, the model took about an two hours.
+```{r affect-music, eval=FALSE}
+affect_music <- 
+  brm(
+    bf(
+      # predicting continuous part
+      lead_music_time ~
+        1 + 
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+      
+      # predicting hurdle part
+      hu ~
+        1 + 
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_music")
+  )
+```
+
+```{r load-affect-music, echo=FALSE}
+affect_music <- read_rds(here("models", "affect_music.rds"))
+```
+
+Let's inspect the traceplots.
+Overall, they look fine and the chains seem to have mixed well, see (Figure \@ref(fig:inspect-affect-music)).
+```{r inspect-affect-music, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Music model"}
+# plot traceplots and posterior distributions
+plot(affect_music, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-music)) shows that the model does an excellent job in predicting our outcome - at least if we follow the distribution.
+Self-reported time will necessarily bundle around full and half hours (e.g., 0.5h, 1h, 1.5h etc.), which is why the distribution of the data has spikes.
+The model smooths those spikes, which is a good thing because we want to get at the data generating process.
+
+It retrieves the mean well, but underestimates the median, quite possibly because the model expects less zeros, but more very small values - which is what we want from multilevel models: shrinkage.
+The other model fit diagnostics are okay, but not great.
+```{r ppc-affect-music, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Music model"}
+model_diagnostics(affect_music)
+```
+
+Let's also check for potentially influential values.
+A lot are flagged, like in the previous model: Again, I think that speaks for the flexibility of the model.
+There are multiple participants with only two observations.
+If we leave one out, the posterior will be influenced heavily by the one remaining observation
+Once more, I'm inclined to trust the model because the model diagnostics looked good.
+```{r outliers-affect-music, cache=TRUE}
+affect_music_loo <- loo(affect_music)
+affect_music_loo
+```
+
+Summary:
+
+* For `mu` we're on the log scale, so we need to exponentiate which yields `exp(0.97)` = `r round(exp(0.97), digits = 2)` hours on non-zero music time - when a participant has zero affect and no deviation from that affect, so not a very meaningful number (`Intercept`)
+* For the hurdle, so the odds of having zero rather than not zero, the model estimates considerable shrinkage: The probability of having a zero is `plogis(-9.46)` = `r plogis(-9.46)`, much smaller than the proportion of zeros in the actual data. That's okay, because most zeros come from very few participants who have all zero, so the model takes that into account (`hu_Intercept`).
+* When we look at the effect of affect on non-zero hours, we're still on the log scale, meaning we need to exponentiate which gives us the factor at which y increases with each increase on x: If we compare a participant with another participant with an increase of one on affect, their music time increases (so decreases) by a factor of `exp(-0.02)` = `r round(exp(-0.02), digits = 2)` one week later - a small effect, but the posterior doesn't include zero (`affect_between`)
+* The same goes for the within effect: As a person goes up one point on affect compared to their typical affect score, their music time increases (i.e., decreases) by a factor of `exp(-0.004)` = `r round(exp(-0.004), digits = 2)` - a completely negligible, small effect whose posterior includes zero (`affect_within`).
+* As for whether affect influences whether someone went from not listening to music to listening to music: The between effect shows that people with higher affect also have higher odds of not listening to music across all waves: `exp(0.48)` = `r exp(0.48)` for `hu_affect_between`.
+* Interestingly, if the average users went went up one point from their typical affect, they had higher odds of not listening to music a week later, `exp(0.21)` = `r exp(0.21)`.
+```{r summary-affect-music}
+summary(affect_music)
+```
+
+Figure \@ref(fig:music-affect-effects) shows the conditional effects of affect on the amount of music listened a week later.
+We see the between effect could be meaningful over the entire range of the affect scale, but the within effect is almost flat.
+```{r affect-music-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Music-Affect model"}
+conditional_effects(affect_music)
+```
+
+```{r, echo=FALSE}
+# remove the model from the workspace to save space
+rm(affect_music)
+```
+
+### Life Satisfaction
+
+From now on, I'll be less verbose in describing the models, simply because we're running 28 in total (7 categories x two directions x 2 well-being measures).
+I'll apply the same steps as I did above with affect and music, but won't describe every parameter unless there's something unusual that sticks out.
+Rather, in the end of this section, I'll create a summary figure.
+
+#### Music on Life Satisfaction
+
+Let's run the model.
+Again, that took about half an hour on my machine.
+```{r music-life, eval=FALSE}
+music_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      music_used_between +
+      music_used_within +
+      music_time_between +
+      music_time_within +
+      (1 +
+         music_time_within +
+         music_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "music_life")
+  )
+```
+
+```{r load-music-life, echo=FALSE}
+# load model
+music_life <- read_rds(here("models", "music_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-music-life)).
+```{r inspect-music-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Music-Life Satisfaction model"}
+# plot traceplots and posterior distributions
+plot(music_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-music-life)) shows that the model does a good job in predicting our outcome.
+Like before, it slightly underestimates the median; everything else looks fine.
+```{r ppc-music-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Music-Life Satisfaction model"}
+model_diagnostics(music_life)
+```
+
+The outliers are in about the same range as previous models, and the model diagnostics look good.
+```{r outliers-music-life, cache=TRUE}
+music_life_loo <- loo(music_life)
+music_life_loo
+```
+
+Let's inspect the summary.
+We see that:
+
+* Music listeners had lower satisfaction with life than non-listeners (`music_used_between`), but the effect is much smaller than for affect and the posterior contains both zero and a lot of negative values
+* However, if a person went from not listening to listening, they reported higher life satisfaction nthe next week (`music_used_within`), but posterior contains zero.
+* When a person listened to one hour more music than someone else, that person reported slightly higher life satisfaction (`music_time_between`), but 0 is in CI.
+* The same goes for a one-hour increase from one's typical music listening (`music_time_within`): the effect is positive, but super small and the posterior contains zero as well as negative values.
+```{r summary-music-life}
+summary(music_life)
+```
+
+Figure \@ref(fig:music-life-effects) shows the conditional effects
+```{r music-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Music-Affect model"}
+conditional_effects(music_life)
+```
+
+```{r, echo=FALSE}
+# remove the model from the workspace to save space
+rm(music_life)
+```
+
+#### Life satisfaction on music
+
+Below I run the model.
+On my machine, the model took about three and a half hours.
+```{r lifes-music, eval=FALSE}
+life_music <- 
+  brm(
+    bf(
+      # predicting continuous part
+      lead_music_time ~
+        1 + 
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+      
+      # predicting hurdle part
+      hu ~
+        1 + 
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_music")
+  )
+```
+
+```{r load-life-music, echo=FALSE}
+life_music <- read_rds(here("models", "life_music.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-music)).
+```{r inspect-life-music, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Music model"}
+# plot traceplots and posterior distributions
+plot(life_music, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-music)) shows that the model does an excellent job in predicting our outcome.
+Once more, it shifts zero values to very small values (shrinkage), which biases the median.
+```{r ppc-life-music, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Music model"}
+model_diagnostics(life_music)
+```
+
+Once more, there are several potential outliers.
+Again, because the model diagnostics look good and leaving one out here will estimate parameters for a participant with only two observations, which can lead to influential values, I believe the model is just flexible.
+```{r outliers-life-music, cache=TRUE}
+life_music_loo <- loo(life_music)
+life_music_loo
+```
+
+Summary:
+
+* Those with higher life satisfaction have a (very small) tendency to listen to more music a week later than those with lower life satisfaction: `exp(0.02)` = `r round(exp(0.02), digits = 2)` (`life_satisfaction_between`)
+* As a person goes up one point on affect compared to their typical life satisfaction score, their music time increases by a factor of `exp(0.002)` = `r round(exp(-0.002), digits = 2)` - a completely negligible, small effect whose posterior includes zero (`life_satisfaction_within`).
+* The between effect shows that people with higher life satisfaction also have lower odds of not listening to music across all waves: `exp(-0.31)` = `r exp(-0.31)` for `hu_life_satisfaction_between` - but the posterior goes from negative to positive.
+* If the average users went went up one point from their typical life satisfaction score, they had lower odds of not listening to music a week later, `exp(-0.15)` = `r exp(-0.15)`, but again the posterior includes a wide range of values, including zero.
+```{r summary-life-music}
+summary(life_music)
+```
+
+Figure \@ref(fig:life-music-effects) shows the conditional effects of life satisfaction on the amount of music listened a week later.
+```{r life-music-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Music model"}
+conditional_effects(life_music)
+```
+
+```{r, echo=FALSE}
+# remove the model from the workspace to save space
+rm(life_music)
+```

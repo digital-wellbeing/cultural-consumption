@@ -17,7 +17,9 @@ p_load(
   cowplot,
   kableExtra,
   directlabels,
-  GGally
+  GGally,
+  lavaan,
+  brms
 )
 
 # set seed
@@ -358,5 +360,46 @@ dens_function <-
       ) +
       geom_density(fill = "#009E73", color = NA, alpha = 0.5)
   }
-```
 
+model_diagnostics <- 
+  function(
+    model
+  ){
+  plot_grid(
+    pp_check(
+      model,
+      type = "dens_overlay",
+      nsamples = 100
+    ),
+    pp_check(
+      model,
+      type = "loo_pit_qq",
+      nsamples = 100
+    ),
+    pp_check(
+      model,
+      type = "loo_pit_overlay",
+      nsamples = 100
+    ),
+    pp_check(
+      model,
+      type = "stat",
+      stat = "median",
+      nsamples = 100
+    ),
+    pp_check(
+      model,
+      type = "stat",
+      stat = "mean",
+      nsamples = 100
+    ),
+    labels = c("Density overlay", "LOO-PIT QQ", "LOO-PIT Uniform", "Predicted medians", "Predicted means"),
+    ncol = 2,
+    label_size = 8,
+    hjust = 0,
+    vjust = 0,
+    label_x = 0,
+    label_y = 0.93
+  )
+  }
+```

@@ -629,9 +629,9 @@ time_per_wave <-
     across(
       c(ends_with("time")),
       list(
-        mean = mean,
-        cilow = ~Rmisc::CI(.x)[[3]], # lower CI
-        cihigh = ~Rmisc::CI(.x)[[1]] # upper CI
+        mean = ~ mean(.x, na.rm = TRUE),
+        cilow = ~Rmisc::CI(na.omit(.x))[[3]], # lower CI
+        cihigh = ~Rmisc::CI(na.omit(.x))[[1]] # upper CI
       )
     )
   ) %>% 
@@ -862,15 +862,23 @@ ggplot(
   ylab("Average estimate per day")
 ```
 
-Last, let's see the overall descriptives of the well-being variable.
-Table \@ref(tab:describe-well-being) shows that well-being was above the mid-point of the scale.
+Last, let's see the overall descriptives of the well-being variables.
+Table \@ref(tab:describe-well-being) shows that both life satisfaction and affect were above the mid-point of the scale - even though for affect, it's a close call.
 ```{r describe-well-being, echo = FALSE}
 well_being <- 
+  bind_rows(
     describe(
       working_file,
-      "well_being",
+      "affect",
       trait = FALSE
+    ),
+    describe(
+      working_file,
+      "life_satisfaction",
+      trait = TRUE
     )
+  )  
+
 
 knitr::kable(
   well_being,
@@ -878,21 +886,31 @@ knitr::kable(
 )
 ```
 
-Let's plot the distribution of overall well-being in Figure \@ref(fig:well-being-distribution).
+Let's plot the distribution of both affect and life satisfaction in Figure \@ref(fig:well-being-distribution).
 ```{r well-being-distribution, echo=FALSE, fig.cap="Distribution of well-being across waves and participants"}
-single_cloud(
+plot_grid(
+  single_cloud(
     working_file,
     well_being,
-    "well_being",
+    "affect",
     "#009E73",
-    title = "Well-being",
+    title = "Affect",
     trait = FALSE
+  ),
+  single_cloud(
+    working_file,
+    well_being,
+    "life_satisfaction",
+    "#E69F00",
+    title = "Life satisfaction",
+    trait = FALSE
+  )
 )
-  
 ```
 
 Last, let's look at how well-being develops over time.
-Figure \@ref(fig:well-being-over-time) shows that well-being is extremely stable: note the y-axis is on decimal points (range: 0 to 10), so well-being seems static.
+Figure \@ref(fig:well-being-over-time) shows that life satisfaction appears stable: note the y-axis is on decimal points (original range: 0 to 10).
+In contrast, affect has significantly decreased, mostly because anxiety has decreased (not shown on graph).
 ```{r well-being-over-time, echo=FALSE, fig.cap="Average estimates over time per medium"}
 # get summary stats with CI per wave in the long format
 well_being_per_wave <-
@@ -900,7 +918,7 @@ well_being_per_wave <-
   group_by(wave) %>% 
   summarise(
     across(
-      well_being,
+      c(affect, life_satisfaction),
       list(
         mean = ~ mean(.x, na.rm = TRUE),
         cilow = ~Rmisc::CI(na.omit(.x))[[3]], # lower CI
@@ -910,35 +928,33 @@ well_being_per_wave <-
   ) %>% 
   pivot_longer(
     -wave,
-    names_to = "Metric",
-    values_to = "Wellbeing"
+    names_to = c("Variable", "Metric"),
+    values_to = "Value",
+    names_pattern = "(.*)_([^_]+$)" # life_satisfaction_mean has two underscores
   ) %>% 
-  mutate(Metric = str_remove(Metric, "well_being_")) %>% 
   pivot_wider(
     names_from = "Metric",
-    values_from = "Wellbeing"
+    values_from = "Value"
   )
-
 
 ggplot(
   well_being_per_wave,
   aes(
     x = as.factor(wave),
     y = mean,
-    group = 1
+    color = Variable,
+    group = Variable
   )
 ) +
   geom_line(
-    size = 1,
-    color = "#009E73"
+    size = 1
   ) +
   geom_errorbar(
     aes(
       ymin = cilow,
       ymax = cihigh,
       width = 0
-    ),
-    color = "#009E73"
+    )
   ) +
   scale_color_brewer(palette="Dark2") +
   xlab("Wave") +
@@ -951,12 +967,13 @@ Let's have a look at the row correlations between the media use variables and we
 Figure \@ref(fig:correlation-matrix-use-well-being) shows that a) most media use is correlated, and b) there are negative, but very small correlations between well-being and media use.
 The significance is negligible here just because the sample is so large.
 That said, we haven't done any grouping yet, so the correlation matrix treats all observations as independent, which is clearly not the case.
-```{r correlation-matrix-use-well-being, echo=FALSE, message=F, fig.cap="Correlation matrix of hours spent with a medium and well-being",fig.dim=c(14,14)}
+```{r correlation-matrix-use-well-being, echo=FALSE, message=F, warning=F, fig.cap="Correlation matrix of hours spent with a medium and well-being",fig.dim=c(14,14)}
 ggpairs(
   data = working_file %>%
     select(
       contains("time"),
-      well_being
+      affect,
+      life_satisfaction
     ) %>%
     # remove _time appendix to make variable names shorter
     rename_with(
@@ -994,7 +1011,8 @@ ggpairs(
   data = working_file %>%
     select(
       contains("estimate"),
-      well_being
+      affect,
+      life_satisfaction
     ) %>%
     # remove _estimate appendix to make variable names shorter
     rename_with(
