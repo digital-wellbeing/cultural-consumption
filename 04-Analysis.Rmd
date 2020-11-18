@@ -289,9 +289,11 @@ Figure \@ref(fig:music-affect-effects) shows that the `used` effects have less u
 ```{r music-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Music-Affect model"}
 conditional_effects(music_affect)
 ```
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 # remove the model from the workspace to save space
 rm(music_affect)
+# even removing all these models makes my RAM use go through the roof. R typically does gc() automatically, but doing it manually after each removing of a model made it possible to run this chapter all in one go without RAM problems. however, I don't think it'll work if you only have 8GB of RAM (I have 16).
+gc()
 ```
 
 #### Affect on music
@@ -396,9 +398,10 @@ We see the between effect could be meaningful over the entire range of the affec
 conditional_effects(affect_music)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 # remove the model from the workspace to save space
 rm(affect_music)
+gc()
 ```
 
 ### Life Satisfaction
@@ -453,7 +456,7 @@ Like before, it slightly underestimates the median; everything else looks fine.
 model_diagnostics(music_life)
 ```
 
-The outliers are in about the same range as previous models, and the model diagnostics look good.
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
 ```{r outliers-music-life, cache=TRUE}
 music_life_loo <- loo(music_life)
 music_life_loo
@@ -475,9 +478,9 @@ Figure \@ref(fig:music-life-effects) shows the conditional effects
 conditional_effects(music_life)
 ```
 
-```{r, echo=FALSE}
-# remove the model from the workspace to save space
+```{r, echo=FALSE, message=FALSE}
 rm(music_life)
+gc()
 ```
 
 #### Life satisfaction on music
@@ -557,7 +560,1657 @@ Figure \@ref(fig:life-music-effects) shows the conditional effects of life satis
 conditional_effects(life_music)
 ```
 
-```{r, echo=FALSE}
-# remove the model from the workspace to save space
+```{r, echo=FALSE, message=FALSE}
 rm(life_music)
+gc()
+```
+
+## Films
+
+### Affect
+
+#### Films on affect
+
+```{r films-affect, eval=FALSE}
+films_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      films_used_between +
+      films_used_within +
+      films_time_between +
+      films_time_within +
+      (1 +
+         films_time_within +
+         films_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "films_affect")
+  )
+```
+
+```{r load-films-affect, echo=FALSE}
+films_affect <- read_rds(here("models", "films_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-films-affect)).
+```{r inspect-films-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Films-Affect model"}
+plot(films_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-films-affect)) looks okay, like in previous models.
+```{r ppc-films-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Films-Affect model"}
+model_diagnostics(films_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-films-affect, cache=TRUE}
+films_affect_loo <- loo(films_affect)
+films_affect_loo
+```
+
+Below the summary.
+```{r summary-films-affect}
+summary(films_affect)
+```
+
+Figure \@ref(fig:films-affect-effects) shows conditional effects.
+```{r films-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Films-Affect model"}
+conditional_effects(films_affect)
+```
+```{r, echo=FALSE, message=FALSE}
+rm(films_affect)
+gc()
+```
+
+#### Affect on films
+
+```{r affect-films, eval=FALSE}
+affect_films <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_films_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_films")
+  )
+```
+
+```{r load-affect-films, echo=FALSE}
+affect_films <- read_rds(here("models", "affect_films.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-films)).
+```{r inspect-affect-films, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Films model"}
+plot(affect_films, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-films)) looks okay, like in previous models.
+```{r ppc-affect-films, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Films model"}
+model_diagnostics(affect_films)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-affect-films, cache=TRUE}
+affect_films_loo <- loo(affect_films)
+affect_films_loo
+```
+
+Below the summary.
+```{r summary-affect-films}
+summary(affect_films)
+```
+
+Figure \@ref(fig:affect-films-effects) shows the conditional effects.
+```{r affect-films-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-Films model"}
+conditional_effects(affect_films)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_films)
+gc()
+```
+
+### Life satisfaction
+
+#### Films on life satisfaction
+
+```{r films-life, eval=FALSE}
+films_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      films_used_between +
+      films_used_within +
+      films_time_between +
+      films_time_within +
+      (1 +
+         films_time_within +
+         films_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "films_life")
+  )
+```
+
+```{r load-films-life, echo=FALSE}
+films_life <- read_rds(here("models", "films_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-films-life)).
+```{r inspect-films-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Films-Life Satisfaction model"}
+plot(films_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-films-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-films-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Films-Life Satisfaction model"}
+model_diagnostics(films_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-films-life, cache=TRUE}
+films_life_loo <- loo(films_life)
+films_life_loo
+```
+
+Below the summary.
+```{r summary-films-life}
+summary(films_life)
+```
+
+Figure \@ref(fig:films-life-effects) shows the conditional effects
+```{r films-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Films-Life Satisfaction model"}
+conditional_effects(films_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(films_life)
+gc()
+```
+
+#### Life satisfaction on films
+
+```{r life-films, eval=FALSE}
+life_films <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_films_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_films")
+  )
+```
+
+```{r load-life-films, echo=FALSE}
+life_films <- read_rds(here("models", "life_films.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-films)).
+```{r inspect-life-films, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Films model"}
+plot(life_films, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-films)) shows that the model do a good job in predicting our outcome.
+```{r ppc-life-films, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Films model"}
+model_diagnostics(life_films)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-life-films, cache=TRUE}
+life_films_loo <- loo(life_films)
+life_films_loo
+```
+
+Below the summary.
+```{r summary-life-films}
+summary(life_films)
+```
+
+Figure \@ref(fig:life-films-effects) shows the conditional effects.
+```{r life-films-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Films model"}
+conditional_effects(life_films)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_films)
+gc()
+```
+
+## TV
+
+### Affect
+
+#### TV on affect
+
+```{r tv-affect, eval=FALSE}
+tv_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      tv_used_between +
+      tv_used_within +
+      tv_time_between +
+      tv_time_within +
+      (1 +
+         tv_time_within +
+         tv_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "tv_affect")
+  )
+```
+
+```{r load-tv-affect, echo=FALSE}
+tv_affect <- read_rds(here("models", "tv_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-tv-affect)).
+```{r inspect-tv-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for TV-affect model"}
+plot(tv_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-tv-affect)) looks okay, like in previous models.
+```{r ppc-tv-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for TV-affect model"}
+model_diagnostics(tv_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-tv-affect, cache=TRUE}
+tv_affect_loo <- loo(tv_affect)
+tv_affect_loo
+```
+
+Below the summary.
+```{r summary-tv-affect}
+summary(tv_affect)
+```
+
+Figure \@ref(fig:tv-affect-effects) shows conditional effects.
+```{r tv-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for TV-affect model"}
+conditional_effects(tv_affect)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(tv_affect)
+gc()
+```
+
+
+#### Affect on TV
+
+```{r affect-tv, eval=FALSE}
+affect_tv <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_tv_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_tv")
+  )
+```
+
+```{r load-affect-tv, echo=FALSE}
+affect_tv <- read_rds(here("models", "affect_tv.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-tv)).
+```{r inspect-affect-tv, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-TV model"}
+plot(affect_tv, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-tv)) looks okay, like in previous models.
+```{r ppc-affect-tv, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-TV model"}
+model_diagnostics(affect_tv)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-affect-tv, cache=TRUE}
+affect_tv_loo <- loo(affect_tv)
+affect_tv_loo
+```
+
+Below the summary.
+```{r summary-affect-tv}
+summary(affect_tv)
+```
+
+Figure \@ref(fig:affect-tv-effects) shows the conditional effects.
+```{r affect-tv-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-TV model"}
+conditional_effects(affect_tv)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_tv)
+gc()
+```
+
+### Life satisfaction
+
+#### TV on life satisfaction
+
+```{r tv-life, eval=FALSE}
+tv_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      tv_used_between +
+      tv_used_within +
+      tv_time_between +
+      tv_time_within +
+      (1 +
+         tv_time_within +
+         tv_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "tv_life")
+  )
+```
+
+```{r load-tv-life, echo=FALSE}
+tv_life <- read_rds(here("models", "tv_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-tv-life)).
+```{r inspect-tv-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for TV-Life Satisfaction model"}
+plot(tv_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-tv-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-tv-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for TV-Life Satisfaction model"}
+model_diagnostics(tv_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-tv-life, cache=TRUE}
+tv_life_loo <- loo(tv_life)
+tv_life_loo
+```
+
+Below the summary.
+```{r summary-tv-life}
+summary(tv_life)
+```
+
+Figure \@ref(fig:tv-life-effects) shows the conditional effects
+```{r tv-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for TV-Life Satisfaction model"}
+conditional_effects(tv_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(tv_life)
+gc()
+```
+
+#### Life satisfaction on TV
+
+```{r life-tv, eval=FALSE}
+life_tv <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_tv_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_tv")
+  )
+```
+
+```{r load-life-tv, echo=FALSE}
+life_tv <- read_rds(here("models", "life_tv.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-tv)).
+```{r inspect-life-tv, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-TV model"}
+plot(life_tv, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-tv)) shows that the model do a good job in predicting our outcome.
+```{r ppc-life-tv, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-TV model"}
+model_diagnostics(life_tv)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-life-tv, cache=TRUE}
+life_tv_loo <- loo(life_tv)
+life_tv_loo
+```
+
+Below the summary.
+```{r summary-life-tv}
+summary(life_tv)
+```
+
+Figure \@ref(fig:life-tv-effects) shows the conditional effects.
+```{r life-tv-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-TV model"}
+conditional_effects(life_tv)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_tv)
+```
+
+## Video games
+
+### Affect
+
+#### Games on affect
+
+```{r games-affect, eval=FALSE}
+games_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      games_used_between +
+      games_used_within +
+      games_time_between +
+      games_time_within +
+      (1 +
+         games_time_within +
+         games_used_within
+       | id),
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "games_affect")
+  )
+```
+
+```{r load-games-affect, echo=FALSE}
+games_affect <- read_rds(here("models", "games_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-games-affect)).
+```{r inspect-games-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Games-Affect model"}
+plot(games_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-games-affect)) looks okay, like in previous models.
+```{r ppc-games-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Games-Affect model"}
+model_diagnostics(games_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-games-affect, cache=TRUE}
+games_affect_loo <- loo(games_affect)
+games_affect_loo
+```
+
+Below the summary.
+```{r summary-games-affect}
+summary(games_affect)
+```
+
+Figure \@ref(fig:games-affect-effects) shows conditional effects.
+```{r games-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Games-Affect model"}
+conditional_effects(games_affect)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(games_affect)
+gc()
+```
+
+#### Affect on video games
+
+```{r affect-games, eval=FALSE}
+affect_games <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_games_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_games")
+  )
+```
+
+```{r load-affect-games, echo=FALSE}
+affect_games <- read_rds(here("models", "affect_games.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-games)).
+```{r inspect-affect-games, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Games model"}
+plot(affect_games, ask = FALSE)
+```
+
+As the proportion of zeros increases, the posterior predictive distribution (Figure \@ref(fig:ppc-affect-games)) looks worse than in previous models, suggesting a smooth term might improve model fit.
+```{r ppc-affect-games, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Games model"}
+model_diagnostics(affect_games)
+```
+
+There are more potentially influential values than in previous models.
+```{r outliers-affect-games, cache=TRUE}
+affect_games_loo <- loo(affect_games)
+affect_games_loo
+```
+
+Below the summary.
+```{r summary-affect-games}
+summary(affect_games)
+```
+
+Figure \@ref(fig:affect-games-effects) shows the conditional effects.
+We see that there's less variation around game time at high levels of happiness and a smooth term will probably increase model fit.
+That said, I'd like to keep the model structure the same across media so that effects are comparable.
+```{r affect-games-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-Games model"}
+conditional_effects(affect_games)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_games)
+gc()
+```
+
+### Life satisfaction
+
+#### Games on life satisfaction
+
+The correlation between random effects has quite few samples, which is why I had to increase the interations.
+```{r games-life, eval=FALSE}
+games_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      games_used_between +
+      games_used_within +
+      games_time_between +
+      games_time_within +
+      (1 +
+         games_time_within +
+         games_used_within
+       | id),
+    iter = 8000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "games_life")
+  )
+```
+
+```{r load-games-life, echo=FALSE}
+games_life <- read_rds(here("models", "games_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-games-life)).
+```{r inspect-games-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Games-Life Satisfaction model"}
+plot(games_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-games-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-games-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Games-Life Satisfaction model"}
+model_diagnostics(games_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-games-life, cache=TRUE}
+games_life_loo <- loo(games_life)
+games_life_loo
+```
+
+Below the summary.
+```{r summary-games-life}
+summary(games_life)
+```
+
+Figure \@ref(fig:games-life-effects) shows the conditional effects
+```{r games-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Games-Life Satisfaction model"}
+conditional_effects(games_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(games_life)
+gc()
+```
+
+#### Life satisfaction on video games
+
+```{r life-games, eval=FALSE}
+life_games <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_games_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_games")
+  )
+```
+
+```{r load-life-games, echo=FALSE}
+life_games <- read_rds(here("models", "life_games.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-games)).
+```{r inspect-life-games, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Games model"}
+plot(life_games, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-games)) look worse than earlier models, again suggesting a smooth term might improve model fit.
+```{r ppc-life-games, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Games model"}
+model_diagnostics(life_games)
+```
+
+There are more potentially influential values than in previous models.
+```{r outliers-life-games, cache=TRUE}
+life_games_loo <- loo(life_games)
+life_games_loo
+```
+
+Below the summary.
+```{r summary-life-games}
+summary(life_games)
+```
+
+Figure \@ref(fig:life-games-effects) shows the conditional effects: looks similar to the affect model.
+```{r life-games-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Games model"}
+conditional_effects(life_games)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_games)
+gc()
+```
+
+## (E-)books
+
+### Affect
+
+#### Books on affect
+
+I had to increase the number of iterations.
+```{r books-affect, eval=FALSE}
+books_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      books_used_between +
+      books_used_within +
+      books_time_between +
+      books_time_within +
+      (1 +
+         books_time_within +
+         books_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "books_affect")
+  )
+```
+
+```{r load-books-affect, echo=FALSE}
+books_affect <- read_rds(here("models", "books_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-books-affect)).
+```{r inspect-books-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Books-Affect model"}
+plot(books_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-books-affect)) looks okay, like in previous models.
+```{r ppc-books-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Books-Affect model"}
+model_diagnostics(books_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-books-affect, cache=TRUE}
+books_affect_loo <- loo(books_affect)
+books_affect_loo
+```
+
+Below the summary.
+```{r summary-books-affect}
+summary(books_affect)
+```
+
+Figure \@ref(fig:books-affect-effects) shows conditional effects.
+```{r books-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Books-Affect model"}
+conditional_effects(books_affect)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(books_affect)
+gc()
+```
+
+#### Affect on books
+
+```{r affect-books, eval=FALSE}
+affect_books <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_books_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_books")
+  )
+```
+
+```{r load-affect-books, echo=FALSE}
+affect_books <- read_rds(here("models", "affect_books.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-books)).
+```{r inspect-affect-books, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Books model"}
+plot(affect_books, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-books)) looks like the two previous affect models, probably because the proportion of zeros increases strongly.
+```{r ppc-affect-books, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Books model"}
+model_diagnostics(affect_books)
+```
+
+There are a similar number of potentially influential values as in the two previous affect models.
+```{r outliers-affect-books, cache=TRUE}
+affect_books_loo <- loo(affect_books)
+affect_books_loo
+```
+
+Below the summary.
+```{r summary-affect-books}
+summary(affect_books)
+```
+
+Figure \@ref(fig:affect-books-effects) shows the conditional effects.
+```{r affect-books-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-Books model"}
+conditional_effects(affect_books)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_books)
+gc()
+```
+
+### Life satisfaction
+
+#### Books on life satisfaction
+
+```{r books-life, eval=FALSE}
+books_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      books_used_between +
+      books_used_within +
+      books_time_between +
+      books_time_within +
+      (1 +
+         books_time_within +
+         books_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "books_life")
+  )
+```
+
+```{r load-books-life, echo=FALSE}
+books_life <- read_rds(here("models", "books_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-books-life)).
+```{r inspect-books-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Books-Life Satisfaction model"}
+plot(books_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-books-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-books-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Books-Life Satisfaction model"}
+model_diagnostics(books_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-books-life, cache=TRUE}
+books_life_loo <- loo(books_life)
+books_life_loo
+```
+
+Below the summary.
+```{r summary-books-life}
+summary(books_life)
+```
+
+Figure \@ref(fig:books-life-effects) shows the conditional effects
+```{r books-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Books-Life Satisfaction model"}
+conditional_effects(books_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(books_life)
+gc()
+```
+
+#### Life satisfaction on books
+
+```{r life-books, eval=FALSE}
+life_books <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_books_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_books")
+  )
+```
+
+```{r load-life-books, echo=FALSE}
+life_books <- read_rds(here("models", "life_books.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-books)).
+```{r inspect-life-books, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Books model"}
+plot(life_books, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-books)) looks similar to previous models, probably because the massive zero inflation.
+```{r ppc-life-books, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Books model"}
+model_diagnostics(life_books)
+```
+
+The outliers are in about the same range as in the more recent models.
+```{r outliers-life-books, cache=TRUE}
+life_books_loo <- loo(life_books)
+life_books_loo
+```
+
+Below the summary.
+```{r summary-life-books}
+summary(life_books)
+```
+
+Figure \@ref(fig:life-books-effects) shows the conditional effects.
+```{r life-books-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Books model"}
+conditional_effects(life_books)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_books)
+gc()
+```
+
+## Magazines
+
+### Affect
+
+#### Magazines on affect
+
+I had to increase the number of iterations again.
+```{r magazines-affect, eval=FALSE}
+magazines_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      magazines_used_between +
+      magazines_used_within +
+      magazines_time_between +
+      magazines_time_within +
+      (1 +
+         magazines_time_within +
+         magazines_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "magazines_affect")
+  )
+```
+
+```{r load-magazines-affect, echo=FALSE}
+magazines_affect <- read_rds(here("models", "magazines_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-magazines-affect)).
+```{r inspect-magazines-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Magazines-Affect model"}
+plot(magazines_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-magazines-affect)) looks okay, like in previous models.
+```{r ppc-magazines-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Magazines-Affect model"}
+model_diagnostics(magazines_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-magazines-affect, cache=TRUE}
+magazines_affect_loo <- loo(magazines_affect)
+magazines_affect_loo
+```
+
+Below the summary.
+```{r summary-magazines-affect}
+summary(magazines_affect)
+```
+
+Figure \@ref(fig:magazines-affect-effects) shows conditional effects.
+```{r magazines-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Magazines-Affect model"}
+conditional_effects(magazines_affect)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(magazines_affect)
+gc()
+```
+
+#### Affect on magazines
+
+```{r affect-magazines, eval=FALSE}
+affect_magazines <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_magazines_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_magazines")
+  )
+```
+
+```{r load-affect-magazines, echo=FALSE}
+affect_magazines <- read_rds(here("models", "affect_magazines.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-magazines)).
+```{r inspect-affect-magazines, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Magazines model"}
+plot(affect_magazines, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-magazines)) reflects the massive zero inflation especially with LOO-PIT QQ.
+Model fit is definitely worse than in previous models, but I'm reluctant to add a smooth/quadratic term to make sure I can compare model coefficients across media.
+```{r ppc-affect-magazines, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Magazines model"}
+model_diagnostics(affect_magazines)
+```
+
+There are more potentially influential values than in earlier models, but similar to recent models.
+```{r outliers-affect-magazines, cache=TRUE}
+affect_magazines_loo <- loo(affect_magazines)
+affect_magazines_loo
+```
+
+Below the summary.
+```{r summary-affect-magazines}
+summary(affect_magazines)
+```
+
+Figure \@ref(fig:affect-magazines-effects) shows the conditional effects.
+```{r affect-magazines-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-Magazines model"}
+conditional_effects(affect_magazines)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_magazines)
+gc()
+```
+
+### Life satisfaction
+
+#### Magazines on life satisfaction
+
+```{r magazines-life, eval=FALSE}
+magazines_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      magazines_used_between +
+      magazines_used_within +
+      magazines_time_between +
+      magazines_time_within +
+      (1 +
+         magazines_time_within +
+         magazines_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "magazines_life")
+  )
+```
+
+```{r load-magazines-life, echo=FALSE}
+magazines_life <- read_rds(here("models", "magazines_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-magazines-life)).
+```{r inspect-magazines-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Magazines-Life Satisfaction model"}
+plot(magazines_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-magazines-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-magazines-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Magazines-Life Satisfaction model"}
+model_diagnostics(magazines_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-magazines-life, cache=TRUE}
+magazines_life_loo <- loo(magazines_life)
+magazines_life_loo
+```
+
+Below the summary.
+```{r summary-magazines-life}
+summary(magazines_life)
+```
+
+Figure \@ref(fig:magazines-life-effects) shows the conditional effects
+```{r magazines-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Magazines-Life Satisfaction model"}
+conditional_effects(magazines_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(magazines_life)
+gc()
+```
+
+#### Life satisfaction on magazines
+
+```{r life-magazines, eval=FALSE}
+life_magazines <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_magazines_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_magazines")
+  )
+```
+
+```{r load-life-magazines, echo=FALSE}
+life_magazines <- read_rds(here("models", "life_magazines.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-magazines)).
+```{r inspect-life-magazines, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Magazines model"}
+plot(life_magazines, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-magazines)) is almost identical to the affect model.
+The massive zero inflation creates problems for the model.
+```{r ppc-life-magazines, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Magazines model"}
+model_diagnostics(life_magazines)
+```
+
+There are more potentially influential values than in earlier models.
+```{r outliers-life-magazines, cache=TRUE}
+life_magazines_loo <- loo(life_magazines)
+life_magazines_loo
+```
+
+Below the summary.
+```{r summary-life-magazines}
+summary(life_magazines)
+```
+
+Figure \@ref(fig:life-magazines-effects) shows the conditional effects where we again see the effect of the massive zero inflation: there's almost no room on the y-axis and little variation around time.
+```{r life-magazines-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Magazines model"}
+conditional_effects(life_magazines)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_magazines)
+gc()
+```
+
+## Audiobooks
+
+### Affect
+
+#### Audiobooks on affect
+
+```{r audiobooks-affect, eval=FALSE}
+audiobooks_affect <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    affect ~
+      1 + 
+      audiobooks_used_between +
+      audiobooks_used_within +
+      audiobooks_time_between +
+      audiobooks_time_within +
+      (1 +
+         audiobooks_time_within +
+         audiobooks_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "audiobooks_affect")
+  )
+```
+
+```{r load-audiobooks-affect, echo=FALSE}
+audiobooks_affect <- read_rds(here("models", "audiobooks_affect.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-audiobooks-affect)).
+```{r inspect-audiobooks-affect, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Audiobooks-Affect model"}
+plot(audiobooks_affect, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-audiobooks-affect)) looks okay, like in previous models.
+```{r ppc-audiobooks-affect, cache = TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Audiobooks-Affect model"}
+model_diagnostics(audiobooks_affect)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-audiobooks-affect, cache=TRUE}
+audiobooks_affect_loo <- loo(audiobooks_affect)
+audiobooks_affect_loo
+```
+
+Below the summary.
+```{r summary-audiobooks-affect}
+summary(audiobooks_affect)
+```
+
+Figure \@ref(fig:audiobooks-affect-effects) shows conditional effects.
+```{r audiobooks-affect-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Audiobooks-Affect model"}
+conditional_effects(audiobooks_affect)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(audiobooks_affect)
+gc()
+```
+
+#### Affect on audiobooks
+
+```{r affect-audiobooks, eval=FALSE}
+affect_audiobooks <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_audiobooks_time ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        affect_between +
+        affect_within +
+        (1 +
+           affect_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "affect_audiobooks")
+  )
+```
+
+```{r load-affect-audiobooks, echo=FALSE}
+affect_audiobooks <- read_rds(here("models", "affect_audiobooks.rds"))
+```
+
+Traceplots look good, see (Figure \@ref(fig:inspect-affect-audiobooks)).
+```{r inspect-affect-audiobooks, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Affect-Audiobooks model"}
+plot(affect_audiobooks, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-affect-audiobooks)) are similar to recent models with massive zero inflation.
+```{r ppc-affect-audiobooks, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Affect-Audiobooks model"}
+model_diagnostics(affect_audiobooks)
+```
+
+There are more potentially influential values than in earlier models.
+```{r outliers-affect-audiobooks, cache=TRUE}
+affect_audiobooks_loo <- loo(affect_audiobooks)
+affect_audiobooks_loo
+```
+
+Below the summary.
+```{r summary-affect-audiobooks}
+summary(affect_audiobooks)
+```
+
+Figure \@ref(fig:affect-audiobooks-effects) shows the conditional effects where we again see the zero inflation because there's little non-zero average time to report.
+```{r affect-audiobooks-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Affect-Audiobooks model"}
+conditional_effects(affect_audiobooks)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(affect_audiobooks)
+gc()
+```
+
+### Life satisfaction
+
+#### Audiobooks on life satisfaction
+
+```{r audiobooks-life, eval=FALSE}
+audiobooks_life <- 
+  brm(
+    data = working_file,
+    family = gaussian,
+    life_satisfaction ~
+      1 + 
+      audiobooks_used_between +
+      audiobooks_used_within +
+      audiobooks_time_between +
+      audiobooks_time_within +
+      (1 +
+         audiobooks_time_within +
+         audiobooks_used_within
+       | id),
+    iter = 7000,
+    warmup = 3000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "audiobooks_life")
+  )
+```
+
+```{r load-audiobooks-life, echo=FALSE}
+audiobooks_life <- read_rds(here("models", "audiobooks_life.rds"))
+```
+
+The traceplots look good (Figure \@ref(fig:inspect-audiobooks-life)).
+```{r inspect-audiobooks-life, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Audiobooks-Life Satisfaction model"}
+plot(audiobooks_life, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-audiobooks-life)) shows that the model does a good job in predicting our outcome.
+```{r ppc-audiobooks-life, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Audiobooks-Life Satisfaction model"}
+model_diagnostics(audiobooks_life)
+```
+
+The outliers are in about the same range as in previous models, and the model diagnostics look good.
+```{r outliers-audiobooks-life, cache=TRUE}
+audiobooks_life_loo <- loo(audiobooks_life)
+audiobooks_life_loo
+```
+
+Below the summary.
+```{r summary-audiobooks-life}
+summary(audiobooks_life)
+```
+
+Figure \@ref(fig:audiobooks-life-effects) shows the conditional effects
+```{r audiobooks-life-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Audiobooks-Life Satisfaction model"}
+conditional_effects(audiobooks_life)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(audiobooks_life)
+gc()
+```
+
+#### Life satisfaction on audiobooks
+
+```{r life-audiobooks, eval=FALSE}
+life_audiobooks <-
+  brm(
+    bf(
+      # predicting continuous part
+      lead_audiobooks_time ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id),
+
+      # predicting hurdle part
+      hu ~
+        1 +
+        life_satisfaction_between +
+        life_satisfaction_within +
+        (1 +
+           life_satisfaction_within
+         | id)
+    ),
+    data = working_file,
+    family = hurdle_gamma(),
+    ,
+    iter = 5000,
+    warmup = 2000,
+    chains = 4,
+    cores = 4,
+    seed = 42,
+    control = list(adapt_delta = 0.95),
+    file = here("models", "life_audiobooks")
+  )
+```
+
+```{r load-life-audiobooks, echo=FALSE}
+life_audiobooks <- read_rds(here("models", "life_audiobooks.rds"))
+```
+
+The chains seem to have mixed well, see (Figure \@ref(fig:inspect-life-audiobooks)).
+```{r inspect-life-audiobooks, echo=FALSE, cache=TRUE, fig.cap="Traceplots and posterior distributions for Life Satisfaction-Audiobooks model"}
+plot(life_audiobooks, ask = FALSE)
+```
+
+The posterior predictive distribution (Figure \@ref(fig:ppc-life-audiobooks)) is similar to the affect model: there's just very little non-zero time to explain for the model.
+```{r ppc-life-audiobooks, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior predictive checks for Life Satisfaction-Audiobooks model"}
+model_diagnostics(life_audiobooks)
+```
+
+There are more potentially influential values than in earlier models.
+```{r outliers-life-audiobooks, cache=TRUE}
+life_audiobooks_loo <- loo(life_audiobooks)
+life_audiobooks_loo
+```
+
+Below the summary.
+```{r summary-life-audiobooks}
+summary(life_audiobooks)
+```
+
+Figure \@ref(fig:life-audiobooks-effects) shows the conditional effects: again, we see that the model struggles because there's so little non-zero stuff to explain.
+```{r life-audiobooks-effects, echo=FALSE, cache=TRUE, fig.cap="Conditional effects for Life Satisfaction-Audiobooks model"}
+conditional_effects(life_audiobooks)
+```
+
+```{r, echo=FALSE, message=FALSE}
+rm(life_audiobooks)
+gc()
 ```

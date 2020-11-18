@@ -967,7 +967,7 @@ Let's have a look at the row correlations between the media use variables and we
 Figure \@ref(fig:correlation-matrix-use-well-being) shows that a) most media use is correlated, and b) there are negative, but very small correlations between well-being and media use.
 The significance is negligible here just because the sample is so large.
 That said, we haven't done any grouping yet, so the correlation matrix treats all observations as independent, which is clearly not the case.
-```{r correlation-matrix-use-well-being, echo=FALSE, message=F, warning=F, fig.cap="Correlation matrix of hours spent with a medium and well-being",fig.dim=c(14,14)}
+```{r correlation-matrix-use-well-being, echo=FALSE, cache=TRUE, message=F, warning=F, fig.cap="Correlation matrix of hours spent with a medium and well-being",fig.dim=c(14,14)}
 ggpairs(
   data = working_file %>%
     select(
@@ -1006,7 +1006,7 @@ ggpairs(
 
 Figure \@ref(fig:correlation-matrix-estimates-well-being) shows the correlations between estimates of change of use and well-being.
 The pattern is similar to that of use and well-being with even smaller effect sizes.
-```{r correlation-matrix-estimates-well-being, echo=FALSE, message=F, warning=F, fig.cap="Correlation matrix of estimated time spent with a medium and well-being", fig.dim=c(14,14)}
+```{r correlation-matrix-estimates-well-being, echo=FALSE, cache=TRUE, message=F, warning=F, fig.cap="Correlation matrix of estimated time spent with a medium and well-being", fig.dim=c(14,14)}
 ggpairs(
   data = working_file %>%
     select(
