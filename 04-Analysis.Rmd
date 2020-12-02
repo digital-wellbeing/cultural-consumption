@@ -9,7 +9,6 @@ The fit is poor-ish and the model suggest that we should correlate the residuals
 
 That confirms my idea about treating those four items as coming from two different constructs.
 ```{r well-being-cfa}
-load(here("data", "workspace.RData"))
 cfa_model <- 
   "well_being_factor =~ life_satisfaction_1 + life_satisfaction_2 + well_being_1 + well_being_2"
 

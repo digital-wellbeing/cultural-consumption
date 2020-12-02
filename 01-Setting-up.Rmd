@@ -19,7 +19,8 @@ p_load(
   directlabels,
   GGally,
   lavaan,
-  brms
+  brms,
+  ggbeeswarm
 )
 
 # set seed
@@ -27,6 +28,9 @@ set.seed(42)
 
 # set theme
 theme_set(theme_cowplot())
+
+# custom colors that are color blind friendly
+cb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # chunk options
 knitr::opts_chunk$set(

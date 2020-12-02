@@ -1798,16 +1798,7 @@ completion_table %>%
   )
 ```
 
-Let's apply those exclusions.
-```{r apply-pp-exclusions}
-# exclusions_pp contains all participant-level exclusions
-working_file <- 
-  working_file %>% 
-  filter(!id %in% exclusions_pp)
-```
-
-Now that we've applied the participant-level exclusions, we also need to take a look at wave-level exclusions.
-It's quite possible that having excluded participants with low-quality data already excluded many of their low-quality rows as well.
+Let's also combine all wave-level exclusions.
 ```{r combine-wave-exclusions}
 # first, I'll combine all three wave-level exclusions
 exclusions_wave <- 
@@ -1822,6 +1813,119 @@ exclusions_wave <-
   ungroup() %>% 
   distinct()
 ```
+
+Before we apply the exclusions, let's first create a data frame which we can use later to plot exclusions for the paper.
+It'll be similar to the one above, but restricted to those with at least three waves, because those are the ones we ultimately use for the analysis.
+The code below might duplicate some of the work of previous and later code, but I came back here for creating a plot for the paper, so I didn't want to break anything.
+```{r get-exclusion-plot-data}
+# vectors holding number of participants and number of observations
+PPs <- c()
+Observations <- c()
+
+# temp data set of people with at least three waves
+dat <- 
+  working_file %>% 
+  group_by(id) %>% 
+  filter(n() >= 3) %>% 
+  ungroup()
+
+# the exclusions we iterate over
+exclusions <- 
+  list(
+    exclusions_pp_1,
+    exclusions_pp_2,
+    exclusions_pp_3,
+    exclusions_pp_4,
+    exclusions_pp_5,
+    exclusions_wave_1,
+    exclusions_wave_2,
+    exclusions_wave_3
+  )
+
+# iterate over each exclusion criterion list/tibble and extract how many are left after excluding those
+for (i in exclusions) {
+  if(!is_tibble(i)){
+    PPs <- c(PPs, dat %>% filter(!id %in% i) %>% summarise(PPs = length(unique(id))) %>% pull(PPs))
+    Observations <- c(Observations, dat %>% filter(!id %in% i) %>% summarise(n = n()) %>% pull(n))
+  } else{
+    PPs <- 
+      c(
+        PPs,
+        anti_join(
+          dat,
+          i
+        ) %>% 
+          summarise(PPs = length(unique(id))) %>% 
+          pull(PPs)
+      )
+    Observations <- 
+      c(
+        Observations,
+        anti_join(
+          dat,
+          i
+        ) %>% 
+          summarise(n = n()) %>% 
+          pull(n)
+      )
+  }
+}
+
+# our data for the plot
+exclusion_plot_data <- 
+  tibble(
+    "Type" = c(rep("Participant-level", 5), rep("Wave-level", 3), "Total", "Total Before"),
+    "Exclusion" = c(1:5, 1:3, "Total", "Total Before"),
+    "PPs" = c(
+      PPs,
+      dat %>% 
+        filter(!id %in% exclusions_pp) %>% 
+        anti_join(
+          .,
+          exclusions_wave
+        ) %>% 
+        group_by(id) %>% 
+        filter(n() >= 3) %>% 
+        ungroup() %>% 
+        summarise(
+          n = length(unique(id))
+        ) %>% 
+        pull(n),
+      length(unique(dat$id))
+    ),
+    "Observations" = c(
+      Observations,
+      dat %>% 
+        filter(!id %in% exclusions_pp) %>% 
+        anti_join(
+          .,
+          exclusions_wave
+        ) %>% 
+        group_by(id) %>% 
+        filter(n() >= 3) %>% 
+        ungroup() %>% 
+        summarise(
+          n = n()
+        ) %>% 
+        pull(n),
+      nrow(dat)
+    )
+  )
+
+# clear workspace
+rm(PPs, Observations, exclusions, dat)
+```
+
+Let's apply participant-level exclusions.
+```{r apply-pp-exclusions}
+# exclusions_pp contains all participant-level exclusions
+working_file <- 
+  working_file %>% 
+  filter(!id %in% exclusions_pp)
+```
+
+Now that we've applied the participant-level exclusions, we also need to take a look at wave-level exclusions.
+It's quite possible that having excluded participants with low-quality data already excluded many of their low-quality rows as well.
 
 I'll check how many rows that we intended to exclude on the wave-level are already not in the data set anymore because the entire participant that row belongs to was excluded during participant-level exclusions.
 ```{r compare-wave-pp-exclusions}
@@ -2038,6 +2142,9 @@ at_least_three <-
 working_file <- 
   working_file %>% 
   filter(id %in% at_least_three)
+
+# save working file
+saveRDS(working_file, here("data", "processed_data.rds"))
 
 # remove from workspace
 rm(at_least_three)

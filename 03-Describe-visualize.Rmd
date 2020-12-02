@@ -1042,3 +1042,664 @@ ggpairs(
     strip.background = element_blank()
   )
 ```
+## Plots for Paper
+
+For the paper, I want to avoid confronting readers with blocks of numbers.
+Therefore, I'll try to put as much info as possible into figures rather than tables or in-text reports of numbers.
+
+I think the following plots are necessary for the paper:
+
+1. A plot of the response rate per wave, simply as a descriptive measure.
+2. A plot showcasing the exclusions. I'll describe the exclusion criteria in the paper, but don't want to overwhelm readers with numbers for each.
+3. A plot showing the distributions, M, and SD of media use for different categories.
+4. Same plot, but for well-being.
+5. A plot of the results.
+
+First, a plot for the response rate for each wave.
+We already showed response rates as a table in the processing section, so we can re-use the `completion_table` object for a plot.
+Not sure about the colors yet, might go all black for this one.
+```{r response-rate-plot}
+ggplot(
+  data = completion_table %>% 
+    rename(
+      Wave = Waves,
+      `Participants per wave (%)` = `Participants per wave`
+    ) %>% 
+    mutate(
+      Wave = as.factor(Wave)
+    ),
+  aes(
+    x = Wave,
+    y = `Participants per wave (%)`#,
+    # color = Wave,
+    # fill = Wave
+  )
+) +
+  geom_segment(
+    aes(
+      xend = Wave,
+      y = 0,
+      yend = `Participants per wave (%)`
+    ),
+    size = 1
+  ) +
+  geom_point(
+    size = 2
+  ) +
+  geom_text(
+    aes(
+      label = paste0(`Participants per wave (%)`, "(", `Frequency per wave`, "%)"),
+      y = `Participants per wave (%)` + 160
+    )
+  ) +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  theme(
+    legend.position = "none"
+  ) -> figure1
+
+figure1
+
+ggsave(
+  filename = here("figures", "figure1.tiff"),
+  plot = figure1,
+  width = 21 * 0.8,
+  height = 29.7 * 0.4,
+  units = "cm",
+  dpi = 300
+)
+```
+
+Next, I plot the exclusions.
+There's two ways to go about this.
+Either I show the absolute number of participants and observations that we exclude with each criterion in relation to the total sample size.
+I do that below.
+Note that getting those exclusions in a nice format requires some wrangling.
+I already created the `exclusion_plot_data` object in the processing section.
+Here, I turn it into the long format first.
+```{r exclusions-plot1}
+# to long format for plotting
+exclusion_plot_data <-
+  exclusion_plot_data %>%
+  filter(!str_detect(Exclusion, "Total")) %>% # don't include the total numbers for now
+  rename(Participants = PPs) %>% # nicer name
+  pivot_longer(
+    Participants:Observations,
+    names_to = "Measure",
+    values_to = "Value"
+  ) %>% 
+  mutate( # create new variable that's stable across exclusions
+    Total = case_when(
+      Measure == "Participants" ~ exclusion_plot_data %>% filter(Type == "Total") %>% pull(PPs),
+      TRUE ~ exclusion_plot_data %>% filter(Type == "Total") %>% pull(Observations),
+    ),
+    `Total Before` = case_when(
+      Measure == "Participants" ~ exclusion_plot_data %>% filter(Type == "Total Before") %>% pull(PPs),
+      TRUE ~ exclusion_plot_data %>% filter(Type == "Total Before") %>% pull(Observations),
+    ) 
+  ) %>% 
+  mutate(
+    across(
+      Type:Measure,
+      as.factor
+    )
+  )
+
+# https://stackoverflow.com/questions/11889625/annotating-text-on-individual-facet-in-ggplot2
+# I want to show the total numbers once, not for each facet/criterion combination, which is why I create a data frame that only has a matching value for the positions in the plot that I want
+label_positions <- 
+  tibble(
+    Type = rep("Wave-level", 2),
+    Exclusion = c(3, 3), # on the right, where wave-level exclusions are
+    Measure = c("Participants", "Observations")
+  ) %>% 
+  mutate(
+    across(
+      everything(),
+      as.factor
+    )
+  )
+
+# add the total values
+label_positions <- 
+  left_join(
+    label_positions,
+    exclusion_plot_data %>% select(-Value)
+  )
+
+# then plot
+ggplot(
+  exclusion_plot_data,
+    aes(
+      x = Exclusion,
+      y = Value,
+      color = Type
+    )
+  ) +
+  geom_segment(
+    aes(
+      x = Exclusion,
+      xend = Exclusion,
+      y = 0,
+      yend = Value
+    ),
+    alpha = 1,
+    size = 1
+  ) +
+  facet_grid(Measure ~ Type, scales = "free") +
+  geom_point(alpha = 1, size = 2) +
+  geom_text(
+    aes(
+      label = paste0("-", `Total Before` - Value),
+      x = as.numeric(Exclusion) + 0.35,
+      y = Total * 0.1
+    )
+  ) +
+  geom_hline(
+    aes(
+      yintercept = Total
+    ),
+    linetype = "dashed"
+  ) +
+  geom_hline(
+    aes(
+      yintercept = `Total Before`
+    ),
+    linetype = "solid"
+  ) +
+  geom_text(
+    data = label_positions,
+    aes(
+      label = `Total`,
+      x = 3.3,
+      y = Total * 1.05
+    ),
+    color = "black"
+  ) +
+  geom_text(
+    data = label_positions,
+    aes(
+      label = `Total Before`,
+      x = 3.3,
+      y = `Total Before` * 1.05
+    ),
+    color = "black"
+  ) +
+  xlab("Exclusion Criterion") +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank()
+  ) -> figure2.1
+
+figure2.1
+
+ggsave(
+  filename = here("figures", "figure2.tiff"),
+  plot = figure2.1,
+  width = 21 * 0.9,
+  height = 29.7 * 0.4,
+  units = "cm",
+  dpi = 300
+)
+```
+
+Alternatively, we could emphasize the contributions of each criterion in relation to the other criteria.
+Not sure I like this because it doesn't show the total sample size and the reduction in total sample size.
+Then again, could simply add those to the figure captions.
+```{r exclusions-plot2}
+ggplot(
+  exclusion_plot_data %>% 
+    mutate(
+      Value = `Total Before` - Value
+    ),
+    aes(
+      x = Exclusion,
+      y = Value,
+      color = Type
+    )
+  ) +
+  geom_segment(
+    aes(
+      x = Exclusion,
+      xend = Exclusion,
+      y = 0,
+      yend = Value
+    ),
+    alpha = 1,
+    size = 1
+  ) +
+  facet_grid(Measure ~ Type, scales = "free") +
+  geom_point(alpha = 1, size = 2) +
+  geom_text(
+    aes(
+      label = paste0(round(Value/`Total Before`, digits = 4) * 100, "%"),
+      y = Value
+    ),
+    vjust = 1,
+    hjust = -0.2,
+    size = 3
+  ) +
+  xlab("Exclusion Criterion") +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    plot.background=element_blank(),
+    strip.background = element_blank()
+  ) -> figure2.2
+
+figure2.2
+```
+
+Next, I plot the distributions of the use variables.
+I want to show distributions, but there are a couple of single large values, so violin or density plots will look strange with a long tail.
+Raincloud plots could solve that to a degree, but they duplicate information.
+I'll go with a doptplot, namely beeswarm plots.
+
+Like before, because I facet, I'll turn the data into the long format first.
+I'm also not sure whether I like vertical or horizontal beeswarms, so I'll do both.
+```{r distributions-time-plot1, warning=FALSE, message=FALSE}
+# temporary data file in long format
+dat <- 
+  working_file %>% 
+  pivot_longer(
+    contains("_time"), # only the time variables
+    names_to = "measure",
+    values_to = "Hours per day"
+  ) %>% 
+  mutate(
+    measure = as.factor(str_to_title(str_remove(measure, "_time"))), # prettier factor levels
+    measure = fct_recode(
+      measure,
+      "TV" = "Tv"
+    ),
+    measure = fct_relevel(
+      measure,
+      c(
+        "Music",
+        "TV",
+        "Films",
+        "Games",
+        "Books",
+        "Magazines",
+        "Audiobooks",
+        "Total"
+      )
+    )
+  )
+
+# summary stats for plotting means over time
+dat_summary <- 
+  dat %>% 
+  group_by(wave, measure) %>% 
+  summarise(
+    mean = mean(`Hours per day`, na.rm = T),
+    sd = sd(`Hours per day`, na.rm = T)
+  ) %>% 
+  mutate(
+    across(
+      mean:sd,
+      ~ round(.x, digits = 1)
+    )
+  )
+
+# let's try horizontal first (the commented out section adds a vertical line where the mean is)
+ggplot(
+  dat,
+  aes(
+    x = `Hours per day`,
+    y = 1,
+    color = measure,
+    fill = measure
+  )
+) +
+  geom_quasirandom(groupOnX=FALSE, size = 0.1, alpha = 0.5) +
+  # geom_vline(
+  #   data = dat_summary,
+  #   aes(
+  #     xintercept = mean,
+  #     color = measure
+  #   ),
+  #   linetype = "dashed"
+  # ) +
+  geom_point(
+    data = dat_summary,
+    aes(
+      x = mean,
+      y = 0.55
+    ),
+    shape = 25,
+    size = 2
+  ) +
+  facet_grid(measure ~ wave) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = 20,
+      y = 1.4,
+      label = paste0("M = ", mean)
+    ),
+    size = 3,
+    color = "black"
+  ) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = 19.6,
+      y = 1.3,
+      label = paste0("SD = ", sd)
+    ),
+    size = 3,
+    color = "black"
+  ) +
+  theme_cowplot() +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.line.y = element_blank(),
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "none"
+  ) -> figure3.1
+
+figure3.1
+```
+
+I guess the trendline makes it easier to see developments (or lack thereof) over time.
+```{r distributions-time-plot2, warning=FALSE, message=FALSE}
+ggplot(
+  dat,
+  aes(
+    x = as.factor(wave),
+    y = `Hours per day`,
+    color = measure,
+    fill = measure,
+    group = 1
+  )
+) +
+  geom_quasirandom(size = 0.1, alpha = 0.2) +
+  geom_line(
+    data = dat_summary,
+    aes(
+      y = mean
+    ),
+    size = 1
+  ) +
+  facet_wrap(~ measure, ncol = 2) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = as.factor(wave),
+      y = -1.2,
+      label = paste0("M = ", mean)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = as.factor(wave),
+      y = -2.9,
+      label = paste0("SD = ", sd)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  theme_cowplot() +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  xlab("Wave") +
+  theme(
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "none"
+  ) -> figure3.2
+
+figure3.2
+```
+
+Then again, for distributions with a small mean, the trendline blocks everything.
+Plus, because total time extends the y-axis, there's lots of white space.
+I'll give total time its separate plot to solve that issue.
+I also won't have trendlines for the separate media, only for the total (too lazy to write the above into a function, so I'll copy paste the code from above.).
+```{r distributions-time-plot3, warning=FALSE, message=FALSE}
+ggplot(
+  dat %>% 
+    filter(measure != "Total"),
+  aes(
+    x = as.factor(wave),
+    y = `Hours per day`,
+    color = measure,
+    fill = measure,
+    group = 1
+  )
+) +
+  geom_quasirandom(size = 0.1, alpha = 0.2) +
+  # geom_line(
+  #   data = dat_summary,
+  #   aes(
+  #     y = mean
+  #   ),
+  #   size = 1
+  # ) +
+  facet_wrap(~ measure, ncol = 2) +
+  geom_text(
+    data = dat_summary %>% 
+      filter(measure != "Total"),
+    aes(
+      x = as.factor(wave),
+      y = -1.2,
+      label = paste0("M = ", mean)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  geom_text(
+    data = dat_summary %>% 
+      filter(measure != "Total"),
+    aes(
+      x = as.factor(wave),
+      y = -2.9,
+      label = paste0("SD = ", sd)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  theme_cowplot() +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  xlab("Wave") +
+  theme(
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "none"
+  ) -> figure3.3
+
+figure3.3
+
+ggsave(
+  here("figures", "figure3.tiff"),
+  plot = figure3.3,
+  width = 21 * 0.8,
+  height = 29.7 * 0.8,
+  units = "cm",
+  dpi = 300
+)
+```
+
+Then a separate plot for total time.
+```{r distributions-total-time-plot, warning=FALSE, message=FALSE}
+ggplot(
+  dat %>% 
+    filter(measure == "Total"),
+  aes(
+    x = as.factor(wave),
+    y = `Hours per day`,
+    group = 1
+  )
+) +
+  geom_quasirandom(size = 0.1, alpha = 0.2, color = "#CC79A7") +
+  geom_line(
+    data = dat_summary %>% 
+      filter(measure == "Total"),
+    aes(
+      y = mean
+    ),
+    size = 0.5,
+    color = "#CC79A7"
+  ) +
+  geom_text(
+    data = dat_summary %>% 
+      filter(measure == "Total"),
+    aes(
+      x = as.factor(wave),
+      y = -1.2,
+      label = paste0("M = ", mean)
+    ),
+    size = 3,
+    color = "black"
+  ) +
+  geom_text(
+    data = dat_summary %>% 
+      filter(measure == "Total"),
+    aes(
+      x = as.factor(wave),
+      y = -2.4,
+      label = paste0("SD = ", sd)
+    ),
+    size = 3,
+    color = "black"
+  ) +
+  theme_cowplot() +
+  xlab("Wave") +
+  ylab("Total hours per day") +
+  theme(
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "none"
+  ) -> figure4
+
+figure4
+
+ggsave(
+  here("figures", "figure4.tiff"),
+  plot = figure4,
+  width = 21 * 0.9,
+  height = 29.7 * 0.4,
+  units = "cm",
+  dpi = 300
+)
+```
+
+Next, I'll do the same thing with well-being.
+```{r distributions-time-plot, warning=FALSE, message=FALSE}
+# temporary data file in long format
+dat <- 
+  working_file %>% 
+  pivot_longer(
+    c(affect, life_satisfaction), # only the aggregated well-being variables
+    names_to = "measure",
+    values_to = "Value"
+  ) %>% 
+  mutate(
+    measure = fct_recode(
+      as.factor(measure),
+      "Affect" = "affect",
+      "Life satisfaction" = "life_satisfaction"
+    )
+  )
+
+# summary stats for plotting means over time
+dat_summary <- 
+  dat %>% 
+  group_by(wave, measure) %>% 
+  summarise(
+    mean = mean(Value, na.rm = T),
+    sd = sd(Value, na.rm = T)
+  ) %>% 
+  mutate(
+    across(
+      mean:sd,
+      ~ round(.x, digits = 1)
+    )
+  )
+
+ggplot(
+  dat,
+  aes(
+    x = as.factor(wave),
+    y = Value,
+    color = measure,
+    fill = measure,
+    group = 1
+  )
+) +
+  geom_quasirandom(size = 0.1, alpha = 0.2) +
+  geom_line(
+    data = dat_summary,
+    aes(
+      y = mean
+    ),
+    size = 0.5
+  ) +
+  facet_wrap(~ measure, ncol = 2) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = as.factor(wave),
+      y = -0.5,
+      label = paste0("M = ", mean)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  geom_text(
+    data = dat_summary,
+    aes(
+      x = as.factor(wave),
+      y = -0.9,
+      label = paste0("SD = ", sd)
+    ),
+    size = 2.5,
+    color = "black"
+  ) +
+  theme_cowplot() +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  xlab("Wave") +
+  theme(
+    axis.title.y = element_blank(),
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "none"
+  ) -> figure5
+
+figure5
+
+ggsave(
+  here("figures", "figure5.tiff"),
+  plot = figure5,
+  width = 21 * 0.8,
+  height = 29.7 * 0.4,
+  units = "cm",
+  dpi = 300
+)
+```
+
