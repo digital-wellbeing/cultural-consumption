@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Descriptives and visualizations | Analysis Report</title>
+  <title>3 Descriptives and visualizations | No effect of different types of media on well-being</title>
   <meta name="description" content="Analysis report detailing alls steps from data processing to final analyses." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Descriptives and visualizations | Analysis Report" />
+  <meta property="og:title" content="3 Descriptives and visualizations | No effect of different types of media on well-being" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/digital-wellbeing/cultural-consumption" />
   
@@ -16,15 +16,15 @@
   <meta name="github-repo" content="digital-wellbeing/cultural-consumption" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Descriptives and visualizations | Analysis Report" />
+  <meta name="twitter:title" content="3 Descriptives and visualizations | No effect of different types of media on well-being" />
   
   <meta name="twitter:description" content="Analysis report detailing alls steps from data processing to final analyses." />
   
 
-<meta name="author" content="Niklas Johannes" />
+<meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2020-12-02" />
+<meta name="date" content="2020-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,7 +136,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Analysis Report</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#data-and-models"><i class="fa fa-check"></i><b>0.1</b> Data and models</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#how-to-reproduce-processing-and-analyses"><i class="fa fa-check"></i><b>0.2</b> How to reproduce processing and analyses</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="setting-up.html"><a href="setting-up.html"><i class="fa fa-check"></i><b>1</b> Setting-up</a></li>
 <li class="chapter" data-level="2" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>2</b> Data processing</a><ul>
 <li class="chapter" data-level="2.1" data-path="data-processing.html"><a href="data-processing.html#read-waves-2-6"><i class="fa fa-check"></i><b>2.1</b> Read waves 2-6</a></li>
@@ -193,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="synthesis.html"><a href="synthesis.html"><i class="fa fa-check"></i><b>5</b> Synthesis</a><ul>
 <li class="chapter" data-level="5.1" data-path="synthesis.html"><a href="synthesis.html#create-a-summary-graph"><i class="fa fa-check"></i><b>5.1</b> Create a summary graph</a></li>
-<li class="chapter" data-level="5.2" data-path="synthesis.html"><a href="synthesis.html#interpreting-the-graph"><i class="fa fa-check"></i><b>5.2</b> Interpreting the graph</a></li>
+<li class="chapter" data-level="5.2" data-path="synthesis.html"><a href="synthesis.html#interpreting-the-results"><i class="fa fa-check"></i><b>5.2</b> Interpreting the results</a></li>
 <li class="chapter" data-level="5.3" data-path="synthesis.html"><a href="synthesis.html#take-aways"><i class="fa fa-check"></i><b>5.3</b> Take-aways</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -208,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analysis Report</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">No effect of different types of media on well-being</a>
           </h1>
         </div>
 
@@ -2490,55 +2493,55 @@ Therefore, I’ll try to put as much info as possible into figures rather than t
 <p>First, a plot for the response rate for each wave.
 We already showed response rates as a table in the processing section, so we can re-use the <code>completion_table</code> object for a plot.
 Not sure about the colors yet, might go all black for this one.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="descriptives-and-visualizations.html#cb48-1"></a><span class="kw">ggplot</span>(</span>
-<span id="cb48-2"><a href="descriptives-and-visualizations.html#cb48-2"></a>  <span class="dt">data =</span> completion_table <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb48-3"><a href="descriptives-and-visualizations.html#cb48-3"></a><span class="st">    </span><span class="kw">rename</span>(</span>
-<span id="cb48-4"><a href="descriptives-and-visualizations.html#cb48-4"></a>      <span class="dt">Wave =</span> Waves,</span>
-<span id="cb48-5"><a href="descriptives-and-visualizations.html#cb48-5"></a>      <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Participants per wave</span><span class="st">`</span></span>
-<span id="cb48-6"><a href="descriptives-and-visualizations.html#cb48-6"></a>    ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb48-7"><a href="descriptives-and-visualizations.html#cb48-7"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
-<span id="cb48-8"><a href="descriptives-and-visualizations.html#cb48-8"></a>      <span class="dt">Wave =</span> <span class="kw">as.factor</span>(Wave)</span>
-<span id="cb48-9"><a href="descriptives-and-visualizations.html#cb48-9"></a>    ),</span>
-<span id="cb48-10"><a href="descriptives-and-visualizations.html#cb48-10"></a>  <span class="kw">aes</span>(</span>
-<span id="cb48-11"><a href="descriptives-and-visualizations.html#cb48-11"></a>    <span class="dt">x =</span> Wave,</span>
-<span id="cb48-12"><a href="descriptives-and-visualizations.html#cb48-12"></a>    <span class="dt">y =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span><span class="co">#,</span></span>
-<span id="cb48-13"><a href="descriptives-and-visualizations.html#cb48-13"></a>    <span class="co"># color = Wave,</span></span>
-<span id="cb48-14"><a href="descriptives-and-visualizations.html#cb48-14"></a>    <span class="co"># fill = Wave</span></span>
-<span id="cb48-15"><a href="descriptives-and-visualizations.html#cb48-15"></a>  )</span>
-<span id="cb48-16"><a href="descriptives-and-visualizations.html#cb48-16"></a>) <span class="op">+</span></span>
-<span id="cb48-17"><a href="descriptives-and-visualizations.html#cb48-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(</span>
-<span id="cb48-18"><a href="descriptives-and-visualizations.html#cb48-18"></a>    <span class="kw">aes</span>(</span>
-<span id="cb48-19"><a href="descriptives-and-visualizations.html#cb48-19"></a>      <span class="dt">xend =</span> Wave,</span>
-<span id="cb48-20"><a href="descriptives-and-visualizations.html#cb48-20"></a>      <span class="dt">y =</span> <span class="dv">0</span>,</span>
-<span id="cb48-21"><a href="descriptives-and-visualizations.html#cb48-21"></a>      <span class="dt">yend =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span></span>
-<span id="cb48-22"><a href="descriptives-and-visualizations.html#cb48-22"></a>    ),</span>
-<span id="cb48-23"><a href="descriptives-and-visualizations.html#cb48-23"></a>    <span class="dt">size =</span> <span class="dv">1</span></span>
-<span id="cb48-24"><a href="descriptives-and-visualizations.html#cb48-24"></a>  ) <span class="op">+</span></span>
-<span id="cb48-25"><a href="descriptives-and-visualizations.html#cb48-25"></a><span class="st">  </span><span class="kw">geom_point</span>(</span>
-<span id="cb48-26"><a href="descriptives-and-visualizations.html#cb48-26"></a>    <span class="dt">size =</span> <span class="dv">2</span></span>
-<span id="cb48-27"><a href="descriptives-and-visualizations.html#cb48-27"></a>  ) <span class="op">+</span></span>
-<span id="cb48-28"><a href="descriptives-and-visualizations.html#cb48-28"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb48-29"><a href="descriptives-and-visualizations.html#cb48-29"></a>    <span class="kw">aes</span>(</span>
-<span id="cb48-30"><a href="descriptives-and-visualizations.html#cb48-30"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span>, <span class="st">&quot;(&quot;</span>, <span class="st">`</span><span class="dt">Frequency per wave</span><span class="st">`</span>, <span class="st">&quot;%)&quot;</span>),</span>
-<span id="cb48-31"><a href="descriptives-and-visualizations.html#cb48-31"></a>      <span class="dt">y =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span><span class="dv">160</span></span>
-<span id="cb48-32"><a href="descriptives-and-visualizations.html#cb48-32"></a>    )</span>
-<span id="cb48-33"><a href="descriptives-and-visualizations.html#cb48-33"></a>  ) <span class="op">+</span></span>
-<span id="cb48-34"><a href="descriptives-and-visualizations.html#cb48-34"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
-<span id="cb48-35"><a href="descriptives-and-visualizations.html#cb48-35"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
-<span id="cb48-36"><a href="descriptives-and-visualizations.html#cb48-36"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb48-37"><a href="descriptives-and-visualizations.html#cb48-37"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb48-38"><a href="descriptives-and-visualizations.html#cb48-38"></a>  ) -&gt;<span class="st"> </span>figure1</span>
-<span id="cb48-39"><a href="descriptives-and-visualizations.html#cb48-39"></a></span>
-<span id="cb48-40"><a href="descriptives-and-visualizations.html#cb48-40"></a>figure1</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="descriptives-and-visualizations.html#cb49-1"></a><span class="kw">ggplot</span>(</span>
+<span id="cb49-2"><a href="descriptives-and-visualizations.html#cb49-2"></a>  <span class="dt">data =</span> completion_table <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-3"><a href="descriptives-and-visualizations.html#cb49-3"></a><span class="st">    </span><span class="kw">rename</span>(</span>
+<span id="cb49-4"><a href="descriptives-and-visualizations.html#cb49-4"></a>      <span class="dt">Wave =</span> Waves,</span>
+<span id="cb49-5"><a href="descriptives-and-visualizations.html#cb49-5"></a>      <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Participants per wave</span><span class="st">`</span></span>
+<span id="cb49-6"><a href="descriptives-and-visualizations.html#cb49-6"></a>    ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-7"><a href="descriptives-and-visualizations.html#cb49-7"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb49-8"><a href="descriptives-and-visualizations.html#cb49-8"></a>      <span class="dt">Wave =</span> <span class="kw">as.factor</span>(Wave)</span>
+<span id="cb49-9"><a href="descriptives-and-visualizations.html#cb49-9"></a>    ),</span>
+<span id="cb49-10"><a href="descriptives-and-visualizations.html#cb49-10"></a>  <span class="kw">aes</span>(</span>
+<span id="cb49-11"><a href="descriptives-and-visualizations.html#cb49-11"></a>    <span class="dt">x =</span> Wave,</span>
+<span id="cb49-12"><a href="descriptives-and-visualizations.html#cb49-12"></a>    <span class="dt">y =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span><span class="co">#,</span></span>
+<span id="cb49-13"><a href="descriptives-and-visualizations.html#cb49-13"></a>    <span class="co"># color = Wave,</span></span>
+<span id="cb49-14"><a href="descriptives-and-visualizations.html#cb49-14"></a>    <span class="co"># fill = Wave</span></span>
+<span id="cb49-15"><a href="descriptives-and-visualizations.html#cb49-15"></a>  )</span>
+<span id="cb49-16"><a href="descriptives-and-visualizations.html#cb49-16"></a>) <span class="op">+</span></span>
+<span id="cb49-17"><a href="descriptives-and-visualizations.html#cb49-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(</span>
+<span id="cb49-18"><a href="descriptives-and-visualizations.html#cb49-18"></a>    <span class="kw">aes</span>(</span>
+<span id="cb49-19"><a href="descriptives-and-visualizations.html#cb49-19"></a>      <span class="dt">xend =</span> Wave,</span>
+<span id="cb49-20"><a href="descriptives-and-visualizations.html#cb49-20"></a>      <span class="dt">y =</span> <span class="dv">0</span>,</span>
+<span id="cb49-21"><a href="descriptives-and-visualizations.html#cb49-21"></a>      <span class="dt">yend =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span></span>
+<span id="cb49-22"><a href="descriptives-and-visualizations.html#cb49-22"></a>    ),</span>
+<span id="cb49-23"><a href="descriptives-and-visualizations.html#cb49-23"></a>    <span class="dt">size =</span> <span class="dv">1</span></span>
+<span id="cb49-24"><a href="descriptives-and-visualizations.html#cb49-24"></a>  ) <span class="op">+</span></span>
+<span id="cb49-25"><a href="descriptives-and-visualizations.html#cb49-25"></a><span class="st">  </span><span class="kw">geom_point</span>(</span>
+<span id="cb49-26"><a href="descriptives-and-visualizations.html#cb49-26"></a>    <span class="dt">size =</span> <span class="dv">2</span></span>
+<span id="cb49-27"><a href="descriptives-and-visualizations.html#cb49-27"></a>  ) <span class="op">+</span></span>
+<span id="cb49-28"><a href="descriptives-and-visualizations.html#cb49-28"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb49-29"><a href="descriptives-and-visualizations.html#cb49-29"></a>    <span class="kw">aes</span>(</span>
+<span id="cb49-30"><a href="descriptives-and-visualizations.html#cb49-30"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span>, <span class="st">&quot;(&quot;</span>, <span class="st">`</span><span class="dt">Frequency per wave</span><span class="st">`</span>, <span class="st">&quot;%)&quot;</span>),</span>
+<span id="cb49-31"><a href="descriptives-and-visualizations.html#cb49-31"></a>      <span class="dt">y =</span> <span class="st">`</span><span class="dt">Participants per wave (%)</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span><span class="dv">160</span></span>
+<span id="cb49-32"><a href="descriptives-and-visualizations.html#cb49-32"></a>    )</span>
+<span id="cb49-33"><a href="descriptives-and-visualizations.html#cb49-33"></a>  ) <span class="op">+</span></span>
+<span id="cb49-34"><a href="descriptives-and-visualizations.html#cb49-34"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
+<span id="cb49-35"><a href="descriptives-and-visualizations.html#cb49-35"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
+<span id="cb49-36"><a href="descriptives-and-visualizations.html#cb49-36"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb49-37"><a href="descriptives-and-visualizations.html#cb49-37"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb49-38"><a href="descriptives-and-visualizations.html#cb49-38"></a>  ) -&gt;<span class="st"> </span>figure1</span>
+<span id="cb49-39"><a href="descriptives-and-visualizations.html#cb49-39"></a></span>
+<span id="cb49-40"><a href="descriptives-and-visualizations.html#cb49-40"></a>figure1</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/response-rate-plot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="descriptives-and-visualizations.html#cb49-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb49-2"><a href="descriptives-and-visualizations.html#cb49-2"></a>  <span class="dt">filename =</span> <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.tiff&quot;</span>),</span>
-<span id="cb49-3"><a href="descriptives-and-visualizations.html#cb49-3"></a>  <span class="dt">plot =</span> figure1,</span>
-<span id="cb49-4"><a href="descriptives-and-visualizations.html#cb49-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
-<span id="cb49-5"><a href="descriptives-and-visualizations.html#cb49-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
-<span id="cb49-6"><a href="descriptives-and-visualizations.html#cb49-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb49-7"><a href="descriptives-and-visualizations.html#cb49-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
-<span id="cb49-8"><a href="descriptives-and-visualizations.html#cb49-8"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="descriptives-and-visualizations.html#cb50-1"></a><span class="kw">ggsave</span>(</span>
+<span id="cb50-2"><a href="descriptives-and-visualizations.html#cb50-2"></a>  <span class="dt">filename =</span> <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.tiff&quot;</span>),</span>
+<span id="cb50-3"><a href="descriptives-and-visualizations.html#cb50-3"></a>  <span class="dt">plot =</span> figure1,</span>
+<span id="cb50-4"><a href="descriptives-and-visualizations.html#cb50-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
+<span id="cb50-5"><a href="descriptives-and-visualizations.html#cb50-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
+<span id="cb50-6"><a href="descriptives-and-visualizations.html#cb50-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb50-7"><a href="descriptives-and-visualizations.html#cb50-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb50-8"><a href="descriptives-and-visualizations.html#cb50-8"></a>)</span></code></pre></div>
 <p>Next, I plot the exclusions.
 There’s two ways to go about this.
 Either I show the absolute number of participants and observations that we exclude with each criterion in relation to the total sample size.
@@ -2546,137 +2549,129 @@ I do that below.
 Note that getting those exclusions in a nice format requires some wrangling.
 I already created the <code>exclusion_plot_data</code> object in the processing section.
 Here, I turn it into the long format first.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="descriptives-and-visualizations.html#cb50-1"></a><span class="co"># to long format for plotting</span></span>
-<span id="cb50-2"><a href="descriptives-and-visualizations.html#cb50-2"></a>exclusion_plot_data &lt;-</span>
-<span id="cb50-3"><a href="descriptives-and-visualizations.html#cb50-3"></a><span class="st">  </span>exclusion_plot_data <span class="op">%&gt;%</span></span>
-<span id="cb50-4"><a href="descriptives-and-visualizations.html#cb50-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(Exclusion, <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># don&#39;t include the total numbers for now</span></span>
-<span id="cb50-5"><a href="descriptives-and-visualizations.html#cb50-5"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Participants =</span> PPs) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nicer name</span></span>
-<span id="cb50-6"><a href="descriptives-and-visualizations.html#cb50-6"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
-<span id="cb50-7"><a href="descriptives-and-visualizations.html#cb50-7"></a>    Participants<span class="op">:</span>Observations,</span>
-<span id="cb50-8"><a href="descriptives-and-visualizations.html#cb50-8"></a>    <span class="dt">names_to =</span> <span class="st">&quot;Measure&quot;</span>,</span>
-<span id="cb50-9"><a href="descriptives-and-visualizations.html#cb50-9"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
-<span id="cb50-10"><a href="descriptives-and-visualizations.html#cb50-10"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb50-11"><a href="descriptives-and-visualizations.html#cb50-11"></a><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># create new variable that&#39;s stable across exclusions</span></span>
-<span id="cb50-12"><a href="descriptives-and-visualizations.html#cb50-12"></a>    <span class="dt">Total =</span> <span class="kw">case_when</span>(</span>
-<span id="cb50-13"><a href="descriptives-and-visualizations.html#cb50-13"></a>      Measure <span class="op">==</span><span class="st"> &quot;Participants&quot;</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(PPs),</span>
-<span id="cb50-14"><a href="descriptives-and-visualizations.html#cb50-14"></a>      <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Observations),</span>
-<span id="cb50-15"><a href="descriptives-and-visualizations.html#cb50-15"></a>    ),</span>
-<span id="cb50-16"><a href="descriptives-and-visualizations.html#cb50-16"></a>    <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> =<span class="st"> </span><span class="kw">case_when</span>(</span>
-<span id="cb50-17"><a href="descriptives-and-visualizations.html#cb50-17"></a>      Measure <span class="op">==</span><span class="st"> &quot;Participants&quot;</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total Before&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(PPs),</span>
-<span id="cb50-18"><a href="descriptives-and-visualizations.html#cb50-18"></a>      <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total Before&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Observations),</span>
-<span id="cb50-19"><a href="descriptives-and-visualizations.html#cb50-19"></a>    ) </span>
-<span id="cb50-20"><a href="descriptives-and-visualizations.html#cb50-20"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb50-21"><a href="descriptives-and-visualizations.html#cb50-21"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb50-22"><a href="descriptives-and-visualizations.html#cb50-22"></a>    <span class="kw">across</span>(</span>
-<span id="cb50-23"><a href="descriptives-and-visualizations.html#cb50-23"></a>      Type<span class="op">:</span>Measure,</span>
-<span id="cb50-24"><a href="descriptives-and-visualizations.html#cb50-24"></a>      as.factor</span>
-<span id="cb50-25"><a href="descriptives-and-visualizations.html#cb50-25"></a>    )</span>
-<span id="cb50-26"><a href="descriptives-and-visualizations.html#cb50-26"></a>  )</span>
-<span id="cb50-27"><a href="descriptives-and-visualizations.html#cb50-27"></a></span>
-<span id="cb50-28"><a href="descriptives-and-visualizations.html#cb50-28"></a><span class="co"># https://stackoverflow.com/questions/11889625/annotating-text-on-individual-facet-in-ggplot2</span></span>
-<span id="cb50-29"><a href="descriptives-and-visualizations.html#cb50-29"></a><span class="co"># I want to show the total numbers once, not for each facet/criterion combination, which is why I create a data frame that only has a matching value for the positions in the plot that I want</span></span>
-<span id="cb50-30"><a href="descriptives-and-visualizations.html#cb50-30"></a>label_positions &lt;-<span class="st"> </span></span>
-<span id="cb50-31"><a href="descriptives-and-visualizations.html#cb50-31"></a><span class="st">  </span><span class="kw">tibble</span>(</span>
-<span id="cb50-32"><a href="descriptives-and-visualizations.html#cb50-32"></a>    <span class="dt">Type =</span> <span class="kw">rep</span>(<span class="st">&quot;Wave-level&quot;</span>, <span class="dv">2</span>),</span>
-<span id="cb50-33"><a href="descriptives-and-visualizations.html#cb50-33"></a>    <span class="dt">Exclusion =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="co"># on the right, where wave-level exclusions are</span></span>
-<span id="cb50-34"><a href="descriptives-and-visualizations.html#cb50-34"></a>    <span class="dt">Measure =</span> <span class="kw">c</span>(<span class="st">&quot;Participants&quot;</span>, <span class="st">&quot;Observations&quot;</span>)</span>
-<span id="cb50-35"><a href="descriptives-and-visualizations.html#cb50-35"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb50-36"><a href="descriptives-and-visualizations.html#cb50-36"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb50-37"><a href="descriptives-and-visualizations.html#cb50-37"></a>    <span class="kw">across</span>(</span>
-<span id="cb50-38"><a href="descriptives-and-visualizations.html#cb50-38"></a>      <span class="kw">everything</span>(),</span>
-<span id="cb50-39"><a href="descriptives-and-visualizations.html#cb50-39"></a>      as.factor</span>
-<span id="cb50-40"><a href="descriptives-and-visualizations.html#cb50-40"></a>    )</span>
-<span id="cb50-41"><a href="descriptives-and-visualizations.html#cb50-41"></a>  )</span>
-<span id="cb50-42"><a href="descriptives-and-visualizations.html#cb50-42"></a></span>
-<span id="cb50-43"><a href="descriptives-and-visualizations.html#cb50-43"></a><span class="co"># add the total values</span></span>
-<span id="cb50-44"><a href="descriptives-and-visualizations.html#cb50-44"></a>label_positions &lt;-<span class="st"> </span></span>
-<span id="cb50-45"><a href="descriptives-and-visualizations.html#cb50-45"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
-<span id="cb50-46"><a href="descriptives-and-visualizations.html#cb50-46"></a>    label_positions,</span>
-<span id="cb50-47"><a href="descriptives-and-visualizations.html#cb50-47"></a>    exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Value)</span>
-<span id="cb50-48"><a href="descriptives-and-visualizations.html#cb50-48"></a>  )</span>
-<span id="cb50-49"><a href="descriptives-and-visualizations.html#cb50-49"></a></span>
-<span id="cb50-50"><a href="descriptives-and-visualizations.html#cb50-50"></a><span class="co"># then plot</span></span>
-<span id="cb50-51"><a href="descriptives-and-visualizations.html#cb50-51"></a><span class="kw">ggplot</span>(</span>
-<span id="cb50-52"><a href="descriptives-and-visualizations.html#cb50-52"></a>  exclusion_plot_data,</span>
-<span id="cb50-53"><a href="descriptives-and-visualizations.html#cb50-53"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-54"><a href="descriptives-and-visualizations.html#cb50-54"></a>      <span class="dt">x =</span> Exclusion,</span>
-<span id="cb50-55"><a href="descriptives-and-visualizations.html#cb50-55"></a>      <span class="dt">y =</span> Value,</span>
-<span id="cb50-56"><a href="descriptives-and-visualizations.html#cb50-56"></a>      <span class="dt">color =</span> Type</span>
-<span id="cb50-57"><a href="descriptives-and-visualizations.html#cb50-57"></a>    )</span>
-<span id="cb50-58"><a href="descriptives-and-visualizations.html#cb50-58"></a>  ) <span class="op">+</span></span>
-<span id="cb50-59"><a href="descriptives-and-visualizations.html#cb50-59"></a><span class="st">  </span><span class="kw">geom_segment</span>(</span>
-<span id="cb50-60"><a href="descriptives-and-visualizations.html#cb50-60"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-61"><a href="descriptives-and-visualizations.html#cb50-61"></a>      <span class="dt">x =</span> Exclusion,</span>
-<span id="cb50-62"><a href="descriptives-and-visualizations.html#cb50-62"></a>      <span class="dt">xend =</span> Exclusion,</span>
-<span id="cb50-63"><a href="descriptives-and-visualizations.html#cb50-63"></a>      <span class="dt">y =</span> <span class="dv">0</span>,</span>
-<span id="cb50-64"><a href="descriptives-and-visualizations.html#cb50-64"></a>      <span class="dt">yend =</span> Value</span>
-<span id="cb50-65"><a href="descriptives-and-visualizations.html#cb50-65"></a>    ),</span>
-<span id="cb50-66"><a href="descriptives-and-visualizations.html#cb50-66"></a>    <span class="dt">alpha =</span> <span class="dv">1</span>,</span>
-<span id="cb50-67"><a href="descriptives-and-visualizations.html#cb50-67"></a>    <span class="dt">size =</span> <span class="dv">1</span></span>
-<span id="cb50-68"><a href="descriptives-and-visualizations.html#cb50-68"></a>  ) <span class="op">+</span></span>
-<span id="cb50-69"><a href="descriptives-and-visualizations.html#cb50-69"></a><span class="st">  </span><span class="kw">facet_grid</span>(Measure <span class="op">~</span><span class="st"> </span>Type, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></span>
-<span id="cb50-70"><a href="descriptives-and-visualizations.html#cb50-70"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb50-71"><a href="descriptives-and-visualizations.html#cb50-71"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb50-72"><a href="descriptives-and-visualizations.html#cb50-72"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-73"><a href="descriptives-and-visualizations.html#cb50-73"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;-&quot;</span>, <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>Value),</span>
-<span id="cb50-74"><a href="descriptives-and-visualizations.html#cb50-74"></a>      <span class="dt">x =</span> <span class="kw">as.numeric</span>(Exclusion) <span class="op">+</span><span class="st"> </span><span class="fl">0.35</span>,</span>
-<span id="cb50-75"><a href="descriptives-and-visualizations.html#cb50-75"></a>      <span class="dt">y =</span> Total <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span></span>
-<span id="cb50-76"><a href="descriptives-and-visualizations.html#cb50-76"></a>    )</span>
-<span id="cb50-77"><a href="descriptives-and-visualizations.html#cb50-77"></a>  ) <span class="op">+</span></span>
-<span id="cb50-78"><a href="descriptives-and-visualizations.html#cb50-78"></a><span class="st">  </span><span class="kw">geom_hline</span>(</span>
-<span id="cb50-79"><a href="descriptives-and-visualizations.html#cb50-79"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-80"><a href="descriptives-and-visualizations.html#cb50-80"></a>      <span class="dt">yintercept =</span> Total</span>
-<span id="cb50-81"><a href="descriptives-and-visualizations.html#cb50-81"></a>    ),</span>
-<span id="cb50-82"><a href="descriptives-and-visualizations.html#cb50-82"></a>    <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span></span>
-<span id="cb50-83"><a href="descriptives-and-visualizations.html#cb50-83"></a>  ) <span class="op">+</span></span>
-<span id="cb50-84"><a href="descriptives-and-visualizations.html#cb50-84"></a><span class="st">  </span><span class="kw">geom_hline</span>(</span>
-<span id="cb50-85"><a href="descriptives-and-visualizations.html#cb50-85"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-86"><a href="descriptives-and-visualizations.html#cb50-86"></a>      <span class="dt">yintercept =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span></span>
-<span id="cb50-87"><a href="descriptives-and-visualizations.html#cb50-87"></a>    ),</span>
-<span id="cb50-88"><a href="descriptives-and-visualizations.html#cb50-88"></a>    <span class="dt">linetype =</span> <span class="st">&quot;solid&quot;</span></span>
-<span id="cb50-89"><a href="descriptives-and-visualizations.html#cb50-89"></a>  ) <span class="op">+</span></span>
-<span id="cb50-90"><a href="descriptives-and-visualizations.html#cb50-90"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb50-91"><a href="descriptives-and-visualizations.html#cb50-91"></a>    <span class="dt">data =</span> label_positions,</span>
-<span id="cb50-92"><a href="descriptives-and-visualizations.html#cb50-92"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-93"><a href="descriptives-and-visualizations.html#cb50-93"></a>      <span class="dt">label =</span> <span class="st">`</span><span class="dt">Total</span><span class="st">`</span>,</span>
-<span id="cb50-94"><a href="descriptives-and-visualizations.html#cb50-94"></a>      <span class="dt">x =</span> <span class="fl">3.3</span>,</span>
-<span id="cb50-95"><a href="descriptives-and-visualizations.html#cb50-95"></a>      <span class="dt">y =</span> Total <span class="op">*</span><span class="st"> </span><span class="fl">1.05</span></span>
-<span id="cb50-96"><a href="descriptives-and-visualizations.html#cb50-96"></a>    ),</span>
-<span id="cb50-97"><a href="descriptives-and-visualizations.html#cb50-97"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb50-98"><a href="descriptives-and-visualizations.html#cb50-98"></a>  ) <span class="op">+</span></span>
-<span id="cb50-99"><a href="descriptives-and-visualizations.html#cb50-99"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb50-100"><a href="descriptives-and-visualizations.html#cb50-100"></a>    <span class="dt">data =</span> label_positions,</span>
-<span id="cb50-101"><a href="descriptives-and-visualizations.html#cb50-101"></a>    <span class="kw">aes</span>(</span>
-<span id="cb50-102"><a href="descriptives-and-visualizations.html#cb50-102"></a>      <span class="dt">label =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span>,</span>
-<span id="cb50-103"><a href="descriptives-and-visualizations.html#cb50-103"></a>      <span class="dt">x =</span> <span class="fl">3.3</span>,</span>
-<span id="cb50-104"><a href="descriptives-and-visualizations.html#cb50-104"></a>      <span class="dt">y =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> <span class="op">*</span><span class="st"> </span><span class="fl">1.05</span></span>
-<span id="cb50-105"><a href="descriptives-and-visualizations.html#cb50-105"></a>    ),</span>
-<span id="cb50-106"><a href="descriptives-and-visualizations.html#cb50-106"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb50-107"><a href="descriptives-and-visualizations.html#cb50-107"></a>  ) <span class="op">+</span></span>
-<span id="cb50-108"><a href="descriptives-and-visualizations.html#cb50-108"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Exclusion Criterion&quot;</span>) <span class="op">+</span></span>
-<span id="cb50-109"><a href="descriptives-and-visualizations.html#cb50-109"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
-<span id="cb50-110"><a href="descriptives-and-visualizations.html#cb50-110"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
-<span id="cb50-111"><a href="descriptives-and-visualizations.html#cb50-111"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb50-112"><a href="descriptives-and-visualizations.html#cb50-112"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb50-113"><a href="descriptives-and-visualizations.html#cb50-113"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb50-114"><a href="descriptives-and-visualizations.html#cb50-114"></a>    <span class="dt">panel.background=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb50-115"><a href="descriptives-and-visualizations.html#cb50-115"></a>    <span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb50-116"><a href="descriptives-and-visualizations.html#cb50-116"></a>    <span class="dt">panel.grid.major=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb50-117"><a href="descriptives-and-visualizations.html#cb50-117"></a>    <span class="dt">panel.grid.minor=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb50-118"><a href="descriptives-and-visualizations.html#cb50-118"></a>    <span class="dt">plot.background=</span><span class="kw">element_blank</span>(),</span>
-<span id="cb50-119"><a href="descriptives-and-visualizations.html#cb50-119"></a>    <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()</span>
-<span id="cb50-120"><a href="descriptives-and-visualizations.html#cb50-120"></a>  ) -&gt;<span class="st"> </span>figure2<span class="fl">.1</span></span>
-<span id="cb50-121"><a href="descriptives-and-visualizations.html#cb50-121"></a></span>
-<span id="cb50-122"><a href="descriptives-and-visualizations.html#cb50-122"></a>figure2<span class="fl">.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives-and-visualizations.html#cb51-1"></a><span class="co"># to long format for plotting</span></span>
+<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2"></a>exclusion_plot_data &lt;-</span>
+<span id="cb51-3"><a href="descriptives-and-visualizations.html#cb51-3"></a><span class="st">  </span>exclusion_plot_data <span class="op">%&gt;%</span></span>
+<span id="cb51-4"><a href="descriptives-and-visualizations.html#cb51-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(Exclusion, <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># don&#39;t include the total numbers for now</span></span>
+<span id="cb51-5"><a href="descriptives-and-visualizations.html#cb51-5"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Participants =</span> PPs) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nicer name</span></span>
+<span id="cb51-6"><a href="descriptives-and-visualizations.html#cb51-6"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
+<span id="cb51-7"><a href="descriptives-and-visualizations.html#cb51-7"></a>    Participants<span class="op">:</span>Observations,</span>
+<span id="cb51-8"><a href="descriptives-and-visualizations.html#cb51-8"></a>    <span class="dt">names_to =</span> <span class="st">&quot;Measure&quot;</span>,</span>
+<span id="cb51-9"><a href="descriptives-and-visualizations.html#cb51-9"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
+<span id="cb51-10"><a href="descriptives-and-visualizations.html#cb51-10"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-11"><a href="descriptives-and-visualizations.html#cb51-11"></a><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># create new variable that&#39;s stable across exclusions</span></span>
+<span id="cb51-12"><a href="descriptives-and-visualizations.html#cb51-12"></a>    <span class="dt">Total =</span> <span class="kw">case_when</span>(</span>
+<span id="cb51-13"><a href="descriptives-and-visualizations.html#cb51-13"></a>      Measure <span class="op">==</span><span class="st"> &quot;Participants&quot;</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(PPs),</span>
+<span id="cb51-14"><a href="descriptives-and-visualizations.html#cb51-14"></a>      <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Observations),</span>
+<span id="cb51-15"><a href="descriptives-and-visualizations.html#cb51-15"></a>    ),</span>
+<span id="cb51-16"><a href="descriptives-and-visualizations.html#cb51-16"></a>    <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> =<span class="st"> </span><span class="kw">case_when</span>(</span>
+<span id="cb51-17"><a href="descriptives-and-visualizations.html#cb51-17"></a>      Measure <span class="op">==</span><span class="st"> &quot;Participants&quot;</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total Before&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(PPs),</span>
+<span id="cb51-18"><a href="descriptives-and-visualizations.html#cb51-18"></a>      <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Type <span class="op">==</span><span class="st"> &quot;Total Before&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Observations),</span>
+<span id="cb51-19"><a href="descriptives-and-visualizations.html#cb51-19"></a>    ) </span>
+<span id="cb51-20"><a href="descriptives-and-visualizations.html#cb51-20"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-21"><a href="descriptives-and-visualizations.html#cb51-21"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb51-22"><a href="descriptives-and-visualizations.html#cb51-22"></a>    <span class="kw">across</span>(</span>
+<span id="cb51-23"><a href="descriptives-and-visualizations.html#cb51-23"></a>      Type<span class="op">:</span>Measure,</span>
+<span id="cb51-24"><a href="descriptives-and-visualizations.html#cb51-24"></a>      as.factor</span>
+<span id="cb51-25"><a href="descriptives-and-visualizations.html#cb51-25"></a>    )</span>
+<span id="cb51-26"><a href="descriptives-and-visualizations.html#cb51-26"></a>  )</span>
+<span id="cb51-27"><a href="descriptives-and-visualizations.html#cb51-27"></a></span>
+<span id="cb51-28"><a href="descriptives-and-visualizations.html#cb51-28"></a><span class="co"># https://stackoverflow.com/questions/11889625/annotating-text-on-individual-facet-in-ggplot2</span></span>
+<span id="cb51-29"><a href="descriptives-and-visualizations.html#cb51-29"></a><span class="co"># I want to show the total numbers once, not for each facet/criterion combination, which is why I create a data frame that only has a matching value for the positions in the plot that I want</span></span>
+<span id="cb51-30"><a href="descriptives-and-visualizations.html#cb51-30"></a>label_positions &lt;-<span class="st"> </span></span>
+<span id="cb51-31"><a href="descriptives-and-visualizations.html#cb51-31"></a><span class="st">  </span><span class="kw">tibble</span>(</span>
+<span id="cb51-32"><a href="descriptives-and-visualizations.html#cb51-32"></a>    <span class="dt">Type =</span> <span class="kw">rep</span>(<span class="st">&quot;Wave-level&quot;</span>, <span class="dv">2</span>),</span>
+<span id="cb51-33"><a href="descriptives-and-visualizations.html#cb51-33"></a>    <span class="dt">Exclusion =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="co"># on the right, where wave-level exclusions are</span></span>
+<span id="cb51-34"><a href="descriptives-and-visualizations.html#cb51-34"></a>    <span class="dt">Measure =</span> <span class="kw">c</span>(<span class="st">&quot;Participants&quot;</span>, <span class="st">&quot;Observations&quot;</span>)</span>
+<span id="cb51-35"><a href="descriptives-and-visualizations.html#cb51-35"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-36"><a href="descriptives-and-visualizations.html#cb51-36"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb51-37"><a href="descriptives-and-visualizations.html#cb51-37"></a>    <span class="kw">across</span>(</span>
+<span id="cb51-38"><a href="descriptives-and-visualizations.html#cb51-38"></a>      <span class="kw">everything</span>(),</span>
+<span id="cb51-39"><a href="descriptives-and-visualizations.html#cb51-39"></a>      as.factor</span>
+<span id="cb51-40"><a href="descriptives-and-visualizations.html#cb51-40"></a>    )</span>
+<span id="cb51-41"><a href="descriptives-and-visualizations.html#cb51-41"></a>  )</span>
+<span id="cb51-42"><a href="descriptives-and-visualizations.html#cb51-42"></a></span>
+<span id="cb51-43"><a href="descriptives-and-visualizations.html#cb51-43"></a><span class="co"># add the total values</span></span>
+<span id="cb51-44"><a href="descriptives-and-visualizations.html#cb51-44"></a>label_positions &lt;-<span class="st"> </span></span>
+<span id="cb51-45"><a href="descriptives-and-visualizations.html#cb51-45"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb51-46"><a href="descriptives-and-visualizations.html#cb51-46"></a>    label_positions,</span>
+<span id="cb51-47"><a href="descriptives-and-visualizations.html#cb51-47"></a>    exclusion_plot_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Value)</span>
+<span id="cb51-48"><a href="descriptives-and-visualizations.html#cb51-48"></a>  )</span>
+<span id="cb51-49"><a href="descriptives-and-visualizations.html#cb51-49"></a></span>
+<span id="cb51-50"><a href="descriptives-and-visualizations.html#cb51-50"></a><span class="co"># then plot</span></span>
+<span id="cb51-51"><a href="descriptives-and-visualizations.html#cb51-51"></a><span class="kw">ggplot</span>(</span>
+<span id="cb51-52"><a href="descriptives-and-visualizations.html#cb51-52"></a>  exclusion_plot_data,</span>
+<span id="cb51-53"><a href="descriptives-and-visualizations.html#cb51-53"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-54"><a href="descriptives-and-visualizations.html#cb51-54"></a>      <span class="dt">x =</span> Exclusion,</span>
+<span id="cb51-55"><a href="descriptives-and-visualizations.html#cb51-55"></a>      <span class="dt">y =</span> Value,</span>
+<span id="cb51-56"><a href="descriptives-and-visualizations.html#cb51-56"></a>      <span class="dt">color =</span> Type</span>
+<span id="cb51-57"><a href="descriptives-and-visualizations.html#cb51-57"></a>    )</span>
+<span id="cb51-58"><a href="descriptives-and-visualizations.html#cb51-58"></a>  ) <span class="op">+</span></span>
+<span id="cb51-59"><a href="descriptives-and-visualizations.html#cb51-59"></a><span class="st">  </span><span class="kw">geom_segment</span>(</span>
+<span id="cb51-60"><a href="descriptives-and-visualizations.html#cb51-60"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-61"><a href="descriptives-and-visualizations.html#cb51-61"></a>      <span class="dt">x =</span> Exclusion,</span>
+<span id="cb51-62"><a href="descriptives-and-visualizations.html#cb51-62"></a>      <span class="dt">xend =</span> Exclusion,</span>
+<span id="cb51-63"><a href="descriptives-and-visualizations.html#cb51-63"></a>      <span class="dt">y =</span> <span class="dv">0</span>,</span>
+<span id="cb51-64"><a href="descriptives-and-visualizations.html#cb51-64"></a>      <span class="dt">yend =</span> Value</span>
+<span id="cb51-65"><a href="descriptives-and-visualizations.html#cb51-65"></a>    ),</span>
+<span id="cb51-66"><a href="descriptives-and-visualizations.html#cb51-66"></a>    <span class="dt">alpha =</span> <span class="dv">1</span>,</span>
+<span id="cb51-67"><a href="descriptives-and-visualizations.html#cb51-67"></a>    <span class="dt">size =</span> <span class="dv">1</span></span>
+<span id="cb51-68"><a href="descriptives-and-visualizations.html#cb51-68"></a>  ) <span class="op">+</span></span>
+<span id="cb51-69"><a href="descriptives-and-visualizations.html#cb51-69"></a><span class="st">  </span><span class="kw">facet_grid</span>(Measure <span class="op">~</span><span class="st"> </span>Type, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></span>
+<span id="cb51-70"><a href="descriptives-and-visualizations.html#cb51-70"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb51-71"><a href="descriptives-and-visualizations.html#cb51-71"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb51-72"><a href="descriptives-and-visualizations.html#cb51-72"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-73"><a href="descriptives-and-visualizations.html#cb51-73"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;-&quot;</span>, <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>Value),</span>
+<span id="cb51-74"><a href="descriptives-and-visualizations.html#cb51-74"></a>      <span class="dt">x =</span> <span class="kw">as.numeric</span>(Exclusion) <span class="op">+</span><span class="st"> </span><span class="fl">0.35</span>,</span>
+<span id="cb51-75"><a href="descriptives-and-visualizations.html#cb51-75"></a>      <span class="dt">y =</span> Total <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span></span>
+<span id="cb51-76"><a href="descriptives-and-visualizations.html#cb51-76"></a>    )</span>
+<span id="cb51-77"><a href="descriptives-and-visualizations.html#cb51-77"></a>  ) <span class="op">+</span></span>
+<span id="cb51-78"><a href="descriptives-and-visualizations.html#cb51-78"></a><span class="st">  </span><span class="kw">geom_hline</span>(</span>
+<span id="cb51-79"><a href="descriptives-and-visualizations.html#cb51-79"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-80"><a href="descriptives-and-visualizations.html#cb51-80"></a>      <span class="dt">yintercept =</span> Total</span>
+<span id="cb51-81"><a href="descriptives-and-visualizations.html#cb51-81"></a>    ),</span>
+<span id="cb51-82"><a href="descriptives-and-visualizations.html#cb51-82"></a>    <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span></span>
+<span id="cb51-83"><a href="descriptives-and-visualizations.html#cb51-83"></a>  ) <span class="op">+</span></span>
+<span id="cb51-84"><a href="descriptives-and-visualizations.html#cb51-84"></a><span class="st">  </span><span class="kw">geom_hline</span>(</span>
+<span id="cb51-85"><a href="descriptives-and-visualizations.html#cb51-85"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-86"><a href="descriptives-and-visualizations.html#cb51-86"></a>      <span class="dt">yintercept =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span></span>
+<span id="cb51-87"><a href="descriptives-and-visualizations.html#cb51-87"></a>    ),</span>
+<span id="cb51-88"><a href="descriptives-and-visualizations.html#cb51-88"></a>    <span class="dt">linetype =</span> <span class="st">&quot;solid&quot;</span></span>
+<span id="cb51-89"><a href="descriptives-and-visualizations.html#cb51-89"></a>  ) <span class="op">+</span></span>
+<span id="cb51-90"><a href="descriptives-and-visualizations.html#cb51-90"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb51-91"><a href="descriptives-and-visualizations.html#cb51-91"></a>    <span class="dt">data =</span> label_positions,</span>
+<span id="cb51-92"><a href="descriptives-and-visualizations.html#cb51-92"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-93"><a href="descriptives-and-visualizations.html#cb51-93"></a>      <span class="dt">label =</span> <span class="st">`</span><span class="dt">Total</span><span class="st">`</span>,</span>
+<span id="cb51-94"><a href="descriptives-and-visualizations.html#cb51-94"></a>      <span class="dt">x =</span> <span class="fl">3.3</span>,</span>
+<span id="cb51-95"><a href="descriptives-and-visualizations.html#cb51-95"></a>      <span class="dt">y =</span> Total <span class="op">*</span><span class="st"> </span><span class="fl">1.05</span></span>
+<span id="cb51-96"><a href="descriptives-and-visualizations.html#cb51-96"></a>    ),</span>
+<span id="cb51-97"><a href="descriptives-and-visualizations.html#cb51-97"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb51-98"><a href="descriptives-and-visualizations.html#cb51-98"></a>  ) <span class="op">+</span></span>
+<span id="cb51-99"><a href="descriptives-and-visualizations.html#cb51-99"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb51-100"><a href="descriptives-and-visualizations.html#cb51-100"></a>    <span class="dt">data =</span> label_positions,</span>
+<span id="cb51-101"><a href="descriptives-and-visualizations.html#cb51-101"></a>    <span class="kw">aes</span>(</span>
+<span id="cb51-102"><a href="descriptives-and-visualizations.html#cb51-102"></a>      <span class="dt">label =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span>,</span>
+<span id="cb51-103"><a href="descriptives-and-visualizations.html#cb51-103"></a>      <span class="dt">x =</span> <span class="fl">3.3</span>,</span>
+<span id="cb51-104"><a href="descriptives-and-visualizations.html#cb51-104"></a>      <span class="dt">y =</span> <span class="st">`</span><span class="dt">Total Before</span><span class="st">`</span> <span class="op">*</span><span class="st"> </span><span class="fl">1.05</span></span>
+<span id="cb51-105"><a href="descriptives-and-visualizations.html#cb51-105"></a>    ),</span>
+<span id="cb51-106"><a href="descriptives-and-visualizations.html#cb51-106"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb51-107"><a href="descriptives-and-visualizations.html#cb51-107"></a>  ) <span class="op">+</span></span>
+<span id="cb51-108"><a href="descriptives-and-visualizations.html#cb51-108"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Exclusion Criterion&quot;</span>) <span class="op">+</span></span>
+<span id="cb51-109"><a href="descriptives-and-visualizations.html#cb51-109"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
+<span id="cb51-110"><a href="descriptives-and-visualizations.html#cb51-110"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
+<span id="cb51-111"><a href="descriptives-and-visualizations.html#cb51-111"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb51-112"><a href="descriptives-and-visualizations.html#cb51-112"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb51-113"><a href="descriptives-and-visualizations.html#cb51-113"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb51-114"><a href="descriptives-and-visualizations.html#cb51-114"></a>    <span class="dt">panel.background=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb51-115"><a href="descriptives-and-visualizations.html#cb51-115"></a>    <span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb51-116"><a href="descriptives-and-visualizations.html#cb51-116"></a>    <span class="dt">panel.grid.major=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb51-117"><a href="descriptives-and-visualizations.html#cb51-117"></a>    <span class="dt">panel.grid.minor=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb51-118"><a href="descriptives-and-visualizations.html#cb51-118"></a>    <span class="dt">plot.background=</span><span class="kw">element_blank</span>(),</span>
+<span id="cb51-119"><a href="descriptives-and-visualizations.html#cb51-119"></a>    <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()</span>
+<span id="cb51-120"><a href="descriptives-and-visualizations.html#cb51-120"></a>  ) -&gt;<span class="st"> </span>exclusion_figure1</span>
+<span id="cb51-121"><a href="descriptives-and-visualizations.html#cb51-121"></a></span>
+<span id="cb51-122"><a href="descriptives-and-visualizations.html#cb51-122"></a>exclusion_figure1</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/exclusions-plot1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives-and-visualizations.html#cb51-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2"></a>  <span class="dt">filename =</span> <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure2.tiff&quot;</span>),</span>
-<span id="cb51-3"><a href="descriptives-and-visualizations.html#cb51-3"></a>  <span class="dt">plot =</span> figure2<span class="fl">.1</span>,</span>
-<span id="cb51-4"><a href="descriptives-and-visualizations.html#cb51-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>,</span>
-<span id="cb51-5"><a href="descriptives-and-visualizations.html#cb51-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
-<span id="cb51-6"><a href="descriptives-and-visualizations.html#cb51-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb51-7"><a href="descriptives-and-visualizations.html#cb51-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
-<span id="cb51-8"><a href="descriptives-and-visualizations.html#cb51-8"></a>)</span></code></pre></div>
 <p>Alternatively, we could emphasize the contributions of each criterion in relation to the other criteria.
 Not sure I like this because it doesn’t show the total sample size and the reduction in total sample size.
 Then again, could simply add those to the figure captions.</p>
@@ -2724,9 +2719,9 @@ Then again, could simply add those to the figure captions.</p>
 <span id="cb52-42"><a href="descriptives-and-visualizations.html#cb52-42"></a>    <span class="dt">panel.grid.minor=</span><span class="kw">element_blank</span>(),</span>
 <span id="cb52-43"><a href="descriptives-and-visualizations.html#cb52-43"></a>    <span class="dt">plot.background=</span><span class="kw">element_blank</span>(),</span>
 <span id="cb52-44"><a href="descriptives-and-visualizations.html#cb52-44"></a>    <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()</span>
-<span id="cb52-45"><a href="descriptives-and-visualizations.html#cb52-45"></a>  ) -&gt;<span class="st"> </span>figure2<span class="fl">.2</span></span>
+<span id="cb52-45"><a href="descriptives-and-visualizations.html#cb52-45"></a>  ) -&gt;<span class="st"> </span>exclusion_figure2</span>
 <span id="cb52-46"><a href="descriptives-and-visualizations.html#cb52-46"></a></span>
-<span id="cb52-47"><a href="descriptives-and-visualizations.html#cb52-47"></a>figure2<span class="fl">.2</span></span></code></pre></div>
+<span id="cb52-47"><a href="descriptives-and-visualizations.html#cb52-47"></a>exclusion_figure2</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/exclusions-plot2-1.png" width="672" /></p>
 <p>Next, I plot the distributions of the use variables.
 I want to show distributions, but there are a couple of single large values, so violin or density plots will look strange with a long tail.
@@ -2838,9 +2833,9 @@ I’m also not sure whether I like vertical or horizontal beeswarms, so I’ll d
 <span id="cb53-102"><a href="descriptives-and-visualizations.html#cb53-102"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb53-103"><a href="descriptives-and-visualizations.html#cb53-103"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb53-104"><a href="descriptives-and-visualizations.html#cb53-104"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb53-105"><a href="descriptives-and-visualizations.html#cb53-105"></a>  ) -&gt;<span class="st"> </span>figure3<span class="fl">.1</span></span>
+<span id="cb53-105"><a href="descriptives-and-visualizations.html#cb53-105"></a>  ) -&gt;<span class="st"> </span>figure2<span class="fl">.1</span></span>
 <span id="cb53-106"><a href="descriptives-and-visualizations.html#cb53-106"></a></span>
-<span id="cb53-107"><a href="descriptives-and-visualizations.html#cb53-107"></a>figure3<span class="fl">.1</span></span></code></pre></div>
+<span id="cb53-107"><a href="descriptives-and-visualizations.html#cb53-107"></a>figure2<span class="fl">.1</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot1-1.png" width="672" /></p>
 <p>I guess the trendline makes it easier to see developments (or lack thereof) over time.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="descriptives-and-visualizations.html#cb54-1"></a><span class="kw">ggplot</span>(</span>
@@ -2890,9 +2885,9 @@ I’m also not sure whether I like vertical or horizontal beeswarms, so I’ll d
 <span id="cb54-45"><a href="descriptives-and-visualizations.html#cb54-45"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb54-46"><a href="descriptives-and-visualizations.html#cb54-46"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb54-47"><a href="descriptives-and-visualizations.html#cb54-47"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb54-48"><a href="descriptives-and-visualizations.html#cb54-48"></a>  ) -&gt;<span class="st"> </span>figure3<span class="fl">.2</span></span>
+<span id="cb54-48"><a href="descriptives-and-visualizations.html#cb54-48"></a>  ) -&gt;<span class="st"> </span>figure2<span class="fl">.2</span></span>
 <span id="cb54-49"><a href="descriptives-and-visualizations.html#cb54-49"></a></span>
-<span id="cb54-50"><a href="descriptives-and-visualizations.html#cb54-50"></a>figure3<span class="fl">.2</span></span></code></pre></div>
+<span id="cb54-50"><a href="descriptives-and-visualizations.html#cb54-50"></a>figure2<span class="fl">.2</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot2-1.png" width="672" /></p>
 <p>Then again, for distributions with a small mean, the trendline blocks everything.
 Plus, because total time extends the y-axis, there’s lots of white space.
@@ -2948,13 +2943,13 @@ I also won’t have trendlines for the separate media, only for the total (too l
 <span id="cb55-48"><a href="descriptives-and-visualizations.html#cb55-48"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb55-49"><a href="descriptives-and-visualizations.html#cb55-49"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb55-50"><a href="descriptives-and-visualizations.html#cb55-50"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb55-51"><a href="descriptives-and-visualizations.html#cb55-51"></a>  ) -&gt;<span class="st"> </span>figure3<span class="fl">.3</span></span>
+<span id="cb55-51"><a href="descriptives-and-visualizations.html#cb55-51"></a>  ) -&gt;<span class="st"> </span>figure2<span class="fl">.3</span></span>
 <span id="cb55-52"><a href="descriptives-and-visualizations.html#cb55-52"></a></span>
-<span id="cb55-53"><a href="descriptives-and-visualizations.html#cb55-53"></a>figure3<span class="fl">.3</span></span></code></pre></div>
+<span id="cb55-53"><a href="descriptives-and-visualizations.html#cb55-53"></a>figure2<span class="fl">.3</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot3-1.png" width="672" /></p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="descriptives-and-visualizations.html#cb56-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb56-2"><a href="descriptives-and-visualizations.html#cb56-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure3.tiff&quot;</span>),</span>
-<span id="cb56-3"><a href="descriptives-and-visualizations.html#cb56-3"></a>  <span class="dt">plot =</span> figure3<span class="fl">.3</span>,</span>
+<span id="cb56-2"><a href="descriptives-and-visualizations.html#cb56-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure2.tiff&quot;</span>),</span>
+<span id="cb56-3"><a href="descriptives-and-visualizations.html#cb56-3"></a>  <span class="dt">plot =</span> figure2<span class="fl">.3</span>,</span>
 <span id="cb56-4"><a href="descriptives-and-visualizations.html#cb56-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
 <span id="cb56-5"><a href="descriptives-and-visualizations.html#cb56-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
 <span id="cb56-6"><a href="descriptives-and-visualizations.html#cb56-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
@@ -3009,110 +3004,185 @@ I also won’t have trendlines for the separate media, only for the total (too l
 <span id="cb57-46"><a href="descriptives-and-visualizations.html#cb57-46"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb57-47"><a href="descriptives-and-visualizations.html#cb57-47"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb57-48"><a href="descriptives-and-visualizations.html#cb57-48"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb57-49"><a href="descriptives-and-visualizations.html#cb57-49"></a>  ) -&gt;<span class="st"> </span>figure4</span>
+<span id="cb57-49"><a href="descriptives-and-visualizations.html#cb57-49"></a>  ) -&gt;<span class="st"> </span>figure3</span>
 <span id="cb57-50"><a href="descriptives-and-visualizations.html#cb57-50"></a></span>
-<span id="cb57-51"><a href="descriptives-and-visualizations.html#cb57-51"></a>figure4</span></code></pre></div>
+<span id="cb57-51"><a href="descriptives-and-visualizations.html#cb57-51"></a>figure3</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-total-time-plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="descriptives-and-visualizations.html#cb58-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb58-2"><a href="descriptives-and-visualizations.html#cb58-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.tiff&quot;</span>),</span>
-<span id="cb58-3"><a href="descriptives-and-visualizations.html#cb58-3"></a>  <span class="dt">plot =</span> figure4,</span>
+<span id="cb58-2"><a href="descriptives-and-visualizations.html#cb58-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure3.tiff&quot;</span>),</span>
+<span id="cb58-3"><a href="descriptives-and-visualizations.html#cb58-3"></a>  <span class="dt">plot =</span> figure3,</span>
 <span id="cb58-4"><a href="descriptives-and-visualizations.html#cb58-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>,</span>
 <span id="cb58-5"><a href="descriptives-and-visualizations.html#cb58-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
 <span id="cb58-6"><a href="descriptives-and-visualizations.html#cb58-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
 <span id="cb58-7"><a href="descriptives-and-visualizations.html#cb58-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
 <span id="cb58-8"><a href="descriptives-and-visualizations.html#cb58-8"></a>)</span></code></pre></div>
-<p>Next, I’ll do the same thing with well-being.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="descriptives-and-visualizations.html#cb59-1"></a><span class="co"># temporary data file in long format</span></span>
+<p>Then, I need to think of a way to visualize use vs. nonuse over time.
+Bar graphs could work, but that would mean a lot of bar graphs (one per medium) per wave, which is probably overwhelming.
+Plus, if I show raw counts, it could be confusing as well, simply because height of the bar != number of participants.
+If everyone at wave 1 used only one medium, but at wave two everyone used all media, it’ll look like an increase in sample size.</p>
+<p>So proportions make the most sense, simple and straightforward.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="descriptives-and-visualizations.html#cb59-1"></a><span class="co"># get proportions of users per medium and wave</span></span>
 <span id="cb59-2"><a href="descriptives-and-visualizations.html#cb59-2"></a>dat &lt;-<span class="st"> </span></span>
 <span id="cb59-3"><a href="descriptives-and-visualizations.html#cb59-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb59-4"><a href="descriptives-and-visualizations.html#cb59-4"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
-<span id="cb59-5"><a href="descriptives-and-visualizations.html#cb59-5"></a>    <span class="kw">c</span>(affect, life_satisfaction), <span class="co"># only the aggregated well-being variables</span></span>
+<span id="cb59-5"><a href="descriptives-and-visualizations.html#cb59-5"></a>    <span class="kw">contains</span>(<span class="st">&quot;_time&quot;</span>), <span class="co"># only the time variables</span></span>
 <span id="cb59-6"><a href="descriptives-and-visualizations.html#cb59-6"></a>    <span class="dt">names_to =</span> <span class="st">&quot;measure&quot;</span>,</span>
-<span id="cb59-7"><a href="descriptives-and-visualizations.html#cb59-7"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
+<span id="cb59-7"><a href="descriptives-and-visualizations.html#cb59-7"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Hours per day&quot;</span></span>
 <span id="cb59-8"><a href="descriptives-and-visualizations.html#cb59-8"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb59-9"><a href="descriptives-and-visualizations.html#cb59-9"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb59-10"><a href="descriptives-and-visualizations.html#cb59-10"></a>    <span class="dt">measure =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb59-11"><a href="descriptives-and-visualizations.html#cb59-11"></a>      <span class="kw">as.factor</span>(measure),</span>
-<span id="cb59-12"><a href="descriptives-and-visualizations.html#cb59-12"></a>      <span class="st">&quot;Affect&quot;</span> =<span class="st"> &quot;affect&quot;</span>,</span>
-<span id="cb59-13"><a href="descriptives-and-visualizations.html#cb59-13"></a>      <span class="st">&quot;Life satisfaction&quot;</span> =<span class="st"> &quot;life_satisfaction&quot;</span></span>
-<span id="cb59-14"><a href="descriptives-and-visualizations.html#cb59-14"></a>    )</span>
-<span id="cb59-15"><a href="descriptives-and-visualizations.html#cb59-15"></a>  )</span>
-<span id="cb59-16"><a href="descriptives-and-visualizations.html#cb59-16"></a></span>
-<span id="cb59-17"><a href="descriptives-and-visualizations.html#cb59-17"></a><span class="co"># summary stats for plotting means over time</span></span>
-<span id="cb59-18"><a href="descriptives-and-visualizations.html#cb59-18"></a>dat_summary &lt;-<span class="st"> </span></span>
-<span id="cb59-19"><a href="descriptives-and-visualizations.html#cb59-19"></a><span class="st">  </span>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb59-20"><a href="descriptives-and-visualizations.html#cb59-20"></a><span class="st">  </span><span class="kw">group_by</span>(wave, measure) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb59-21"><a href="descriptives-and-visualizations.html#cb59-21"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
-<span id="cb59-22"><a href="descriptives-and-visualizations.html#cb59-22"></a>    <span class="dt">mean =</span> <span class="kw">mean</span>(Value, <span class="dt">na.rm =</span> T),</span>
-<span id="cb59-23"><a href="descriptives-and-visualizations.html#cb59-23"></a>    <span class="dt">sd =</span> <span class="kw">sd</span>(Value, <span class="dt">na.rm =</span> T)</span>
+<span id="cb59-10"><a href="descriptives-and-visualizations.html#cb59-10"></a>    <span class="co"># get use vs. no use in long format</span></span>
+<span id="cb59-11"><a href="descriptives-and-visualizations.html#cb59-11"></a>    <span class="dt">used =</span> <span class="kw">if_else</span>(<span class="st">`</span><span class="dt">Hours per day</span><span class="st">`</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb59-12"><a href="descriptives-and-visualizations.html#cb59-12"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb59-13"><a href="descriptives-and-visualizations.html#cb59-13"></a><span class="st">  </span><span class="co"># no need for total time</span></span>
+<span id="cb59-14"><a href="descriptives-and-visualizations.html#cb59-14"></a><span class="st">  </span><span class="kw">filter</span>(used <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, measure <span class="op">!=</span><span class="st"> &quot;total_time&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb59-15"><a href="descriptives-and-visualizations.html#cb59-15"></a><span class="st">  </span><span class="co"># remove &quot;tome appendix</span></span>
+<span id="cb59-16"><a href="descriptives-and-visualizations.html#cb59-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">measure =</span> <span class="kw">as.factor</span>(<span class="kw">str_to_title</span>(<span class="kw">str_remove</span>(measure, <span class="st">&quot;_time&quot;</span>)))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb59-17"><a href="descriptives-and-visualizations.html#cb59-17"></a><span class="st">  </span><span class="co"># count how often a medium was used</span></span>
+<span id="cb59-18"><a href="descriptives-and-visualizations.html#cb59-18"></a><span class="st">  </span><span class="kw">count</span>(wave, measure, used) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb59-19"><a href="descriptives-and-visualizations.html#cb59-19"></a><span class="st">  </span><span class="co"># add total N per wave (of only those that will be included in analysis)</span></span>
+<span id="cb59-20"><a href="descriptives-and-visualizations.html#cb59-20"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
+<span id="cb59-21"><a href="descriptives-and-visualizations.html#cb59-21"></a>    .,</span>
+<span id="cb59-22"><a href="descriptives-and-visualizations.html#cb59-22"></a>    working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb59-23"><a href="descriptives-and-visualizations.html#cb59-23"></a><span class="st">      </span><span class="kw">count</span>(wave, <span class="dt">name =</span> <span class="st">&quot;N&quot;</span>)</span>
 <span id="cb59-24"><a href="descriptives-and-visualizations.html#cb59-24"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb59-25"><a href="descriptives-and-visualizations.html#cb59-25"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb59-26"><a href="descriptives-and-visualizations.html#cb59-26"></a>    <span class="kw">across</span>(</span>
-<span id="cb59-27"><a href="descriptives-and-visualizations.html#cb59-27"></a>      mean<span class="op">:</span>sd,</span>
-<span id="cb59-28"><a href="descriptives-and-visualizations.html#cb59-28"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.x, <span class="dt">digits =</span> <span class="dv">1</span>)</span>
-<span id="cb59-29"><a href="descriptives-and-visualizations.html#cb59-29"></a>    )</span>
-<span id="cb59-30"><a href="descriptives-and-visualizations.html#cb59-30"></a>  )</span>
-<span id="cb59-31"><a href="descriptives-and-visualizations.html#cb59-31"></a></span>
-<span id="cb59-32"><a href="descriptives-and-visualizations.html#cb59-32"></a><span class="kw">ggplot</span>(</span>
-<span id="cb59-33"><a href="descriptives-and-visualizations.html#cb59-33"></a>  dat,</span>
-<span id="cb59-34"><a href="descriptives-and-visualizations.html#cb59-34"></a>  <span class="kw">aes</span>(</span>
-<span id="cb59-35"><a href="descriptives-and-visualizations.html#cb59-35"></a>    <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb59-36"><a href="descriptives-and-visualizations.html#cb59-36"></a>    <span class="dt">y =</span> Value,</span>
-<span id="cb59-37"><a href="descriptives-and-visualizations.html#cb59-37"></a>    <span class="dt">color =</span> measure,</span>
-<span id="cb59-38"><a href="descriptives-and-visualizations.html#cb59-38"></a>    <span class="dt">fill =</span> measure,</span>
-<span id="cb59-39"><a href="descriptives-and-visualizations.html#cb59-39"></a>    <span class="dt">group =</span> <span class="dv">1</span></span>
-<span id="cb59-40"><a href="descriptives-and-visualizations.html#cb59-40"></a>  )</span>
-<span id="cb59-41"><a href="descriptives-and-visualizations.html#cb59-41"></a>) <span class="op">+</span></span>
-<span id="cb59-42"><a href="descriptives-and-visualizations.html#cb59-42"></a><span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
-<span id="cb59-43"><a href="descriptives-and-visualizations.html#cb59-43"></a><span class="st">  </span><span class="kw">geom_line</span>(</span>
-<span id="cb59-44"><a href="descriptives-and-visualizations.html#cb59-44"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb59-45"><a href="descriptives-and-visualizations.html#cb59-45"></a>    <span class="kw">aes</span>(</span>
-<span id="cb59-46"><a href="descriptives-and-visualizations.html#cb59-46"></a>      <span class="dt">y =</span> mean</span>
-<span id="cb59-47"><a href="descriptives-and-visualizations.html#cb59-47"></a>    ),</span>
-<span id="cb59-48"><a href="descriptives-and-visualizations.html#cb59-48"></a>    <span class="dt">size =</span> <span class="fl">0.5</span></span>
-<span id="cb59-49"><a href="descriptives-and-visualizations.html#cb59-49"></a>  ) <span class="op">+</span></span>
-<span id="cb59-50"><a href="descriptives-and-visualizations.html#cb59-50"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>measure, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb59-51"><a href="descriptives-and-visualizations.html#cb59-51"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb59-52"><a href="descriptives-and-visualizations.html#cb59-52"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb59-53"><a href="descriptives-and-visualizations.html#cb59-53"></a>    <span class="kw">aes</span>(</span>
-<span id="cb59-54"><a href="descriptives-and-visualizations.html#cb59-54"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb59-55"><a href="descriptives-and-visualizations.html#cb59-55"></a>      <span class="dt">y =</span> <span class="fl">-0.5</span>,</span>
-<span id="cb59-56"><a href="descriptives-and-visualizations.html#cb59-56"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;M = &quot;</span>, mean)</span>
-<span id="cb59-57"><a href="descriptives-and-visualizations.html#cb59-57"></a>    ),</span>
-<span id="cb59-58"><a href="descriptives-and-visualizations.html#cb59-58"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
-<span id="cb59-59"><a href="descriptives-and-visualizations.html#cb59-59"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb59-60"><a href="descriptives-and-visualizations.html#cb59-60"></a>  ) <span class="op">+</span></span>
-<span id="cb59-61"><a href="descriptives-and-visualizations.html#cb59-61"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb59-62"><a href="descriptives-and-visualizations.html#cb59-62"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb59-63"><a href="descriptives-and-visualizations.html#cb59-63"></a>    <span class="kw">aes</span>(</span>
-<span id="cb59-64"><a href="descriptives-and-visualizations.html#cb59-64"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb59-65"><a href="descriptives-and-visualizations.html#cb59-65"></a>      <span class="dt">y =</span> <span class="fl">-0.9</span>,</span>
-<span id="cb59-66"><a href="descriptives-and-visualizations.html#cb59-66"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;SD = &quot;</span>, sd)</span>
-<span id="cb59-67"><a href="descriptives-and-visualizations.html#cb59-67"></a>    ),</span>
-<span id="cb59-68"><a href="descriptives-and-visualizations.html#cb59-68"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
-<span id="cb59-69"><a href="descriptives-and-visualizations.html#cb59-69"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb59-70"><a href="descriptives-and-visualizations.html#cb59-70"></a>  ) <span class="op">+</span></span>
-<span id="cb59-71"><a href="descriptives-and-visualizations.html#cb59-71"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
-<span id="cb59-72"><a href="descriptives-and-visualizations.html#cb59-72"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
-<span id="cb59-73"><a href="descriptives-and-visualizations.html#cb59-73"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
-<span id="cb59-74"><a href="descriptives-and-visualizations.html#cb59-74"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Wave&quot;</span>) <span class="op">+</span></span>
-<span id="cb59-75"><a href="descriptives-and-visualizations.html#cb59-75"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb59-76"><a href="descriptives-and-visualizations.html#cb59-76"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb59-77"><a href="descriptives-and-visualizations.html#cb59-77"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb59-78"><a href="descriptives-and-visualizations.html#cb59-78"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb59-79"><a href="descriptives-and-visualizations.html#cb59-79"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb59-80"><a href="descriptives-and-visualizations.html#cb59-80"></a>  ) -&gt;<span class="st"> </span>figure5</span>
-<span id="cb59-81"><a href="descriptives-and-visualizations.html#cb59-81"></a></span>
-<span id="cb59-82"><a href="descriptives-and-visualizations.html#cb59-82"></a>figure5</span></code></pre></div>
+<span id="cb59-25"><a href="descriptives-and-visualizations.html#cb59-25"></a><span class="st">  </span><span class="co"># get proprotion</span></span>
+<span id="cb59-26"><a href="descriptives-and-visualizations.html#cb59-26"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb59-27"><a href="descriptives-and-visualizations.html#cb59-27"></a>    <span class="dt">proportion =</span> <span class="kw">round</span>(n <span class="op">/</span><span class="st"> </span>N, <span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</span>
+<span id="cb59-28"><a href="descriptives-and-visualizations.html#cb59-28"></a>    <span class="dt">measure =</span> <span class="kw">fct_recode</span>(measure, <span class="st">&quot;TV&quot;</span> =<span class="st"> &quot;Tv&quot;</span>),</span>
+<span id="cb59-29"><a href="descriptives-and-visualizations.html#cb59-29"></a>    <span class="dt">measure =</span> <span class="kw">fct_relevel</span>(</span>
+<span id="cb59-30"><a href="descriptives-and-visualizations.html#cb59-30"></a>      measure,</span>
+<span id="cb59-31"><a href="descriptives-and-visualizations.html#cb59-31"></a>      <span class="kw">c</span>(</span>
+<span id="cb59-32"><a href="descriptives-and-visualizations.html#cb59-32"></a>        <span class="st">&quot;Music&quot;</span>,</span>
+<span id="cb59-33"><a href="descriptives-and-visualizations.html#cb59-33"></a>        <span class="st">&quot;TV&quot;</span>,</span>
+<span id="cb59-34"><a href="descriptives-and-visualizations.html#cb59-34"></a>        <span class="st">&quot;Films&quot;</span>,</span>
+<span id="cb59-35"><a href="descriptives-and-visualizations.html#cb59-35"></a>        <span class="st">&quot;Games&quot;</span>,</span>
+<span id="cb59-36"><a href="descriptives-and-visualizations.html#cb59-36"></a>        <span class="st">&quot;Books&quot;</span>,</span>
+<span id="cb59-37"><a href="descriptives-and-visualizations.html#cb59-37"></a>        <span class="st">&quot;Magazines&quot;</span>,</span>
+<span id="cb59-38"><a href="descriptives-and-visualizations.html#cb59-38"></a>        <span class="st">&quot;Audiobooks&quot;</span></span>
+<span id="cb59-39"><a href="descriptives-and-visualizations.html#cb59-39"></a>      )</span>
+<span id="cb59-40"><a href="descriptives-and-visualizations.html#cb59-40"></a>    )</span>
+<span id="cb59-41"><a href="descriptives-and-visualizations.html#cb59-41"></a>  )</span>
+<span id="cb59-42"><a href="descriptives-and-visualizations.html#cb59-42"></a></span>
+<span id="cb59-43"><a href="descriptives-and-visualizations.html#cb59-43"></a><span class="kw">ggplot</span>(</span>
+<span id="cb59-44"><a href="descriptives-and-visualizations.html#cb59-44"></a>  dat,</span>
+<span id="cb59-45"><a href="descriptives-and-visualizations.html#cb59-45"></a>  <span class="kw">aes</span>(</span>
+<span id="cb59-46"><a href="descriptives-and-visualizations.html#cb59-46"></a>    <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb59-47"><a href="descriptives-and-visualizations.html#cb59-47"></a>    <span class="dt">y =</span> proportion,</span>
+<span id="cb59-48"><a href="descriptives-and-visualizations.html#cb59-48"></a>    <span class="dt">group =</span> measure,</span>
+<span id="cb59-49"><a href="descriptives-and-visualizations.html#cb59-49"></a>    <span class="dt">color =</span> measure</span>
+<span id="cb59-50"><a href="descriptives-and-visualizations.html#cb59-50"></a>  )</span>
+<span id="cb59-51"><a href="descriptives-and-visualizations.html#cb59-51"></a>) <span class="op">+</span></span>
+<span id="cb59-52"><a href="descriptives-and-visualizations.html#cb59-52"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb59-53"><a href="descriptives-and-visualizations.html#cb59-53"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb59-54"><a href="descriptives-and-visualizations.html#cb59-54"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
+<span id="cb59-55"><a href="descriptives-and-visualizations.html#cb59-55"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
+<span id="cb59-56"><a href="descriptives-and-visualizations.html#cb59-56"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;% of people who used medium&quot;</span>) <span class="op">+</span></span>
+<span id="cb59-57"><a href="descriptives-and-visualizations.html#cb59-57"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Wave&quot;</span>) <span class="op">+</span></span>
+<span id="cb59-58"><a href="descriptives-and-visualizations.html#cb59-58"></a><span class="st">  </span><span class="kw">geom_dl</span>(<span class="kw">aes</span>(<span class="dt">label =</span> measure), <span class="dt">method =</span> <span class="kw">list</span>(<span class="kw">dl.trans</span>(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="fl">0.25</span>), <span class="st">&quot;last.points&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.6</span>)) <span class="op">+</span></span>
+<span id="cb59-59"><a href="descriptives-and-visualizations.html#cb59-59"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb59-60"><a href="descriptives-and-visualizations.html#cb59-60"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb59-61"><a href="descriptives-and-visualizations.html#cb59-61"></a>  ) -&gt;<span class="st"> </span>figure4</span>
+<span id="cb59-62"><a href="descriptives-and-visualizations.html#cb59-62"></a></span>
+<span id="cb59-63"><a href="descriptives-and-visualizations.html#cb59-63"></a><span class="kw">ggsave</span>(</span>
+<span id="cb59-64"><a href="descriptives-and-visualizations.html#cb59-64"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.tiff&quot;</span>),</span>
+<span id="cb59-65"><a href="descriptives-and-visualizations.html#cb59-65"></a>  <span class="dt">plot =</span> figure4,</span>
+<span id="cb59-66"><a href="descriptives-and-visualizations.html#cb59-66"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>,</span>
+<span id="cb59-67"><a href="descriptives-and-visualizations.html#cb59-67"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
+<span id="cb59-68"><a href="descriptives-and-visualizations.html#cb59-68"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb59-69"><a href="descriptives-and-visualizations.html#cb59-69"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb59-70"><a href="descriptives-and-visualizations.html#cb59-70"></a>)</span></code></pre></div>
+<p>Next, I’ll do a beeswarm plot for well-being.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptives-and-visualizations.html#cb60-1"></a><span class="co"># temporary data file in long format</span></span>
+<span id="cb60-2"><a href="descriptives-and-visualizations.html#cb60-2"></a>dat &lt;-<span class="st"> </span></span>
+<span id="cb60-3"><a href="descriptives-and-visualizations.html#cb60-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-4"><a href="descriptives-and-visualizations.html#cb60-4"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
+<span id="cb60-5"><a href="descriptives-and-visualizations.html#cb60-5"></a>    <span class="kw">c</span>(affect, life_satisfaction), <span class="co"># only the aggregated well-being variables</span></span>
+<span id="cb60-6"><a href="descriptives-and-visualizations.html#cb60-6"></a>    <span class="dt">names_to =</span> <span class="st">&quot;measure&quot;</span>,</span>
+<span id="cb60-7"><a href="descriptives-and-visualizations.html#cb60-7"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
+<span id="cb60-8"><a href="descriptives-and-visualizations.html#cb60-8"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-9"><a href="descriptives-and-visualizations.html#cb60-9"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb60-10"><a href="descriptives-and-visualizations.html#cb60-10"></a>    <span class="dt">measure =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb60-11"><a href="descriptives-and-visualizations.html#cb60-11"></a>      <span class="kw">as.factor</span>(measure),</span>
+<span id="cb60-12"><a href="descriptives-and-visualizations.html#cb60-12"></a>      <span class="st">&quot;Affect&quot;</span> =<span class="st"> &quot;affect&quot;</span>,</span>
+<span id="cb60-13"><a href="descriptives-and-visualizations.html#cb60-13"></a>      <span class="st">&quot;Life satisfaction&quot;</span> =<span class="st"> &quot;life_satisfaction&quot;</span></span>
+<span id="cb60-14"><a href="descriptives-and-visualizations.html#cb60-14"></a>    )</span>
+<span id="cb60-15"><a href="descriptives-and-visualizations.html#cb60-15"></a>  )</span>
+<span id="cb60-16"><a href="descriptives-and-visualizations.html#cb60-16"></a></span>
+<span id="cb60-17"><a href="descriptives-and-visualizations.html#cb60-17"></a><span class="co"># summary stats for plotting means over time</span></span>
+<span id="cb60-18"><a href="descriptives-and-visualizations.html#cb60-18"></a>dat_summary &lt;-<span class="st"> </span></span>
+<span id="cb60-19"><a href="descriptives-and-visualizations.html#cb60-19"></a><span class="st">  </span>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-20"><a href="descriptives-and-visualizations.html#cb60-20"></a><span class="st">  </span><span class="kw">group_by</span>(wave, measure) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-21"><a href="descriptives-and-visualizations.html#cb60-21"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb60-22"><a href="descriptives-and-visualizations.html#cb60-22"></a>    <span class="dt">mean =</span> <span class="kw">mean</span>(Value, <span class="dt">na.rm =</span> T),</span>
+<span id="cb60-23"><a href="descriptives-and-visualizations.html#cb60-23"></a>    <span class="dt">sd =</span> <span class="kw">sd</span>(Value, <span class="dt">na.rm =</span> T)</span>
+<span id="cb60-24"><a href="descriptives-and-visualizations.html#cb60-24"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-25"><a href="descriptives-and-visualizations.html#cb60-25"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb60-26"><a href="descriptives-and-visualizations.html#cb60-26"></a>    <span class="kw">across</span>(</span>
+<span id="cb60-27"><a href="descriptives-and-visualizations.html#cb60-27"></a>      mean<span class="op">:</span>sd,</span>
+<span id="cb60-28"><a href="descriptives-and-visualizations.html#cb60-28"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.x, <span class="dt">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb60-29"><a href="descriptives-and-visualizations.html#cb60-29"></a>    )</span>
+<span id="cb60-30"><a href="descriptives-and-visualizations.html#cb60-30"></a>  )</span>
+<span id="cb60-31"><a href="descriptives-and-visualizations.html#cb60-31"></a></span>
+<span id="cb60-32"><a href="descriptives-and-visualizations.html#cb60-32"></a><span class="kw">ggplot</span>(</span>
+<span id="cb60-33"><a href="descriptives-and-visualizations.html#cb60-33"></a>  dat,</span>
+<span id="cb60-34"><a href="descriptives-and-visualizations.html#cb60-34"></a>  <span class="kw">aes</span>(</span>
+<span id="cb60-35"><a href="descriptives-and-visualizations.html#cb60-35"></a>    <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb60-36"><a href="descriptives-and-visualizations.html#cb60-36"></a>    <span class="dt">y =</span> Value,</span>
+<span id="cb60-37"><a href="descriptives-and-visualizations.html#cb60-37"></a>    <span class="dt">color =</span> measure,</span>
+<span id="cb60-38"><a href="descriptives-and-visualizations.html#cb60-38"></a>    <span class="dt">fill =</span> measure,</span>
+<span id="cb60-39"><a href="descriptives-and-visualizations.html#cb60-39"></a>    <span class="dt">group =</span> <span class="dv">1</span></span>
+<span id="cb60-40"><a href="descriptives-and-visualizations.html#cb60-40"></a>  )</span>
+<span id="cb60-41"><a href="descriptives-and-visualizations.html#cb60-41"></a>) <span class="op">+</span></span>
+<span id="cb60-42"><a href="descriptives-and-visualizations.html#cb60-42"></a><span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb60-43"><a href="descriptives-and-visualizations.html#cb60-43"></a><span class="st">  </span><span class="kw">geom_line</span>(</span>
+<span id="cb60-44"><a href="descriptives-and-visualizations.html#cb60-44"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb60-45"><a href="descriptives-and-visualizations.html#cb60-45"></a>    <span class="kw">aes</span>(</span>
+<span id="cb60-46"><a href="descriptives-and-visualizations.html#cb60-46"></a>      <span class="dt">y =</span> mean</span>
+<span id="cb60-47"><a href="descriptives-and-visualizations.html#cb60-47"></a>    ),</span>
+<span id="cb60-48"><a href="descriptives-and-visualizations.html#cb60-48"></a>    <span class="dt">size =</span> <span class="fl">0.5</span></span>
+<span id="cb60-49"><a href="descriptives-and-visualizations.html#cb60-49"></a>  ) <span class="op">+</span></span>
+<span id="cb60-50"><a href="descriptives-and-visualizations.html#cb60-50"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>measure, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb60-51"><a href="descriptives-and-visualizations.html#cb60-51"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb60-52"><a href="descriptives-and-visualizations.html#cb60-52"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb60-53"><a href="descriptives-and-visualizations.html#cb60-53"></a>    <span class="kw">aes</span>(</span>
+<span id="cb60-54"><a href="descriptives-and-visualizations.html#cb60-54"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb60-55"><a href="descriptives-and-visualizations.html#cb60-55"></a>      <span class="dt">y =</span> <span class="fl">-0.5</span>,</span>
+<span id="cb60-56"><a href="descriptives-and-visualizations.html#cb60-56"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;M = &quot;</span>, mean)</span>
+<span id="cb60-57"><a href="descriptives-and-visualizations.html#cb60-57"></a>    ),</span>
+<span id="cb60-58"><a href="descriptives-and-visualizations.html#cb60-58"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb60-59"><a href="descriptives-and-visualizations.html#cb60-59"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb60-60"><a href="descriptives-and-visualizations.html#cb60-60"></a>  ) <span class="op">+</span></span>
+<span id="cb60-61"><a href="descriptives-and-visualizations.html#cb60-61"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb60-62"><a href="descriptives-and-visualizations.html#cb60-62"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb60-63"><a href="descriptives-and-visualizations.html#cb60-63"></a>    <span class="kw">aes</span>(</span>
+<span id="cb60-64"><a href="descriptives-and-visualizations.html#cb60-64"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb60-65"><a href="descriptives-and-visualizations.html#cb60-65"></a>      <span class="dt">y =</span> <span class="fl">-0.9</span>,</span>
+<span id="cb60-66"><a href="descriptives-and-visualizations.html#cb60-66"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;SD = &quot;</span>, sd)</span>
+<span id="cb60-67"><a href="descriptives-and-visualizations.html#cb60-67"></a>    ),</span>
+<span id="cb60-68"><a href="descriptives-and-visualizations.html#cb60-68"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb60-69"><a href="descriptives-and-visualizations.html#cb60-69"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb60-70"><a href="descriptives-and-visualizations.html#cb60-70"></a>  ) <span class="op">+</span></span>
+<span id="cb60-71"><a href="descriptives-and-visualizations.html#cb60-71"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
+<span id="cb60-72"><a href="descriptives-and-visualizations.html#cb60-72"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
+<span id="cb60-73"><a href="descriptives-and-visualizations.html#cb60-73"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
+<span id="cb60-74"><a href="descriptives-and-visualizations.html#cb60-74"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Wave&quot;</span>) <span class="op">+</span></span>
+<span id="cb60-75"><a href="descriptives-and-visualizations.html#cb60-75"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb60-76"><a href="descriptives-and-visualizations.html#cb60-76"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb60-77"><a href="descriptives-and-visualizations.html#cb60-77"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb60-78"><a href="descriptives-and-visualizations.html#cb60-78"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb60-79"><a href="descriptives-and-visualizations.html#cb60-79"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb60-80"><a href="descriptives-and-visualizations.html#cb60-80"></a>  ) -&gt;<span class="st"> </span>figure5</span>
+<span id="cb60-81"><a href="descriptives-and-visualizations.html#cb60-81"></a></span>
+<span id="cb60-82"><a href="descriptives-and-visualizations.html#cb60-82"></a>figure5</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptives-and-visualizations.html#cb60-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb60-2"><a href="descriptives-and-visualizations.html#cb60-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.tiff&quot;</span>),</span>
-<span id="cb60-3"><a href="descriptives-and-visualizations.html#cb60-3"></a>  <span class="dt">plot =</span> figure5,</span>
-<span id="cb60-4"><a href="descriptives-and-visualizations.html#cb60-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
-<span id="cb60-5"><a href="descriptives-and-visualizations.html#cb60-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
-<span id="cb60-6"><a href="descriptives-and-visualizations.html#cb60-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb60-7"><a href="descriptives-and-visualizations.html#cb60-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
-<span id="cb60-8"><a href="descriptives-and-visualizations.html#cb60-8"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptives-and-visualizations.html#cb61-1"></a><span class="kw">ggsave</span>(</span>
+<span id="cb61-2"><a href="descriptives-and-visualizations.html#cb61-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.tiff&quot;</span>),</span>
+<span id="cb61-3"><a href="descriptives-and-visualizations.html#cb61-3"></a>  <span class="dt">plot =</span> figure5,</span>
+<span id="cb61-4"><a href="descriptives-and-visualizations.html#cb61-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
+<span id="cb61-5"><a href="descriptives-and-visualizations.html#cb61-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
+<span id="cb61-6"><a href="descriptives-and-visualizations.html#cb61-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb61-7"><a href="descriptives-and-visualizations.html#cb61-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb61-8"><a href="descriptives-and-visualizations.html#cb61-8"></a>)</span></code></pre></div>
 
 </div>
 </div>

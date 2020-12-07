@@ -20,7 +20,8 @@ p_load(
   GGally,
   lavaan,
   brms,
-  ggbeeswarm
+  ggbeeswarm,
+  osfr
 )
 
 # set seed
@@ -39,6 +40,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+Below the functions I use throughout the script.
+They're usually explained in the section where I use them.
 ```{r custom-functions}
 dens_with_points <- 
   function(

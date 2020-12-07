@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Setting-up | Analysis Report</title>
+  <title>1 Setting-up | No effect of different types of media on well-being</title>
   <meta name="description" content="Analysis report detailing alls steps from data processing to final analyses." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Setting-up | Analysis Report" />
+  <meta property="og:title" content="1 Setting-up | No effect of different types of media on well-being" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/digital-wellbeing/cultural-consumption" />
   
@@ -16,15 +16,15 @@
   <meta name="github-repo" content="digital-wellbeing/cultural-consumption" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Setting-up | Analysis Report" />
+  <meta name="twitter:title" content="1 Setting-up | No effect of different types of media on well-being" />
   
   <meta name="twitter:description" content="Analysis report detailing alls steps from data processing to final analyses." />
   
 
-<meta name="author" content="Niklas Johannes" />
+<meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2020-12-02" />
+<meta name="date" content="2020-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,7 +136,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Analysis Report</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#data-and-models"><i class="fa fa-check"></i><b>0.1</b> Data and models</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#how-to-reproduce-processing-and-analyses"><i class="fa fa-check"></i><b>0.2</b> How to reproduce processing and analyses</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="setting-up.html"><a href="setting-up.html"><i class="fa fa-check"></i><b>1</b> Setting-up</a></li>
 <li class="chapter" data-level="2" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>2</b> Data processing</a><ul>
 <li class="chapter" data-level="2.1" data-path="data-processing.html"><a href="data-processing.html#read-waves-2-6"><i class="fa fa-check"></i><b>2.1</b> Read waves 2-6</a></li>
@@ -193,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="synthesis.html"><a href="synthesis.html"><i class="fa fa-check"></i><b>5</b> Synthesis</a><ul>
 <li class="chapter" data-level="5.1" data-path="synthesis.html"><a href="synthesis.html#create-a-summary-graph"><i class="fa fa-check"></i><b>5.1</b> Create a summary graph</a></li>
-<li class="chapter" data-level="5.2" data-path="synthesis.html"><a href="synthesis.html#interpreting-the-graph"><i class="fa fa-check"></i><b>5.2</b> Interpreting the graph</a></li>
+<li class="chapter" data-level="5.2" data-path="synthesis.html"><a href="synthesis.html#interpreting-the-results"><i class="fa fa-check"></i><b>5.2</b> Interpreting the results</a></li>
 <li class="chapter" data-level="5.3" data-path="synthesis.html"><a href="synthesis.html#take-aways"><i class="fa fa-check"></i><b>5.3</b> Take-aways</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -208,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analysis Report</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">No effect of different types of media on well-being</a>
           </h1>
         </div>
 
@@ -237,23 +240,26 @@ Note I use the <code>pacman</code> package for loading libraries.</p>
 <span id="cb1-15"><a href="setting-up.html#cb1-15"></a>  GGally,</span>
 <span id="cb1-16"><a href="setting-up.html#cb1-16"></a>  lavaan,</span>
 <span id="cb1-17"><a href="setting-up.html#cb1-17"></a>  brms,</span>
-<span id="cb1-18"><a href="setting-up.html#cb1-18"></a>  ggbeeswarm</span>
-<span id="cb1-19"><a href="setting-up.html#cb1-19"></a>)</span>
-<span id="cb1-20"><a href="setting-up.html#cb1-20"></a></span>
-<span id="cb1-21"><a href="setting-up.html#cb1-21"></a><span class="co"># set seed</span></span>
-<span id="cb1-22"><a href="setting-up.html#cb1-22"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1-23"><a href="setting-up.html#cb1-23"></a></span>
-<span id="cb1-24"><a href="setting-up.html#cb1-24"></a><span class="co"># set theme</span></span>
-<span id="cb1-25"><a href="setting-up.html#cb1-25"></a><span class="kw">theme_set</span>(<span class="kw">theme_cowplot</span>())</span>
-<span id="cb1-26"><a href="setting-up.html#cb1-26"></a></span>
-<span id="cb1-27"><a href="setting-up.html#cb1-27"></a><span class="co"># custom colors that are color blind friendly</span></span>
-<span id="cb1-28"><a href="setting-up.html#cb1-28"></a>cb_palette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
-<span id="cb1-29"><a href="setting-up.html#cb1-29"></a></span>
-<span id="cb1-30"><a href="setting-up.html#cb1-30"></a><span class="co"># chunk options</span></span>
-<span id="cb1-31"><a href="setting-up.html#cb1-31"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</span>
-<span id="cb1-32"><a href="setting-up.html#cb1-32"></a>  <span class="dt">message =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb1-33"><a href="setting-up.html#cb1-33"></a>  <span class="dt">warning =</span> <span class="ot">FALSE</span></span>
-<span id="cb1-34"><a href="setting-up.html#cb1-34"></a>)</span></code></pre></div>
+<span id="cb1-18"><a href="setting-up.html#cb1-18"></a>  ggbeeswarm,</span>
+<span id="cb1-19"><a href="setting-up.html#cb1-19"></a>  osfr</span>
+<span id="cb1-20"><a href="setting-up.html#cb1-20"></a>)</span>
+<span id="cb1-21"><a href="setting-up.html#cb1-21"></a></span>
+<span id="cb1-22"><a href="setting-up.html#cb1-22"></a><span class="co"># set seed</span></span>
+<span id="cb1-23"><a href="setting-up.html#cb1-23"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-24"><a href="setting-up.html#cb1-24"></a></span>
+<span id="cb1-25"><a href="setting-up.html#cb1-25"></a><span class="co"># set theme</span></span>
+<span id="cb1-26"><a href="setting-up.html#cb1-26"></a><span class="kw">theme_set</span>(<span class="kw">theme_cowplot</span>())</span>
+<span id="cb1-27"><a href="setting-up.html#cb1-27"></a></span>
+<span id="cb1-28"><a href="setting-up.html#cb1-28"></a><span class="co"># custom colors that are color blind friendly</span></span>
+<span id="cb1-29"><a href="setting-up.html#cb1-29"></a>cb_palette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
+<span id="cb1-30"><a href="setting-up.html#cb1-30"></a></span>
+<span id="cb1-31"><a href="setting-up.html#cb1-31"></a><span class="co"># chunk options</span></span>
+<span id="cb1-32"><a href="setting-up.html#cb1-32"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</span>
+<span id="cb1-33"><a href="setting-up.html#cb1-33"></a>  <span class="dt">message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb1-34"><a href="setting-up.html#cb1-34"></a>  <span class="dt">warning =</span> <span class="ot">FALSE</span></span>
+<span id="cb1-35"><a href="setting-up.html#cb1-35"></a>)</span></code></pre></div>
+<p>Below the functions I use throughout the script.
+They’re usually explained in the section where I use them.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setting-up.html#cb2-1"></a>dens_with_points &lt;-<span class="st"> </span></span>
 <span id="cb2-2"><a href="setting-up.html#cb2-2"></a><span class="st">  </span><span class="cf">function</span>(</span>
 <span id="cb2-3"><a href="setting-up.html#cb2-3"></a>    data,</span>

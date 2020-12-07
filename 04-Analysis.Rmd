@@ -26,6 +26,7 @@ summary(
   modindices = TRUE
 )
 ```
+
 ## Data preparation
 
 We're interested in reciprocal effects of media use and well-being.
@@ -202,6 +203,29 @@ working_file <-
   ungroup()
 ```
 
+Note, I saved all `brms` model objects and load them below.
+Each model takes quite some time and the files get huge (a total of 35GB).
+If you're reproducing the analysis and don't want to run the models yourself, you can download the model objects from the OSF.
+For that, you need to set the code chunk below to `eval=TRUE`, which creates a `model/` directory with all models inside.
+```{r download-models, eval=FALSE}
+# create directory
+dir.create("models/", FALSE, TRUE)
+
+# download models
+osf_retrieve_node("https://osf.io/yn7sx/") %>% 
+  osf_ls_nodes() %>% 
+  filter(name == "models") %>% 
+  osf_ls_files(
+    .,
+    n_max = Inf
+  ) %>% 
+  osf_download(
+    .,
+    path = here("models"),
+    progress = TRUE
+  )
+```
+
 ## Music
 
 ### Affect
@@ -213,7 +237,6 @@ In addition to separating within and between effects, we also let the within eff
 So the fixed effects tell us how much an average person changed on well-being a week later if they went from not using to using a medium and how much well-being changed if a person used a medium an hour more than they usually do.
 We allow both of those effects to vary across participants.
 
-Note, I only ran those once because the analysis takes time (~ half an hour on my machine) and the files get huge (this one is almost 1 GB).
 ```{r music-affect, eval=FALSE}
 music_affect <- 
   brm(

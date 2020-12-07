@@ -15,7 +15,7 @@ Instead, I'll iterate over each model:
 3. Wrangle and relabel them
 4. Remove model from workspace again
 
-The below took about a couple of minutes on my laptop.
+The below took about five minutes on my laptop.
 ```{r get-estimates-function, message=FALSE, cache=TRUE}
 # get all model names
 well_being_indicators <- c("affect", "life")
@@ -178,7 +178,7 @@ First, I need to do some wrangling on the `estimates` data frame.
 Then I facet by the direction of the effect and time and use.
 Not sure I like this: Four columns might be a bit much.
 ```{r estimates-plot1}
-estimates2 <- 
+estimates <- 
   estimates %>% 
     mutate(
       # factor variable that shows the direction of effect
@@ -227,7 +227,7 @@ estimates2 <-
     )
 
 ggplot(
-    estimates2 %>% 
+    estimates %>% 
       arrange(Measure),
   aes(
     x = Estimate,
@@ -265,9 +265,10 @@ figure6.1
 ```
 This looks better, in my opinion.
 Shapes and colors can be tough, but I think it's easier to read than having four columns.
+Then again, it's quite a lot to take in, so maybe it's best to split one of the facets into two plots.
 ```{r estimates-plot2}
 ggplot(
-    estimates2 %>% 
+    estimates %>% 
       mutate(
         # ggplot weirdly shows the first level of the legend second on the graph, so I reverse level order and then reverse the legend order below with the guides command
         `Use vs. Time` = fct_relevel(
@@ -331,10 +332,80 @@ ggplot(
   ) -> figure6.2
 
 figure6.2
+```
+
+I'll create one plot for use and one plot for time effects.
+I'll start with a plot for use vs. nonuse.
+```{r estimates-plot3}
+ggplot(
+    estimates %>% 
+      mutate(
+        `Use vs. Time` = fct_relevel(
+          `Use vs. Time`,
+          "Time",
+          "Use"
+        ),
+        Measure = fct_relevel(
+          Measure,
+          "Life satisfaction",
+          "Affect"
+        )
+      ) %>% 
+      # only use
+      filter(`Use vs. Time` == "Use"),
+  aes(
+    x = Estimate,
+    y = Effect,
+    color = Measure
+  )
+) +
+  geom_vline(
+    aes(
+      xintercept = Line
+    )
+  ) +
+  geom_pointrange(
+    aes(
+      xmin = `Lower CI`,
+      xmax = `Upper CI`
+    ),
+    position = position_dodge2(1),
+    size = 0.5
+  ) +
+    geom_hline(
+      aes(
+        yintercept = if_else(as.numeric(Effect) == 1, 0, as.numeric(Effect) - 0.5)
+      ),
+      color = "lightgrey",
+      linetype = "dashed",
+      alpha = 0.45
+  ) +
+  facet_grid(
+    `Between vs. Within` ~ Direction,
+    scales = "free_x"
+  ) +
+  scale_colour_manual(values=c("#000000", "#E69F00")) +
+  scale_fill_manual(values = c("#000000", "#E69F00")) +
+  scale_shape_manual(values=c(15, 16)) +
+  guides(
+    color = guide_legend(reverse = TRUE),
+    shape = guide_legend(reverse = TRUE)
+  ) +
+  theme(
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    # axis.line.y = element_blank(),
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "bottom",
+  ) -> figure6.3
+
+figure6.3
 
 ggsave(
   filename = here("figures", "figure6.tiff"),
-  plot = figure6.2,
+  plot = figure6.3,
   width = 21 * 0.9,
   height = 29.7 * 0.7,
   units = "cm",
@@ -342,29 +413,98 @@ ggsave(
 )
 ```
 
-## Interpreting the graph
+Then a plot for time effects.
+```{r estimates-plot4}
+ggplot(
+    estimates %>% 
+      mutate(
+        `Use vs. Time` = fct_relevel(
+          `Use vs. Time`,
+          "Time",
+          "Use"
+        ),
+        Measure = fct_relevel(
+          Measure,
+          "Life satisfaction",
+          "Affect"
+        )
+      ) %>% 
+      # show only
+      filter(`Use vs. Time` == "Time"),
+  aes(
+    x = Estimate,
+    y = Effect,
+    color = Measure
+  )
+) +
+  geom_vline(
+    aes(
+      xintercept = Line
+    )
+  ) +
+  geom_pointrange(
+    aes(
+      xmin = `Lower CI`,
+      xmax = `Upper CI`
+    ),
+    position = position_dodge2(1),
+    size = 0.5
+  ) +
+    geom_hline(
+      aes(
+        yintercept = if_else(as.numeric(Effect) == 1, 0, as.numeric(Effect) - 0.5)
+      ),
+      color = "lightgrey",
+      linetype = "dashed",
+      alpha = 0.45
+  ) +
+  facet_grid(
+    `Between vs. Within` ~ Direction,
+    scales = "free_x"
+  ) +
+  scale_colour_manual(values=c("#000000", "#E69F00")) +
+  scale_fill_manual(values = c("#000000", "#E69F00")) +
+  scale_shape_manual(values=c(15, 16)) +
+  guides(
+    color = guide_legend(reverse = TRUE),
+    shape = guide_legend(reverse = TRUE)
+  ) +
+  theme(
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    # axis.line.y = element_blank(),
+    strip.background.x = element_blank(),
+    strip.background.y = element_blank(),
+    legend.position = "bottom",
+  ) -> figure7
+
+figure7
+
+ggsave(
+  filename = here("figures", "figure7.tiff"),
+  plot = figure7,
+  width = 21 * 0.9,
+  height = 29.7 * 0.7,
+  units = "cm",
+  dpi = 300
+)
+```
+
+
+## Interpreting the results
 
 Points represent the mean of the posterior distribution of the parameter.
 Lines represent 95% Credible Intervals of the same posterior distribution.
-The columns display reciprocal effects: On the left-hand side, coefficients are of the Gaussian models, meaning they represent an effect on the 0 to 10 well-being scale.
+For both of the last two figures, the columns display reciprocal effects: On the left-hand side, coefficients are of the Gaussian models, meaning they represent an effect on the 0 to 10 well-being scale.
 On the right, coefficients are of the hurdle gamma model, meaning they represent odds of using a medium at all (hurdle part) and time spent using a medium (gamma part).
 The top part shows between-person effects.
 The bottom part shows within-person effects.
-Effects are grouped by whether or not a medium was used or how much time a person spent with a medium, and by the well-being measures, affects vs. life satisfaction.
 
-If we take music as an example: In the top left, we see the between-person effects of music listening on affect (circle) and life satisfaction (square).
-That facets also shows whether effects are of using vs. not using a medium (gold) or of time spent using a medium (black).
-Across the entire sample and all waves, the model estimated that someone who listens to music, compared to someone who does not listen to music, feels somewhat worse on affect, but not on life satisfaction.
-That correlation is mirrored on the top right that shows effects of affect (circle) and life satisfaction (square), across all waves, on whether someone listens to music vs. not (gold) and time listening to music (black).
-So someone who feels one point better than someone else on the 0 to 10 affect measure has lower odds of listening to music compared to someone else.
-Note that both facets in the top-row represent the same theoretical effects.
-However, they were obtained from slightly different models, explaining their small differences.
-Among those who listen to music, one hour more than someone else is only weakly related to well-being (black coefficients, left side); conversely, scoring one point higher on well-being than someone else is only weakly related to the odds of spending more time listening to music (black coefficients, right side.
 
-The bottom left shows within-effects of listening to music: Someone who goes from not listening to music to listening to music does feel somewhat better a week later (golden circle).
-At the same time, when a person listens to one hour more than they typically do, they felt slightly better, but the posterior included zero as well as negative effects (black circle).
-Conversely (on the bottom right), if a person feels one point better on affect than they typically do, they do not have higher odds of listening to music a week later (golden circle).
-Likewise, they don’t have higher odds of listening to more music (black circle).
+If we take music as an example: In the top left of the second to last figure, we see the between-person effects of listening to music vs. not listening to music on affect and life satisfaction. Across the entire sample and all waves, the model estimated that someone who listens to music, compared to someone who does not listen to music, reports feeling somewhat worse on affect, but not on life satisfaction. That correlation is mirrored on the top right that shows effects of affect and life satisfaction, across all waves, on whether someone listens to music vs. not. Mirroring the left-hand columns, someone who feels one point better than someone else on the 0 to 10 affect measure has lower odds of listening to music compared to someone else. The bottom left shows within-effects of listening to music: Someone who goes from not listening to music to listening to music does feel somewhat better a week later. Conversely (on the bottom right), if a person feels one point better on affect than they typically do, they do not have higher odds of listening to music a week later (golden circle).
+
+In the last figure, we see the effects of time spent listening to music. The top left corner shows that one hour more music listening than someone else is only weakly related to well-being; conversely, scoring one point higher on well-being than someone else is only weakly related to the odds of spending more time listening to music. At the within-person level (bottom left), when a person listens to one hour more than they typically do, they felt slightly better, but the posterior included zero as well as negative effects. Likewise, if someone scored on point higher on the affect scale than they typically do, they do not have higher odds of listening to more music (bottom right).
 
 ## Take-aways
 

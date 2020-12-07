@@ -1237,18 +1237,9 @@ ggplot(
     panel.grid.minor=element_blank(),
     plot.background=element_blank(),
     strip.background = element_blank()
-  ) -> figure2.1
+  ) -> exclusion_figure1
 
-figure2.1
-
-ggsave(
-  filename = here("figures", "figure2.tiff"),
-  plot = figure2.1,
-  width = 21 * 0.9,
-  height = 29.7 * 0.4,
-  units = "cm",
-  dpi = 300
-)
+exclusion_figure1
 ```
 
 Alternatively, we could emphasize the contributions of each criterion in relation to the other criteria.
@@ -1299,9 +1290,9 @@ ggplot(
     panel.grid.minor=element_blank(),
     plot.background=element_blank(),
     strip.background = element_blank()
-  ) -> figure2.2
+  ) -> exclusion_figure2
 
-figure2.2
+exclusion_figure2
 ```
 
 Next, I plot the distributions of the use variables.
@@ -1416,9 +1407,9 @@ ggplot(
     strip.background.x = element_blank(),
     strip.background.y = element_blank(),
     legend.position = "none"
-  ) -> figure3.1
+  ) -> figure2.1
 
-figure3.1
+figure2.1
 ```
 
 I guess the trendline makes it easier to see developments (or lack thereof) over time.
@@ -1470,9 +1461,9 @@ ggplot(
     strip.background.x = element_blank(),
     strip.background.y = element_blank(),
     legend.position = "none"
-  ) -> figure3.2
+  ) -> figure2.2
 
-figure3.2
+figure2.2
 ```
 
 Then again, for distributions with a small mean, the trendline blocks everything.
@@ -1530,13 +1521,13 @@ ggplot(
     strip.background.x = element_blank(),
     strip.background.y = element_blank(),
     legend.position = "none"
-  ) -> figure3.3
+  ) -> figure2.3
 
-figure3.3
+figure2.3
 
 ggsave(
-  here("figures", "figure3.tiff"),
-  plot = figure3.3,
+  here("figures", "figure2.tiff"),
+  plot = figure2.3,
   width = 21 * 0.8,
   height = 29.7 * 0.8,
   units = "cm",
@@ -1594,9 +1585,88 @@ ggplot(
     strip.background.x = element_blank(),
     strip.background.y = element_blank(),
     legend.position = "none"
-  ) -> figure4
+  ) -> figure3
 
-figure4
+figure3
+
+ggsave(
+  here("figures", "figure3.tiff"),
+  plot = figure3,
+  width = 21 * 0.9,
+  height = 29.7 * 0.4,
+  units = "cm",
+  dpi = 300
+)
+```
+
+Then, I need to think of a way to visualize use vs. nonuse over time.
+Bar graphs could work, but that would mean a lot of bar graphs (one per medium) per wave, which is probably overwhelming.
+Plus, if I show raw counts, it could be confusing as well, simply because height of the bar != number of participants.
+If everyone at wave 1 used only one medium, but at wave two everyone used all media, it'll look like an increase in sample size.
+
+So proportions make the most sense, simple and straightforward.
+```{r proportions-use-plot, warning=FALSE, message=FALSE}
+# get proportions of users per medium and wave
+dat <- 
+  working_file %>% 
+  pivot_longer(
+    contains("_time"), # only the time variables
+    names_to = "measure",
+    values_to = "Hours per day"
+  ) %>% 
+  mutate(
+    # get use vs. no use in long format
+    used = if_else(`Hours per day` == 0, 0, 1)
+  ) %>% 
+  # no need for total time
+  filter(used == 1, measure != "total_time") %>%
+  # remove "tome appendix
+  mutate(measure = as.factor(str_to_title(str_remove(measure, "_time")))) %>% 
+  # count how often a medium was used
+  count(wave, measure, used) %>% 
+  # add total N per wave (of only those that will be included in analysis)
+  left_join(
+    .,
+    working_file %>% 
+      count(wave, name = "N")
+  ) %>% 
+  # get proprotion
+  mutate(
+    proportion = round(n / N, digits = 2) * 100,
+    measure = fct_recode(measure, "TV" = "Tv"),
+    measure = fct_relevel(
+      measure,
+      c(
+        "Music",
+        "TV",
+        "Films",
+        "Games",
+        "Books",
+        "Magazines",
+        "Audiobooks"
+      )
+    )
+  )
+
+ggplot(
+  dat,
+  aes(
+    x = as.factor(wave),
+    y = proportion,
+    group = measure,
+    color = measure
+  )
+) +
+  geom_point(size = 3) +
+  geom_line(size = 1) +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  ylab("% of people who used medium") +
+  xlab("Wave") +
+  geom_dl(aes(label = measure), method = list(dl.trans(x = x + 0.25), "last.points", cex = 0.6)) +
+  theme(
+    legend.position = "none"
+  ) -> figure4
 
 ggsave(
   here("figures", "figure4.tiff"),
@@ -1608,7 +1678,8 @@ ggsave(
 )
 ```
 
-Next, I'll do the same thing with well-being.
+
+Next, I'll do a beeswarm plot for well-being.
 ```{r distributions-time-plot, warning=FALSE, message=FALSE}
 # temporary data file in long format
 dat <- 
