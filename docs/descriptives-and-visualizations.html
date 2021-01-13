@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2020-12-07" />
+<meta name="date" content="2021-01-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,18 +229,12 @@ We got variables on the person-level and on the wave level.</p>
 <ul>
 <li>Age and gender (<code>age</code>, <code>gender</code>)</li>
 <li>What region of the UK participants are from (<code>region</code>)</li>
-<li>What their ethnicity is (<code>ethnicity</code>)</li>
-<li>What their employment status is (<code>employment</code>)</li>
-<li>Whether they are the main earner (<code>main_earner</code>), what the occupation of the main earner is (<code>occupation_main_earner</code>) plus the main earner’s or their own income (<code>income_main_earner</code> and <code>income_own</code>)</li>
-<li>Their living situation (variables starting with <code>living</code>)</li>
-<li>How COVID-19 has affected their situation (variables starting with <code>covid</code>)</li>
 <li>Whether they’ve used a medium in the three months before the first wave (variables starting with <code>filter</code>)</li>
 <li>To what extent they identify with a medium (variables ending with <code>identity</code>)</li>
 </ul>
 <p><strong>Wave-level</strong></p>
 <ul>
 <li>How much they used a medium per wave (variables ending with <code>time</code>)</li>
-<li>How much they estimated to have used a medium per wave (variables ending with <code>estimate</code>)</li>
 <li>Their well-being per wave (<code>well_being</code>)</li>
 </ul>
 </div>
@@ -256,907 +250,10 @@ The gender distribution is pretty equal (1123 women (52.01%), 1035 men, and 1 no
 Figure 3.1: Distribution of age
 </p>
 </div>
-Alright, next let’s see from what regions participants come from, Table <a href="descriptives-and-visualizations.html#tab:describe-region">3.1</a>.
-The sample is distributed pretty much long the geographical population density.
+Alright, next let’s have a look again (now that we have the final sample) at how many people had used a medium in the three months before wave 1 (Table <a href="descriptives-and-visualizations.html#tab:table-media-filters">3.1</a>).
 <table>
 <caption>
-<span id="tab:describe-region">Table 3.1: </span>Region that participants come from
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Region
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-South East
-</td>
-<td style="text-align:right;">
-348
-</td>
-<td style="text-align:right;">
-16.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-London
-</td>
-<td style="text-align:right;">
-239
-</td>
-<td style="text-align:right;">
-11.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-North West
-</td>
-<td style="text-align:right;">
-232
-</td>
-<td style="text-align:right;">
-10.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-East
-</td>
-<td style="text-align:right;">
-201
-</td>
-<td style="text-align:right;">
-9.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Scotland
-</td>
-<td style="text-align:right;">
-186
-</td>
-<td style="text-align:right;">
-8.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-West Midlands
-</td>
-<td style="text-align:right;">
-184
-</td>
-<td style="text-align:right;">
-8.5
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-South West
-</td>
-<td style="text-align:right;">
-175
-</td>
-<td style="text-align:right;">
-8.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-East Midlands
-</td>
-<td style="text-align:right;">
-172
-</td>
-<td style="text-align:right;">
-8.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Yorkshire and The Humber
-</td>
-<td style="text-align:right;">
-169
-</td>
-<td style="text-align:right;">
-7.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Wales
-</td>
-<td style="text-align:right;">
-116
-</td>
-<td style="text-align:right;">
-5.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-North East
-</td>
-<td style="text-align:right;">
-84
-</td>
-<td style="text-align:right;">
-3.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Northern Ireland
-</td>
-<td style="text-align:right;">
-53
-</td>
-<td style="text-align:right;">
-2.5
-</td>
-</tr>
-</tbody>
-</table>
-Let’s do the same thing for ethnicity, see Table <a href="descriptives-and-visualizations.html#tab:describe-ethnicity">3.2</a>.
-The majority of participants are White British.
-<table>
-<caption>
-<span id="tab:describe-ethnicity">Table 3.2: </span>Participants’ ethnicity
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Ethnicity
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-White British
-</td>
-<td style="text-align:right;">
-1861
-</td>
-<td style="text-align:right;">
-86.20
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-White European
-</td>
-<td style="text-align:right;">
-72
-</td>
-<td style="text-align:right;">
-3.33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-White - Other
-</td>
-<td style="text-align:right;">
-60
-</td>
-<td style="text-align:right;">
-2.78
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Chinese
-</td>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-1.48
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Indian
-</td>
-<td style="text-align:right;">
-28
-</td>
-<td style="text-align:right;">
-1.30
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Any other Asian/Asian British Origin
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-0.83
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pakistani
-</td>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:right;">
-0.79
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-African
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-0.60
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Any other Mixed/Multiple ethnic origins
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-0.60
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-White and Asian
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-0.51
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Caribbean
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-0.37
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bangladeshi
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-0.32
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Prefer not to say
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0.28
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arab
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0.19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-White and Black Caribbean
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0.19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Any other ethnic origin
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Japanese
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Any other Black/African/Caribbean British origin
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-White and Black African
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-</tbody>
-</table>
-In Table <a href="descriptives-and-visualizations.html#tab:describe-employment">3.3</a> we see that the majority of the sample are not employed full time.
-A substantial proportion are furloughed because of COVID-19.
-<table>
-<caption>
-<span id="tab:describe-employment">Table 3.3: </span>Participants’ employment
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Employment
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Employed full time
-</td>
-<td style="text-align:right;">
-922
-</td>
-<td style="text-align:right;">
-42.70
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Retired
-</td>
-<td style="text-align:right;">
-335
-</td>
-<td style="text-align:right;">
-15.52
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Employed part time
-</td>
-<td style="text-align:right;">
-302
-</td>
-<td style="text-align:right;">
-13.99
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Unemployed and not looking for work
-</td>
-<td style="text-align:right;">
-217
-</td>
-<td style="text-align:right;">
-10.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Self employed
-</td>
-<td style="text-align:right;">
-130
-</td>
-<td style="text-align:right;">
-6.02
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Employed but furloughed due to the coronavirus pandemic
-</td>
-<td style="text-align:right;">
-109
-</td>
-<td style="text-align:right;">
-5.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Student
-</td>
-<td style="text-align:right;">
-71
-</td>
-<td style="text-align:right;">
-3.29
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Unemployed and looking for work
-</td>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:right;">
-3.10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rather not say
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0.28
-</td>
-</tr>
-</tbody>
-</table>
-<p>Now let’s check the income brackets.
-If participants were the main earner, they provided only their income.
-If participants weren’t the main earner, they provided the income of the main earner and their own.
-The answers were on an ordinal scale, so adding those two up to a total income doesn’t work.
-Instead, I’ll simply provide a frequency table of the income of the main earner.</p>
-Table <a href="descriptives-and-visualizations.html#tab:describe-main-earner-income">3.4</a> shows the distribution of income brackets.
-We see that the majority is somewhere around UK median income.
-<table>
-<caption>
-<span id="tab:describe-main-earner-income">Table 3.4: </span>Income of the household main earner
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Income
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Less than £10,000
-</td>
-<td style="text-align:right;">
-170
-</td>
-<td style="text-align:right;">
-7.87
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£10,000 - £19,999
-</td>
-<td style="text-align:right;">
-428
-</td>
-<td style="text-align:right;">
-19.82
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£20,000 - £29,999
-</td>
-<td style="text-align:right;">
-514
-</td>
-<td style="text-align:right;">
-23.81
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£30,000 - £39,999
-</td>
-<td style="text-align:right;">
-393
-</td>
-<td style="text-align:right;">
-18.20
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£40,000 - £49,999
-</td>
-<td style="text-align:right;">
-274
-</td>
-<td style="text-align:right;">
-12.69
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£50,000 - £59,999
-</td>
-<td style="text-align:right;">
-148
-</td>
-<td style="text-align:right;">
-6.86
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£60,000 - £69,999
-</td>
-<td style="text-align:right;">
-84
-</td>
-<td style="text-align:right;">
-3.89
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£70,000 - £79,999
-</td>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:right;">
-2.59
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£80,000 - £89,999
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:right;">
-1.20
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£90,000 - £99,999
-</td>
-<td style="text-align:right;">
-22
-</td>
-<td style="text-align:right;">
-1.02
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£100,000 - £109,999
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-0.60
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£110,000 - £119,999
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-0.42
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£120,000 - £129,999
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0.14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£130,000 - £139,999
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0.14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£140,000 - £149,999
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0.19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£150,000 - £159,999
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£180,000 - £189,999
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£230,000 - £239,999
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£240,000 - £249,999
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£250,000 or more
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0.19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£190,000 - £199,999
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-£210,000 - £219,999
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.09
-</td>
-</tr>
-</tbody>
-</table>
-Now let’s inspect participants’ occupation.
-Rather, that’s the occupation of the main earner.
-In Table <a href="descriptives-and-visualizations.html#tab:describe-main-earner-occupation">3.5</a> we see that the majority have a white collar job.
-<table>
-<caption>
-<span id="tab:describe-main-earner-occupation">Table 3.5: </span>Occupation of the household main earner
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Occupation of the main earner
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Supervisory or clerical/junior managerial/ professional/ administrative
-</td>
-<td style="text-align:right;">
-636
-</td>
-<td style="text-align:right;">
-29.46
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Intermediate managerial/professional/administrative
-</td>
-<td style="text-align:right;">
-584
-</td>
-<td style="text-align:right;">
-27.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Skilled manual worker
-</td>
-<td style="text-align:right;">
-361
-</td>
-<td style="text-align:right;">
-16.72
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Semi-skilled or unskilled work
-</td>
-<td style="text-align:right;">
-277
-</td>
-<td style="text-align:right;">
-12.83
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Unemployed
-</td>
-<td style="text-align:right;">
-152
-</td>
-<td style="text-align:right;">
-7.04
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Higher managerial/professional/administrative
-</td>
-<td style="text-align:right;">
-133
-</td>
-<td style="text-align:right;">
-6.16
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-In full time education
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:right;">
-0.74
-</td>
-</tr>
-</tbody>
-</table>
-<p>Alright, how do participants live?
-This item was a multiple choice question, so we’ll have more responses than participants.
-I’ll not plot the unique combinations, but rather summarize across variables.
-Participants answered this question at each wave, so we’ll plot the proportions over time.
-At this point, it’s easiest to first turn the data into the long format, then count, then back to wide format.</p>
-Table <a href="descriptives-and-visualizations.html#fig:describe-living-situation">3.2</a> shows that the majority are living with a partner and/or with partner and children, but also that over time those with living with a partner become fewer.
-<div class="figure"><span id="fig:describe-living-situation"></span>
-<img src="analysis_report_files/figure-html/describe-living-situation-1.png" alt="Living situation over time (multiple choice possible)" width="672" />
-<p class="caption">
-Figure 3.2: Living situation over time (multiple choice possible)
-</p>
-</div>
-<p>Let’s do the same for the impact of COVID-19.
-Note that this item was a) multiple choice again, b) not all options were shown to all participants, c) asked at each wave.</p>
-I’ll show the proportions as a line graph, faceting by the grouping of work and parenting situation.
-Figure <a href="descriptives-and-visualizations.html#fig:describe-covid-consequences">3.3</a> shows that the majority of participants had to work from home full time or had to stop working altogether.
-<div class="figure"><span id="fig:describe-covid-consequences"></span>
-<img src="analysis_report_files/figure-html/describe-covid-consequences-1.png" alt="Proportion of consequences of COVID-19 by demographic group" width="672" />
-<p class="caption">
-Figure 3.3: Proportion of consequences of COVID-19 by demographic group
-</p>
-</div>
-Alright, next let’s have a look again (now that we have the final sample) at how many people had used a medium in the three months before wave 1 (Table <a href="descriptives-and-visualizations.html#tab:table-media-filters">3.6</a>).
-<table>
-<caption>
-<span id="tab:table-media-filters">Table 3.6: </span>Frequency of how much a medium was used at wave 1
+<span id="tab:table-media-filters">Table 3.1: </span>Frequency of how much a medium was used at wave 1
 </caption>
 <thead>
 <tr>
@@ -1279,7 +376,7 @@ Now let’s have a look at how much people identified with each medium.
 Note that people weren’t asked those identity questions if they indicated that they hadn’t used a medium at wave 1.
 <table>
 <caption>
-<span id="tab:describe-identities">Table 3.7: </span>Descriptive information for identity scales
+<span id="tab:describe-identities">Table 3.2: </span>Descriptive information for identity scales
 </caption>
 <thead>
 <tr>
@@ -1478,22 +575,22 @@ e_publishing_identity
 </tr>
 </tbody>
 </table>
-Figure <a href="descriptives-and-visualizations.html#fig:identity-distributions">3.4</a> shows the distributions of those identity variables.
+Figure <a href="descriptives-and-visualizations.html#fig:identity-distributions">3.2</a> shows the distributions of those identity variables.
 Apparently gamers identified more with games than for example music listeners identified with music.
 <div class="figure"><span id="fig:identity-distributions"></span>
 <img src="analysis_report_files/figure-html/identity-distributions-1.png" alt="Distribution of identity variables" width="672" />
 <p class="caption">
-Figure 3.4: Distribution of identity variables
+Figure 3.2: Distribution of identity variables
 </p>
 </div>
 </div>
 <div id="wave-level" class="section level2">
 <h2><span class="header-section-number">3.3</span> Wave-level</h2>
 Let’s inspect the descriptive information for the different media.
-Table <a href="descriptives-and-visualizations.html#tab:describe-time-with-zeros">3.8</a> shows that people used TV, music, and films the most, but spent little time on magazines and audio books.
+Table <a href="descriptives-and-visualizations.html#tab:describe-time-with-zeros">3.3</a> shows that people used TV, music, and films the most, but spent little time on magazines and audio books.
 <table>
 <caption>
-<span id="tab:describe-time-with-zeros">Table 3.8: </span>Descriptive information for use time (including zero estimates)
+<span id="tab:describe-time-with-zeros">Table 3.3: </span>Descriptive information for use time (including zero estimates)
 </caption>
 <thead>
 <tr>
@@ -1756,20 +853,20 @@ audiobooks_time
 </tr>
 </tbody>
 </table>
-Figure <a href="descriptives-and-visualizations.html#fig:time-distributions-with-zeros">3.5</a> shows the distributions of those time variables.
+Figure <a href="descriptives-and-visualizations.html#fig:time-distributions-with-zeros">3.3</a> shows the distributions of those time variables.
 Note that most distributions are zero-inflated with a heavy skew.
 <div class="figure"><span id="fig:time-distributions-with-zeros"></span>
 <img src="analysis_report_files/figure-html/time-distributions-with-zeros-1.png" alt="Distribution of time variables (with zeros)" width="672" />
 <p class="caption">
-Figure 3.5: Distribution of time variables (with zeros)
+Figure 3.3: Distribution of time variables (with zeros)
 </p>
 </div>
 Let’s also inspect those summary statistics and distributions without zeros.
-Table <a href="descriptives-and-visualizations.html#tab:describe-time-without-zeros">3.9</a> shows the same pattern was with zeros, but overall higher means.
+Table <a href="descriptives-and-visualizations.html#tab:describe-time-without-zeros">3.4</a> shows the same pattern was with zeros, but overall higher means.
 Interestingly, those who listen to audiobooks report to do so for a long time per day.
 <table>
 <caption>
-<span id="tab:describe-time-without-zeros">Table 3.9: </span>Descriptive information for use time (excluding zero estimates)
+<span id="tab:describe-time-without-zeros">Table 3.4: </span>Descriptive information for use time (excluding zero estimates)
 </caption>
 <thead>
 <tr>
@@ -2032,312 +1129,26 @@ audiobooks_time
 </tr>
 </tbody>
 </table>
-Figure <a href="descriptives-and-visualizations.html#fig:time-distributions-without-zeros">3.6</a> shows a less skewed distribution once we remove zeros.
+Figure <a href="descriptives-and-visualizations.html#fig:time-distributions-without-zeros">3.4</a> shows a less skewed distribution once we remove zeros.
 <div class="figure"><span id="fig:time-distributions-without-zeros"></span>
 <img src="analysis_report_files/figure-html/time-distributions-without-zeros-1.png" alt="Distribution of time variables (without zeros)" width="672" />
 <p class="caption">
-Figure 3.6: Distribution of time variables (without zeros)
+Figure 3.4: Distribution of time variables (without zeros)
 </p>
 </div>
 As a next step, let’s see how use developed over time.
-Figure <a href="descriptives-and-visualizations.html#fig:use-over-time">3.7</a> shows that most media stay stable, except maybe an overall spike in wave 2.
+Figure <a href="descriptives-and-visualizations.html#fig:use-over-time">3.5</a> shows that most media stay stable, except maybe an overall spike in wave 2.
 <div class="figure"><span id="fig:use-over-time"></span>
 <img src="analysis_report_files/figure-html/use-over-time-1.png" alt="Average use over time per medium" width="672" />
 <p class="caption">
-Figure 3.7: Average use over time per medium
-</p>
-</div>
-Let’s also check how estimates look like over time per medium.
-We’ll only use answers when there was use.
-Recall that I reverse coded the estimates question, so now 1 means not having used a medium.
-I’ll remove all answers where people haven’t used a medium and then recode so that 1 means having used a lot less.
-Table <a href="descriptives-and-visualizations.html#tab:describe-estimates">3.10</a> shows that, on average across all waves, participants felt like their used remained stable.
-<table>
-<caption>
-<span id="tab:describe-estimates">Table 3.10: </span>Descriptive information for estimates
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-variable
-</th>
-<th style="text-align:right;">
-N
-</th>
-<th style="text-align:right;">
-mean
-</th>
-<th style="text-align:right;">
-sd
-</th>
-<th style="text-align:right;">
-median
-</th>
-<th style="text-align:right;">
-min
-</th>
-<th style="text-align:right;">
-max
-</th>
-<th style="text-align:right;">
-range
-</th>
-<th style="text-align:right;">
-cilow
-</th>
-<th style="text-align:right;">
-cihigh
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-music_estimate
-</td>
-<td style="text-align:right;">
-9338
-</td>
-<td style="text-align:right;">
-3.34
-</td>
-<td style="text-align:right;">
-0.85
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.32
-</td>
-<td style="text-align:right;">
-3.35
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tv_estimate
-</td>
-<td style="text-align:right;">
-9829
-</td>
-<td style="text-align:right;">
-3.22
-</td>
-<td style="text-align:right;">
-0.78
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.20
-</td>
-<td style="text-align:right;">
-3.23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-films_estimate
-</td>
-<td style="text-align:right;">
-9298
-</td>
-<td style="text-align:right;">
-3.28
-</td>
-<td style="text-align:right;">
-0.82
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.27
-</td>
-<td style="text-align:right;">
-3.30
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-games_estimate
-</td>
-<td style="text-align:right;">
-5578
-</td>
-<td style="text-align:right;">
-3.12
-</td>
-<td style="text-align:right;">
-0.78
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.10
-</td>
-<td style="text-align:right;">
-3.14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-books_estimate
-</td>
-<td style="text-align:right;">
-6834
-</td>
-<td style="text-align:right;">
-3.21
-</td>
-<td style="text-align:right;">
-0.76
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.19
-</td>
-<td style="text-align:right;">
-3.23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-magazines_estimate
-</td>
-<td style="text-align:right;">
-4045
-</td>
-<td style="text-align:right;">
-3.01
-</td>
-<td style="text-align:right;">
-0.64
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2.99
-</td>
-<td style="text-align:right;">
-3.03
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-audiobooks_estimate
-</td>
-<td style="text-align:right;">
-2270
-</td>
-<td style="text-align:right;">
-3.07
-</td>
-<td style="text-align:right;">
-0.69
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3.05
-</td>
-<td style="text-align:right;">
-3.10
-</td>
-</tr>
-</tbody>
-</table>
-Figure <a href="descriptives-and-visualizations.html#fig:estimate-distributions">3.8</a> shows the typical distribution of ordinal variables.
-Even then, the mean and median are clearly around the midpoint of the scale.
-<div class="figure"><span id="fig:estimate-distributions"></span>
-<img src="analysis_report_files/figure-html/estimate-distributions-1.png" alt="Distribution of estimate variables" width="672" />
-<p class="caption">
-Figure 3.8: Distribution of estimate variables
-</p>
-</div>
-Let’s inspect how those estimates behave over time.
-Figure <a href="descriptives-and-visualizations.html#fig:estimates-over-time">3.9</a> shows that there’s a clear downward trend in the estimates the longer the study lasted, with the sharpest drop at wave 2 - ironically, where the self-reported use went up.
-<div class="figure"><span id="fig:estimates-over-time"></span>
-<img src="analysis_report_files/figure-html/estimates-over-time-1.png" alt="Average estimates over time per medium" width="672" />
-<p class="caption">
-Figure 3.9: Average estimates over time per medium
+Figure 3.5: Average use over time per medium
 </p>
 </div>
 Last, let’s see the overall descriptives of the well-being variables.
-Table <a href="descriptives-and-visualizations.html#tab:describe-well-being">3.11</a> shows that both life satisfaction and affect were above the mid-point of the scale - even though for affect, it’s a close call.
+Table <a href="descriptives-and-visualizations.html#tab:describe-well-being">3.5</a> shows that both life satisfaction and affect were above the mid-point of the scale - even though for affect, it’s a close call.
 <table>
 <caption>
-<span id="tab:describe-well-being">Table 3.11: </span>Well-being descriptives
+<span id="tab:describe-well-being">Table 3.5: </span>Well-being descriptives
 </caption>
 <thead>
 <tr>
@@ -2440,41 +1251,33 @@ life_satisfaction
 </tr>
 </tbody>
 </table>
-Let’s plot the distribution of both affect and life satisfaction in Figure <a href="descriptives-and-visualizations.html#fig:well-being-distribution">3.10</a>.
+Let’s plot the distribution of both affect and life satisfaction in Figure <a href="descriptives-and-visualizations.html#fig:well-being-distribution">3.6</a>.
 <div class="figure"><span id="fig:well-being-distribution"></span>
 <img src="analysis_report_files/figure-html/well-being-distribution-1.png" alt="Distribution of well-being across waves and participants" width="672" />
 <p class="caption">
-Figure 3.10: Distribution of well-being across waves and participants
+Figure 3.6: Distribution of well-being across waves and participants
 </p>
 </div>
 Last, let’s look at how well-being develops over time.
-Figure <a href="descriptives-and-visualizations.html#fig:well-being-over-time">3.11</a> shows that life satisfaction appears stable: note the y-axis is on decimal points (original range: 0 to 10).
+Figure <a href="descriptives-and-visualizations.html#fig:well-being-over-time">3.7</a> shows that life satisfaction appears stable: note the y-axis is on decimal points (original range: 0 to 10).
 In contrast, affect has significantly decreased, mostly because anxiety has decreased (not shown on graph).
 <div class="figure"><span id="fig:well-being-over-time"></span>
 <img src="analysis_report_files/figure-html/well-being-over-time-1.png" alt="Average estimates over time per medium" width="672" />
 <p class="caption">
-Figure 3.11: Average estimates over time per medium
+Figure 3.7: Average estimates over time per medium
 </p>
 </div>
 </div>
 <div id="correlation-matrices" class="section level2">
 <h2><span class="header-section-number">3.4</span> Correlation matrices</h2>
 Let’s have a look at the row correlations between the media use variables and well-being.
-Figure <a href="descriptives-and-visualizations.html#fig:correlation-matrix-use-well-being">3.12</a> shows that a) most media use is correlated, and b) there are negative, but very small correlations between well-being and media use.
+Figure <a href="descriptives-and-visualizations.html#fig:correlation-matrix-use-well-being">3.8</a> shows that a) most media use is correlated, and b) there are negative, but very small correlations between well-being and media use.
 The significance is negligible here just because the sample is so large.
 That said, we haven’t done any grouping yet, so the correlation matrix treats all observations as independent, which is clearly not the case.
 <div class="figure"><span id="fig:correlation-matrix-use-well-being"></span>
 <img src="analysis_report_files/figure-html/correlation-matrix-use-well-being-1.png" alt="Correlation matrix of hours spent with a medium and well-being" width="1344" />
 <p class="caption">
-Figure 3.12: Correlation matrix of hours spent with a medium and well-being
-</p>
-</div>
-Figure <a href="descriptives-and-visualizations.html#fig:correlation-matrix-estimates-well-being">3.13</a> shows the correlations between estimates of change of use and well-being.
-The pattern is similar to that of use and well-being with even smaller effect sizes.
-<div class="figure"><span id="fig:correlation-matrix-estimates-well-being"></span>
-<img src="analysis_report_files/figure-html/correlation-matrix-estimates-well-being-1.png" alt="Correlation matrix of estimated time spent with a medium and well-being" width="1344" />
-<p class="caption">
-Figure 3.13: Correlation matrix of estimated time spent with a medium and well-being
+Figure 3.8: Correlation matrix of hours spent with a medium and well-being
 </p>
 </div>
 </div>
@@ -3083,106 +1886,108 @@ If everyone at wave 1 used only one medium, but at wave two everyone used all me
 <span id="cb59-60"><a href="descriptives-and-visualizations.html#cb59-60"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
 <span id="cb59-61"><a href="descriptives-and-visualizations.html#cb59-61"></a>  ) -&gt;<span class="st"> </span>figure4</span>
 <span id="cb59-62"><a href="descriptives-and-visualizations.html#cb59-62"></a></span>
-<span id="cb59-63"><a href="descriptives-and-visualizations.html#cb59-63"></a><span class="kw">ggsave</span>(</span>
-<span id="cb59-64"><a href="descriptives-and-visualizations.html#cb59-64"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.tiff&quot;</span>),</span>
-<span id="cb59-65"><a href="descriptives-and-visualizations.html#cb59-65"></a>  <span class="dt">plot =</span> figure4,</span>
-<span id="cb59-66"><a href="descriptives-and-visualizations.html#cb59-66"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>,</span>
-<span id="cb59-67"><a href="descriptives-and-visualizations.html#cb59-67"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
-<span id="cb59-68"><a href="descriptives-and-visualizations.html#cb59-68"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb59-69"><a href="descriptives-and-visualizations.html#cb59-69"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
-<span id="cb59-70"><a href="descriptives-and-visualizations.html#cb59-70"></a>)</span></code></pre></div>
+<span id="cb59-63"><a href="descriptives-and-visualizations.html#cb59-63"></a>figure4</span></code></pre></div>
+<p><img src="analysis_report_files/figure-html/proportions-use-plot-1.png" width="672" /></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptives-and-visualizations.html#cb60-1"></a><span class="kw">ggsave</span>(</span>
+<span id="cb60-2"><a href="descriptives-and-visualizations.html#cb60-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.tiff&quot;</span>),</span>
+<span id="cb60-3"><a href="descriptives-and-visualizations.html#cb60-3"></a>  <span class="dt">plot =</span> figure4,</span>
+<span id="cb60-4"><a href="descriptives-and-visualizations.html#cb60-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>,</span>
+<span id="cb60-5"><a href="descriptives-and-visualizations.html#cb60-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
+<span id="cb60-6"><a href="descriptives-and-visualizations.html#cb60-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb60-7"><a href="descriptives-and-visualizations.html#cb60-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb60-8"><a href="descriptives-and-visualizations.html#cb60-8"></a>)</span></code></pre></div>
 <p>Next, I’ll do a beeswarm plot for well-being.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptives-and-visualizations.html#cb60-1"></a><span class="co"># temporary data file in long format</span></span>
-<span id="cb60-2"><a href="descriptives-and-visualizations.html#cb60-2"></a>dat &lt;-<span class="st"> </span></span>
-<span id="cb60-3"><a href="descriptives-and-visualizations.html#cb60-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-4"><a href="descriptives-and-visualizations.html#cb60-4"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
-<span id="cb60-5"><a href="descriptives-and-visualizations.html#cb60-5"></a>    <span class="kw">c</span>(affect, life_satisfaction), <span class="co"># only the aggregated well-being variables</span></span>
-<span id="cb60-6"><a href="descriptives-and-visualizations.html#cb60-6"></a>    <span class="dt">names_to =</span> <span class="st">&quot;measure&quot;</span>,</span>
-<span id="cb60-7"><a href="descriptives-and-visualizations.html#cb60-7"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
-<span id="cb60-8"><a href="descriptives-and-visualizations.html#cb60-8"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-9"><a href="descriptives-and-visualizations.html#cb60-9"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb60-10"><a href="descriptives-and-visualizations.html#cb60-10"></a>    <span class="dt">measure =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb60-11"><a href="descriptives-and-visualizations.html#cb60-11"></a>      <span class="kw">as.factor</span>(measure),</span>
-<span id="cb60-12"><a href="descriptives-and-visualizations.html#cb60-12"></a>      <span class="st">&quot;Affect&quot;</span> =<span class="st"> &quot;affect&quot;</span>,</span>
-<span id="cb60-13"><a href="descriptives-and-visualizations.html#cb60-13"></a>      <span class="st">&quot;Life satisfaction&quot;</span> =<span class="st"> &quot;life_satisfaction&quot;</span></span>
-<span id="cb60-14"><a href="descriptives-and-visualizations.html#cb60-14"></a>    )</span>
-<span id="cb60-15"><a href="descriptives-and-visualizations.html#cb60-15"></a>  )</span>
-<span id="cb60-16"><a href="descriptives-and-visualizations.html#cb60-16"></a></span>
-<span id="cb60-17"><a href="descriptives-and-visualizations.html#cb60-17"></a><span class="co"># summary stats for plotting means over time</span></span>
-<span id="cb60-18"><a href="descriptives-and-visualizations.html#cb60-18"></a>dat_summary &lt;-<span class="st"> </span></span>
-<span id="cb60-19"><a href="descriptives-and-visualizations.html#cb60-19"></a><span class="st">  </span>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-20"><a href="descriptives-and-visualizations.html#cb60-20"></a><span class="st">  </span><span class="kw">group_by</span>(wave, measure) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-21"><a href="descriptives-and-visualizations.html#cb60-21"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
-<span id="cb60-22"><a href="descriptives-and-visualizations.html#cb60-22"></a>    <span class="dt">mean =</span> <span class="kw">mean</span>(Value, <span class="dt">na.rm =</span> T),</span>
-<span id="cb60-23"><a href="descriptives-and-visualizations.html#cb60-23"></a>    <span class="dt">sd =</span> <span class="kw">sd</span>(Value, <span class="dt">na.rm =</span> T)</span>
-<span id="cb60-24"><a href="descriptives-and-visualizations.html#cb60-24"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-25"><a href="descriptives-and-visualizations.html#cb60-25"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb60-26"><a href="descriptives-and-visualizations.html#cb60-26"></a>    <span class="kw">across</span>(</span>
-<span id="cb60-27"><a href="descriptives-and-visualizations.html#cb60-27"></a>      mean<span class="op">:</span>sd,</span>
-<span id="cb60-28"><a href="descriptives-and-visualizations.html#cb60-28"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.x, <span class="dt">digits =</span> <span class="dv">1</span>)</span>
-<span id="cb60-29"><a href="descriptives-and-visualizations.html#cb60-29"></a>    )</span>
-<span id="cb60-30"><a href="descriptives-and-visualizations.html#cb60-30"></a>  )</span>
-<span id="cb60-31"><a href="descriptives-and-visualizations.html#cb60-31"></a></span>
-<span id="cb60-32"><a href="descriptives-and-visualizations.html#cb60-32"></a><span class="kw">ggplot</span>(</span>
-<span id="cb60-33"><a href="descriptives-and-visualizations.html#cb60-33"></a>  dat,</span>
-<span id="cb60-34"><a href="descriptives-and-visualizations.html#cb60-34"></a>  <span class="kw">aes</span>(</span>
-<span id="cb60-35"><a href="descriptives-and-visualizations.html#cb60-35"></a>    <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb60-36"><a href="descriptives-and-visualizations.html#cb60-36"></a>    <span class="dt">y =</span> Value,</span>
-<span id="cb60-37"><a href="descriptives-and-visualizations.html#cb60-37"></a>    <span class="dt">color =</span> measure,</span>
-<span id="cb60-38"><a href="descriptives-and-visualizations.html#cb60-38"></a>    <span class="dt">fill =</span> measure,</span>
-<span id="cb60-39"><a href="descriptives-and-visualizations.html#cb60-39"></a>    <span class="dt">group =</span> <span class="dv">1</span></span>
-<span id="cb60-40"><a href="descriptives-and-visualizations.html#cb60-40"></a>  )</span>
-<span id="cb60-41"><a href="descriptives-and-visualizations.html#cb60-41"></a>) <span class="op">+</span></span>
-<span id="cb60-42"><a href="descriptives-and-visualizations.html#cb60-42"></a><span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
-<span id="cb60-43"><a href="descriptives-and-visualizations.html#cb60-43"></a><span class="st">  </span><span class="kw">geom_line</span>(</span>
-<span id="cb60-44"><a href="descriptives-and-visualizations.html#cb60-44"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb60-45"><a href="descriptives-and-visualizations.html#cb60-45"></a>    <span class="kw">aes</span>(</span>
-<span id="cb60-46"><a href="descriptives-and-visualizations.html#cb60-46"></a>      <span class="dt">y =</span> mean</span>
-<span id="cb60-47"><a href="descriptives-and-visualizations.html#cb60-47"></a>    ),</span>
-<span id="cb60-48"><a href="descriptives-and-visualizations.html#cb60-48"></a>    <span class="dt">size =</span> <span class="fl">0.5</span></span>
-<span id="cb60-49"><a href="descriptives-and-visualizations.html#cb60-49"></a>  ) <span class="op">+</span></span>
-<span id="cb60-50"><a href="descriptives-and-visualizations.html#cb60-50"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>measure, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb60-51"><a href="descriptives-and-visualizations.html#cb60-51"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb60-52"><a href="descriptives-and-visualizations.html#cb60-52"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb60-53"><a href="descriptives-and-visualizations.html#cb60-53"></a>    <span class="kw">aes</span>(</span>
-<span id="cb60-54"><a href="descriptives-and-visualizations.html#cb60-54"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb60-55"><a href="descriptives-and-visualizations.html#cb60-55"></a>      <span class="dt">y =</span> <span class="fl">-0.5</span>,</span>
-<span id="cb60-56"><a href="descriptives-and-visualizations.html#cb60-56"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;M = &quot;</span>, mean)</span>
-<span id="cb60-57"><a href="descriptives-and-visualizations.html#cb60-57"></a>    ),</span>
-<span id="cb60-58"><a href="descriptives-and-visualizations.html#cb60-58"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
-<span id="cb60-59"><a href="descriptives-and-visualizations.html#cb60-59"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb60-60"><a href="descriptives-and-visualizations.html#cb60-60"></a>  ) <span class="op">+</span></span>
-<span id="cb60-61"><a href="descriptives-and-visualizations.html#cb60-61"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
-<span id="cb60-62"><a href="descriptives-and-visualizations.html#cb60-62"></a>    <span class="dt">data =</span> dat_summary,</span>
-<span id="cb60-63"><a href="descriptives-and-visualizations.html#cb60-63"></a>    <span class="kw">aes</span>(</span>
-<span id="cb60-64"><a href="descriptives-and-visualizations.html#cb60-64"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
-<span id="cb60-65"><a href="descriptives-and-visualizations.html#cb60-65"></a>      <span class="dt">y =</span> <span class="fl">-0.9</span>,</span>
-<span id="cb60-66"><a href="descriptives-and-visualizations.html#cb60-66"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;SD = &quot;</span>, sd)</span>
-<span id="cb60-67"><a href="descriptives-and-visualizations.html#cb60-67"></a>    ),</span>
-<span id="cb60-68"><a href="descriptives-and-visualizations.html#cb60-68"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
-<span id="cb60-69"><a href="descriptives-and-visualizations.html#cb60-69"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
-<span id="cb60-70"><a href="descriptives-and-visualizations.html#cb60-70"></a>  ) <span class="op">+</span></span>
-<span id="cb60-71"><a href="descriptives-and-visualizations.html#cb60-71"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
-<span id="cb60-72"><a href="descriptives-and-visualizations.html#cb60-72"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
-<span id="cb60-73"><a href="descriptives-and-visualizations.html#cb60-73"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
-<span id="cb60-74"><a href="descriptives-and-visualizations.html#cb60-74"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Wave&quot;</span>) <span class="op">+</span></span>
-<span id="cb60-75"><a href="descriptives-and-visualizations.html#cb60-75"></a><span class="st">  </span><span class="kw">theme</span>(</span>
-<span id="cb60-76"><a href="descriptives-and-visualizations.html#cb60-76"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb60-77"><a href="descriptives-and-visualizations.html#cb60-77"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb60-78"><a href="descriptives-and-visualizations.html#cb60-78"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb60-79"><a href="descriptives-and-visualizations.html#cb60-79"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb60-80"><a href="descriptives-and-visualizations.html#cb60-80"></a>  ) -&gt;<span class="st"> </span>figure5</span>
-<span id="cb60-81"><a href="descriptives-and-visualizations.html#cb60-81"></a></span>
-<span id="cb60-82"><a href="descriptives-and-visualizations.html#cb60-82"></a>figure5</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptives-and-visualizations.html#cb61-1"></a><span class="co"># temporary data file in long format</span></span>
+<span id="cb61-2"><a href="descriptives-and-visualizations.html#cb61-2"></a>dat &lt;-<span class="st"> </span></span>
+<span id="cb61-3"><a href="descriptives-and-visualizations.html#cb61-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb61-4"><a href="descriptives-and-visualizations.html#cb61-4"></a><span class="st">  </span><span class="kw">pivot_longer</span>(</span>
+<span id="cb61-5"><a href="descriptives-and-visualizations.html#cb61-5"></a>    <span class="kw">c</span>(affect, life_satisfaction), <span class="co"># only the aggregated well-being variables</span></span>
+<span id="cb61-6"><a href="descriptives-and-visualizations.html#cb61-6"></a>    <span class="dt">names_to =</span> <span class="st">&quot;measure&quot;</span>,</span>
+<span id="cb61-7"><a href="descriptives-and-visualizations.html#cb61-7"></a>    <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span></span>
+<span id="cb61-8"><a href="descriptives-and-visualizations.html#cb61-8"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb61-9"><a href="descriptives-and-visualizations.html#cb61-9"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb61-10"><a href="descriptives-and-visualizations.html#cb61-10"></a>    <span class="dt">measure =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb61-11"><a href="descriptives-and-visualizations.html#cb61-11"></a>      <span class="kw">as.factor</span>(measure),</span>
+<span id="cb61-12"><a href="descriptives-and-visualizations.html#cb61-12"></a>      <span class="st">&quot;Affect&quot;</span> =<span class="st"> &quot;affect&quot;</span>,</span>
+<span id="cb61-13"><a href="descriptives-and-visualizations.html#cb61-13"></a>      <span class="st">&quot;Life satisfaction&quot;</span> =<span class="st"> &quot;life_satisfaction&quot;</span></span>
+<span id="cb61-14"><a href="descriptives-and-visualizations.html#cb61-14"></a>    )</span>
+<span id="cb61-15"><a href="descriptives-and-visualizations.html#cb61-15"></a>  )</span>
+<span id="cb61-16"><a href="descriptives-and-visualizations.html#cb61-16"></a></span>
+<span id="cb61-17"><a href="descriptives-and-visualizations.html#cb61-17"></a><span class="co"># summary stats for plotting means over time</span></span>
+<span id="cb61-18"><a href="descriptives-and-visualizations.html#cb61-18"></a>dat_summary &lt;-<span class="st"> </span></span>
+<span id="cb61-19"><a href="descriptives-and-visualizations.html#cb61-19"></a><span class="st">  </span>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb61-20"><a href="descriptives-and-visualizations.html#cb61-20"></a><span class="st">  </span><span class="kw">group_by</span>(wave, measure) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb61-21"><a href="descriptives-and-visualizations.html#cb61-21"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb61-22"><a href="descriptives-and-visualizations.html#cb61-22"></a>    <span class="dt">mean =</span> <span class="kw">mean</span>(Value, <span class="dt">na.rm =</span> T),</span>
+<span id="cb61-23"><a href="descriptives-and-visualizations.html#cb61-23"></a>    <span class="dt">sd =</span> <span class="kw">sd</span>(Value, <span class="dt">na.rm =</span> T)</span>
+<span id="cb61-24"><a href="descriptives-and-visualizations.html#cb61-24"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb61-25"><a href="descriptives-and-visualizations.html#cb61-25"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb61-26"><a href="descriptives-and-visualizations.html#cb61-26"></a>    <span class="kw">across</span>(</span>
+<span id="cb61-27"><a href="descriptives-and-visualizations.html#cb61-27"></a>      mean<span class="op">:</span>sd,</span>
+<span id="cb61-28"><a href="descriptives-and-visualizations.html#cb61-28"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.x, <span class="dt">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb61-29"><a href="descriptives-and-visualizations.html#cb61-29"></a>    )</span>
+<span id="cb61-30"><a href="descriptives-and-visualizations.html#cb61-30"></a>  )</span>
+<span id="cb61-31"><a href="descriptives-and-visualizations.html#cb61-31"></a></span>
+<span id="cb61-32"><a href="descriptives-and-visualizations.html#cb61-32"></a><span class="kw">ggplot</span>(</span>
+<span id="cb61-33"><a href="descriptives-and-visualizations.html#cb61-33"></a>  dat,</span>
+<span id="cb61-34"><a href="descriptives-and-visualizations.html#cb61-34"></a>  <span class="kw">aes</span>(</span>
+<span id="cb61-35"><a href="descriptives-and-visualizations.html#cb61-35"></a>    <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb61-36"><a href="descriptives-and-visualizations.html#cb61-36"></a>    <span class="dt">y =</span> Value,</span>
+<span id="cb61-37"><a href="descriptives-and-visualizations.html#cb61-37"></a>    <span class="dt">color =</span> measure,</span>
+<span id="cb61-38"><a href="descriptives-and-visualizations.html#cb61-38"></a>    <span class="dt">fill =</span> measure,</span>
+<span id="cb61-39"><a href="descriptives-and-visualizations.html#cb61-39"></a>    <span class="dt">group =</span> <span class="dv">1</span></span>
+<span id="cb61-40"><a href="descriptives-and-visualizations.html#cb61-40"></a>  )</span>
+<span id="cb61-41"><a href="descriptives-and-visualizations.html#cb61-41"></a>) <span class="op">+</span></span>
+<span id="cb61-42"><a href="descriptives-and-visualizations.html#cb61-42"></a><span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb61-43"><a href="descriptives-and-visualizations.html#cb61-43"></a><span class="st">  </span><span class="kw">geom_line</span>(</span>
+<span id="cb61-44"><a href="descriptives-and-visualizations.html#cb61-44"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb61-45"><a href="descriptives-and-visualizations.html#cb61-45"></a>    <span class="kw">aes</span>(</span>
+<span id="cb61-46"><a href="descriptives-and-visualizations.html#cb61-46"></a>      <span class="dt">y =</span> mean</span>
+<span id="cb61-47"><a href="descriptives-and-visualizations.html#cb61-47"></a>    ),</span>
+<span id="cb61-48"><a href="descriptives-and-visualizations.html#cb61-48"></a>    <span class="dt">size =</span> <span class="fl">0.5</span></span>
+<span id="cb61-49"><a href="descriptives-and-visualizations.html#cb61-49"></a>  ) <span class="op">+</span></span>
+<span id="cb61-50"><a href="descriptives-and-visualizations.html#cb61-50"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>measure, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb61-51"><a href="descriptives-and-visualizations.html#cb61-51"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb61-52"><a href="descriptives-and-visualizations.html#cb61-52"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb61-53"><a href="descriptives-and-visualizations.html#cb61-53"></a>    <span class="kw">aes</span>(</span>
+<span id="cb61-54"><a href="descriptives-and-visualizations.html#cb61-54"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb61-55"><a href="descriptives-and-visualizations.html#cb61-55"></a>      <span class="dt">y =</span> <span class="fl">-0.5</span>,</span>
+<span id="cb61-56"><a href="descriptives-and-visualizations.html#cb61-56"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;M = &quot;</span>, mean)</span>
+<span id="cb61-57"><a href="descriptives-and-visualizations.html#cb61-57"></a>    ),</span>
+<span id="cb61-58"><a href="descriptives-and-visualizations.html#cb61-58"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb61-59"><a href="descriptives-and-visualizations.html#cb61-59"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb61-60"><a href="descriptives-and-visualizations.html#cb61-60"></a>  ) <span class="op">+</span></span>
+<span id="cb61-61"><a href="descriptives-and-visualizations.html#cb61-61"></a><span class="st">  </span><span class="kw">geom_text</span>(</span>
+<span id="cb61-62"><a href="descriptives-and-visualizations.html#cb61-62"></a>    <span class="dt">data =</span> dat_summary,</span>
+<span id="cb61-63"><a href="descriptives-and-visualizations.html#cb61-63"></a>    <span class="kw">aes</span>(</span>
+<span id="cb61-64"><a href="descriptives-and-visualizations.html#cb61-64"></a>      <span class="dt">x =</span> <span class="kw">as.factor</span>(wave),</span>
+<span id="cb61-65"><a href="descriptives-and-visualizations.html#cb61-65"></a>      <span class="dt">y =</span> <span class="fl">-0.9</span>,</span>
+<span id="cb61-66"><a href="descriptives-and-visualizations.html#cb61-66"></a>      <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;SD = &quot;</span>, sd)</span>
+<span id="cb61-67"><a href="descriptives-and-visualizations.html#cb61-67"></a>    ),</span>
+<span id="cb61-68"><a href="descriptives-and-visualizations.html#cb61-68"></a>    <span class="dt">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb61-69"><a href="descriptives-and-visualizations.html#cb61-69"></a>    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb61-70"><a href="descriptives-and-visualizations.html#cb61-70"></a>  ) <span class="op">+</span></span>
+<span id="cb61-71"><a href="descriptives-and-visualizations.html#cb61-71"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
+<span id="cb61-72"><a href="descriptives-and-visualizations.html#cb61-72"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values=</span>cb_palette) <span class="op">+</span></span>
+<span id="cb61-73"><a href="descriptives-and-visualizations.html#cb61-73"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> cb_palette) <span class="op">+</span></span>
+<span id="cb61-74"><a href="descriptives-and-visualizations.html#cb61-74"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Wave&quot;</span>) <span class="op">+</span></span>
+<span id="cb61-75"><a href="descriptives-and-visualizations.html#cb61-75"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb61-76"><a href="descriptives-and-visualizations.html#cb61-76"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb61-77"><a href="descriptives-and-visualizations.html#cb61-77"></a>    <span class="dt">strip.background.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb61-78"><a href="descriptives-and-visualizations.html#cb61-78"></a>    <span class="dt">strip.background.y =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb61-79"><a href="descriptives-and-visualizations.html#cb61-79"></a>    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb61-80"><a href="descriptives-and-visualizations.html#cb61-80"></a>  ) -&gt;<span class="st"> </span>figure5</span>
+<span id="cb61-81"><a href="descriptives-and-visualizations.html#cb61-81"></a></span>
+<span id="cb61-82"><a href="descriptives-and-visualizations.html#cb61-82"></a>figure5</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptives-and-visualizations.html#cb61-1"></a><span class="kw">ggsave</span>(</span>
-<span id="cb61-2"><a href="descriptives-and-visualizations.html#cb61-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.tiff&quot;</span>),</span>
-<span id="cb61-3"><a href="descriptives-and-visualizations.html#cb61-3"></a>  <span class="dt">plot =</span> figure5,</span>
-<span id="cb61-4"><a href="descriptives-and-visualizations.html#cb61-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
-<span id="cb61-5"><a href="descriptives-and-visualizations.html#cb61-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
-<span id="cb61-6"><a href="descriptives-and-visualizations.html#cb61-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb61-7"><a href="descriptives-and-visualizations.html#cb61-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
-<span id="cb61-8"><a href="descriptives-and-visualizations.html#cb61-8"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="descriptives-and-visualizations.html#cb62-1"></a><span class="kw">ggsave</span>(</span>
+<span id="cb62-2"><a href="descriptives-and-visualizations.html#cb62-2"></a>  <span class="kw">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.tiff&quot;</span>),</span>
+<span id="cb62-3"><a href="descriptives-and-visualizations.html#cb62-3"></a>  <span class="dt">plot =</span> figure5,</span>
+<span id="cb62-4"><a href="descriptives-and-visualizations.html#cb62-4"></a>  <span class="dt">width =</span> <span class="dv">21</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>,</span>
+<span id="cb62-5"><a href="descriptives-and-visualizations.html#cb62-5"></a>  <span class="dt">height =</span> <span class="fl">29.7</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.4</span>,</span>
+<span id="cb62-6"><a href="descriptives-and-visualizations.html#cb62-6"></a>  <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb62-7"><a href="descriptives-and-visualizations.html#cb62-7"></a>  <span class="dt">dpi =</span> <span class="dv">300</span></span>
+<span id="cb62-8"><a href="descriptives-and-visualizations.html#cb62-8"></a>)</span></code></pre></div>
 
 </div>
 </div>

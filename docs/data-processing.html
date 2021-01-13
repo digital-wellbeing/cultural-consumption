@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2020-12-07" />
+<meta name="date" content="2021-01-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,22 +228,22 @@ Other than that, the data were untouched.</p>
 You can download them if you set the code chunk below to <code>eval=TRUE</code>.
 Downloading only works when the OSF project is public.
 If it isn’t during peer review, you’ll need to paste the data files from the OSF to the <code>data/</code> folder manually.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-processing.html#cb3-1"></a><span class="co"># create directory</span></span>
-<span id="cb3-2"><a href="data-processing.html#cb3-2"></a><span class="kw">dir.create</span>(<span class="st">&quot;data/&quot;</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)</span>
-<span id="cb3-3"><a href="data-processing.html#cb3-3"></a></span>
-<span id="cb3-4"><a href="data-processing.html#cb3-4"></a><span class="co"># download models</span></span>
-<span id="cb3-5"><a href="data-processing.html#cb3-5"></a><span class="kw">osf_retrieve_node</span>(<span class="st">&quot;https://osf.io/yn7sx/&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-6"><a href="data-processing.html#cb3-6"></a><span class="st">  </span><span class="kw">osf_ls_nodes</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-7"><a href="data-processing.html#cb3-7"></a><span class="st">  </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;data&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-8"><a href="data-processing.html#cb3-8"></a><span class="st">  </span><span class="kw">osf_ls_files</span>(</span>
-<span id="cb3-9"><a href="data-processing.html#cb3-9"></a>    .,</span>
-<span id="cb3-10"><a href="data-processing.html#cb3-10"></a>    <span class="dt">n_max =</span> <span class="ot">Inf</span></span>
-<span id="cb3-11"><a href="data-processing.html#cb3-11"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-12"><a href="data-processing.html#cb3-12"></a><span class="st">  </span><span class="kw">osf_download</span>(</span>
-<span id="cb3-13"><a href="data-processing.html#cb3-13"></a>    .,</span>
-<span id="cb3-14"><a href="data-processing.html#cb3-14"></a>    <span class="dt">path =</span> <span class="kw">here</span>(<span class="st">&quot;data&quot;</span>),</span>
-<span id="cb3-15"><a href="data-processing.html#cb3-15"></a>    <span class="dt">progress =</span> <span class="ot">TRUE</span></span>
-<span id="cb3-16"><a href="data-processing.html#cb3-16"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-processing.html#cb3-1"></a><span class="co"># # create directory</span></span>
+<span id="cb3-2"><a href="data-processing.html#cb3-2"></a><span class="co"># dir.create(&quot;data/&quot;, FALSE, TRUE)</span></span>
+<span id="cb3-3"><a href="data-processing.html#cb3-3"></a><span class="co"># </span></span>
+<span id="cb3-4"><a href="data-processing.html#cb3-4"></a><span class="co"># # download models</span></span>
+<span id="cb3-5"><a href="data-processing.html#cb3-5"></a><span class="co"># osf_retrieve_node(&quot;https://osf.io/yn7sx/&quot;) %&gt;% </span></span>
+<span id="cb3-6"><a href="data-processing.html#cb3-6"></a><span class="co">#   osf_ls_nodes() %&gt;% </span></span>
+<span id="cb3-7"><a href="data-processing.html#cb3-7"></a><span class="co">#   filter(name == &quot;data&quot;) %&gt;% </span></span>
+<span id="cb3-8"><a href="data-processing.html#cb3-8"></a><span class="co">#   osf_ls_files(</span></span>
+<span id="cb3-9"><a href="data-processing.html#cb3-9"></a><span class="co">#     .,</span></span>
+<span id="cb3-10"><a href="data-processing.html#cb3-10"></a><span class="co">#     n_max = Inf</span></span>
+<span id="cb3-11"><a href="data-processing.html#cb3-11"></a><span class="co">#   ) %&gt;% </span></span>
+<span id="cb3-12"><a href="data-processing.html#cb3-12"></a><span class="co">#   osf_download(</span></span>
+<span id="cb3-13"><a href="data-processing.html#cb3-13"></a><span class="co">#     .,</span></span>
+<span id="cb3-14"><a href="data-processing.html#cb3-14"></a><span class="co">#     path = here(&quot;data&quot;),</span></span>
+<span id="cb3-15"><a href="data-processing.html#cb3-15"></a><span class="co">#     progress = TRUE</span></span>
+<span id="cb3-16"><a href="data-processing.html#cb3-16"></a><span class="co">#   )</span></span></code></pre></div>
 <div id="read-waves-2-6" class="section level2">
 <h2><span class="header-section-number">2.1</span> Read waves 2-6</h2>
 <p>We’ll start with loading the data for waves 2 to 6.
@@ -829,134 +829,112 @@ We can’t collapse these to one variable because these questions were multiple 
 <span id="cb8-6"><a href="data-processing.html#cb8-6"></a>    <span class="dt">wave =</span> dWeekMerged,</span>
 <span id="cb8-7"><a href="data-processing.html#cb8-7"></a>    </span>
 <span id="cb8-8"><a href="data-processing.html#cb8-8"></a>    <span class="co"># demographics</span></span>
-<span id="cb8-9"><a href="data-processing.html#cb8-9"></a>    <span class="dt">occupation_main_earner =</span> PS1a,</span>
-<span id="cb8-10"><a href="data-processing.html#cb8-10"></a>    <span class="dt">main_earner =</span> PS1b,</span>
-<span id="cb8-11"><a href="data-processing.html#cb8-11"></a>    <span class="dt">income_main_earner =</span> PS1c,</span>
-<span id="cb8-12"><a href="data-processing.html#cb8-12"></a>    <span class="dt">income_own =</span> A7,</span>
-<span id="cb8-13"><a href="data-processing.html#cb8-13"></a>    <span class="dt">ethnicity =</span> PS2,</span>
-<span id="cb8-14"><a href="data-processing.html#cb8-14"></a>    <span class="dt">internet_use =</span> A2,</span>
-<span id="cb8-15"><a href="data-processing.html#cb8-15"></a>    <span class="dt">gender =</span> A4,</span>
-<span id="cb8-16"><a href="data-processing.html#cb8-16"></a>    <span class="dt">age =</span> A5,</span>
-<span id="cb8-17"><a href="data-processing.html#cb8-17"></a>    <span class="dt">employment =</span> A6x1,</span>
-<span id="cb8-18"><a href="data-processing.html#cb8-18"></a>    <span class="dt">living_on_my_own =</span> A6x2r1,</span>
-<span id="cb8-19"><a href="data-processing.html#cb8-19"></a>    <span class="dt">living_with_children =</span> A6x2r2,</span>
-<span id="cb8-20"><a href="data-processing.html#cb8-20"></a>    <span class="dt">living_with_partner =</span> A6x2r3,</span>
-<span id="cb8-21"><a href="data-processing.html#cb8-21"></a>    <span class="dt">living_with_partner_children =</span> A6x2r4,</span>
-<span id="cb8-22"><a href="data-processing.html#cb8-22"></a>    <span class="dt">living_with_family =</span> A6x2r5,</span>
-<span id="cb8-23"><a href="data-processing.html#cb8-23"></a>    <span class="dt">living_with_parents =</span> A6x2r6,</span>
-<span id="cb8-24"><a href="data-processing.html#cb8-24"></a>    <span class="dt">living_with_friends =</span> A6x2r7,</span>
-<span id="cb8-25"><a href="data-processing.html#cb8-25"></a>    <span class="dt">region =</span> A8,</span>
-<span id="cb8-26"><a href="data-processing.html#cb8-26"></a>    <span class="dt">covid_work_home_often =</span> A6x4r1,</span>
-<span id="cb8-27"><a href="data-processing.html#cb8-27"></a>    <span class="dt">covid_work_home_always =</span> A6x4r2,</span>
-<span id="cb8-28"><a href="data-processing.html#cb8-28"></a>    <span class="dt">covid_work_outside =</span> A6x4r3,</span>
-<span id="cb8-29"><a href="data-processing.html#cb8-29"></a>    <span class="dt">covid_work_stopped =</span> A6x4r4,</span>
-<span id="cb8-30"><a href="data-processing.html#cb8-30"></a>    <span class="dt">covid_home_schooling =</span> A6x4r5,</span>
-<span id="cb8-31"><a href="data-processing.html#cb8-31"></a>    <span class="dt">covid_self_isolating =</span> A6x4r6,</span>
-<span id="cb8-32"><a href="data-processing.html#cb8-32"></a>    <span class="dt">covid_none =</span> A6x4r99,</span>
-<span id="cb8-33"><a href="data-processing.html#cb8-33"></a>    </span>
-<span id="cb8-34"><a href="data-processing.html#cb8-34"></a>    <span class="co"># filter questions: downloaded</span></span>
-<span id="cb8-35"><a href="data-processing.html#cb8-35"></a>    <span class="dt">downloaded_music =</span> B1r1,</span>
-<span id="cb8-36"><a href="data-processing.html#cb8-36"></a>    <span class="dt">downloaded_music_videos =</span> B1r2,</span>
-<span id="cb8-37"><a href="data-processing.html#cb8-37"></a>    <span class="dt">downloaded_video_games =</span> B1r3,</span>
-<span id="cb8-38"><a href="data-processing.html#cb8-38"></a>    <span class="dt">downloaded_software =</span> B1r4,</span>
-<span id="cb8-39"><a href="data-processing.html#cb8-39"></a>    <span class="dt">downloaded_films =</span> B1r5,</span>
-<span id="cb8-40"><a href="data-processing.html#cb8-40"></a>    <span class="dt">downloaded_tv =</span> B1r6,</span>
-<span id="cb8-41"><a href="data-processing.html#cb8-41"></a>    <span class="dt">downloaded_sports =</span> B1r7,</span>
-<span id="cb8-42"><a href="data-processing.html#cb8-42"></a>    <span class="dt">downloaded_video_clips =</span> B1r8,</span>
-<span id="cb8-43"><a href="data-processing.html#cb8-43"></a>    <span class="dt">downloaded_ebooks =</span> B1r9,</span>
-<span id="cb8-44"><a href="data-processing.html#cb8-44"></a>    <span class="dt">downloaded_magazines =</span> B1r10,</span>
-<span id="cb8-45"><a href="data-processing.html#cb8-45"></a>    <span class="dt">downloaded_audiobooks =</span> B1r11,</span>
-<span id="cb8-46"><a href="data-processing.html#cb8-46"></a>    <span class="dt">downloaded_images =</span> B1r12,</span>
-<span id="cb8-47"><a href="data-processing.html#cb8-47"></a>    <span class="dt">downloaded_none =</span> B1r13,</span>
-<span id="cb8-48"><a href="data-processing.html#cb8-48"></a>    </span>
-<span id="cb8-49"><a href="data-processing.html#cb8-49"></a>    <span class="co"># filter questions: streamed</span></span>
-<span id="cb8-50"><a href="data-processing.html#cb8-50"></a>    <span class="dt">streamed_music =</span> B2r1,</span>
-<span id="cb8-51"><a href="data-processing.html#cb8-51"></a>    <span class="dt">streamed_music_videos =</span> B2r2,</span>
-<span id="cb8-52"><a href="data-processing.html#cb8-52"></a>    <span class="dt">streamed_video_games =</span> B2r3,</span>
-<span id="cb8-53"><a href="data-processing.html#cb8-53"></a>    <span class="dt">streamed_software =</span> B2r4,</span>
-<span id="cb8-54"><a href="data-processing.html#cb8-54"></a>    <span class="dt">streamed_films =</span> B2r5,</span>
-<span id="cb8-55"><a href="data-processing.html#cb8-55"></a>    <span class="dt">streamed_tv =</span> B2r6,</span>
-<span id="cb8-56"><a href="data-processing.html#cb8-56"></a>    <span class="dt">streamed_sports =</span> B2r7,</span>
-<span id="cb8-57"><a href="data-processing.html#cb8-57"></a>    <span class="dt">streamed_video_clips =</span> B2r8,</span>
-<span id="cb8-58"><a href="data-processing.html#cb8-58"></a>    <span class="dt">streamed_ebooks =</span> B2r9,</span>
-<span id="cb8-59"><a href="data-processing.html#cb8-59"></a>    <span class="dt">streamed_magazines =</span> B2r10,</span>
-<span id="cb8-60"><a href="data-processing.html#cb8-60"></a>    <span class="dt">streamed_audiobooks =</span> B2r11,</span>
-<span id="cb8-61"><a href="data-processing.html#cb8-61"></a>    <span class="dt">streamed_images =</span> B2r12,</span>
-<span id="cb8-62"><a href="data-processing.html#cb8-62"></a>    <span class="dt">streamed_none =</span> B2r13,</span>
-<span id="cb8-63"><a href="data-processing.html#cb8-63"></a>    </span>
-<span id="cb8-64"><a href="data-processing.html#cb8-64"></a>    <span class="co"># filter questions: shared</span></span>
-<span id="cb8-65"><a href="data-processing.html#cb8-65"></a>    <span class="dt">shared_music =</span> B3r1,</span>
-<span id="cb8-66"><a href="data-processing.html#cb8-66"></a>    <span class="dt">shared_music_videos =</span> B3r2,</span>
-<span id="cb8-67"><a href="data-processing.html#cb8-67"></a>    <span class="dt">shared_video_games =</span> B3r3,</span>
-<span id="cb8-68"><a href="data-processing.html#cb8-68"></a>    <span class="dt">shared_software =</span> B3r4,</span>
-<span id="cb8-69"><a href="data-processing.html#cb8-69"></a>    <span class="dt">shared_films =</span> B3r5,</span>
-<span id="cb8-70"><a href="data-processing.html#cb8-70"></a>    <span class="dt">shared_tv =</span> B3r6,</span>
-<span id="cb8-71"><a href="data-processing.html#cb8-71"></a>    <span class="dt">shared_sports =</span> B3r7,</span>
-<span id="cb8-72"><a href="data-processing.html#cb8-72"></a>    <span class="dt">shared_video_clips =</span> B3r8,</span>
-<span id="cb8-73"><a href="data-processing.html#cb8-73"></a>    <span class="dt">shared_ebooks =</span> B3r9,</span>
-<span id="cb8-74"><a href="data-processing.html#cb8-74"></a>    <span class="dt">shared_magazines =</span> B3r10,</span>
-<span id="cb8-75"><a href="data-processing.html#cb8-75"></a>    <span class="dt">shared_audiobooks =</span> B3r11,</span>
-<span id="cb8-76"><a href="data-processing.html#cb8-76"></a>    <span class="dt">shared_images =</span> B3r12,</span>
-<span id="cb8-77"><a href="data-processing.html#cb8-77"></a>    <span class="dt">shared_none =</span> B3r13,</span>
-<span id="cb8-78"><a href="data-processing.html#cb8-78"></a>    </span>
-<span id="cb8-79"><a href="data-processing.html#cb8-79"></a>    <span class="co"># filter questions: bought</span></span>
-<span id="cb8-80"><a href="data-processing.html#cb8-80"></a>    <span class="dt">bought_music =</span> B4r1,</span>
-<span id="cb8-81"><a href="data-processing.html#cb8-81"></a>    <span class="dt">bought_video_games =</span> B4r2,</span>
-<span id="cb8-82"><a href="data-processing.html#cb8-82"></a>    <span class="dt">bought_software =</span> B4r3,</span>
-<span id="cb8-83"><a href="data-processing.html#cb8-83"></a>    <span class="dt">bought_films =</span> B4r4,</span>
-<span id="cb8-84"><a href="data-processing.html#cb8-84"></a>    <span class="dt">bought_tv =</span> B4r5,</span>
-<span id="cb8-85"><a href="data-processing.html#cb8-85"></a>    <span class="dt">bought_books =</span> B4r6,</span>
-<span id="cb8-86"><a href="data-processing.html#cb8-86"></a>    <span class="dt">bought_magazines =</span> B4r7,</span>
-<span id="cb8-87"><a href="data-processing.html#cb8-87"></a>    <span class="dt">bought_audiobooks =</span> B4r8,</span>
-<span id="cb8-88"><a href="data-processing.html#cb8-88"></a>    <span class="dt">bought_none =</span> B4r9,</span>
-<span id="cb8-89"><a href="data-processing.html#cb8-89"></a>    </span>
-<span id="cb8-90"><a href="data-processing.html#cb8-90"></a>    <span class="co"># music</span></span>
-<span id="cb8-91"><a href="data-processing.html#cb8-91"></a>    <span class="dt">music_identity_ =</span> C1x1r1<span class="op">:</span>C1x1r7,</span>
-<span id="cb8-92"><a href="data-processing.html#cb8-92"></a>    <span class="dt">music_hours =</span> C1x1aiHoursc1,</span>
-<span id="cb8-93"><a href="data-processing.html#cb8-93"></a>    <span class="dt">music_minutes =</span> C1x1aiMinutesc2,</span>
-<span id="cb8-94"><a href="data-processing.html#cb8-94"></a>    <span class="dt">music_estimate =</span> C1x1aii,</span>
-<span id="cb8-95"><a href="data-processing.html#cb8-95"></a>    </span>
-<span id="cb8-96"><a href="data-processing.html#cb8-96"></a>    <span class="co"># films</span></span>
-<span id="cb8-97"><a href="data-processing.html#cb8-97"></a>    <span class="dt">films_identity_ =</span> C2x1r1<span class="op">:</span>C2x1r7,</span>
-<span id="cb8-98"><a href="data-processing.html#cb8-98"></a>    <span class="dt">films_hours =</span> C2x1aiHoursc1,</span>
-<span id="cb8-99"><a href="data-processing.html#cb8-99"></a>    <span class="dt">films_minutes =</span> C2x1aiMinutesc2,</span>
-<span id="cb8-100"><a href="data-processing.html#cb8-100"></a>    <span class="dt">films_estimate =</span> C2x1aii,</span>
-<span id="cb8-101"><a href="data-processing.html#cb8-101"></a>    </span>
-<span id="cb8-102"><a href="data-processing.html#cb8-102"></a>    <span class="co"># tv</span></span>
-<span id="cb8-103"><a href="data-processing.html#cb8-103"></a>    <span class="dt">tv_identity_ =</span> C3x1r1<span class="op">:</span>C3x1r7,</span>
-<span id="cb8-104"><a href="data-processing.html#cb8-104"></a>    <span class="dt">tv_hours =</span> C3x1aiHoursc1,</span>
-<span id="cb8-105"><a href="data-processing.html#cb8-105"></a>    <span class="dt">tv_minutes =</span> C3x1aiMinutesc2,</span>
-<span id="cb8-106"><a href="data-processing.html#cb8-106"></a>    <span class="dt">tv_estimate =</span> C3x1aii,</span>
-<span id="cb8-107"><a href="data-processing.html#cb8-107"></a>    </span>
-<span id="cb8-108"><a href="data-processing.html#cb8-108"></a>    <span class="co"># video games</span></span>
-<span id="cb8-109"><a href="data-processing.html#cb8-109"></a>    <span class="dt">games_identity_ =</span> C5x1r1<span class="op">:</span>C5x1r7,</span>
-<span id="cb8-110"><a href="data-processing.html#cb8-110"></a>    <span class="dt">games_hours =</span> C5x1aiHoursc1,</span>
-<span id="cb8-111"><a href="data-processing.html#cb8-111"></a>    <span class="dt">games_minutes =</span> C5x1aiMinutesc2,</span>
-<span id="cb8-112"><a href="data-processing.html#cb8-112"></a>    <span class="dt">games_estimate =</span> C5x1aii,</span>
-<span id="cb8-113"><a href="data-processing.html#cb8-113"></a>    </span>
-<span id="cb8-114"><a href="data-processing.html#cb8-114"></a>    <span class="co"># e-publishing</span></span>
-<span id="cb8-115"><a href="data-processing.html#cb8-115"></a>    <span class="dt">e_publishing_identity_ =</span> C7x1r1<span class="op">:</span>C7x1r7,</span>
-<span id="cb8-116"><a href="data-processing.html#cb8-116"></a>    </span>
-<span id="cb8-117"><a href="data-processing.html#cb8-117"></a>    <span class="co"># (e-)books</span></span>
-<span id="cb8-118"><a href="data-processing.html#cb8-118"></a>    <span class="dt">books_hours =</span> C7ax1aiHoursc1,</span>
-<span id="cb8-119"><a href="data-processing.html#cb8-119"></a>    <span class="dt">books_minutes =</span> C7ax1aiMinutesc2,</span>
-<span id="cb8-120"><a href="data-processing.html#cb8-120"></a>    <span class="dt">books_estimate =</span> C7ax1aii,</span>
-<span id="cb8-121"><a href="data-processing.html#cb8-121"></a>    </span>
-<span id="cb8-122"><a href="data-processing.html#cb8-122"></a>    <span class="co"># magazines</span></span>
-<span id="cb8-123"><a href="data-processing.html#cb8-123"></a>    <span class="dt">magazines_hours =</span> C7bx1aiHoursc1,</span>
-<span id="cb8-124"><a href="data-processing.html#cb8-124"></a>    <span class="dt">magazines_minutes =</span> C7bx1aiMinutesc2,</span>
-<span id="cb8-125"><a href="data-processing.html#cb8-125"></a>    <span class="dt">magazines_estimate =</span> C7bx1aii,</span>
-<span id="cb8-126"><a href="data-processing.html#cb8-126"></a>    </span>
-<span id="cb8-127"><a href="data-processing.html#cb8-127"></a>    <span class="co"># audiobooks</span></span>
-<span id="cb8-128"><a href="data-processing.html#cb8-128"></a>    <span class="dt">audiobooks_hours =</span> C7cx1aiHoursc1,</span>
-<span id="cb8-129"><a href="data-processing.html#cb8-129"></a>    <span class="dt">audiobooks_minutes =</span> C7cx1aiMinutesc2,</span>
-<span id="cb8-130"><a href="data-processing.html#cb8-130"></a>    <span class="dt">audiobooks_estimate =</span> C7cx1aii,</span>
-<span id="cb8-131"><a href="data-processing.html#cb8-131"></a>    </span>
-<span id="cb8-132"><a href="data-processing.html#cb8-132"></a>    <span class="co"># well-being</span></span>
-<span id="cb8-133"><a href="data-processing.html#cb8-133"></a>    <span class="dt">life_satisfaction_ =</span> QD2r1<span class="op">:</span>QD2r2,</span>
-<span id="cb8-134"><a href="data-processing.html#cb8-134"></a>    <span class="dt">well_being_ =</span> QD2r3<span class="op">:</span>QD2r4</span>
-<span id="cb8-135"><a href="data-processing.html#cb8-135"></a>  )</span></code></pre></div>
-<p>Alright, now to the tedious part: transforming all variables to the correct type and assigning informative factor level labels.
+<span id="cb8-9"><a href="data-processing.html#cb8-9"></a>    <span class="dt">gender =</span> A4,</span>
+<span id="cb8-10"><a href="data-processing.html#cb8-10"></a>    <span class="dt">age =</span> A5,</span>
+<span id="cb8-11"><a href="data-processing.html#cb8-11"></a>    </span>
+<span id="cb8-12"><a href="data-processing.html#cb8-12"></a>    <span class="co"># filter questions: downloaded</span></span>
+<span id="cb8-13"><a href="data-processing.html#cb8-13"></a>    <span class="dt">downloaded_music =</span> B1r1,</span>
+<span id="cb8-14"><a href="data-processing.html#cb8-14"></a>    <span class="dt">downloaded_music_videos =</span> B1r2,</span>
+<span id="cb8-15"><a href="data-processing.html#cb8-15"></a>    <span class="dt">downloaded_video_games =</span> B1r3,</span>
+<span id="cb8-16"><a href="data-processing.html#cb8-16"></a>    <span class="dt">downloaded_software =</span> B1r4,</span>
+<span id="cb8-17"><a href="data-processing.html#cb8-17"></a>    <span class="dt">downloaded_films =</span> B1r5,</span>
+<span id="cb8-18"><a href="data-processing.html#cb8-18"></a>    <span class="dt">downloaded_tv =</span> B1r6,</span>
+<span id="cb8-19"><a href="data-processing.html#cb8-19"></a>    <span class="dt">downloaded_sports =</span> B1r7,</span>
+<span id="cb8-20"><a href="data-processing.html#cb8-20"></a>    <span class="dt">downloaded_video_clips =</span> B1r8,</span>
+<span id="cb8-21"><a href="data-processing.html#cb8-21"></a>    <span class="dt">downloaded_ebooks =</span> B1r9,</span>
+<span id="cb8-22"><a href="data-processing.html#cb8-22"></a>    <span class="dt">downloaded_magazines =</span> B1r10,</span>
+<span id="cb8-23"><a href="data-processing.html#cb8-23"></a>    <span class="dt">downloaded_audiobooks =</span> B1r11,</span>
+<span id="cb8-24"><a href="data-processing.html#cb8-24"></a>    <span class="dt">downloaded_images =</span> B1r12,</span>
+<span id="cb8-25"><a href="data-processing.html#cb8-25"></a>    <span class="dt">downloaded_none =</span> B1r13,</span>
+<span id="cb8-26"><a href="data-processing.html#cb8-26"></a>    </span>
+<span id="cb8-27"><a href="data-processing.html#cb8-27"></a>    <span class="co"># filter questions: streamed</span></span>
+<span id="cb8-28"><a href="data-processing.html#cb8-28"></a>    <span class="dt">streamed_music =</span> B2r1,</span>
+<span id="cb8-29"><a href="data-processing.html#cb8-29"></a>    <span class="dt">streamed_music_videos =</span> B2r2,</span>
+<span id="cb8-30"><a href="data-processing.html#cb8-30"></a>    <span class="dt">streamed_video_games =</span> B2r3,</span>
+<span id="cb8-31"><a href="data-processing.html#cb8-31"></a>    <span class="dt">streamed_software =</span> B2r4,</span>
+<span id="cb8-32"><a href="data-processing.html#cb8-32"></a>    <span class="dt">streamed_films =</span> B2r5,</span>
+<span id="cb8-33"><a href="data-processing.html#cb8-33"></a>    <span class="dt">streamed_tv =</span> B2r6,</span>
+<span id="cb8-34"><a href="data-processing.html#cb8-34"></a>    <span class="dt">streamed_sports =</span> B2r7,</span>
+<span id="cb8-35"><a href="data-processing.html#cb8-35"></a>    <span class="dt">streamed_video_clips =</span> B2r8,</span>
+<span id="cb8-36"><a href="data-processing.html#cb8-36"></a>    <span class="dt">streamed_ebooks =</span> B2r9,</span>
+<span id="cb8-37"><a href="data-processing.html#cb8-37"></a>    <span class="dt">streamed_magazines =</span> B2r10,</span>
+<span id="cb8-38"><a href="data-processing.html#cb8-38"></a>    <span class="dt">streamed_audiobooks =</span> B2r11,</span>
+<span id="cb8-39"><a href="data-processing.html#cb8-39"></a>    <span class="dt">streamed_images =</span> B2r12,</span>
+<span id="cb8-40"><a href="data-processing.html#cb8-40"></a>    <span class="dt">streamed_none =</span> B2r13,</span>
+<span id="cb8-41"><a href="data-processing.html#cb8-41"></a>    </span>
+<span id="cb8-42"><a href="data-processing.html#cb8-42"></a>    <span class="co"># filter questions: shared</span></span>
+<span id="cb8-43"><a href="data-processing.html#cb8-43"></a>    <span class="dt">shared_music =</span> B3r1,</span>
+<span id="cb8-44"><a href="data-processing.html#cb8-44"></a>    <span class="dt">shared_music_videos =</span> B3r2,</span>
+<span id="cb8-45"><a href="data-processing.html#cb8-45"></a>    <span class="dt">shared_video_games =</span> B3r3,</span>
+<span id="cb8-46"><a href="data-processing.html#cb8-46"></a>    <span class="dt">shared_software =</span> B3r4,</span>
+<span id="cb8-47"><a href="data-processing.html#cb8-47"></a>    <span class="dt">shared_films =</span> B3r5,</span>
+<span id="cb8-48"><a href="data-processing.html#cb8-48"></a>    <span class="dt">shared_tv =</span> B3r6,</span>
+<span id="cb8-49"><a href="data-processing.html#cb8-49"></a>    <span class="dt">shared_sports =</span> B3r7,</span>
+<span id="cb8-50"><a href="data-processing.html#cb8-50"></a>    <span class="dt">shared_video_clips =</span> B3r8,</span>
+<span id="cb8-51"><a href="data-processing.html#cb8-51"></a>    <span class="dt">shared_ebooks =</span> B3r9,</span>
+<span id="cb8-52"><a href="data-processing.html#cb8-52"></a>    <span class="dt">shared_magazines =</span> B3r10,</span>
+<span id="cb8-53"><a href="data-processing.html#cb8-53"></a>    <span class="dt">shared_audiobooks =</span> B3r11,</span>
+<span id="cb8-54"><a href="data-processing.html#cb8-54"></a>    <span class="dt">shared_images =</span> B3r12,</span>
+<span id="cb8-55"><a href="data-processing.html#cb8-55"></a>    <span class="dt">shared_none =</span> B3r13,</span>
+<span id="cb8-56"><a href="data-processing.html#cb8-56"></a>    </span>
+<span id="cb8-57"><a href="data-processing.html#cb8-57"></a>    <span class="co"># filter questions: bought</span></span>
+<span id="cb8-58"><a href="data-processing.html#cb8-58"></a>    <span class="dt">bought_music =</span> B4r1,</span>
+<span id="cb8-59"><a href="data-processing.html#cb8-59"></a>    <span class="dt">bought_video_games =</span> B4r2,</span>
+<span id="cb8-60"><a href="data-processing.html#cb8-60"></a>    <span class="dt">bought_software =</span> B4r3,</span>
+<span id="cb8-61"><a href="data-processing.html#cb8-61"></a>    <span class="dt">bought_films =</span> B4r4,</span>
+<span id="cb8-62"><a href="data-processing.html#cb8-62"></a>    <span class="dt">bought_tv =</span> B4r5,</span>
+<span id="cb8-63"><a href="data-processing.html#cb8-63"></a>    <span class="dt">bought_books =</span> B4r6,</span>
+<span id="cb8-64"><a href="data-processing.html#cb8-64"></a>    <span class="dt">bought_magazines =</span> B4r7,</span>
+<span id="cb8-65"><a href="data-processing.html#cb8-65"></a>    <span class="dt">bought_audiobooks =</span> B4r8,</span>
+<span id="cb8-66"><a href="data-processing.html#cb8-66"></a>    <span class="dt">bought_none =</span> B4r9,</span>
+<span id="cb8-67"><a href="data-processing.html#cb8-67"></a>    </span>
+<span id="cb8-68"><a href="data-processing.html#cb8-68"></a>    <span class="co"># music</span></span>
+<span id="cb8-69"><a href="data-processing.html#cb8-69"></a>    <span class="dt">music_identity_ =</span> C1x1r1<span class="op">:</span>C1x1r7,</span>
+<span id="cb8-70"><a href="data-processing.html#cb8-70"></a>    <span class="dt">music_hours =</span> C1x1aiHoursc1,</span>
+<span id="cb8-71"><a href="data-processing.html#cb8-71"></a>    <span class="dt">music_minutes =</span> C1x1aiMinutesc2,</span>
+<span id="cb8-72"><a href="data-processing.html#cb8-72"></a>    <span class="dt">music_estimate =</span> C1x1aii,</span>
+<span id="cb8-73"><a href="data-processing.html#cb8-73"></a>    </span>
+<span id="cb8-74"><a href="data-processing.html#cb8-74"></a>    <span class="co"># films</span></span>
+<span id="cb8-75"><a href="data-processing.html#cb8-75"></a>    <span class="dt">films_identity_ =</span> C2x1r1<span class="op">:</span>C2x1r7,</span>
+<span id="cb8-76"><a href="data-processing.html#cb8-76"></a>    <span class="dt">films_hours =</span> C2x1aiHoursc1,</span>
+<span id="cb8-77"><a href="data-processing.html#cb8-77"></a>    <span class="dt">films_minutes =</span> C2x1aiMinutesc2,</span>
+<span id="cb8-78"><a href="data-processing.html#cb8-78"></a>    <span class="dt">films_estimate =</span> C2x1aii,</span>
+<span id="cb8-79"><a href="data-processing.html#cb8-79"></a>    </span>
+<span id="cb8-80"><a href="data-processing.html#cb8-80"></a>    <span class="co"># tv</span></span>
+<span id="cb8-81"><a href="data-processing.html#cb8-81"></a>    <span class="dt">tv_identity_ =</span> C3x1r1<span class="op">:</span>C3x1r7,</span>
+<span id="cb8-82"><a href="data-processing.html#cb8-82"></a>    <span class="dt">tv_hours =</span> C3x1aiHoursc1,</span>
+<span id="cb8-83"><a href="data-processing.html#cb8-83"></a>    <span class="dt">tv_minutes =</span> C3x1aiMinutesc2,</span>
+<span id="cb8-84"><a href="data-processing.html#cb8-84"></a>    <span class="dt">tv_estimate =</span> C3x1aii,</span>
+<span id="cb8-85"><a href="data-processing.html#cb8-85"></a>    </span>
+<span id="cb8-86"><a href="data-processing.html#cb8-86"></a>    <span class="co"># video games</span></span>
+<span id="cb8-87"><a href="data-processing.html#cb8-87"></a>    <span class="dt">games_identity_ =</span> C5x1r1<span class="op">:</span>C5x1r7,</span>
+<span id="cb8-88"><a href="data-processing.html#cb8-88"></a>    <span class="dt">games_hours =</span> C5x1aiHoursc1,</span>
+<span id="cb8-89"><a href="data-processing.html#cb8-89"></a>    <span class="dt">games_minutes =</span> C5x1aiMinutesc2,</span>
+<span id="cb8-90"><a href="data-processing.html#cb8-90"></a>    <span class="dt">games_estimate =</span> C5x1aii,</span>
+<span id="cb8-91"><a href="data-processing.html#cb8-91"></a>    </span>
+<span id="cb8-92"><a href="data-processing.html#cb8-92"></a>    <span class="co"># e-publishing</span></span>
+<span id="cb8-93"><a href="data-processing.html#cb8-93"></a>    <span class="dt">e_publishing_identity_ =</span> C7x1r1<span class="op">:</span>C7x1r7,</span>
+<span id="cb8-94"><a href="data-processing.html#cb8-94"></a>    </span>
+<span id="cb8-95"><a href="data-processing.html#cb8-95"></a>    <span class="co"># (e-)books</span></span>
+<span id="cb8-96"><a href="data-processing.html#cb8-96"></a>    <span class="dt">books_hours =</span> C7ax1aiHoursc1,</span>
+<span id="cb8-97"><a href="data-processing.html#cb8-97"></a>    <span class="dt">books_minutes =</span> C7ax1aiMinutesc2,</span>
+<span id="cb8-98"><a href="data-processing.html#cb8-98"></a>    <span class="dt">books_estimate =</span> C7ax1aii,</span>
+<span id="cb8-99"><a href="data-processing.html#cb8-99"></a>    </span>
+<span id="cb8-100"><a href="data-processing.html#cb8-100"></a>    <span class="co"># magazines</span></span>
+<span id="cb8-101"><a href="data-processing.html#cb8-101"></a>    <span class="dt">magazines_hours =</span> C7bx1aiHoursc1,</span>
+<span id="cb8-102"><a href="data-processing.html#cb8-102"></a>    <span class="dt">magazines_minutes =</span> C7bx1aiMinutesc2,</span>
+<span id="cb8-103"><a href="data-processing.html#cb8-103"></a>    <span class="dt">magazines_estimate =</span> C7bx1aii,</span>
+<span id="cb8-104"><a href="data-processing.html#cb8-104"></a>    </span>
+<span id="cb8-105"><a href="data-processing.html#cb8-105"></a>    <span class="co"># audiobooks</span></span>
+<span id="cb8-106"><a href="data-processing.html#cb8-106"></a>    <span class="dt">audiobooks_hours =</span> C7cx1aiHoursc1,</span>
+<span id="cb8-107"><a href="data-processing.html#cb8-107"></a>    <span class="dt">audiobooks_minutes =</span> C7cx1aiMinutesc2,</span>
+<span id="cb8-108"><a href="data-processing.html#cb8-108"></a>    <span class="dt">audiobooks_estimate =</span> C7cx1aii,</span>
+<span id="cb8-109"><a href="data-processing.html#cb8-109"></a>    </span>
+<span id="cb8-110"><a href="data-processing.html#cb8-110"></a>    <span class="co"># well-being</span></span>
+<span id="cb8-111"><a href="data-processing.html#cb8-111"></a>    <span class="dt">life_satisfaction_ =</span> QD2r1<span class="op">:</span>QD2r2,</span>
+<span id="cb8-112"><a href="data-processing.html#cb8-112"></a>    <span class="dt">well_being_ =</span> QD2r3<span class="op">:</span>QD2r4</span>
+<span id="cb8-113"><a href="data-processing.html#cb8-113"></a>  )</span></code></pre></div>
+<p>Alright, now to transforming all variables to the correct type and assigning informative factor level labels.
 Note that <code>id</code> now is numeric which can be misleading, which is why I add <code>pp_</code> (for participant) before the ID number.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-processing.html#cb9-1"></a>working_file &lt;-<span class="st"> </span></span>
 <span id="cb9-2"><a href="data-processing.html#cb9-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -966,159 +944,28 @@ Note that <code>id</code> now is numeric which can be misleading, which is why I
 <span id="cb9-6"><a href="data-processing.html#cb9-6"></a>    <span class="kw">across</span>(</span>
 <span id="cb9-7"><a href="data-processing.html#cb9-7"></a>      <span class="kw">c</span>(</span>
 <span id="cb9-8"><a href="data-processing.html#cb9-8"></a>        id,</span>
-<span id="cb9-9"><a href="data-processing.html#cb9-9"></a>        occupation_main_earner<span class="op">:</span>gender,</span>
-<span id="cb9-10"><a href="data-processing.html#cb9-10"></a>        employment<span class="op">:</span>covid_none</span>
-<span id="cb9-11"><a href="data-processing.html#cb9-11"></a>      ),</span>
-<span id="cb9-12"><a href="data-processing.html#cb9-12"></a>      as.factor</span>
-<span id="cb9-13"><a href="data-processing.html#cb9-13"></a>    )</span>
-<span id="cb9-14"><a href="data-processing.html#cb9-14"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb9-15"><a href="data-processing.html#cb9-15"></a><span class="st">  </span></span>
-<span id="cb9-16"><a href="data-processing.html#cb9-16"></a><span class="st">  </span><span class="co"># purely cosmetic: arrange by id</span></span>
-<span id="cb9-17"><a href="data-processing.html#cb9-17"></a><span class="st">  </span><span class="kw">arrange</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb9-18"><a href="data-processing.html#cb9-18"></a><span class="st">  </span></span>
-<span id="cb9-19"><a href="data-processing.html#cb9-19"></a><span class="st">  </span><span class="co"># give proper labels to demographics</span></span>
-<span id="cb9-20"><a href="data-processing.html#cb9-20"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb9-21"><a href="data-processing.html#cb9-21"></a>    <span class="dt">occupation_main_earner =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-22"><a href="data-processing.html#cb9-22"></a>      occupation_main_earner,</span>
-<span id="cb9-23"><a href="data-processing.html#cb9-23"></a>      <span class="st">&quot;Higher managerial/professional/administrative&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-24"><a href="data-processing.html#cb9-24"></a>      <span class="st">&quot;Intermediate managerial/professional/administrative&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-25"><a href="data-processing.html#cb9-25"></a>      <span class="st">&quot;Supervisory or clerical/junior managerial/ professional/ administrative&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-26"><a href="data-processing.html#cb9-26"></a>      <span class="st">&quot;Skilled manual worker&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-27"><a href="data-processing.html#cb9-27"></a>      <span class="st">&quot;Semi-skilled or unskilled work&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-28"><a href="data-processing.html#cb9-28"></a>      <span class="st">&quot;In full time education&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-29"><a href="data-processing.html#cb9-29"></a>      <span class="st">&quot;Unemployed&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-30"><a href="data-processing.html#cb9-30"></a>      <span class="st">&quot;Prefer not to say&quot;</span> =<span class="st"> &quot;8&quot;</span></span>
-<span id="cb9-31"><a href="data-processing.html#cb9-31"></a>    ),</span>
-<span id="cb9-32"><a href="data-processing.html#cb9-32"></a>    <span class="kw">across</span>(</span>
-<span id="cb9-33"><a href="data-processing.html#cb9-33"></a>      <span class="kw">c</span>(income_main_earner, income_own),</span>
-<span id="cb9-34"><a href="data-processing.html#cb9-34"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">fct_recode</span>(</span>
-<span id="cb9-35"><a href="data-processing.html#cb9-35"></a>        .x,</span>
-<span id="cb9-36"><a href="data-processing.html#cb9-36"></a>        <span class="st">&quot;Less than £10,000&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-37"><a href="data-processing.html#cb9-37"></a>        <span class="st">&quot;£10,000 - £19,999&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-38"><a href="data-processing.html#cb9-38"></a>        <span class="st">&quot;£20,000 - £29,999&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-39"><a href="data-processing.html#cb9-39"></a>        <span class="st">&quot;£30,000 - £39,999&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-40"><a href="data-processing.html#cb9-40"></a>        <span class="st">&quot;£40,000 - £49,999&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-41"><a href="data-processing.html#cb9-41"></a>        <span class="st">&quot;£50,000 - £59,999&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-42"><a href="data-processing.html#cb9-42"></a>        <span class="st">&quot;£60,000 - £69,999&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-43"><a href="data-processing.html#cb9-43"></a>        <span class="st">&quot;£70,000 - £79,999&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
-<span id="cb9-44"><a href="data-processing.html#cb9-44"></a>        <span class="st">&quot;£80,000 - £89,999&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
-<span id="cb9-45"><a href="data-processing.html#cb9-45"></a>        <span class="st">&quot;£90,000 - £99,999&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
-<span id="cb9-46"><a href="data-processing.html#cb9-46"></a>        <span class="st">&quot;£100,000 - £109,999&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
-<span id="cb9-47"><a href="data-processing.html#cb9-47"></a>        <span class="st">&quot;£110,000 - £119,999&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
-<span id="cb9-48"><a href="data-processing.html#cb9-48"></a>        <span class="st">&quot;£120,000 - £129,999&quot;</span> =<span class="st"> &quot;13&quot;</span>,</span>
-<span id="cb9-49"><a href="data-processing.html#cb9-49"></a>        <span class="st">&quot;£130,000 - £139,999&quot;</span> =<span class="st"> &quot;14&quot;</span>,</span>
-<span id="cb9-50"><a href="data-processing.html#cb9-50"></a>        <span class="st">&quot;£140,000 - £149,999&quot;</span> =<span class="st"> &quot;15&quot;</span>,</span>
-<span id="cb9-51"><a href="data-processing.html#cb9-51"></a>        <span class="st">&quot;£150,000 - £159,999&quot;</span> =<span class="st"> &quot;16&quot;</span>,</span>
-<span id="cb9-52"><a href="data-processing.html#cb9-52"></a>        <span class="st">&quot;£160,000 - £169,999&quot;</span> =<span class="st"> &quot;17&quot;</span>,</span>
-<span id="cb9-53"><a href="data-processing.html#cb9-53"></a>        <span class="st">&quot;£170,000 - £179,999&quot;</span> =<span class="st"> &quot;18&quot;</span>,</span>
-<span id="cb9-54"><a href="data-processing.html#cb9-54"></a>        <span class="st">&quot;£180,000 - £189,999&quot;</span> =<span class="st"> &quot;19&quot;</span>,</span>
-<span id="cb9-55"><a href="data-processing.html#cb9-55"></a>        <span class="st">&quot;£190,000 - £199,999&quot;</span> =<span class="st"> &quot;20&quot;</span>,</span>
-<span id="cb9-56"><a href="data-processing.html#cb9-56"></a>        <span class="st">&quot;£200,000 - £209,999&quot;</span> =<span class="st"> &quot;21&quot;</span>,</span>
-<span id="cb9-57"><a href="data-processing.html#cb9-57"></a>        <span class="st">&quot;£210,000 - £219,999&quot;</span> =<span class="st"> &quot;22&quot;</span>,</span>
-<span id="cb9-58"><a href="data-processing.html#cb9-58"></a>        <span class="st">&quot;£220,000 - £229,999&quot;</span> =<span class="st"> &quot;23&quot;</span>,</span>
-<span id="cb9-59"><a href="data-processing.html#cb9-59"></a>        <span class="st">&quot;£230,000 - £239,999&quot;</span> =<span class="st"> &quot;24&quot;</span>,</span>
-<span id="cb9-60"><a href="data-processing.html#cb9-60"></a>        <span class="st">&quot;£240,000 - £249,999&quot;</span> =<span class="st"> &quot;25&quot;</span>,</span>
-<span id="cb9-61"><a href="data-processing.html#cb9-61"></a>        <span class="st">&quot;£250,000 or more&quot;</span> =<span class="st"> &quot;26&quot;</span></span>
-<span id="cb9-62"><a href="data-processing.html#cb9-62"></a>      )</span>
-<span id="cb9-63"><a href="data-processing.html#cb9-63"></a>    ),</span>
-<span id="cb9-64"><a href="data-processing.html#cb9-64"></a>    </span>
-<span id="cb9-65"><a href="data-processing.html#cb9-65"></a>    <span class="dt">ethnicity =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-66"><a href="data-processing.html#cb9-66"></a>      ethnicity,</span>
-<span id="cb9-67"><a href="data-processing.html#cb9-67"></a>      <span class="st">&quot;White British&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-68"><a href="data-processing.html#cb9-68"></a>      <span class="st">&quot;White European&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-69"><a href="data-processing.html#cb9-69"></a>      <span class="st">&quot;White - Other&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-70"><a href="data-processing.html#cb9-70"></a>      <span class="st">&quot;Indian&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-71"><a href="data-processing.html#cb9-71"></a>      <span class="st">&quot;Pakistani&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-72"><a href="data-processing.html#cb9-72"></a>      <span class="st">&quot;Bangladeshi&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-73"><a href="data-processing.html#cb9-73"></a>      <span class="st">&quot;Chinese&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-74"><a href="data-processing.html#cb9-74"></a>      <span class="st">&quot;Japanese&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
-<span id="cb9-75"><a href="data-processing.html#cb9-75"></a>      <span class="st">&quot;Any other Asian/Asian British Origin&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
-<span id="cb9-76"><a href="data-processing.html#cb9-76"></a>      <span class="st">&quot;African&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
-<span id="cb9-77"><a href="data-processing.html#cb9-77"></a>      <span class="st">&quot;Caribbean&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
-<span id="cb9-78"><a href="data-processing.html#cb9-78"></a>      <span class="st">&quot;Any other Black/African/Caribbean British origin&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
-<span id="cb9-79"><a href="data-processing.html#cb9-79"></a>      <span class="st">&quot;Arab&quot;</span> =<span class="st"> &quot;13&quot;</span>,</span>
-<span id="cb9-80"><a href="data-processing.html#cb9-80"></a>      <span class="st">&quot;Any other ethnic origin&quot;</span> =<span class="st"> &quot;14&quot;</span>,</span>
-<span id="cb9-81"><a href="data-processing.html#cb9-81"></a>      <span class="st">&quot;White and Black Caribbean&quot;</span> =<span class="st"> &quot;15&quot;</span>,</span>
-<span id="cb9-82"><a href="data-processing.html#cb9-82"></a>      <span class="st">&quot;White and Black African&quot;</span> =<span class="st"> &quot;16&quot;</span>,</span>
-<span id="cb9-83"><a href="data-processing.html#cb9-83"></a>      <span class="st">&quot;White and Asian&quot;</span> =<span class="st"> &quot;17&quot;</span>,</span>
-<span id="cb9-84"><a href="data-processing.html#cb9-84"></a>      <span class="st">&quot;Any other Mixed/Multiple ethnic origins&quot;</span> =<span class="st"> &quot;18&quot;</span>,</span>
-<span id="cb9-85"><a href="data-processing.html#cb9-85"></a>      <span class="st">&quot;Prefer not to say&quot;</span> =<span class="st"> &quot;19&quot;</span></span>
-<span id="cb9-86"><a href="data-processing.html#cb9-86"></a>    ),</span>
-<span id="cb9-87"><a href="data-processing.html#cb9-87"></a>    </span>
-<span id="cb9-88"><a href="data-processing.html#cb9-88"></a>    <span class="dt">internet_use =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-89"><a href="data-processing.html#cb9-89"></a>      internet_use,</span>
-<span id="cb9-90"><a href="data-processing.html#cb9-90"></a>      <span class="st">&quot;Several times a day&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-91"><a href="data-processing.html#cb9-91"></a>      <span class="st">&quot;Once a day&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-92"><a href="data-processing.html#cb9-92"></a>      <span class="st">&quot;5-6 days a week&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-93"><a href="data-processing.html#cb9-93"></a>      <span class="st">&quot;2-4 days a week&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-94"><a href="data-processing.html#cb9-94"></a>      <span class="st">&quot;Once a week&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-95"><a href="data-processing.html#cb9-95"></a>      <span class="st">&quot;2-3 times a month&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-96"><a href="data-processing.html#cb9-96"></a>      <span class="st">&quot;Once a month&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-97"><a href="data-processing.html#cb9-97"></a>      <span class="st">&quot;Less often&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
-<span id="cb9-98"><a href="data-processing.html#cb9-98"></a>      <span class="st">&quot;Don&#39;t know/Not sure&quot;</span> =<span class="st"> &quot;9&quot;</span></span>
-<span id="cb9-99"><a href="data-processing.html#cb9-99"></a>    ),</span>
-<span id="cb9-100"><a href="data-processing.html#cb9-100"></a>    </span>
-<span id="cb9-101"><a href="data-processing.html#cb9-101"></a>    <span class="dt">gender =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-102"><a href="data-processing.html#cb9-102"></a>      gender,</span>
-<span id="cb9-103"><a href="data-processing.html#cb9-103"></a>      <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-104"><a href="data-processing.html#cb9-104"></a>      <span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-105"><a href="data-processing.html#cb9-105"></a>      <span class="st">&quot;Other&quot;</span> =<span class="st"> &quot;3&quot;</span></span>
-<span id="cb9-106"><a href="data-processing.html#cb9-106"></a>    ),</span>
-<span id="cb9-107"><a href="data-processing.html#cb9-107"></a>    </span>
-<span id="cb9-108"><a href="data-processing.html#cb9-108"></a>    <span class="dt">employment =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-109"><a href="data-processing.html#cb9-109"></a>      employment,</span>
-<span id="cb9-110"><a href="data-processing.html#cb9-110"></a>      <span class="st">&quot;Employed full time&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-111"><a href="data-processing.html#cb9-111"></a>      <span class="st">&quot;Employed part time&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-112"><a href="data-processing.html#cb9-112"></a>      <span class="st">&quot;Employed but furloughed due to the coronavirus pandemic&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-113"><a href="data-processing.html#cb9-113"></a>      <span class="st">&quot;Unemployed and looking for work&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-114"><a href="data-processing.html#cb9-114"></a>      <span class="st">&quot;Unemployed and not looking for work&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-115"><a href="data-processing.html#cb9-115"></a>      <span class="st">&quot;Self employed&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-116"><a href="data-processing.html#cb9-116"></a>      <span class="st">&quot;Retired&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-117"><a href="data-processing.html#cb9-117"></a>      <span class="st">&quot;Student&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
-<span id="cb9-118"><a href="data-processing.html#cb9-118"></a>      <span class="st">&quot;Rather not say&quot;</span> =<span class="st"> &quot;9&quot;</span></span>
-<span id="cb9-119"><a href="data-processing.html#cb9-119"></a>    ),</span>
-<span id="cb9-120"><a href="data-processing.html#cb9-120"></a>    </span>
-<span id="cb9-121"><a href="data-processing.html#cb9-121"></a>    <span class="dt">region =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-122"><a href="data-processing.html#cb9-122"></a>      region,</span>
-<span id="cb9-123"><a href="data-processing.html#cb9-123"></a>      <span class="st">&quot;North East&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-124"><a href="data-processing.html#cb9-124"></a>      <span class="st">&quot;North West&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
-<span id="cb9-125"><a href="data-processing.html#cb9-125"></a>      <span class="st">&quot;Yorkshire and The Humber&quot;</span> =<span class="st"> &quot;3&quot;</span>,</span>
-<span id="cb9-126"><a href="data-processing.html#cb9-126"></a>      <span class="st">&quot;East Midlands&quot;</span> =<span class="st"> &quot;4&quot;</span>,</span>
-<span id="cb9-127"><a href="data-processing.html#cb9-127"></a>      <span class="st">&quot;West Midlands&quot;</span> =<span class="st"> &quot;5&quot;</span>,</span>
-<span id="cb9-128"><a href="data-processing.html#cb9-128"></a>      <span class="st">&quot;East&quot;</span> =<span class="st"> &quot;6&quot;</span>,</span>
-<span id="cb9-129"><a href="data-processing.html#cb9-129"></a>      <span class="st">&quot;London&quot;</span> =<span class="st"> &quot;7&quot;</span>,</span>
-<span id="cb9-130"><a href="data-processing.html#cb9-130"></a>      <span class="st">&quot;South East&quot;</span> =<span class="st"> &quot;8&quot;</span>,</span>
-<span id="cb9-131"><a href="data-processing.html#cb9-131"></a>      <span class="st">&quot;South West&quot;</span> =<span class="st"> &quot;9&quot;</span>,</span>
-<span id="cb9-132"><a href="data-processing.html#cb9-132"></a>      <span class="st">&quot;Wales&quot;</span> =<span class="st"> &quot;10&quot;</span>,</span>
-<span id="cb9-133"><a href="data-processing.html#cb9-133"></a>      <span class="st">&quot;Scotland&quot;</span> =<span class="st"> &quot;11&quot;</span>,</span>
-<span id="cb9-134"><a href="data-processing.html#cb9-134"></a>      <span class="st">&quot;Northern Ireland&quot;</span> =<span class="st"> &quot;12&quot;</span>,</span>
-<span id="cb9-135"><a href="data-processing.html#cb9-135"></a>      <span class="st">&quot;Not in the UK&quot;</span> =<span class="st"> &quot;13&quot;</span></span>
-<span id="cb9-136"><a href="data-processing.html#cb9-136"></a>    ),</span>
-<span id="cb9-137"><a href="data-processing.html#cb9-137"></a>    </span>
-<span id="cb9-138"><a href="data-processing.html#cb9-138"></a>    <span class="co"># assign yes/no to binary variables</span></span>
-<span id="cb9-139"><a href="data-processing.html#cb9-139"></a>    <span class="kw">across</span>(</span>
-<span id="cb9-140"><a href="data-processing.html#cb9-140"></a>      <span class="kw">c</span>(</span>
-<span id="cb9-141"><a href="data-processing.html#cb9-141"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;living&quot;</span>),</span>
-<span id="cb9-142"><a href="data-processing.html#cb9-142"></a>        <span class="kw">starts_with</span>(<span class="st">&quot;covid&quot;</span>),</span>
-<span id="cb9-143"><a href="data-processing.html#cb9-143"></a>      ),</span>
-<span id="cb9-144"><a href="data-processing.html#cb9-144"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">fct_recode</span>(</span>
-<span id="cb9-145"><a href="data-processing.html#cb9-145"></a>        .x,</span>
-<span id="cb9-146"><a href="data-processing.html#cb9-146"></a>        <span class="st">&quot;Yes&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-147"><a href="data-processing.html#cb9-147"></a>        <span class="st">&quot;No&quot;</span> =<span class="st"> &quot;0&quot;</span></span>
-<span id="cb9-148"><a href="data-processing.html#cb9-148"></a>      )</span>
-<span id="cb9-149"><a href="data-processing.html#cb9-149"></a>    ),</span>
-<span id="cb9-150"><a href="data-processing.html#cb9-150"></a>    </span>
-<span id="cb9-151"><a href="data-processing.html#cb9-151"></a>    <span class="dt">main_earner =</span> <span class="kw">fct_recode</span>(</span>
-<span id="cb9-152"><a href="data-processing.html#cb9-152"></a>      main_earner,</span>
-<span id="cb9-153"><a href="data-processing.html#cb9-153"></a>      <span class="st">&quot;Yes&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
-<span id="cb9-154"><a href="data-processing.html#cb9-154"></a>      <span class="st">&quot;No&quot;</span> =<span class="st"> &quot;2&quot;</span></span>
-<span id="cb9-155"><a href="data-processing.html#cb9-155"></a>    ),</span>
-<span id="cb9-156"><a href="data-processing.html#cb9-156"></a>    </span>
-<span id="cb9-157"><a href="data-processing.html#cb9-157"></a>    <span class="co"># add &quot;pp_&quot; prefix to id variable</span></span>
-<span id="cb9-158"><a href="data-processing.html#cb9-158"></a>    <span class="dt">id =</span> <span class="kw">as.factor</span>(</span>
-<span id="cb9-159"><a href="data-processing.html#cb9-159"></a>      <span class="kw">paste0</span>(<span class="st">&quot;pp_&quot;</span>, id)</span>
-<span id="cb9-160"><a href="data-processing.html#cb9-160"></a>    )</span>
-<span id="cb9-161"><a href="data-processing.html#cb9-161"></a>  )</span></code></pre></div>
+<span id="cb9-9"><a href="data-processing.html#cb9-9"></a>        gender</span>
+<span id="cb9-10"><a href="data-processing.html#cb9-10"></a>      ),</span>
+<span id="cb9-11"><a href="data-processing.html#cb9-11"></a>      as.factor</span>
+<span id="cb9-12"><a href="data-processing.html#cb9-12"></a>    )</span>
+<span id="cb9-13"><a href="data-processing.html#cb9-13"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-14"><a href="data-processing.html#cb9-14"></a><span class="st">  </span></span>
+<span id="cb9-15"><a href="data-processing.html#cb9-15"></a><span class="st">  </span><span class="co"># purely cosmetic: arrange by id</span></span>
+<span id="cb9-16"><a href="data-processing.html#cb9-16"></a><span class="st">  </span><span class="kw">arrange</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-17"><a href="data-processing.html#cb9-17"></a><span class="st">  </span></span>
+<span id="cb9-18"><a href="data-processing.html#cb9-18"></a><span class="st">  </span><span class="co"># give proper labels to demographics</span></span>
+<span id="cb9-19"><a href="data-processing.html#cb9-19"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb9-20"><a href="data-processing.html#cb9-20"></a>    <span class="dt">gender =</span> <span class="kw">fct_recode</span>(</span>
+<span id="cb9-21"><a href="data-processing.html#cb9-21"></a>      gender,</span>
+<span id="cb9-22"><a href="data-processing.html#cb9-22"></a>      <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb9-23"><a href="data-processing.html#cb9-23"></a>      <span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;2&quot;</span>,</span>
+<span id="cb9-24"><a href="data-processing.html#cb9-24"></a>      <span class="st">&quot;Other&quot;</span> =<span class="st"> &quot;3&quot;</span></span>
+<span id="cb9-25"><a href="data-processing.html#cb9-25"></a>    ),</span>
+<span id="cb9-26"><a href="data-processing.html#cb9-26"></a>    <span class="co"># add &quot;pp_&quot; prefix to id variable</span></span>
+<span id="cb9-27"><a href="data-processing.html#cb9-27"></a>    <span class="dt">id =</span> <span class="kw">as.factor</span>(</span>
+<span id="cb9-28"><a href="data-processing.html#cb9-28"></a>      <span class="kw">paste0</span>(<span class="st">&quot;pp_&quot;</span>, id)</span>
+<span id="cb9-29"><a href="data-processing.html#cb9-29"></a>    )</span>
+<span id="cb9-30"><a href="data-processing.html#cb9-30"></a>  )</span></code></pre></div>
 <p>For the first wave, participants only responded to questions about how much they used a medium if they indicated that they had used it in the three months before wave 1.
 Those variables (e.g. <code>bought_books</code>) are only present in wave 1, but <code>NA</code> in the other waves.
 Therefore, we create new variables that show whether a person was asked to indicate their use of a medium, so if they answered yes to any of the filter variables at the beginning of the wave 1 survey.
@@ -1245,7 +1092,7 @@ Note that three demographic questions were asked at each wave, employment status
 <span id="cb12-87"><a href="data-processing.html#cb12-87"></a><span class="st">  </span><span class="co"># select variables that are constant across all waves</span></span>
 <span id="cb12-88"><a href="data-processing.html#cb12-88"></a><span class="st">  </span><span class="kw">select</span>(</span>
 <span id="cb12-89"><a href="data-processing.html#cb12-89"></a>    id,</span>
-<span id="cb12-90"><a href="data-processing.html#cb12-90"></a>    occupation_main_earner<span class="op">:</span>internet_use,</span>
+<span id="cb12-90"><a href="data-processing.html#cb12-90"></a>    gender,</span>
 <span id="cb12-91"><a href="data-processing.html#cb12-91"></a>    <span class="kw">contains</span>(<span class="st">&quot;identity&quot;</span>),</span>
 <span id="cb12-92"><a href="data-processing.html#cb12-92"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>)</span>
 <span id="cb12-93"><a href="data-processing.html#cb12-93"></a>  )</span>
@@ -1255,7 +1102,7 @@ Note that three demographic questions were asked at each wave, employment status
 <span id="cb12-97"><a href="data-processing.html#cb12-97"></a><span class="st">  </span><span class="kw">left_join</span>(</span>
 <span id="cb12-98"><a href="data-processing.html#cb12-98"></a>    working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb12-99"><a href="data-processing.html#cb12-99"></a><span class="st">      </span><span class="kw">select</span>(</span>
-<span id="cb12-100"><a href="data-processing.html#cb12-100"></a>        <span class="op">-</span>(occupation_main_earner<span class="op">:</span>internet_use),</span>
+<span id="cb12-100"><a href="data-processing.html#cb12-100"></a>        <span class="op">-</span>(gender),</span>
 <span id="cb12-101"><a href="data-processing.html#cb12-101"></a>        <span class="op">-</span><span class="kw">contains</span>(<span class="st">&quot;identity&quot;</span>)</span>
 <span id="cb12-102"><a href="data-processing.html#cb12-102"></a>      ),</span>
 <span id="cb12-103"><a href="data-processing.html#cb12-103"></a>    filters,</span>
@@ -1271,21 +1118,12 @@ Note that three demographic questions were asked at each wave, employment status
 <span id="cb12-113"><a href="data-processing.html#cb12-113"></a><span class="st">  </span><span class="co"># some reordering for purely cosmetic purposes</span></span>
 <span id="cb12-114"><a href="data-processing.html#cb12-114"></a><span class="st">  </span><span class="kw">select</span>(</span>
 <span id="cb12-115"><a href="data-processing.html#cb12-115"></a>    id<span class="op">:</span>age,</span>
-<span id="cb12-116"><a href="data-processing.html#cb12-116"></a>    region,</span>
-<span id="cb12-117"><a href="data-processing.html#cb12-117"></a>    ethnicity,</span>
-<span id="cb12-118"><a href="data-processing.html#cb12-118"></a>    employment,</span>
-<span id="cb12-119"><a href="data-processing.html#cb12-119"></a>    main_earner,</span>
-<span id="cb12-120"><a href="data-processing.html#cb12-120"></a>    occupation_main_earner,</span>
-<span id="cb12-121"><a href="data-processing.html#cb12-121"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;income&quot;</span>),</span>
-<span id="cb12-122"><a href="data-processing.html#cb12-122"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;living&quot;</span>),</span>
-<span id="cb12-123"><a href="data-processing.html#cb12-123"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;covid&quot;</span>),</span>
-<span id="cb12-124"><a href="data-processing.html#cb12-124"></a>    internet_use,</span>
-<span id="cb12-125"><a href="data-processing.html#cb12-125"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>),</span>
-<span id="cb12-126"><a href="data-processing.html#cb12-126"></a>    <span class="kw">everything</span>()</span>
-<span id="cb12-127"><a href="data-processing.html#cb12-127"></a>  )</span>
-<span id="cb12-128"><a href="data-processing.html#cb12-128"></a></span>
-<span id="cb12-129"><a href="data-processing.html#cb12-129"></a><span class="co"># remove the temp filters file</span></span>
-<span id="cb12-130"><a href="data-processing.html#cb12-130"></a><span class="kw">rm</span>(filters)</span></code></pre></div>
+<span id="cb12-116"><a href="data-processing.html#cb12-116"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;filter&quot;</span>),</span>
+<span id="cb12-117"><a href="data-processing.html#cb12-117"></a>    <span class="kw">everything</span>()</span>
+<span id="cb12-118"><a href="data-processing.html#cb12-118"></a>  )</span>
+<span id="cb12-119"><a href="data-processing.html#cb12-119"></a></span>
+<span id="cb12-120"><a href="data-processing.html#cb12-120"></a><span class="co"># remove the temp filters file</span></span>
+<span id="cb12-121"><a href="data-processing.html#cb12-121"></a><span class="kw">rm</span>(filters)</span></code></pre></div>
 </div>
 <div id="response-rates-and-missing-values" class="section level2">
 <h2><span class="header-section-number">2.4</span> Response rates and missing values</h2>
@@ -1441,11 +1279,15 @@ If they said that they had used a medium less, about the same, or more compared 
 For wave 1, then, they didn’t provide the minutes and hours they spent on audio books.
 In wave 2, they were then asked how their audio book use had changed since the last survey.
 If they answered anything but the sixth answer option (i.e., they still hadn’t listened to audio books), they were asked to report how many minutes and hours they had used audio books.</p>
-Here’s why that can be problematic: The participant below (<a href="data-processing.html#tab:example-filter-change">2.3</a>) hadn’t listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn’t changed (i.e., selected <code>3</code> on the <code>audiobooks_estimate</code> question).
+<p>Here’s why that can be problematic: The participant below (<a href="data-processing.html#tab:example-filter-change">2.3</a>) hadn’t listened to audio books in the first three months and reports that at wave 1, then says at wave 2 that their audio book use hadn’t changed (i.e., selected <code>3</code> on the <code>audiobooks_estimate</code> question).
 But the participant was still asked about their minutes and hours - which is why they filled in bogus numbers.
 Minutes and hours were forced response as far as I can tell.
 I wouldn’t take those estimates seriously, because the participant was forced to respond to minutes and hours.
-We see that in the following waves, they selected the option that they hadn’t listened to audiobooks.
+We see that in the following waves, they selected the option that they hadn’t listened to audiobooks.</p>
+Please note: We could not share the full <code>estimate</code> questions.
+Before uploading the raw data, I did some preprocessing such that only the answer options 3 (nothing changed) and 6 (didn’t use a medium) remained.
+All other non-missing values are set to 9.
+Missing values remain as <code>NA</code>.
 <table class="table" style="font-size: 15px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:example-filter-change">Table 2.3: </span>Example of a participant with no change in use
@@ -1661,7 +1503,7 @@ I’ll only make changes in clear cases like the one presented above, where some
 I’ll do exclusions in the next section when I look at data quality.</p>
 <p>For now, let’s deal with those few cases that are as clear-cut as the one presented above.
 First some house keeping.
-If participants indicated on one of the <code>estimate</code> questions that they didn’t use that medium in the previous week (only applicable in waves 2 to 6), they’ll receive an <code>NA</code> on their time estimates.
+If participants indicated on one of the <code>estimate</code> questions that they didn’t use that medium in the previous week (only applicable in waves 2 to 6), they’ll receive a 0 on their time estimates.
 So we’ll first set time estimates to <code>-999</code> if participants say that they didn’t use a medium, following the same logic I outlined above.
 I use <code>-999</code> instead of <code>-99</code> like above to be able to distinguish between imputed zeros in the first wave and imputed zeros in later waves.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-processing.html#cb15-1"></a>working_file &lt;-<span class="st"> </span></span>
@@ -1755,7 +1597,7 @@ pp_1
 music
 </td>
 <td style="text-align:right;">
-2
+9
 </td>
 <td style="text-align:right;">
 10
@@ -1775,7 +1617,7 @@ pp_1
 films
 </td>
 <td style="text-align:right;">
-2
+9
 </td>
 <td style="text-align:right;">
 0
@@ -1795,7 +1637,7 @@ pp_1
 tv
 </td>
 <td style="text-align:right;">
-2
+9
 </td>
 <td style="text-align:right;">
 0
@@ -1835,7 +1677,7 @@ pp_1
 books
 </td>
 <td style="text-align:right;">
-2
+9
 </td>
 <td style="text-align:right;">
 0
@@ -1855,7 +1697,7 @@ pp_1
 magazines
 </td>
 <td style="text-align:right;">
-2
+9
 </td>
 <td style="text-align:right;">
 0
@@ -2035,7 +1877,7 @@ pp_2
 music
 </td>
 <td style="text-align:right;">
-1
+9
 </td>
 <td style="text-align:right;">
 0
@@ -2194,7 +2036,7 @@ If it’s <code>TRUE</code> the person didn’t provide an estimate at wave 1 an
 Table <a href="data-processing.html#tab:table-no-changes">2.5</a> shows how these markers look like.
 <table class="table" style="font-size: 7px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:table-no-changes">Table 2.5: </span>Markers for whether someone had no change from wave 1 through wave 2 or not, per medium
+<span id="tab:table-no-changes">Table 2.5: </span>Markers for whether someone had no change from wave 1 through wave 6 or not, per medium
 </caption>
 <thead>
 <tr>
@@ -5511,22 +5353,21 @@ In addition, if we want to impute missing values during model fitting (via the b
 <span id="cb43-17"><a href="data-processing.html#cb43-17"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
 <span id="cb43-18"><a href="data-processing.html#cb43-18"></a>    <span class="kw">across</span>(</span>
 <span id="cb43-19"><a href="data-processing.html#cb43-19"></a>      <span class="kw">c</span>(</span>
-<span id="cb43-20"><a href="data-processing.html#cb43-20"></a>        covid_work_home_often<span class="op">:</span>covid_none,</span>
-<span id="cb43-21"><a href="data-processing.html#cb43-21"></a>        music_hours<span class="op">:</span>well_being_<span class="dv">2</span>,</span>
-<span id="cb43-22"><a href="data-processing.html#cb43-22"></a>        music_time<span class="op">:</span>total_time</span>
-<span id="cb43-23"><a href="data-processing.html#cb43-23"></a>      ),</span>
-<span id="cb43-24"><a href="data-processing.html#cb43-24"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">replace</span>(.x, set_to_na <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="ot">NA</span>)</span>
-<span id="cb43-25"><a href="data-processing.html#cb43-25"></a>    )</span>
-<span id="cb43-26"><a href="data-processing.html#cb43-26"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb43-27"><a href="data-processing.html#cb43-27"></a><span class="st">  </span><span class="co"># remove marker</span></span>
-<span id="cb43-28"><a href="data-processing.html#cb43-28"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>set_to_na)</span></code></pre></div>
+<span id="cb43-20"><a href="data-processing.html#cb43-20"></a>        music_hours<span class="op">:</span>well_being_<span class="dv">2</span>,</span>
+<span id="cb43-21"><a href="data-processing.html#cb43-21"></a>        music_time<span class="op">:</span>total_time</span>
+<span id="cb43-22"><a href="data-processing.html#cb43-22"></a>      ),</span>
+<span id="cb43-23"><a href="data-processing.html#cb43-23"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">replace</span>(.x, set_to_na <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="ot">NA</span>)</span>
+<span id="cb43-24"><a href="data-processing.html#cb43-24"></a>    )</span>
+<span id="cb43-25"><a href="data-processing.html#cb43-25"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-26"><a href="data-processing.html#cb43-26"></a><span class="st">  </span><span class="co"># remove marker</span></span>
+<span id="cb43-27"><a href="data-processing.html#cb43-27"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>set_to_na)</span></code></pre></div>
 </div>
 </div>
 <div id="build-scales" class="section level2">
 <h2><span class="header-section-number">2.6</span> Build scales</h2>
 <p>As a last step, we’re creating the mean score scales.</p>
 <p>Before we do that, we have to reverse code some items.
-Both the <code>estimates</code> and the <code>identity</code> items had strongest agreement as 1.
+<code>identity</code> items had strongest agreement as 1.
 I find it more intuitive when larger numbers mean more agreement.
 The same applies to the well-being item about anxiety, which I will reverse code.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-processing.html#cb44-1"></a>working_file &lt;-<span class="st"> </span></span>
@@ -5537,13 +5378,8 @@ The same applies to the well-being item about anxiety, which I will reverse code
 <span id="cb44-6"><a href="data-processing.html#cb44-6"></a>      <span class="op">~</span><span class="st"> </span><span class="dv">5</span> <span class="op">-</span><span class="st"> </span>.x</span>
 <span id="cb44-7"><a href="data-processing.html#cb44-7"></a>    ),</span>
 <span id="cb44-8"><a href="data-processing.html#cb44-8"></a>    </span>
-<span id="cb44-9"><a href="data-processing.html#cb44-9"></a>    <span class="kw">across</span>(</span>
-<span id="cb44-10"><a href="data-processing.html#cb44-10"></a>      <span class="kw">ends_with</span>(<span class="st">&quot;estimate&quot;</span>),</span>
-<span id="cb44-11"><a href="data-processing.html#cb44-11"></a>      <span class="op">~</span><span class="st"> </span><span class="dv">7</span> <span class="op">-</span><span class="st"> </span>.x</span>
-<span id="cb44-12"><a href="data-processing.html#cb44-12"></a>    ),</span>
-<span id="cb44-13"><a href="data-processing.html#cb44-13"></a>    </span>
-<span id="cb44-14"><a href="data-processing.html#cb44-14"></a>    <span class="dt">well_being_2 =</span> <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>well_being_<span class="dv">2</span> <span class="co"># starts at 0</span></span>
-<span id="cb44-15"><a href="data-processing.html#cb44-15"></a>  )</span></code></pre></div>
+<span id="cb44-9"><a href="data-processing.html#cb44-9"></a>    <span class="dt">well_being_2 =</span> <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>well_being_<span class="dv">2</span> <span class="co"># starts at 0</span></span>
+<span id="cb44-10"><a href="data-processing.html#cb44-10"></a>  )</span></code></pre></div>
 <p>Let’s start with the identity scales; for each medium (except magazines and audiobooks), participants indicated how much that medium was part of their identity.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="data-processing.html#cb45-1"></a>working_file &lt;-<span class="st"> </span></span>
 <span id="cb45-2"><a href="data-processing.html#cb45-2"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -5578,35 +5414,37 @@ I’ll reorder some variables for cosmetic purposes, only select those we need, 
 <span id="cb47-2"><a href="data-processing.html#cb47-2"></a>working_file &lt;-<span class="st"> </span></span>
 <span id="cb47-3"><a href="data-processing.html#cb47-3"></a><span class="st">  </span>working_file <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb47-4"><a href="data-processing.html#cb47-4"></a><span class="st">  </span><span class="kw">select</span>(</span>
-<span id="cb47-5"><a href="data-processing.html#cb47-5"></a>    id<span class="op">:</span>filter_audiobooks,</span>
-<span id="cb47-6"><a href="data-processing.html#cb47-6"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;music&quot;</span>),</span>
-<span id="cb47-7"><a href="data-processing.html#cb47-7"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;films&quot;</span>),</span>
-<span id="cb47-8"><a href="data-processing.html#cb47-8"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;tv&quot;</span>),</span>
-<span id="cb47-9"><a href="data-processing.html#cb47-9"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;games&quot;</span>),</span>
-<span id="cb47-10"><a href="data-processing.html#cb47-10"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;e_publishing&quot;</span>),</span>
-<span id="cb47-11"><a href="data-processing.html#cb47-11"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;books&quot;</span>),</span>
-<span id="cb47-12"><a href="data-processing.html#cb47-12"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;magazines&quot;</span>),</span>
-<span id="cb47-13"><a href="data-processing.html#cb47-13"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;audiobooks&quot;</span>),</span>
-<span id="cb47-14"><a href="data-processing.html#cb47-14"></a>    total_time,</span>
-<span id="cb47-15"><a href="data-processing.html#cb47-15"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;life_satisfaction&quot;</span>),</span>
-<span id="cb47-16"><a href="data-processing.html#cb47-16"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;well_being&quot;</span>),</span>
-<span id="cb47-17"><a href="data-processing.html#cb47-17"></a>    affect,</span>
-<span id="cb47-18"><a href="data-processing.html#cb47-18"></a>    <span class="op">-</span><span class="kw">ends_with</span>(<span class="st">&quot;hours&quot;</span>), <span class="co"># we got the total time from here on</span></span>
-<span id="cb47-19"><a href="data-processing.html#cb47-19"></a>    <span class="op">-</span><span class="kw">ends_with</span>(<span class="st">&quot;minutes&quot;</span>),</span>
-<span id="cb47-20"><a href="data-processing.html#cb47-20"></a>  )</span>
-<span id="cb47-21"><a href="data-processing.html#cb47-21"></a></span>
-<span id="cb47-22"><a href="data-processing.html#cb47-22"></a><span class="co"># clean workspace</span></span>
-<span id="cb47-23"><a href="data-processing.html#cb47-23"></a><span class="kw">rm</span>(</span>
-<span id="cb47-24"><a href="data-processing.html#cb47-24"></a>  markers,</span>
-<span id="cb47-25"><a href="data-processing.html#cb47-25"></a>  no_changes,</span>
-<span id="cb47-26"><a href="data-processing.html#cb47-26"></a>  waves_per_id,</span>
-<span id="cb47-27"><a href="data-processing.html#cb47-27"></a>  an_id,</span>
-<span id="cb47-28"><a href="data-processing.html#cb47-28"></a>  id_counter,</span>
-<span id="cb47-29"><a href="data-processing.html#cb47-29"></a>  id_to_match,</span>
-<span id="cb47-30"><a href="data-processing.html#cb47-30"></a>  ids,</span>
-<span id="cb47-31"><a href="data-processing.html#cb47-31"></a>  temp_id,</span>
-<span id="cb47-32"><a href="data-processing.html#cb47-32"></a>  three_media_and_waves</span>
-<span id="cb47-33"><a href="data-processing.html#cb47-33"></a>)</span></code></pre></div>
+<span id="cb47-5"><a href="data-processing.html#cb47-5"></a>    id, </span>
+<span id="cb47-6"><a href="data-processing.html#cb47-6"></a>    gender,</span>
+<span id="cb47-7"><a href="data-processing.html#cb47-7"></a>    wave<span class="op">:</span>filter_audiobooks,</span>
+<span id="cb47-8"><a href="data-processing.html#cb47-8"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;music&quot;</span>),</span>
+<span id="cb47-9"><a href="data-processing.html#cb47-9"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;films&quot;</span>),</span>
+<span id="cb47-10"><a href="data-processing.html#cb47-10"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;tv&quot;</span>),</span>
+<span id="cb47-11"><a href="data-processing.html#cb47-11"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;games&quot;</span>),</span>
+<span id="cb47-12"><a href="data-processing.html#cb47-12"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;e_publishing&quot;</span>),</span>
+<span id="cb47-13"><a href="data-processing.html#cb47-13"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;books&quot;</span>),</span>
+<span id="cb47-14"><a href="data-processing.html#cb47-14"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;magazines&quot;</span>),</span>
+<span id="cb47-15"><a href="data-processing.html#cb47-15"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;audiobooks&quot;</span>),</span>
+<span id="cb47-16"><a href="data-processing.html#cb47-16"></a>    total_time,</span>
+<span id="cb47-17"><a href="data-processing.html#cb47-17"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;life_satisfaction&quot;</span>),</span>
+<span id="cb47-18"><a href="data-processing.html#cb47-18"></a>    <span class="kw">starts_with</span>(<span class="st">&quot;well_being&quot;</span>),</span>
+<span id="cb47-19"><a href="data-processing.html#cb47-19"></a>    affect,</span>
+<span id="cb47-20"><a href="data-processing.html#cb47-20"></a>    <span class="op">-</span><span class="kw">ends_with</span>(<span class="st">&quot;hours&quot;</span>), <span class="co"># we got the total time from here on</span></span>
+<span id="cb47-21"><a href="data-processing.html#cb47-21"></a>    <span class="op">-</span><span class="kw">ends_with</span>(<span class="st">&quot;minutes&quot;</span>),</span>
+<span id="cb47-22"><a href="data-processing.html#cb47-22"></a>  )</span>
+<span id="cb47-23"><a href="data-processing.html#cb47-23"></a></span>
+<span id="cb47-24"><a href="data-processing.html#cb47-24"></a><span class="co"># clean workspace</span></span>
+<span id="cb47-25"><a href="data-processing.html#cb47-25"></a><span class="kw">rm</span>(</span>
+<span id="cb47-26"><a href="data-processing.html#cb47-26"></a>  markers,</span>
+<span id="cb47-27"><a href="data-processing.html#cb47-27"></a>  no_changes,</span>
+<span id="cb47-28"><a href="data-processing.html#cb47-28"></a>  waves_per_id,</span>
+<span id="cb47-29"><a href="data-processing.html#cb47-29"></a>  an_id,</span>
+<span id="cb47-30"><a href="data-processing.html#cb47-30"></a>  id_counter,</span>
+<span id="cb47-31"><a href="data-processing.html#cb47-31"></a>  id_to_match,</span>
+<span id="cb47-32"><a href="data-processing.html#cb47-32"></a>  ids,</span>
+<span id="cb47-33"><a href="data-processing.html#cb47-33"></a>  temp_id,</span>
+<span id="cb47-34"><a href="data-processing.html#cb47-34"></a>  three_media_and_waves</span>
+<span id="cb47-35"><a href="data-processing.html#cb47-35"></a>)</span></code></pre></div>
 <p>And then remove those who don’t have at least three waves.
 For one model part, we’ll used led values, so two waves won’t be enough because that means a participant is left with only one wave once we lead a predictor.</p>
 <p>Also, some participants now have missing values (because we applied the wave-level exclusions).

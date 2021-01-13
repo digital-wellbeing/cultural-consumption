@@ -9,11 +9,6 @@ We got variables on the person-level and on the wave level.
 
 * Age and gender (`age`, `gender`)
 * What region of the UK participants are from (`region`)
-* What their ethnicity is (`ethnicity`)
-* What their employment status is (`employment`)
-* Whether they are the main earner (`main_earner`), what the occupation of the main earner is (`occupation_main_earner`) plus the main earner's or their own income (`income_main_earner` and `income_own`)
-* Their living situation (variables starting with `living`)
-* How COVID-19 has affected their situation (variables starting with `covid`)
 * Whether they've used a medium in the three months before the first wave (variables starting with `filter`)
 * To what extent they identify with a medium (variables ending with `identity`)
 
@@ -44,207 +39,6 @@ single_cloud(
   title = NULL,
   trait = TRUE
 )
-```
-
-Alright, next let's see from what regions participants come from, Table \@ref(tab:describe-region).
-The sample is distributed pretty much long the geographical population density.
-```{r describe-region, echo=FALSE}
-working_file %>% 
-  group_by(id) %>% 
-  slice(1) %>% 
-  ungroup() %>% 
-  count(region, sort = TRUE) %>% 
-  mutate(
-    Frequency = round(n / sum(n), 3) * 100 
-  ) %>% 
-  rename(
-    Region = region,
-    N = n
-  ) %>% 
-  knitr::kable(
-    .,
-    caption = "Region that participants come from"
-  )
-```
-
-Let's do the same thing for ethnicity, see Table \@ref(tab:describe-ethnicity).
-The majority of participants are White British.
-```{r describe-ethnicity, echo=FALSE}
-working_file %>% 
-  group_by(id) %>% 
-  slice(1) %>% 
-  ungroup() %>% 
-  count(ethnicity, sort = TRUE) %>% 
-  mutate(
-    Frequency = round(n / sum(n), 4) * 100 
-  ) %>% 
-  rename(
-    Ethnicity = ethnicity,
-    N = n
-  ) %>% 
-  knitr::kable(
-    .,
-    caption = "Participants' ethnicity"
-  )
-```
-
-In Table \@ref(tab:describe-employment) we see that the majority of the sample are not employed full time.
-A substantial proportion are furloughed because of COVID-19.
-```{r describe-employment, echo=FALSE}
-working_file %>% 
-  group_by(id) %>% 
-  slice(1) %>% 
-  ungroup() %>% 
-  count(employment, sort = TRUE) %>% 
-  mutate(
-    Frequency = round(n / sum(n), 4) * 100 
-  ) %>% 
-  rename(
-    Employment = employment,
-    N = n
-  ) %>% 
-  knitr::kable(
-    .,
-    caption = "Participants' employment"
-  )
-```
-
-Now let's check the income brackets.
-If participants were the main earner, they provided only their income.
-If participants weren't the main earner, they provided the income of the main earner and their own.
-The answers were on an ordinal scale, so adding those two up to a total income doesn't work.
-Instead, I'll simply provide a frequency table of the income of the main earner.
-
-Table \@ref(tab:describe-main-earner-income) shows the distribution of income brackets.
-We see that the majority is somewhere around UK median income.
-```{r describe-main-earner-income, echo=FALSE}
-working_file %>% 
-  group_by(id) %>% 
-  slice(1) %>% 
-  mutate(
-    Income = coalesce(income_main_earner, income_own)
-  ) %>% 
-  ungroup() %>% 
-  count(Income) %>% 
-  mutate(
-    Frequency = round(n / sum(n), 4) * 100 
-  ) %>% 
-  rename(N = n) %>% 
-  knitr::kable(
-    .,
-    caption = "Income of the household main earner"
-  )
-```
-
-Now let's inspect participants' occupation.
-Rather, that's the occupation of the main earner.
-In Table \@ref(tab:describe-main-earner-occupation) we see that the majority have a white collar job.
-```{r describe-main-earner-occupation, echo=FALSE}
-working_file %>% 
-  group_by(id) %>% 
-  slice(1) %>% 
-  ungroup() %>% 
-  count(occupation_main_earner, sort = TRUE) %>% 
-  mutate(
-    Frequency = round(n / sum(n), 4) * 100 
-  ) %>% 
-  rename(
-    "Occupation of the main earner" = occupation_main_earner,
-    N = n
-  ) %>% 
-  knitr::kable(
-    .,
-    caption = "Occupation of the household main earner"
-  )
-```
-
-
-Alright, how do participants live?
-This item was a multiple choice question, so we'll have more responses than participants.
-I'll not plot the unique combinations, but rather summarize across variables.
-Participants answered this question at each wave, so we'll plot the proportions over time.
-At this point, it's easiest to first turn the data into the long format, then count, then back to wide format.
-
-Table \@ref(fig:describe-living-situation) shows that the majority are living with a partner and/or with partner and children, but also that over time those with living with a partner become fewer.
-```{r describe-living-situation, echo=FALSE, fig.cap="Living situation over time (multiple choice possible)"}
-working_file %>% 
-  select(id, wave, starts_with("living")) %>% 
-  pivot_longer(
-    c(-id, -wave),
-    names_to = "Situation",
-    values_to = "Applies"
-  ) %>% 
-  group_by(wave) %>% 
-  count(Situation, Applies) %>% 
-  ungroup() %>% 
-  pivot_wider(
-    names_from = Applies,
-    values_from = n
-  ) %>% 
-  mutate(
-    Percent = round(Yes / (No + Yes), digits = 2) * 100,
-    wave = as.factor(wave)
-  ) %>% 
-  ggplot(
-    data = .,
-    aes(
-      x = wave,
-      y = Percent,
-      color = Situation,
-      group = Situation
-    )
-  ) +
-  geom_line() +
-  scale_color_brewer(palette="Dark2") +
-  scale_colour_discrete(guide = "none") +
-  geom_dl(aes(label = Situation), method = list(dl.trans(x = x - 1), gapply.fun(d[6,]), cex = 0.8)) 
-```
-
-Let's do the same for the impact of COVID-19.
-Note that this item was a) multiple choice again, b) not all options were shown to all participants, c) asked at each wave.
-
-I'll show the proportions as a line graph, faceting by the grouping of work and parenting situation.
-Figure \@ref(fig:describe-covid-consequences) shows that the majority of participants had to work from home full time or had to stop working altogether.
-```{r describe-covid-consequences, echo=FALSE, fig.cap="Proportion of consequences of COVID-19 by demographic group"}
-# get proportions per answer of those who are employed
-working_file %>% 
-  mutate(
-    # see the survey materials, not all questions were shown to all respondents, so we create four groups, which neglects retirees and those who prefer not to say
-    covid_filter = case_when(
-      (employment %in% levels(working_file$employment)[c(1:3,6,8)] & (living_with_children == "Yes" | living_with_parents == "Yes" | living_with_partner_children == "Yes")) ~ "Working with kids/parents at home",
-      (employment %in% levels(working_file$employment)[c(1:3,6,8)] & (living_with_children == "No" & living_with_parents == "No" & living_with_partner_children == "No")) ~ "Working without kids/parents at home",
-      (employment %in% levels(working_file$employment)[c(4,5)] & (living_with_children == "Yes" | living_with_parents == "Yes" | living_with_partner_children == "Yes")) ~ "Unemployed with kids/parents at home",
-      (employment %in% levels(working_file$employment)[c(4,5)] & (living_with_children == "No" & living_with_parents == "No" & living_with_partner_children == "No")) ~ "Unemployed without kids/parents at home",
-      TRUE ~ as.character(employment)
-    )
-  )  %>% 
-  select(id, wave, starts_with("covid")) %>% 
-  pivot_longer(
-    c(-id, -wave, -covid_filter),
-    names_to = "Situation",
-    values_to = "Applies"
-  ) %>%
-  group_by(wave, covid_filter) %>% 
-  count(Situation, Applies) %>% 
-  pivot_wider(
-    names_from = Applies,
-    values_from = n
-  ) %>% 
-  mutate(
-    Percent = round(Yes / (No + Yes), digits = 2) * 100
-  ) %>% 
-  filter(!is.na(Percent)) %>% # exclude those who weren't asked that question
-  ggplot(
-    aes(
-      x = wave,
-      y = Percent,
-      color = Situation,
-      group = Situation
-    )
-  ) +
-  geom_line() +
-  scale_color_brewer(palette="Dark2") +
-  facet_wrap(~ covid_filter)
 ```
 
 Alright, next let's have a look again (now that we have the final sample) at how many people had used a medium in the three months before wave 1 (Table \@ref(tab:table-media-filters)).
@@ -814,44 +608,6 @@ ggpairs(
   )
 ```
 
-Figure \@ref(fig:correlation-matrix-estimates-well-being) shows the correlations between estimates of change of use and well-being.
-The pattern is similar to that of use and well-being with even smaller effect sizes.
-```{r correlation-matrix-estimates-well-being, echo=FALSE, cache=TRUE, message=F, warning=F, fig.cap="Correlation matrix of estimated time spent with a medium and well-being", fig.dim=c(14,14)}
-ggpairs(
-  data = working_file %>%
-    select(
-      contains("estimate"),
-      affect,
-      life_satisfaction
-    ) %>%
-    # remove _estimate appendix to make variable names shorter
-    rename_with(
-      ~ str_remove(.x, "_estimate"),
-      ends_with("estimate"),
-    ),
-  lower = list(
-    continuous = lm_function # custom helper function
-  ),
-  diag = list(
-    continuous = dens_function # custom helper function
-  )
-) +
-  theme(
-    axis.line=element_blank(),
-    axis.text.x=element_blank(),
-    axis.text.y=element_blank(),
-    axis.ticks=element_blank(),
-    axis.title.y=element_blank(),
-    axis.title.x=element_blank(),
-    legend.position="none",
-    panel.background=element_blank(),
-    panel.border=element_blank(),
-    panel.grid.major=element_blank(),
-    panel.grid.minor=element_blank(),
-    plot.background=element_blank(),
-    strip.background = element_blank()
-  )
-```
 ## Plots for Paper
 
 For the paper, I want to avoid confronting readers with blocks of numbers.
@@ -1478,6 +1234,8 @@ ggplot(
     legend.position = "none"
   ) -> figure4
 
+figure4
+
 ggsave(
   here("figures", "figure4.tiff"),
   plot = figure4,
@@ -1583,4 +1341,3 @@ ggsave(
   dpi = 300
 )
 ```
-

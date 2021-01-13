@@ -256,30 +256,8 @@ working_file <-
     wave = dWeekMerged,
     
     # demographics
-    occupation_main_earner = PS1a,
-    main_earner = PS1b,
-    income_main_earner = PS1c,
-    income_own = A7,
-    ethnicity = PS2,
-    internet_use = A2,
     gender = A4,
     age = A5,
-    employment = A6x1,
-    living_on_my_own = A6x2r1,
-    living_with_children = A6x2r2,
-    living_with_partner = A6x2r3,
-    living_with_partner_children = A6x2r4,
-    living_with_family = A6x2r5,
-    living_with_parents = A6x2r6,
-    living_with_friends = A6x2r7,
-    region = A8,
-    covid_work_home_often = A6x4r1,
-    covid_work_home_always = A6x4r2,
-    covid_work_outside = A6x4r3,
-    covid_work_stopped = A6x4r4,
-    covid_home_schooling = A6x4r5,
-    covid_self_isolating = A6x4r6,
-    covid_none = A6x4r99,
     
     # filter questions: downloaded
     downloaded_music = B1r1,
@@ -385,7 +363,7 @@ working_file <-
   )
 ```
 
-Alright, now to the tedious part: transforming all variables to the correct type and assigning informative factor level labels.
+Alright, now to transforming all variables to the correct type and assigning informative factor level labels.
 Note that `id` now is numeric which can be misleading, which is why I add `pp_` (for participant) before the ID number.
 ```{r assign-types-and-labels}
 working_file <- 
@@ -396,8 +374,7 @@ working_file <-
     across(
       c(
         id,
-        occupation_main_earner:gender,
-        employment:covid_none
+        gender
       ),
       as.factor
     )
@@ -408,142 +385,12 @@ working_file <-
   
   # give proper labels to demographics
   mutate(
-    occupation_main_earner = fct_recode(
-      occupation_main_earner,
-      "Higher managerial/professional/administrative" = "1",
-      "Intermediate managerial/professional/administrative" = "2",
-      "Supervisory or clerical/junior managerial/ professional/ administrative" = "3",
-      "Skilled manual worker" = "4",
-      "Semi-skilled or unskilled work" = "5",
-      "In full time education" = "6",
-      "Unemployed" = "7",
-      "Prefer not to say" = "8"
-    ),
-    across(
-      c(income_main_earner, income_own),
-      ~ fct_recode(
-        .x,
-        "Less than £10,000" = "1",
-        "£10,000 - £19,999" = "2",
-        "£20,000 - £29,999" = "3",
-        "£30,000 - £39,999" = "4",
-        "£40,000 - £49,999" = "5",
-        "£50,000 - £59,999" = "6",
-        "£60,000 - £69,999" = "7",
-        "£70,000 - £79,999" = "8",
-        "£80,000 - £89,999" = "9",
-        "£90,000 - £99,999" = "10",
-        "£100,000 - £109,999" = "11",
-        "£110,000 - £119,999" = "12",
-        "£120,000 - £129,999" = "13",
-        "£130,000 - £139,999" = "14",
-        "£140,000 - £149,999" = "15",
-        "£150,000 - £159,999" = "16",
-        "£160,000 - £169,999" = "17",
-        "£170,000 - £179,999" = "18",
-        "£180,000 - £189,999" = "19",
-        "£190,000 - £199,999" = "20",
-        "£200,000 - £209,999" = "21",
-        "£210,000 - £219,999" = "22",
-        "£220,000 - £229,999" = "23",
-        "£230,000 - £239,999" = "24",
-        "£240,000 - £249,999" = "25",
-        "£250,000 or more" = "26"
-      )
-    ),
-    
-    ethnicity = fct_recode(
-      ethnicity,
-      "White British" = "1",
-      "White European" = "2",
-      "White - Other" = "3",
-      "Indian" = "4",
-      "Pakistani" = "5",
-      "Bangladeshi" = "6",
-      "Chinese" = "7",
-      "Japanese" = "8",
-      "Any other Asian/Asian British Origin" = "9",
-      "African" = "10",
-      "Caribbean" = "11",
-      "Any other Black/African/Caribbean British origin" = "12",
-      "Arab" = "13",
-      "Any other ethnic origin" = "14",
-      "White and Black Caribbean" = "15",
-      "White and Black African" = "16",
-      "White and Asian" = "17",
-      "Any other Mixed/Multiple ethnic origins" = "18",
-      "Prefer not to say" = "19"
-    ),
-    
-    internet_use = fct_recode(
-      internet_use,
-      "Several times a day" = "1",
-      "Once a day" = "2",
-      "5-6 days a week" = "3",
-      "2-4 days a week" = "4",
-      "Once a week" = "5",
-      "2-3 times a month" = "6",
-      "Once a month" = "7",
-      "Less often" = "8",
-      "Don't know/Not sure" = "9"
-    ),
-    
     gender = fct_recode(
       gender,
       "Male" = "1",
       "Female" = "2",
       "Other" = "3"
     ),
-    
-    employment = fct_recode(
-      employment,
-      "Employed full time" = "1",
-      "Employed part time" = "2",
-      "Employed but furloughed due to the coronavirus pandemic" = "3",
-      "Unemployed and looking for work" = "4",
-      "Unemployed and not looking for work" = "5",
-      "Self employed" = "6",
-      "Retired" = "7",
-      "Student" = "8",
-      "Rather not say" = "9"
-    ),
-    
-    region = fct_recode(
-      region,
-      "North East" = "1",
-      "North West" = "2",
-      "Yorkshire and The Humber" = "3",
-      "East Midlands" = "4",
-      "West Midlands" = "5",
-      "East" = "6",
-      "London" = "7",
-      "South East" = "8",
-      "South West" = "9",
-      "Wales" = "10",
-      "Scotland" = "11",
-      "Northern Ireland" = "12",
-      "Not in the UK" = "13"
-    ),
-    
-    # assign yes/no to binary variables
-    across(
-      c(
-        starts_with("living"),
-        starts_with("covid"),
-      ),
-      ~ fct_recode(
-        .x,
-        "Yes" = "1",
-        "No" = "0"
-      )
-    ),
-    
-    main_earner = fct_recode(
-      main_earner,
-      "Yes" = "1",
-      "No" = "2"
-    ),
-    
     # add "pp_" prefix to id variable
     id = as.factor(
       paste0("pp_", id)
@@ -678,7 +525,7 @@ filters <-
   # select variables that are constant across all waves
   select(
     id,
-    occupation_main_earner:internet_use,
+    gender,
     contains("identity"),
     starts_with("filter")
   )
@@ -688,7 +535,7 @@ working_file <-
   left_join(
     working_file %>% 
       select(
-        -(occupation_main_earner:internet_use),
+        -(gender),
         -contains("identity")
       ),
     filters,
@@ -704,15 +551,6 @@ working_file <-
   # some reordering for purely cosmetic purposes
   select(
     id:age,
-    region,
-    ethnicity,
-    employment,
-    main_earner,
-    occupation_main_earner,
-    starts_with("income"),
-    starts_with("living"),
-    starts_with("covid"),
-    internet_use,
     starts_with("filter"),
     everything()
   )
@@ -2042,7 +1880,6 @@ working_file <-
   mutate(
     across(
       c(
-        covid_work_home_often:covid_none,
         music_hours:well_being_2,
         music_time:total_time
       ),
@@ -2116,7 +1953,9 @@ I'll reorder some variables for cosmetic purposes, only select those we need, an
 working_file <- 
   working_file %>% 
   select(
-    id:filter_audiobooks,
+    id, 
+    gender,
+    wave:filter_audiobooks,
     starts_with("music"),
     starts_with("films"),
     starts_with("tv"),
