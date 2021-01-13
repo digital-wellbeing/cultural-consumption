@@ -9,22 +9,22 @@ You can download them if you set the code chunk below to `eval=TRUE`.
 Downloading only works when the OSF project is public.
 If it isn't during peer review, you'll need to paste the data files from the OSF to the `data/` folder manually.
 ```{r download-data, eval=FALSE}
-# create directory
-dir.create("data/", FALSE, TRUE)
-
-# download models
-osf_retrieve_node("https://osf.io/yn7sx/") %>% 
-  osf_ls_nodes() %>% 
-  filter(name == "data") %>% 
-  osf_ls_files(
-    .,
-    n_max = Inf
-  ) %>% 
-  osf_download(
-    .,
-    path = here("data"),
-    progress = TRUE
-  )
+# # create directory
+# dir.create("data/", FALSE, TRUE)
+# 
+# # download models
+# osf_retrieve_node("https://osf.io/yn7sx/") %>% 
+#   osf_ls_nodes() %>% 
+#   filter(name == "data") %>% 
+#   osf_ls_files(
+#     .,
+#     n_max = Inf
+#   ) %>% 
+#   osf_download(
+#     .,
+#     path = here("data"),
+#     progress = TRUE
+#   )
 ```
 
 
@@ -778,6 +778,11 @@ But the participant was still asked about their minutes and hours - which is why
 Minutes and hours were forced response as far as I can tell.
 I wouldn't take those estimates seriously, because the participant was forced to respond to minutes and hours.
 We see that in the following waves, they selected the option that they hadn't listened to audiobooks.
+
+Please note: We could not share the full `estimate` questions.
+Before uploading the raw data, I did some preprocessing such that only the answer options 3 (nothing changed) and 6 (didn't use a medium) remained.
+All other non-missing values are set to 9.
+Missing values remain as `NA`.
 ```{r example-filter-change, echo=FALSE}
 working_file %>% 
   filter(id == "pp_7") %>%
@@ -894,7 +899,7 @@ I'll do exclusions in the next section when I look at data quality.
 
 For now, let's deal with those few cases that are as clear-cut as the one presented above.
 First some house keeping.
-If participants indicated on one of the `estimate` questions that they didn't use that medium in the previous week (only applicable in waves 2 to 6), they'll receive an `NA` on their time estimates.
+If participants indicated on one of the `estimate` questions that they didn't use that medium in the previous week (only applicable in waves 2 to 6), they'll receive a 0 on their time estimates.
 So we'll first set time estimates to `-999` if participants say that they didn't use a medium, following the same logic I outlined above.
 I use `-999` instead of `-99` like above to be able to distinguish between imputed zeros in the first wave and imputed zeros in later waves.
 ```{r didnt-use-medium}
@@ -1042,7 +1047,7 @@ Table \@ref(tab:table-no-changes) shows how these markers look like.
 ```{r table-no-changes, echo=FALSE}
 knitr::kable(
   head(no_changes, n = 10),
-  caption = "Markers for whether someone had no change from wave 1 through wave 2 or not, per medium"
+  caption = "Markers for whether someone had no change from wave 1 through wave 6 or not, per medium"
 ) %>% 
   kable_styling(font_size =  7)
 ```
@@ -2053,7 +2058,7 @@ working_file <-
 As a last step, we're creating the mean score scales.
 
 Before we do that, we have to reverse code some items.
-Both the `estimates` and the `identity` items had strongest agreement as 1.
+`identity` items had strongest agreement as 1.
 I find it more intuitive when larger numbers mean more agreement.
 The same applies to the well-being item about anxiety, which I will reverse code.
 ```{r reverse-code}
@@ -2063,11 +2068,6 @@ working_file <-
     across(
       contains("identity"),
       ~ 5 - .x
-    ),
-    
-    across(
-      ends_with("estimate"),
-      ~ 7 - .x
     ),
     
     well_being_2 = 10 - well_being_2 # starts at 0

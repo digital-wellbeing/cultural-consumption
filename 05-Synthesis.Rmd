@@ -479,7 +479,7 @@ ggplot(
     legend.position = "bottom",
   ) -> figure7
 
-figure7
+figure7 
 
 ggsave(
   filename = here("figures", "figure7.tiff"),
