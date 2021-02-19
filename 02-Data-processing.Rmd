@@ -247,6 +247,10 @@ For our purposes, we'll retain:
 
 Note that there are quite a lot of filtering variables.
 We can't collapse these to one variable because these questions were multiple choice.
+
+Also, variables `C1x1aii` to `C7cx1aii` ask about estimates of change of media use.
+However, the first wave has a different time frame ("Since the COVID-19 pandemic") than the following waves ("Compared to the week before"), but assess the same concept: estimates of change.
+We don't formally analyze these variables, but use their data in all waves a) to impute missing values later in data processing, b) in visualizations to help readers understand the data structure.
 ```{r select-and-rename}
 working_file <-
   working_file %>% 
