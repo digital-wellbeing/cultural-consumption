@@ -8,25 +8,24 @@ The data are on the OSF.
 You can download them if you set the code chunk below to `eval=TRUE`.
 Downloading only works when the OSF project is public.
 If it isn't during peer review, you'll need to paste the data files from the OSF to the `data/` folder manually.
-```{r download-data, eval=FALSE}
-# # create directory
-# dir.create("data/", FALSE, TRUE)
-# 
-# # download models
-# osf_retrieve_node("https://osf.io/yn7sx/") %>% 
-#   osf_ls_nodes() %>% 
-#   filter(name == "data") %>% 
-#   osf_ls_files(
-#     .,
-#     n_max = Inf
-#   ) %>% 
-#   osf_download(
-#     .,
-#     path = here("data"),
-#     progress = TRUE
-#   )
-```
+```{r download-data, eval=TRUE}
+# create directory
+dir.create("data/", FALSE, TRUE)
 
+# download models
+osf_retrieve_node("https://osf.io/yn7sx/") %>%
+  osf_ls_nodes() %>%
+  filter(name == "data") %>%
+  osf_ls_files(
+    .,
+    n_max = Inf
+  ) %>%
+  osf_download(
+    .,
+    path = here("data"),
+    progress = FALSE
+  )
+```
 
 ## Read waves 2-6
 
@@ -63,7 +62,8 @@ waves_2_to_6 <-
   read_csv(
     here("data", "waves_2_to_6.csv"),
     guess_max = 2e4
-  )
+  ) %>% 
+  select(-X1) # remove rownumber
 ```
 
 Next, the logic behind assigning the constant IDs.
@@ -165,7 +165,7 @@ for (an_id in ids) {
 
   # increase the participant number
   id_counter <- id_counter + 1
-}
+} 
 ```
 
 Before we we assign correct variable types, name factor levels etc. we'll load wave 1.
@@ -183,6 +183,7 @@ wave1 <-
     here("data", "wave1.csv"),
     guess_max = 2e4
   ) %>% 
+  select(-X1) %>% # remove row number
   rename(transaction_idOld = transaction_id) %>% 
   mutate(dWeekMerged = 1)
 ```

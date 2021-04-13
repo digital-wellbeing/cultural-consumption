@@ -226,6 +226,11 @@ osf_retrieve_node("https://osf.io/yn7sx/") %>%
   )
 ```
 
+Last, I'll write that data object into the `data` folder now that we have our final analysis data file.
+```{r write-processed-data}
+write_rds(working_file, here("data", "processed_data.rds"))
+```
+
 ## Music
 
 ### Affect

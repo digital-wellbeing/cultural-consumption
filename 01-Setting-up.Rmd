@@ -4,9 +4,6 @@ In this section, I load all libraries and define all custom functions that we ne
 Note I use the `pacman` package for loading libraries.
 ```{r setting-up}
 # pacman makes it easier to load and install packages
-if (!requireNamespace("pacman"))
-  install.packages("pacman")
-
 library(pacman)
 
 # load packages
