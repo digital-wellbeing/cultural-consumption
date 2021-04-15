@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -450,75 +450,79 @@ Not sure I like this: Four columns might be a bit much.</p>
 <span id="cb241-13"><a href="synthesis.html#cb241-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># the effect on the hurdle gave us odds ratios of zero, so I reverse those to tell use odds of having used medium</span></span>
 <span id="cb241-14"><a href="synthesis.html#cb241-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">across</span>(</span>
 <span id="cb241-15"><a href="synthesis.html#cb241-15" aria-hidden="true" tabindex="-1"></a>        Estimate<span class="sc">:</span><span class="st">`</span><span class="at">Upper CI</span><span class="st">`</span>,</span>
-<span id="cb241-16"><a href="synthesis.html#cb241-16" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span> <span class="fu">if_else</span>(Direction <span class="sc">==</span> <span class="st">&quot;Well-Being on Media&quot;</span>, <span class="fu">exp</span>(<span class="sc">-</span>.x), .x)</span>
-<span id="cb241-17"><a href="synthesis.html#cb241-17" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb241-18"><a href="synthesis.html#cb241-18" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb241-19"><a href="synthesis.html#cb241-19" aria-hidden="true" tabindex="-1"></a>      <span class="co"># the line for null effect (0 for gaussian, 1 for hurdle gamme)</span></span>
-<span id="cb241-20"><a href="synthesis.html#cb241-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">Line =</span> <span class="fu">if_else</span>(Direction <span class="sc">==</span> <span class="st">&quot;Media on Well-Being&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb241-21"><a href="synthesis.html#cb241-21" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb241-22"><a href="synthesis.html#cb241-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># rename levels</span></span>
-<span id="cb241-23"><a href="synthesis.html#cb241-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">Effect =</span> <span class="fu">fct_recode</span>(</span>
-<span id="cb241-24"><a href="synthesis.html#cb241-24" aria-hidden="true" tabindex="-1"></a>        Effect,</span>
-<span id="cb241-25"><a href="synthesis.html#cb241-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;TV&quot;</span> <span class="ot">=</span> <span class="st">&quot;Tv&quot;</span>,</span>
-<span id="cb241-26"><a href="synthesis.html#cb241-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Life satisfaction&quot;</span> <span class="ot">=</span> <span class="st">&quot;Life Satisfaction&quot;</span></span>
-<span id="cb241-27"><a href="synthesis.html#cb241-27" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb241-28"><a href="synthesis.html#cb241-28" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb241-29"><a href="synthesis.html#cb241-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">Measure =</span> <span class="fu">fct_recode</span>(</span>
-<span id="cb241-30"><a href="synthesis.html#cb241-30" aria-hidden="true" tabindex="-1"></a>        Measure,</span>
-<span id="cb241-31"><a href="synthesis.html#cb241-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Life satisfaction&quot;</span> <span class="ot">=</span> <span class="st">&quot;Life Satisfaction&quot;</span></span>
-<span id="cb241-32"><a href="synthesis.html#cb241-32" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb241-33"><a href="synthesis.html#cb241-33" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb241-34"><a href="synthesis.html#cb241-34" aria-hidden="true" tabindex="-1"></a>      <span class="co"># reorder factor levels</span></span>
-<span id="cb241-35"><a href="synthesis.html#cb241-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">Effect =</span> <span class="fu">fct_relevel</span>(</span>
-<span id="cb241-36"><a href="synthesis.html#cb241-36" aria-hidden="true" tabindex="-1"></a>        Effect,</span>
-<span id="cb241-37"><a href="synthesis.html#cb241-37" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(</span>
-<span id="cb241-38"><a href="synthesis.html#cb241-38" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Audiobooks&quot;</span>,</span>
-<span id="cb241-39"><a href="synthesis.html#cb241-39" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Magazines&quot;</span>,</span>
-<span id="cb241-40"><a href="synthesis.html#cb241-40" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Books&quot;</span>,</span>
-<span id="cb241-41"><a href="synthesis.html#cb241-41" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Games&quot;</span>,</span>
-<span id="cb241-42"><a href="synthesis.html#cb241-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Films&quot;</span>,</span>
-<span id="cb241-43"><a href="synthesis.html#cb241-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;TV&quot;</span>,</span>
-<span id="cb241-44"><a href="synthesis.html#cb241-44" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Music&quot;</span></span>
-<span id="cb241-45"><a href="synthesis.html#cb241-45" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb241-46"><a href="synthesis.html#cb241-46" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb241-47"><a href="synthesis.html#cb241-47" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb241-48"><a href="synthesis.html#cb241-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb241-49"><a href="synthesis.html#cb241-49" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb241-50"><a href="synthesis.html#cb241-50" aria-hidden="true" tabindex="-1"></a>    estimates <span class="sc">%&gt;%</span> </span>
-<span id="cb241-51"><a href="synthesis.html#cb241-51" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(Measure),</span>
-<span id="cb241-52"><a href="synthesis.html#cb241-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb241-53"><a href="synthesis.html#cb241-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Estimate,</span>
-<span id="cb241-54"><a href="synthesis.html#cb241-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> Effect,</span>
-<span id="cb241-55"><a href="synthesis.html#cb241-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Measure</span>
-<span id="cb241-56"><a href="synthesis.html#cb241-56" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb241-57"><a href="synthesis.html#cb241-57" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb241-58"><a href="synthesis.html#cb241-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
-<span id="cb241-59"><a href="synthesis.html#cb241-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb241-60"><a href="synthesis.html#cb241-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> Line</span>
-<span id="cb241-61"><a href="synthesis.html#cb241-61" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb241-62"><a href="synthesis.html#cb241-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb241-63"><a href="synthesis.html#cb241-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(</span>
-<span id="cb241-64"><a href="synthesis.html#cb241-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb241-65"><a href="synthesis.html#cb241-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> <span class="st">`</span><span class="at">Lower CI</span><span class="st">`</span>,</span>
-<span id="cb241-66"><a href="synthesis.html#cb241-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> <span class="st">`</span><span class="at">Upper CI</span><span class="st">`</span></span>
-<span id="cb241-67"><a href="synthesis.html#cb241-67" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb241-68"><a href="synthesis.html#cb241-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge2</span>(.<span class="dv">6</span>, <span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb241-69"><a href="synthesis.html#cb241-69" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb241-70"><a href="synthesis.html#cb241-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
-<span id="cb241-71"><a href="synthesis.html#cb241-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Between vs. Within</span><span class="st">`</span> <span class="sc">~</span> Direction <span class="sc">+</span> <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span>,</span>
-<span id="cb241-72"><a href="synthesis.html#cb241-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span></span>
+<span id="cb241-16"><a href="synthesis.html#cb241-16" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span> <span class="fu">case_when</span>(</span>
+<span id="cb241-17"><a href="synthesis.html#cb241-17" aria-hidden="true" tabindex="-1"></a>          Direction <span class="sc">==</span> <span class="st">&quot;Well-Being on Media&quot;</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Use&quot;</span> <span class="sc">~</span> <span class="fu">exp</span>(<span class="sc">-</span>.x), <span class="co"># effect on hurdle</span></span>
+<span id="cb241-18"><a href="synthesis.html#cb241-18" aria-hidden="true" tabindex="-1"></a>          Direction <span class="sc">==</span> <span class="st">&quot;Well-Being on Media&quot;</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Time&quot;</span> <span class="sc">~</span> <span class="fu">exp</span>(.x), <span class="co"># odds for increased time</span></span>
+<span id="cb241-19"><a href="synthesis.html#cb241-19" aria-hidden="true" tabindex="-1"></a>          <span class="cn">TRUE</span> <span class="sc">~</span> .x</span>
+<span id="cb241-20"><a href="synthesis.html#cb241-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb241-21"><a href="synthesis.html#cb241-21" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb241-22"><a href="synthesis.html#cb241-22" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb241-23"><a href="synthesis.html#cb241-23" aria-hidden="true" tabindex="-1"></a>      <span class="co"># the line for null effect (0 for gaussian, 1 for hurdle gamme)</span></span>
+<span id="cb241-24"><a href="synthesis.html#cb241-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">Line =</span> <span class="fu">if_else</span>(Direction <span class="sc">==</span> <span class="st">&quot;Media on Well-Being&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb241-25"><a href="synthesis.html#cb241-25" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb241-26"><a href="synthesis.html#cb241-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># rename levels</span></span>
+<span id="cb241-27"><a href="synthesis.html#cb241-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">Effect =</span> <span class="fu">fct_recode</span>(</span>
+<span id="cb241-28"><a href="synthesis.html#cb241-28" aria-hidden="true" tabindex="-1"></a>        Effect,</span>
+<span id="cb241-29"><a href="synthesis.html#cb241-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;TV&quot;</span> <span class="ot">=</span> <span class="st">&quot;Tv&quot;</span>,</span>
+<span id="cb241-30"><a href="synthesis.html#cb241-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Life satisfaction&quot;</span> <span class="ot">=</span> <span class="st">&quot;Life Satisfaction&quot;</span></span>
+<span id="cb241-31"><a href="synthesis.html#cb241-31" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb241-32"><a href="synthesis.html#cb241-32" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb241-33"><a href="synthesis.html#cb241-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">Measure =</span> <span class="fu">fct_recode</span>(</span>
+<span id="cb241-34"><a href="synthesis.html#cb241-34" aria-hidden="true" tabindex="-1"></a>        Measure,</span>
+<span id="cb241-35"><a href="synthesis.html#cb241-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Life satisfaction&quot;</span> <span class="ot">=</span> <span class="st">&quot;Life Satisfaction&quot;</span></span>
+<span id="cb241-36"><a href="synthesis.html#cb241-36" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb241-37"><a href="synthesis.html#cb241-37" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb241-38"><a href="synthesis.html#cb241-38" aria-hidden="true" tabindex="-1"></a>      <span class="co"># reorder factor levels</span></span>
+<span id="cb241-39"><a href="synthesis.html#cb241-39" aria-hidden="true" tabindex="-1"></a>      <span class="at">Effect =</span> <span class="fu">fct_relevel</span>(</span>
+<span id="cb241-40"><a href="synthesis.html#cb241-40" aria-hidden="true" tabindex="-1"></a>        Effect,</span>
+<span id="cb241-41"><a href="synthesis.html#cb241-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(</span>
+<span id="cb241-42"><a href="synthesis.html#cb241-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Audiobooks&quot;</span>,</span>
+<span id="cb241-43"><a href="synthesis.html#cb241-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Magazines&quot;</span>,</span>
+<span id="cb241-44"><a href="synthesis.html#cb241-44" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Books&quot;</span>,</span>
+<span id="cb241-45"><a href="synthesis.html#cb241-45" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Games&quot;</span>,</span>
+<span id="cb241-46"><a href="synthesis.html#cb241-46" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Films&quot;</span>,</span>
+<span id="cb241-47"><a href="synthesis.html#cb241-47" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;TV&quot;</span>,</span>
+<span id="cb241-48"><a href="synthesis.html#cb241-48" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Music&quot;</span></span>
+<span id="cb241-49"><a href="synthesis.html#cb241-49" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb241-50"><a href="synthesis.html#cb241-50" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb241-51"><a href="synthesis.html#cb241-51" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb241-52"><a href="synthesis.html#cb241-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-53"><a href="synthesis.html#cb241-53" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb241-54"><a href="synthesis.html#cb241-54" aria-hidden="true" tabindex="-1"></a>    estimates <span class="sc">%&gt;%</span> </span>
+<span id="cb241-55"><a href="synthesis.html#cb241-55" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(Measure),</span>
+<span id="cb241-56"><a href="synthesis.html#cb241-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb241-57"><a href="synthesis.html#cb241-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Estimate,</span>
+<span id="cb241-58"><a href="synthesis.html#cb241-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> Effect,</span>
+<span id="cb241-59"><a href="synthesis.html#cb241-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Measure</span>
+<span id="cb241-60"><a href="synthesis.html#cb241-60" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb241-61"><a href="synthesis.html#cb241-61" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb241-62"><a href="synthesis.html#cb241-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb241-63"><a href="synthesis.html#cb241-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb241-64"><a href="synthesis.html#cb241-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> Line</span>
+<span id="cb241-65"><a href="synthesis.html#cb241-65" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb241-66"><a href="synthesis.html#cb241-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb241-67"><a href="synthesis.html#cb241-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(</span>
+<span id="cb241-68"><a href="synthesis.html#cb241-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb241-69"><a href="synthesis.html#cb241-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> <span class="st">`</span><span class="at">Lower CI</span><span class="st">`</span>,</span>
+<span id="cb241-70"><a href="synthesis.html#cb241-70" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> <span class="st">`</span><span class="at">Upper CI</span><span class="st">`</span></span>
+<span id="cb241-71"><a href="synthesis.html#cb241-71" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb241-72"><a href="synthesis.html#cb241-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge2</span>(.<span class="dv">6</span>, <span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb241-73"><a href="synthesis.html#cb241-73" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb241-74"><a href="synthesis.html#cb241-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span>cb_palette) <span class="sc">+</span></span>
-<span id="cb241-75"><a href="synthesis.html#cb241-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cb_palette) <span class="sc">+</span></span>
-<span id="cb241-76"><a href="synthesis.html#cb241-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb241-77"><a href="synthesis.html#cb241-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb241-78"><a href="synthesis.html#cb241-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb241-79"><a href="synthesis.html#cb241-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb241-80"><a href="synthesis.html#cb241-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb241-81"><a href="synthesis.html#cb241-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb241-82"><a href="synthesis.html#cb241-82" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure6<span class="fl">.1</span></span>
-<span id="cb241-83"><a href="synthesis.html#cb241-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb241-84"><a href="synthesis.html#cb241-84" aria-hidden="true" tabindex="-1"></a>figure6<span class="fl">.1</span></span></code></pre></div>
+<span id="cb241-74"><a href="synthesis.html#cb241-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb241-75"><a href="synthesis.html#cb241-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Between vs. Within</span><span class="st">`</span> <span class="sc">~</span> Direction <span class="sc">+</span> <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span>,</span>
+<span id="cb241-76"><a href="synthesis.html#cb241-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span></span>
+<span id="cb241-77"><a href="synthesis.html#cb241-77" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb241-78"><a href="synthesis.html#cb241-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span>cb_palette) <span class="sc">+</span></span>
+<span id="cb241-79"><a href="synthesis.html#cb241-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cb_palette) <span class="sc">+</span></span>
+<span id="cb241-80"><a href="synthesis.html#cb241-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb241-81"><a href="synthesis.html#cb241-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb241-82"><a href="synthesis.html#cb241-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb241-83"><a href="synthesis.html#cb241-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb241-84"><a href="synthesis.html#cb241-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb241-85"><a href="synthesis.html#cb241-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb241-86"><a href="synthesis.html#cb241-86" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure6<span class="fl">.1</span></span>
+<span id="cb241-87"><a href="synthesis.html#cb241-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-88"><a href="synthesis.html#cb241-88" aria-hidden="true" tabindex="-1"></a>figure6<span class="fl">.1</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/estimates-plot1-1.png" width="672" />
 This looks better, in my opinion.
 Shapes and colors can be tough, but I think it’s easier to read than having four columns.
@@ -645,20 +649,22 @@ I’ll start with a plot for use vs. nonuse.</p>
 <span id="cb243-52"><a href="synthesis.html#cb243-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb243-53"><a href="synthesis.html#cb243-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb243-54"><a href="synthesis.html#cb243-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb243-55"><a href="synthesis.html#cb243-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb243-56"><a href="synthesis.html#cb243-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb243-57"><a href="synthesis.html#cb243-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb243-58"><a href="synthesis.html#cb243-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb243-59"><a href="synthesis.html#cb243-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.line.y = element_blank(),</span></span>
-<span id="cb243-60"><a href="synthesis.html#cb243-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb243-61"><a href="synthesis.html#cb243-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb243-62"><a href="synthesis.html#cb243-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb243-63"><a href="synthesis.html#cb243-63" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure6<span class="fl">.3</span></span>
-<span id="cb243-64"><a href="synthesis.html#cb243-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb243-65"><a href="synthesis.html#cb243-65" aria-hidden="true" tabindex="-1"></a>figure6<span class="fl">.3</span></span></code></pre></div>
+<span id="cb243-55"><a href="synthesis.html#cb243-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Reciprocal effects between using vs. not using a medium and well-being</span><span class="sc">\n</span><span class="st">&quot;</span>) <span class="sc">+</span></span>
+<span id="cb243-56"><a href="synthesis.html#cb243-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb243-57"><a href="synthesis.html#cb243-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb243-58"><a href="synthesis.html#cb243-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-59"><a href="synthesis.html#cb243-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-60"><a href="synthesis.html#cb243-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-61"><a href="synthesis.html#cb243-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.line.y = element_blank(),</span></span>
+<span id="cb243-62"><a href="synthesis.html#cb243-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-63"><a href="synthesis.html#cb243-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-64"><a href="synthesis.html#cb243-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb243-65"><a href="synthesis.html#cb243-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure6<span class="fl">.3</span></span>
+<span id="cb243-66"><a href="synthesis.html#cb243-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb243-67"><a href="synthesis.html#cb243-67" aria-hidden="true" tabindex="-1"></a>figure6<span class="fl">.3</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/estimates-plot3-1.png" width="672" /></p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="synthesis.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb244-2"><a href="synthesis.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure6.tiff&quot;</span>),</span>
+<span id="cb244-2"><a href="synthesis.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure6.png&quot;</span>),</span>
 <span id="cb244-3"><a href="synthesis.html#cb244-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure6<span class="fl">.3</span>,</span>
 <span id="cb244-4"><a href="synthesis.html#cb244-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.9</span>,</span>
 <span id="cb244-5"><a href="synthesis.html#cb244-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.7</span>,</span>
@@ -666,74 +672,87 @@ I’ll start with a plot for use vs. nonuse.</p>
 <span id="cb244-7"><a href="synthesis.html#cb244-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span></span>
 <span id="cb244-8"><a href="synthesis.html#cb244-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Then a plot for time effects.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="synthesis.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb245-2"><a href="synthesis.html#cb245-2" aria-hidden="true" tabindex="-1"></a>    estimates <span class="sc">%&gt;%</span> </span>
-<span id="cb245-3"><a href="synthesis.html#cb245-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
-<span id="cb245-4"><a href="synthesis.html#cb245-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_relevel</span>(</span>
-<span id="cb245-5"><a href="synthesis.html#cb245-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span>,</span>
-<span id="cb245-6"><a href="synthesis.html#cb245-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Time&quot;</span>,</span>
-<span id="cb245-7"><a href="synthesis.html#cb245-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Use&quot;</span></span>
-<span id="cb245-8"><a href="synthesis.html#cb245-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb245-9"><a href="synthesis.html#cb245-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Measure =</span> <span class="fu">fct_relevel</span>(</span>
-<span id="cb245-10"><a href="synthesis.html#cb245-10" aria-hidden="true" tabindex="-1"></a>          Measure,</span>
-<span id="cb245-11"><a href="synthesis.html#cb245-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Life satisfaction&quot;</span>,</span>
-<span id="cb245-12"><a href="synthesis.html#cb245-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Affect&quot;</span></span>
-<span id="cb245-13"><a href="synthesis.html#cb245-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb245-14"><a href="synthesis.html#cb245-14" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span> </span>
-<span id="cb245-15"><a href="synthesis.html#cb245-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># show only</span></span>
-<span id="cb245-16"><a href="synthesis.html#cb245-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Time&quot;</span>),</span>
-<span id="cb245-17"><a href="synthesis.html#cb245-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb245-18"><a href="synthesis.html#cb245-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Estimate,</span>
-<span id="cb245-19"><a href="synthesis.html#cb245-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> Effect,</span>
-<span id="cb245-20"><a href="synthesis.html#cb245-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Measure</span>
-<span id="cb245-21"><a href="synthesis.html#cb245-21" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb245-22"><a href="synthesis.html#cb245-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb245-23"><a href="synthesis.html#cb245-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
-<span id="cb245-24"><a href="synthesis.html#cb245-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb245-25"><a href="synthesis.html#cb245-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> Line</span>
-<span id="cb245-26"><a href="synthesis.html#cb245-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb245-27"><a href="synthesis.html#cb245-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb245-28"><a href="synthesis.html#cb245-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(</span>
-<span id="cb245-29"><a href="synthesis.html#cb245-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb245-30"><a href="synthesis.html#cb245-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> <span class="st">`</span><span class="at">Lower CI</span><span class="st">`</span>,</span>
-<span id="cb245-31"><a href="synthesis.html#cb245-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> <span class="st">`</span><span class="at">Upper CI</span><span class="st">`</span></span>
-<span id="cb245-32"><a href="synthesis.html#cb245-32" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb245-33"><a href="synthesis.html#cb245-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="dv">1</span>),</span>
-<span id="cb245-34"><a href="synthesis.html#cb245-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span></span>
-<span id="cb245-35"><a href="synthesis.html#cb245-35" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb245-36"><a href="synthesis.html#cb245-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(</span>
-<span id="cb245-37"><a href="synthesis.html#cb245-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb245-38"><a href="synthesis.html#cb245-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">yintercept =</span> <span class="fu">if_else</span>(<span class="fu">as.numeric</span>(Effect) <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="fu">as.numeric</span>(Effect) <span class="sc">-</span> <span class="fl">0.5</span>)</span>
-<span id="cb245-39"><a href="synthesis.html#cb245-39" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb245-40"><a href="synthesis.html#cb245-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&quot;lightgrey&quot;</span>,</span>
-<span id="cb245-41"><a href="synthesis.html#cb245-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>,</span>
-<span id="cb245-42"><a href="synthesis.html#cb245-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">alpha =</span> <span class="fl">0.45</span></span>
-<span id="cb245-43"><a href="synthesis.html#cb245-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb245-44"><a href="synthesis.html#cb245-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
-<span id="cb245-45"><a href="synthesis.html#cb245-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Between vs. Within</span><span class="st">`</span> <span class="sc">~</span> Direction,</span>
-<span id="cb245-46"><a href="synthesis.html#cb245-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span></span>
-<span id="cb245-47"><a href="synthesis.html#cb245-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb245-48"><a href="synthesis.html#cb245-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb245-49"><a href="synthesis.html#cb245-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb245-50"><a href="synthesis.html#cb245-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>)) <span class="sc">+</span></span>
-<span id="cb245-51"><a href="synthesis.html#cb245-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
-<span id="cb245-52"><a href="synthesis.html#cb245-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb245-53"><a href="synthesis.html#cb245-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb245-54"><a href="synthesis.html#cb245-54" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb245-55"><a href="synthesis.html#cb245-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb245-56"><a href="synthesis.html#cb245-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-57"><a href="synthesis.html#cb245-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-58"><a href="synthesis.html#cb245-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-59"><a href="synthesis.html#cb245-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.line.y = element_blank(),</span></span>
-<span id="cb245-60"><a href="synthesis.html#cb245-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-61"><a href="synthesis.html#cb245-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-62"><a href="synthesis.html#cb245-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb245-63"><a href="synthesis.html#cb245-63" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure7</span>
-<span id="cb245-64"><a href="synthesis.html#cb245-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb245-65"><a href="synthesis.html#cb245-65" aria-hidden="true" tabindex="-1"></a>figure7 </span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="synthesis.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function for different breaks on x-axis per facet</span></span>
+<span id="cb245-2"><a href="synthesis.html#cb245-2" aria-hidden="true" tabindex="-1"></a>my_breaks <span class="ot">&lt;-</span> </span>
+<span id="cb245-3"><a href="synthesis.html#cb245-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb245-4"><a href="synthesis.html#cb245-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">max</span>(x) <span class="sc">&gt;</span> <span class="dv">1</span>){</span>
+<span id="cb245-5"><a href="synthesis.html#cb245-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">1.1</span>)</span>
+<span id="cb245-6"><a href="synthesis.html#cb245-6" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb245-7"><a href="synthesis.html#cb245-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)</span>
+<span id="cb245-8"><a href="synthesis.html#cb245-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb245-9"><a href="synthesis.html#cb245-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb245-10"><a href="synthesis.html#cb245-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-11"><a href="synthesis.html#cb245-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb245-12"><a href="synthesis.html#cb245-12" aria-hidden="true" tabindex="-1"></a>    estimates <span class="sc">%&gt;%</span> </span>
+<span id="cb245-13"><a href="synthesis.html#cb245-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb245-14"><a href="synthesis.html#cb245-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_relevel</span>(</span>
+<span id="cb245-15"><a href="synthesis.html#cb245-15" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span>,</span>
+<span id="cb245-16"><a href="synthesis.html#cb245-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb245-17"><a href="synthesis.html#cb245-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Use&quot;</span></span>
+<span id="cb245-18"><a href="synthesis.html#cb245-18" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb245-19"><a href="synthesis.html#cb245-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">Measure =</span> <span class="fu">fct_relevel</span>(</span>
+<span id="cb245-20"><a href="synthesis.html#cb245-20" aria-hidden="true" tabindex="-1"></a>          Measure,</span>
+<span id="cb245-21"><a href="synthesis.html#cb245-21" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Life satisfaction&quot;</span>,</span>
+<span id="cb245-22"><a href="synthesis.html#cb245-22" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Affect&quot;</span></span>
+<span id="cb245-23"><a href="synthesis.html#cb245-23" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb245-24"><a href="synthesis.html#cb245-24" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span> </span>
+<span id="cb245-25"><a href="synthesis.html#cb245-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># show only</span></span>
+<span id="cb245-26"><a href="synthesis.html#cb245-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="st">`</span><span class="at">Use vs. Time</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Time&quot;</span>),</span>
+<span id="cb245-27"><a href="synthesis.html#cb245-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb245-28"><a href="synthesis.html#cb245-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Estimate,</span>
+<span id="cb245-29"><a href="synthesis.html#cb245-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> Effect,</span>
+<span id="cb245-30"><a href="synthesis.html#cb245-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Measure</span>
+<span id="cb245-31"><a href="synthesis.html#cb245-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb245-32"><a href="synthesis.html#cb245-32" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb245-33"><a href="synthesis.html#cb245-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb245-34"><a href="synthesis.html#cb245-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb245-35"><a href="synthesis.html#cb245-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> Line</span>
+<span id="cb245-36"><a href="synthesis.html#cb245-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb245-37"><a href="synthesis.html#cb245-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb245-38"><a href="synthesis.html#cb245-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(</span>
+<span id="cb245-39"><a href="synthesis.html#cb245-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb245-40"><a href="synthesis.html#cb245-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> <span class="st">`</span><span class="at">Lower CI</span><span class="st">`</span>,</span>
+<span id="cb245-41"><a href="synthesis.html#cb245-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> <span class="st">`</span><span class="at">Upper CI</span><span class="st">`</span></span>
+<span id="cb245-42"><a href="synthesis.html#cb245-42" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb245-43"><a href="synthesis.html#cb245-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="dv">1</span>),</span>
+<span id="cb245-44"><a href="synthesis.html#cb245-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span></span>
+<span id="cb245-45"><a href="synthesis.html#cb245-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb245-46"><a href="synthesis.html#cb245-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(</span>
+<span id="cb245-47"><a href="synthesis.html#cb245-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb245-48"><a href="synthesis.html#cb245-48" aria-hidden="true" tabindex="-1"></a>        <span class="at">yintercept =</span> <span class="fu">if_else</span>(<span class="fu">as.numeric</span>(Effect) <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="fu">as.numeric</span>(Effect) <span class="sc">-</span> <span class="fl">0.5</span>)</span>
+<span id="cb245-49"><a href="synthesis.html#cb245-49" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb245-50"><a href="synthesis.html#cb245-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&quot;lightgrey&quot;</span>,</span>
+<span id="cb245-51"><a href="synthesis.html#cb245-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>,</span>
+<span id="cb245-52"><a href="synthesis.html#cb245-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">alpha =</span> <span class="fl">0.45</span></span>
+<span id="cb245-53"><a href="synthesis.html#cb245-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb245-54"><a href="synthesis.html#cb245-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb245-55"><a href="synthesis.html#cb245-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Between vs. Within</span><span class="st">`</span> <span class="sc">~</span> Direction,</span>
+<span id="cb245-56"><a href="synthesis.html#cb245-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span></span>
+<span id="cb245-57"><a href="synthesis.html#cb245-57" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb245-58"><a href="synthesis.html#cb245-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> my_breaks) <span class="sc">+</span></span>
+<span id="cb245-59"><a href="synthesis.html#cb245-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb245-60"><a href="synthesis.html#cb245-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb245-61"><a href="synthesis.html#cb245-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>)) <span class="sc">+</span></span>
+<span id="cb245-62"><a href="synthesis.html#cb245-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb245-63"><a href="synthesis.html#cb245-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb245-64"><a href="synthesis.html#cb245-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb245-65"><a href="synthesis.html#cb245-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb245-66"><a href="synthesis.html#cb245-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Reciprocal effects between time spent using a medium and well-being</span><span class="sc">\n</span><span class="st">&quot;</span>) <span class="sc">+</span></span>
+<span id="cb245-67"><a href="synthesis.html#cb245-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb245-68"><a href="synthesis.html#cb245-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb245-69"><a href="synthesis.html#cb245-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb245-70"><a href="synthesis.html#cb245-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb245-71"><a href="synthesis.html#cb245-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb245-72"><a href="synthesis.html#cb245-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.line.y = element_blank(),</span></span>
+<span id="cb245-73"><a href="synthesis.html#cb245-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb245-74"><a href="synthesis.html#cb245-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb245-75"><a href="synthesis.html#cb245-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb245-76"><a href="synthesis.html#cb245-76" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> figure7</span>
+<span id="cb245-77"><a href="synthesis.html#cb245-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-78"><a href="synthesis.html#cb245-78" aria-hidden="true" tabindex="-1"></a>figure7 </span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/estimates-plot4-1.png" width="672" /></p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="synthesis.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb246-2"><a href="synthesis.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure7.tiff&quot;</span>),</span>
+<span id="cb246-2"><a href="synthesis.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure7.png&quot;</span>),</span>
 <span id="cb246-3"><a href="synthesis.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure7,</span>
 <span id="cb246-4"><a href="synthesis.html#cb246-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.9</span>,</span>
 <span id="cb246-5"><a href="synthesis.html#cb246-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.7</span>,</span>

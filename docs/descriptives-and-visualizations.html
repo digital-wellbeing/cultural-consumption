@@ -24,7 +24,7 @@
 <meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
 
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1351,7 +1351,7 @@ Not sure about the colors yet, might go all black for this one.</p>
 <span id="cb50-40"><a href="descriptives-and-visualizations.html#cb50-40" aria-hidden="true" tabindex="-1"></a>figure1</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/response-rate-plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives-and-visualizations.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.tiff&quot;</span>),</span>
+<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.png&quot;</span>),</span>
 <span id="cb51-3"><a href="descriptives-and-visualizations.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure1,</span>
 <span id="cb51-4"><a href="descriptives-and-visualizations.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
 <span id="cb51-5"><a href="descriptives-and-visualizations.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>
@@ -1764,7 +1764,7 @@ I also won’t have trendlines for the separate media, only for the total (too l
 <span id="cb56-53"><a href="descriptives-and-visualizations.html#cb56-53" aria-hidden="true" tabindex="-1"></a>figure2<span class="fl">.3</span></span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot3-1.png" width="672" /></p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="descriptives-and-visualizations.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb57-2"><a href="descriptives-and-visualizations.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure2.tiff&quot;</span>),</span>
+<span id="cb57-2"><a href="descriptives-and-visualizations.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure2.png&quot;</span>),</span>
 <span id="cb57-3"><a href="descriptives-and-visualizations.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure2<span class="fl">.3</span>,</span>
 <span id="cb57-4"><a href="descriptives-and-visualizations.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
 <span id="cb57-5"><a href="descriptives-and-visualizations.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
@@ -1825,7 +1825,7 @@ I also won’t have trendlines for the separate media, only for the total (too l
 <span id="cb58-51"><a href="descriptives-and-visualizations.html#cb58-51" aria-hidden="true" tabindex="-1"></a>figure3</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-total-time-plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="descriptives-and-visualizations.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb59-2"><a href="descriptives-and-visualizations.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure3.tiff&quot;</span>),</span>
+<span id="cb59-2"><a href="descriptives-and-visualizations.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure3.png&quot;</span>),</span>
 <span id="cb59-3"><a href="descriptives-and-visualizations.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure3,</span>
 <span id="cb59-4"><a href="descriptives-and-visualizations.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.9</span>,</span>
 <span id="cb59-5"><a href="descriptives-and-visualizations.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>
@@ -1902,7 +1902,7 @@ If everyone at wave 1 used only one medium, but at wave two everyone used all me
 <span id="cb60-63"><a href="descriptives-and-visualizations.html#cb60-63" aria-hidden="true" tabindex="-1"></a>figure4</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/proportions-use-plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptives-and-visualizations.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb61-2"><a href="descriptives-and-visualizations.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.tiff&quot;</span>),</span>
+<span id="cb61-2"><a href="descriptives-and-visualizations.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure4.png&quot;</span>),</span>
 <span id="cb61-3"><a href="descriptives-and-visualizations.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure4,</span>
 <span id="cb61-4"><a href="descriptives-and-visualizations.html#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.9</span>,</span>
 <span id="cb61-5"><a href="descriptives-and-visualizations.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>
@@ -1994,7 +1994,7 @@ If everyone at wave 1 used only one medium, but at wave two everyone used all me
 <span id="cb62-82"><a href="descriptives-and-visualizations.html#cb62-82" aria-hidden="true" tabindex="-1"></a>figure5</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/distributions-time-plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="descriptives-and-visualizations.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb63-2"><a href="descriptives-and-visualizations.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.tiff&quot;</span>),</span>
+<span id="cb63-2"><a href="descriptives-and-visualizations.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure5.png&quot;</span>),</span>
 <span id="cb63-3"><a href="descriptives-and-visualizations.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure5,</span>
 <span id="cb63-4"><a href="descriptives-and-visualizations.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
 <span id="cb63-5"><a href="descriptives-and-visualizations.html#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>

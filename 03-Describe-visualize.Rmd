@@ -667,7 +667,7 @@ ggplot(
 figure1
 
 ggsave(
-  filename = here("figures", "figure1.tiff"),
+  filename = here("figures", "figure1.png"),
   plot = figure1,
   width = 21 * 0.8,
   height = 29.7 * 0.4,
@@ -1092,7 +1092,7 @@ ggplot(
 figure2.3
 
 ggsave(
-  here("figures", "figure2.tiff"),
+  here("figures", "figure2.png"),
   plot = figure2.3,
   width = 21 * 0.8,
   height = 29.7 * 0.8,
@@ -1156,7 +1156,7 @@ ggplot(
 figure3
 
 ggsave(
-  here("figures", "figure3.tiff"),
+  here("figures", "figure3.png"),
   plot = figure3,
   width = 21 * 0.9,
   height = 29.7 * 0.4,
@@ -1237,7 +1237,7 @@ ggplot(
 figure4
 
 ggsave(
-  here("figures", "figure4.tiff"),
+  here("figures", "figure4.png"),
   plot = figure4,
   width = 21 * 0.9,
   height = 29.7 * 0.4,
@@ -1333,7 +1333,7 @@ ggplot(
 figure5
 
 ggsave(
-  here("figures", "figure5.tiff"),
+  here("figures", "figure5.png"),
   plot = figure5,
   width = 21 * 0.8,
   height = 29.7 * 0.4,

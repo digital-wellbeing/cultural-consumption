@@ -193,7 +193,11 @@ estimates <-
       # the effect on the hurdle gave us odds ratios of zero, so I reverse those to tell use odds of having used medium
       across(
         Estimate:`Upper CI`,
-        ~ if_else(Direction == "Well-Being on Media", exp(-.x), .x)
+        ~ case_when(
+          Direction == "Well-Being on Media" & `Use vs. Time` == "Use" ~ exp(-.x), # effect on hurdle
+          Direction == "Well-Being on Media" & `Use vs. Time` == "Time" ~ exp(.x), # odds for increased time
+          TRUE ~ .x
+        )
       ),
       
       # the line for null effect (0 for gaussian, 1 for hurdle gamme)
@@ -391,7 +395,9 @@ ggplot(
     color = guide_legend(reverse = TRUE),
     shape = guide_legend(reverse = TRUE)
   ) +
+  ggtitle("Reciprocal effects between using vs. not using a medium and well-being\n") +
   theme(
+    title = element_text(size = 11),
     axis.title.y = element_blank(),
     axis.title.x = element_blank(),
     axis.ticks.y = element_blank(),
@@ -404,7 +410,7 @@ ggplot(
 figure6.3
 
 ggsave(
-  filename = here("figures", "figure6.tiff"),
+  filename = here("figures", "figure6.png"),
   plot = figure6.3,
   width = 21 * 0.9,
   height = 29.7 * 0.7,
@@ -415,6 +421,16 @@ ggsave(
 
 Then a plot for time effects.
 ```{r estimates-plot4}
+# function for different breaks on x-axis per facet
+my_breaks <- 
+  function(x) {
+    if (max(x) > 1){
+      c(0.9, 1, 1.1)
+    } else {
+    c(-0.2, 0, 0.2)
+    }
+  }
+
 ggplot(
     estimates %>% 
       mutate(
@@ -462,6 +478,7 @@ ggplot(
     `Between vs. Within` ~ Direction,
     scales = "free_x"
   ) +
+  scale_x_continuous(breaks = my_breaks) +
   scale_colour_manual(values=c("#000000", "#E69F00")) +
   scale_fill_manual(values = c("#000000", "#E69F00")) +
   scale_shape_manual(values=c(15, 16)) +
@@ -469,7 +486,9 @@ ggplot(
     color = guide_legend(reverse = TRUE),
     shape = guide_legend(reverse = TRUE)
   ) +
+  ggtitle("Reciprocal effects between time spent using a medium and well-being\n") +
   theme(
+    title = element_text(size = 11),
     axis.title.y = element_blank(),
     axis.title.x = element_blank(),
     axis.ticks.y = element_blank(),
@@ -482,7 +501,7 @@ ggplot(
 figure7 
 
 ggsave(
-  filename = here("figures", "figure7.tiff"),
+  filename = here("figures", "figure7.png"),
   plot = figure7,
   width = 21 * 0.9,
   height = 29.7 * 0.7,
