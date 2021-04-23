@@ -13,7 +13,7 @@ If it isn't during peer review, you'll need to paste the data files from the OSF
 dir.create("data/", FALSE, TRUE)
 
 # download models
-osf_retrieve_node("https://osf.io/yn7sx/") %>%
+osf_retrieve_node("https://osf.io/yn7sx/?view_only=2d0d8bf4850d4ace8a08c860bc45e9f2") %>%
   osf_ls_nodes() %>%
   filter(name == "data") %>%
   osf_ls_files(

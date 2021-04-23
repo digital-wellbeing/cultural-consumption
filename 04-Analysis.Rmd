@@ -212,7 +212,7 @@ For that, you need to set the code chunk below to `eval=TRUE`, which creates a `
 dir.create("models/", FALSE, TRUE)
 
 # download models
-osf_retrieve_node("https://osf.io/yn7sx/") %>% 
+osf_retrieve_node("https://osf.io/yn7sx/?view_only=2d0d8bf4850d4ace8a08c860bc45e9f2") %>% 
   osf_ls_nodes() %>% 
   filter(name == "models") %>% 
   osf_ls_files(

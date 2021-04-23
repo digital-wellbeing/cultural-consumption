@@ -666,6 +666,9 @@ ggplot(
 
 figure1
 
+# create figure folder
+dir.create("figures/", FALSE, TRUE)
+
 ggsave(
   filename = here("figures", "figure1.png"),
   plot = figure1,

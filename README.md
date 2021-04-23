@@ -3,7 +3,7 @@ On this site, I document all steps, from data processing to final analyses, for 
 Link to the preprint: <>
 
 ## Data and models
-The data and models are on the Open Science Framework page of this project at <https://osf.io/yn7sx/>.
+The data and models are on the Open Science Framework page of this project at <https://osf.io/yn7sx/?view_only=2d0d8bf4850d4ace8a08c860bc45e9f2>.
 You'll see that there are different components.
 One component holds the raw data.
 These data were processed before uploading because they contained other variables that we were not allowed to share.
@@ -43,5 +43,4 @@ If you want to run the models rather than downloading them and loading them into
 I set this book up so that it runs in one go, meaning you need to run the source files in their order, and can't run source files independently.
 
 The same goes for the data: You'll need to set the chunk `download-data` to `eval=TRUE`.
-That only works when the OSF project is public.
-If it isn't (because of peer review), you'll need to manually download the data files from the OSF into a `data/` folder in the main directory of the project.
+If that doesn't work (but it should, even with an anonymized link), you'll need to manually download the data files from the OSF into a `data/` folder in the main directory of the project.

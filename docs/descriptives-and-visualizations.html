@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Analysis report detailing alls steps from data processing to final analyses." />
   
 
-<meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
+<meta name="author" content="[blinded for peer review]" />
 
 
-<meta name="date" content="2021-04-15" />
+<meta name="date" content="2021-04-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1350,14 +1350,17 @@ Not sure about the colors yet, might go all black for this one.</p>
 <span id="cb50-39"><a href="descriptives-and-visualizations.html#cb50-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-40"><a href="descriptives-and-visualizations.html#cb50-40" aria-hidden="true" tabindex="-1"></a>figure1</span></code></pre></div>
 <p><img src="analysis_report_files/figure-html/response-rate-plot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives-and-visualizations.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.png&quot;</span>),</span>
-<span id="cb51-3"><a href="descriptives-and-visualizations.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure1,</span>
-<span id="cb51-4"><a href="descriptives-and-visualizations.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
-<span id="cb51-5"><a href="descriptives-and-visualizations.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>
-<span id="cb51-6"><a href="descriptives-and-visualizations.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
-<span id="cb51-7"><a href="descriptives-and-visualizations.html#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span></span>
-<span id="cb51-8"><a href="descriptives-and-visualizations.html#cb51-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives-and-visualizations.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create figure folder</span></span>
+<span id="cb51-2"><a href="descriptives-and-visualizations.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;figures/&quot;</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb51-3"><a href="descriptives-and-visualizations.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="descriptives-and-visualizations.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb51-5"><a href="descriptives-and-visualizations.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="fu">here</span>(<span class="st">&quot;figures&quot;</span>, <span class="st">&quot;figure1.png&quot;</span>),</span>
+<span id="cb51-6"><a href="descriptives-and-visualizations.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> figure1,</span>
+<span id="cb51-7"><a href="descriptives-and-visualizations.html#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">21</span> <span class="sc">*</span> <span class="fl">0.8</span>,</span>
+<span id="cb51-8"><a href="descriptives-and-visualizations.html#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">29.7</span> <span class="sc">*</span> <span class="fl">0.4</span>,</span>
+<span id="cb51-9"><a href="descriptives-and-visualizations.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb51-10"><a href="descriptives-and-visualizations.html#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span></span>
+<span id="cb51-11"><a href="descriptives-and-visualizations.html#cb51-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Next, I plot the exclusions.
 There’s two ways to go about this.
 Either I show the absolute number of participants and observations that we exclude with each criterion in relation to the total sample size.

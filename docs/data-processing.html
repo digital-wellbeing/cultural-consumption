@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Analysis report detailing alls steps from data processing to final analyses." />
   
 
-<meta name="author" content="Niklas Johannes, Tobias Dienlin, Hasan Bakhshi, and Andrew K. Przybylski" />
+<meta name="author" content="[blinded for peer review]" />
 
 
-<meta name="date" content="2021-04-15" />
+<meta name="date" content="2021-04-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -245,7 +245,7 @@ If it isn’t during peer review, you’ll need to paste the data files from the
 <span id="cb3-2"><a href="data-processing.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data/&quot;</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb3-3"><a href="data-processing.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="data-processing.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># download models</span></span>
-<span id="cb3-5"><a href="data-processing.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">osf_retrieve_node</span>(<span class="st">&quot;https://osf.io/yn7sx/&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="data-processing.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">osf_retrieve_node</span>(<span class="st">&quot;https://osf.io/yn7sx/?view_only=2d0d8bf4850d4ace8a08c860bc45e9f2&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb3-6"><a href="data-processing.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osf_ls_nodes</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb3-7"><a href="data-processing.html#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;data&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb3-8"><a href="data-processing.html#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osf_ls_files</span>(</span>
