@@ -1323,8 +1323,8 @@ ggplot(
     color = "black"
   ) +
   theme_cowplot() +
-  scale_colour_manual(values=cb_palette) +
-  scale_fill_manual(values = cb_palette) +
+  scale_colour_manual(values=c("#E69F00", "#000000")) +
+  scale_fill_manual(values = c("#E69F00", "#000000")) +
   xlab("Wave") +
   theme(
     axis.title.y = element_blank(),
