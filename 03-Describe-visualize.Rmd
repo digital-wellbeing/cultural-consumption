@@ -479,13 +479,19 @@ well_being <-
     describe(
       working_file,
       "life_satisfaction",
-      trait = TRUE
+      trait = FALSE
     )
   )  
 
 
 knitr::kable(
-  well_being,
+  well_being %>% 
+    mutate(
+      across(
+        mean:cihigh,
+        ~ round(.x, digits = 2)
+      )
+    ),
   caption = "Well-being descriptives"
 )
 ```
