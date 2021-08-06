@@ -1991,6 +1991,12 @@ rm(
 )
 ```
 
+Before I remove those who only have three waves, I'll create a temporary working file that we use in the next chapter to look at demographics per number of filled out surveys.
+```{r make-demo-temp-file}
+temp <- working_file
+```
+
+
 And then remove those who don't have at least three waves.
 For one model part, we'll used led values, so two waves won't be enough because that means a participant is left with only one wave once we lead a predictor.
 

@@ -66,6 +66,34 @@ working_file %>%
   )
 ```
 
+Let's inspect the sample characteristics (age and gender) by how many surveys a person filled out (Table \@ref(tab:describe-per-wave)).
+So we're just looking at whether there are pronounced differences in sample charateristics as people dropped out of the study.
+Looks pretty stable to me, especially given the samller sample sizes for those who dropped out early.
+```{r describe-per-wave, echo=FALSE}
+temp %>% 
+  group_by(id) %>%
+  mutate(Waves = n()) %>%
+  slice(1) %>% 
+  ungroup() %>%
+  group_by(Waves) %>% 
+  summarise(
+    N = n(),
+    `Mean age` = mean(age, na.rm = TRUE),
+    `SD age` = sd(age, na.rm = TRUE),
+    `Women` = sum(gender=="Female"),
+    Men = sum(gender=="Male"),
+    Other = sum(gender=="Other"),
+    `Proportion women (%)` = round(Women / n(), digits = 2) * 100
+  ) %>% 
+  knitr::kable(
+    .,
+    caption = "Demographics by number of filled out surveys"
+  )
+
+# remove tmp file
+rm(tmp)
+```
+
 Now let's have a look at how much people identified with each medium.
 Note that people weren't asked those identity questions if they indicated that they hadn't used a medium at wave 1.
 ```{r describe-identities, echo=FALSE}
@@ -613,6 +641,86 @@ ggpairs(
     strip.background = element_blank()
   )
 ```
+
+At the request of a reviewer, we can also look at correlations per age group.
+We leave a formal analysis up to readers, who can estimate models with an interaction term.
+Here, I merely plot the slope between total media time and well-being by age groups.
+In Figure \@ref(fig:relation-by-age), we see that there are differences in age on well-being, but not in slopes.
+```{r relation-by-age, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Relation between total time and well-being by age"}
+working_file %>%
+  mutate(
+    age_group = case_when(
+      age < 30 ~ "16-29",
+      age >= 30 ~ "30+"
+    )
+  ) %>% 
+  select(id, age_group, total_time, affect, life_satisfaction) %>% 
+  pivot_longer(
+    .,
+    cols = c("affect", "life_satisfaction"),
+    names_to = "Measure",
+    values_to = "score"
+  ) %>% 
+  ggplot(
+    .,
+    aes(
+      x = total_time,
+      y = score,
+      color = age_group
+    )
+  ) +
+  ylim(0, 11) +
+  geom_smooth(method = "lm") +
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  facet_wrap(~ Measure) +
+  theme_cowplot()
+  
+```
+
+The reviewer was also interested in different lags.
+However, to see each correlation at each wave with each lag for each medium would be 6 (lags medium) x 6 (lags well-being) x 2 (well-being measures) x 7 (media types) = `r 6*6*2*7` correlations.
+Therefore, Figure \@ref(fig:correlations-per-lag) shows the correlations of total time with all media with affect at the last wave for total time at each wave.
+We see little differences in the slopes, meaning that a different lag for the analysis would probably not change the results much.
+However, we invite readers to run the analysis themselves with a different lag.
+```{r correlations-per-lag, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Correlation between affect at the last wave and total time at each wave"}
+working_file %>% 
+  select(id, wave, total_time, affect) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = wave,
+    values_from = total_time,
+    names_glue = "total_time_{wave}"
+  ) %>% 
+  # add affect at wave 6
+  left_join(
+    .,
+    working_file %>%
+      filter(wave==6) %>% 
+      select(id, affect)
+  ) %>% 
+  pivot_longer(
+    cols = c(-id, -affect),
+    names_to = "lag",
+    values_to = 'total_time'
+  ) %>% 
+  mutate(lag = parse_number(lag)) %>% 
+  ggplot(
+    .,
+    aes(
+      x = total_time,
+      y = affect
+    )
+  ) +
+  geom_smooth(method = "lm", color = "black") +
+  facet_wrap(~ lag) +  
+  scale_colour_manual(values=cb_palette) +
+  scale_fill_manual(values = cb_palette) +
+  theme_cowplot() +
+  xlab("Total time at each wave") +
+  ylab("Affect at the last wave")
+```
+
 
 ## Plots for Paper
 

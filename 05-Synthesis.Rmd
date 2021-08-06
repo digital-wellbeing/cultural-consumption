@@ -510,6 +510,20 @@ ggsave(
 )
 ```
 
+## Full table of estimates
+
+Some readers may not want to go through the entire analysis section to look for a coefficient.
+Therefore, we provide the full estimates in one table here.
+Table \@ref(fig:full-estimates) shows all estimates.
+```{r full-estimates, echo=FALSE, fig.cap="Estimates of all models", fig.dim=c(14,14)}
+DT::datatable(
+  estimates,
+  class = "cell-border stripe",
+  filter = "top",
+  options = list(scrollX = TRUE)
+)
+```
+
 
 ## Interpreting the results
 

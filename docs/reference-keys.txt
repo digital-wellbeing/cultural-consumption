@@ -17,6 +17,7 @@ tab:show-pp-exclusions
 tab:show-wave-exclusions
 fig:visualize-age
 tab:table-media-filters
+tab:describe-per-wave
 tab:describe-identities
 fig:identity-distributions
 tab:describe-time-with-zeros
@@ -28,6 +29,8 @@ tab:describe-well-being
 fig:well-being-distribution
 fig:well-being-over-time
 fig:correlation-matrix-use-well-being
+fig:relation-by-age
+fig:correlations-per-lag
 fig:inspect-music-affect-1
 fig:inspect-music-affect-2
 fig:inspect-music-affect-3
@@ -224,6 +227,7 @@ fig:inspect-life-audiobooks-3
 fig:ppc-life-audiobooks
 fig:life-audiobooks-effects-1
 fig:life-audiobooks-effects-2
+fig:full-estimates
 data-and-models
 how-to-reproduce-processing-and-analyses
 setting-up
@@ -300,5 +304,6 @@ audiobooks-on-life-satisfaction
 life-satisfaction-on-audiobooks
 synthesis
 create-a-summary-graph
+full-table-of-estimates
 interpreting-the-results
 take-aways
